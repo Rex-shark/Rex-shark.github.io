@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python .claude/skills/ui-ux-pro-max/scripts/search.py \"personal portfolio developer hand-drawn ghibli watercolor sketch fresh\" --design-system -p \"Rex Portfolio Ghibli\" -f markdown)",
+      "Bash(python -c \"import sys; content = sys.stdin.buffer.read\\(\\); print\\(content.decode\\(''''utf-8'''', errors=''''replace''''\\)\\)\")",
+      "Bash(PYTHONIOENCODING=utf-8 python .claude/skills/ui-ux-pro-max/scripts/search.py \"personal portfolio developer hand-drawn ghibli watercolor sketch fresh\" --design-system -p \"Rex Portfolio Ghibli\" -f markdown)"
+    ]
+  }
+}
