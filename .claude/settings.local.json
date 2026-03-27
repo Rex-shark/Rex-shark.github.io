@@ -3,7 +3,17 @@
     "allow": [
       "Bash(python .claude/skills/ui-ux-pro-max/scripts/search.py \"personal portfolio developer hand-drawn ghibli watercolor sketch fresh\" --design-system -p \"Rex Portfolio Ghibli\" -f markdown)",
       "Bash(python -c \"import sys; content = sys.stdin.buffer.read\\(\\); print\\(content.decode\\(''''utf-8'''', errors=''''replace''''\\)\\)\")",
-      "Bash(PYTHONIOENCODING=utf-8 python .claude/skills/ui-ux-pro-max/scripts/search.py \"personal portfolio developer hand-drawn ghibli watercolor sketch fresh\" --design-system -p \"Rex Portfolio Ghibli\" -f markdown)"
+      "Bash(PYTHONIOENCODING=utf-8 python .claude/skills/ui-ux-pro-max/scripts/search.py \"personal portfolio developer hand-drawn ghibli watercolor sketch fresh\" --design-system -p \"Rex Portfolio Ghibli\" -f markdown)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(curl -s \"https://api.github.com/repos/anthropics/skills/contents/skills/skill-creator/SKILL.md\")",
+      "Bash(mkdir -p ~/.claude/skills)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/anthropics/skills/main/skills/skill-creator/SKILL.md\" -o ~/.claude/skills/skill-creator.md)",
+      "Bash(echo $HOME)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(npx shadcn@latest init -d)"
     ]
   }
 }
