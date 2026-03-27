@@ -16,16 +16,16 @@ Rex 的 GitHub Pages 個人網站，部署於 [rex-shark.github.io](https://rex-
 
 ## 技術
 
-純靜態網站，無框架、無建置流程。
+- **框架**：React 19 + Vite
+- **樣式**：Tailwind CSS v4
+- **UI 元件**：shadcn/ui
+- **動畫**：Framer Motion
+- **語言**：TypeScript
+- **部署**：GitHub Pages（透過 GitHub Actions）
 
-- HTML / CSS / 少量 JavaScript
-- Google Fonts：Caveat + Quicksand
-- 部署：GitHub Pages（push 至 `main` 即自動發布）
-
-## 本地預覽
+## 本地開發
 
 ```bash
-npx serve .
-# 或
-python -m http.server 8080
+npm install
+npm run dev
 ```

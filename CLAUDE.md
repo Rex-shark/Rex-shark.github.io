@@ -27,7 +27,15 @@ npm run dev       # 本地開發伺服器
 npm run build     # 建置至 dist/
 ```
 
-部署：push 至 `main` 分支後，GitHub Actions 自動建置並發布。
+## 部署
+
+push 至 `main` 分支後，`.github/workflows/deploy.yml` 會自動觸發：
+
+1. `npm ci` 安裝相依
+2. `npm run build` 建置至 `dist/`
+3. 部署至 GitHub Pages
+
+網址：`https://rex-shark.github.io`
 
 ## 目前開發狀態
 
