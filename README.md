@@ -6,7 +6,7 @@ Rex 的 GitHub Pages 個人網站，部署於 [rex-shark.github.io](https://rex-
 
 - **作者**：Rex — Java 全端工程師 ＆ 系統分析師
 - **聯絡**：rexrex10050@gmail.com
-- **設計風格**：吉卜力手繪風
+- **設計風格**：未定
 
 ## 內容規劃
 
