@@ -81,6 +81,44 @@ function HandDrawnPreview() {
   )
 }
 
+/* 賽博龐克預覽 */
+function CyberpunkPreview() {
+  return (
+    <div className="w-full h-full bg-[#0D0D0D] flex flex-col items-center justify-center gap-3 relative overflow-hidden">
+      {/* 掃描線 */}
+      <div
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 4px)`,
+        }}
+      />
+      {/* HUD 頭像 */}
+      <div className="relative">
+        <div
+          className="w-10 h-10 bg-[#0D0D0D] border border-[#00FFFF]/40"
+          style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%)' }}
+        />
+        <div className="absolute -top-px -left-px w-2 h-px bg-[#00FFFF]" />
+        <div className="absolute -top-px -left-px w-px h-2 bg-[#00FFFF]" />
+      </div>
+      {/* 霓虹文字 */}
+      <div
+        className="w-20 h-2.5 rounded-sm"
+        style={{ background: '#00FFFF', boxShadow: '0 0 8px #00FFFF60' }}
+      />
+      <div
+        className="w-14 h-1.5 rounded-sm"
+        style={{ background: '#FF00FF', boxShadow: '0 0 6px #FF00FF40', opacity: 0.7 }}
+      />
+      {/* 按鈕 */}
+      <div className="flex gap-2 mt-1">
+        <div className="w-14 h-5 border border-[#00FF00]/50" style={{ background: '#00FF0010' }} />
+        <div className="w-14 h-5 border border-[#FF00FF]/50" style={{ background: '#FF00FF10' }} />
+      </div>
+    </div>
+  )
+}
+
 const styles = [
   {
     title: '簡約商務',
@@ -101,6 +139,16 @@ const styles = [
     bgColor: '#FDF8F2',
     textColor: '#1A1A1A',
     preview: <HandDrawnPreview />,
+  },
+  {
+    title: '賽博龐克',
+    subtitle: 'Cyberpunk',
+    description: '深黑底色搭配霓虹光暈，終端機美學與 HUD 介面。科幻感十足。',
+    to: '/styles/cyberpunk',
+    accentColor: '#00FFFF',
+    bgColor: '#0D0D0D',
+    textColor: '#E0E0E0',
+    preview: <CyberpunkPreview />,
   },
 ]
 
@@ -128,7 +176,7 @@ export default function StyleGallery() {
       {/* 卡片列表 */}
       <main className="flex-1 px-6 pb-16">
         <motion.div
-          className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6"
+          className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
