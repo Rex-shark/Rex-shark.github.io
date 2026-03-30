@@ -119,6 +119,160 @@ function CyberpunkPreview() {
   )
 }
 
+/* 極簡日式預覽 */
+function JapaneseMinimalPreview() {
+  return (
+    <div className="w-full h-full bg-[#F5F1EB] flex flex-col items-center justify-center gap-3 relative overflow-hidden">
+      {/* 圓相 */}
+      <svg width="50" height="50" viewBox="0 0 100 100" fill="none" className="opacity-15">
+        <path
+          d="M50 10 C75 10 90 30 90 50 C90 72 72 90 52 90 C32 90 12 75 10 55 C8 35 25 12 48 10"
+          stroke="#8B7355" strokeWidth="2.5" strokeLinecap="round"
+        />
+      </svg>
+      {/* 文字線條 */}
+      <div className="w-20 h-2 bg-[#2C2C2C] rounded-sm" />
+      <div className="w-14 h-1.5 bg-[#8B7355]/40 rounded-sm" />
+      {/* 按鈕 */}
+      <div className="flex gap-2 mt-1">
+        <div className="w-14 h-5 border border-[#2C2C2C] rounded-sm" />
+        <div className="w-14 h-5 bg-[#2C2C2C] rounded-sm" />
+      </div>
+    </div>
+  )
+}
+
+/* 蒸汽龐克預覽 */
+function SteampunkPreview() {
+  return (
+    <div
+      className="w-full h-full flex flex-col items-center justify-center gap-3 relative overflow-hidden"
+      style={{ background: '#1A0E08' }}
+    >
+      {/* 皮革紋路背景 */}
+      <div
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage: `repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 8px,
+            rgba(139,90,43,1) 8px,
+            rgba(139,90,43,1) 9px
+          )`,
+        }}
+      />
+      {/* 齒輪 SVG */}
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" className="opacity-80">
+        <polygon
+          points="22,2 24.5,8 30,6 29,12 35,14 31,19 36,23 31,27 35,32 29,34 30,40 24.5,38 22,44 19.5,38 14,40 15,34 9,32 13,27 8,23 13,19 9,14 15,12 14,6 19.5,8"
+          fill="#B87333"
+          stroke="#8B5A2B"
+          strokeWidth="1"
+          opacity="0.8"
+        />
+        <circle cx="22" cy="23" r="7" fill="#8B5A2B" opacity="0.8" />
+        <circle cx="22" cy="23" r="3" fill="#1A0E08" />
+      </svg>
+      {/* 文字線條 */}
+      <div
+        className="w-20 h-2.5"
+        style={{ background: 'linear-gradient(90deg, #8B5A2B, #DAA520, #8B5A2B)', boxShadow: '0 0 6px rgba(218,165,32,0.4)' }}
+      />
+      <div className="w-14 h-1.5" style={{ background: '#8B5A2B', opacity: 0.6 }} />
+      {/* 銅色按鈕 */}
+      <div className="flex gap-2 mt-1">
+        <div
+          className="w-16 h-5 border"
+          style={{ borderColor: '#8B5A2B', background: 'linear-gradient(135deg, #8B5A2B55, #B8733355)' }}
+        />
+        <div className="w-16 h-5 border" style={{ borderColor: '#8B5A2B50' }} />
+      </div>
+    </div>
+  )
+}
+
+/* 蘋果風格預覽 */
+function MacbookPreview() {
+  return (
+    <div
+      className="w-full h-full flex flex-col items-center justify-center gap-3 px-6 relative overflow-hidden"
+      style={{ background: '#F2F2F7' }}
+    >
+      {/* 毛玻璃視窗卡片 */}
+      <div
+        className="w-full max-w-[160px] overflow-hidden"
+        style={{
+          background: 'rgba(255,255,255,0.75)',
+          backdropFilter: 'blur(12px)',
+          borderRadius: '12px',
+          border: '0.5px solid rgba(0,0,0,0.12)',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
+        }}
+      >
+        {/* 視窗標題列 */}
+        <div
+          className="flex items-center gap-1 px-3 h-6"
+          style={{ background: 'rgba(246,246,246,0.9)', borderBottom: '0.5px solid rgba(0,0,0,0.1)' }}
+        >
+          <div className="w-2 h-2 rounded-full bg-[#FF5F57]" />
+          <div className="w-2 h-2 rounded-full bg-[#FEBC2E]" />
+          <div className="w-2 h-2 rounded-full bg-[#28C840]" />
+        </div>
+        {/* 內容模擬 */}
+        <div className="px-3 py-3 flex flex-col gap-2">
+          <div className="w-8 h-8 rounded-full bg-[#0071E3]/20 flex items-center justify-center">
+            <div className="w-4 h-4 rounded-full bg-[#0071E3]" />
+          </div>
+          <div className="h-2 rounded-full bg-[#1C1C1E]" style={{ width: '70%' }} />
+          <div className="h-1.5 rounded-full bg-[#8E8E93]/40" style={{ width: '50%' }} />
+          <div className="flex gap-1.5 mt-1">
+            <div className="h-5 rounded-full bg-[#0071E3] flex-1" />
+            <div
+              className="h-5 rounded-full flex-1"
+              style={{ border: '0.5px solid rgba(0,0,0,0.18)', background: 'rgba(255,255,255,0.8)' }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* 蒸氣波預覽 */
+function VaporwavePreview() {
+  return (
+    <div
+      className="w-full h-full flex flex-col items-center justify-center gap-3 relative overflow-hidden"
+      style={{ background: 'linear-gradient(180deg, #1A1A2E 0%, #2D1B69 50%, #FF71CE 100%)' }}
+    >
+      {/* 透視網格 */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-1/2 opacity-20"
+        style={{
+          background: 'linear-gradient(rgba(255,113,206,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,113,206,0.5) 1px, transparent 1px)',
+          backgroundSize: '20px 20px',
+          transform: 'perspective(200px) rotateX(60deg)',
+          transformOrigin: 'center top',
+        }}
+      />
+      {/* 太陽 */}
+      <div
+        className="w-10 h-10 rounded-full"
+        style={{ background: 'linear-gradient(180deg, #FF71CE, #FFD700)', boxShadow: '0 0 15px #FF71CE60' }}
+      />
+      {/* 文字 */}
+      <div className="w-20 h-2.5 rounded-sm" style={{ background: '#01CDFE', boxShadow: '0 0 6px #01CDFE60' }} />
+      <div className="w-14 h-1.5 rounded-sm bg-[#B967FF]/70" />
+      {/* 按鈕 */}
+      <div className="flex gap-2 mt-1">
+        <div className="w-14 h-5 border border-[#FF71CE]/60 rounded" style={{ background: '#FF71CE15' }} />
+        <div className="w-14 h-5 border border-[#01CDFE]/60 rounded" style={{ background: '#01CDFE15' }} />
+      </div>
+    </div>
+  )
+}
+
 const styles = [
   {
     title: '簡約商務',
@@ -149,6 +303,46 @@ const styles = [
     bgColor: '#0D0D0D',
     textColor: '#E0E0E0',
     preview: <CyberpunkPreview />,
+  },
+  {
+    title: '極簡日式',
+    subtitle: 'Japanese Minimal',
+    description: '侘寂美學，大量留白與自然色調。圓相裝飾、極致簡約的禪風設計。',
+    to: '/styles/japanese-minimal',
+    accentColor: '#8B7355',
+    bgColor: '#F5F1EB',
+    textColor: '#2C2C2C',
+    preview: <JapaneseMinimalPreview />,
+  },
+  {
+    title: '蒸氣波',
+    subtitle: 'Vaporwave',
+    description: '80-90 年代復古懷舊，粉紫漸層落日、透視網格與霓虹光暈。',
+    to: '/styles/vaporwave',
+    accentColor: '#FF71CE',
+    bgColor: '#1A1A2E',
+    textColor: '#E0D7FF',
+    preview: <VaporwavePreview />,
+  },
+  {
+    title: '蘋果風格',
+    subtitle: 'macOS Design',
+    description: '仿 Apple 設計語言，毛玻璃質感、精緻圓角與大量留白。極致簡約而不失細節。',
+    to: '/styles/macbook',
+    accentColor: '#0071E3',
+    bgColor: '#F2F2F7',
+    textColor: '#1C1C1E',
+    preview: <MacbookPreview />,
+  },
+  {
+    title: '蒸汽龐克',
+    subtitle: 'Steampunk',
+    description: '維多利亞工業美學，銅製齒輪、皮革質感與蒸汽機械。時間的歷史感與精密機械之美。',
+    to: '/styles/steampunk',
+    accentColor: '#B87333',
+    bgColor: '#2C1810',
+    textColor: '#E8D5A3',
+    preview: <SteampunkPreview />,
   },
 ]
 
