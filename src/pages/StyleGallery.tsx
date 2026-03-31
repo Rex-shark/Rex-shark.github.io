@@ -378,6 +378,64 @@ function SoftUiPreview() {
   )
 }
 
+/* 玻璃態預覽 */
+function GlassmorphismPreview() {
+  return (
+    <div
+      className="w-full h-full flex flex-col items-center justify-center gap-3 relative overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)' }}
+    >
+      {/* 光暈球 */}
+      <div className="absolute top-2 right-4 w-12 h-12 rounded-full opacity-30" style={{ background: '#8b5cf6', filter: 'blur(16px)' }} />
+      <div className="absolute bottom-4 left-2 w-10 h-10 rounded-full opacity-25" style={{ background: '#3b82f6', filter: 'blur(14px)' }} />
+      {/* 玻璃卡片 */}
+      <div
+        className="w-28 rounded-xl p-3 flex flex-col gap-2"
+        style={{
+          background: 'rgba(255,255,255,0.08)',
+          border: '1px solid rgba(255,255,255,0.15)',
+          backdropFilter: 'blur(12px)',
+        }}
+      >
+        <div className="w-8 h-8 rounded-full" style={{ background: 'rgba(167,139,250,0.4)', border: '1px solid rgba(255,255,255,0.2)' }} />
+        <div className="h-2 rounded-full bg-white/40" style={{ width: '80%' }} />
+        <div className="h-1.5 rounded-full bg-white/20" style={{ width: '60%' }} />
+        <div className="flex gap-1 mt-1">
+          <div className="flex-1 h-4 rounded-lg" style={{ background: 'rgba(167,139,250,0.5)', border: '1px solid rgba(255,255,255,0.2)' }} />
+          <div className="flex-1 h-4 rounded-lg" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* 黏土態預覽 */
+function ClaymorphismPreview() {
+  return (
+    <div
+      className="w-full h-full flex flex-col items-center justify-center gap-3 relative overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #fdf4ff, #f0fdf4)' }}
+    >
+      {/* 裝飾 Blob */}
+      <div className="absolute top-2 right-2 w-10 h-10 rounded-full opacity-40" style={{ background: '#f9a8d4', boxShadow: 'inset 2px 3px 6px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.1)' }} />
+      <div className="absolute bottom-3 left-2 w-8 h-8 rounded-full opacity-40" style={{ background: '#86efac', boxShadow: 'inset 2px 3px 6px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.1)' }} />
+      {/* 主卡片 */}
+      <div
+        className="flex flex-col items-center gap-2 p-3"
+        style={{ background: '#fff', borderRadius: '20px', boxShadow: '6px 6px 16px rgba(167,139,250,0.25), -2px -2px 8px rgba(255,255,255,0.8), inset 0 2px 4px rgba(255,255,255,0.6)' }}
+      >
+        <div className="w-10 h-10 rounded-full" style={{ background: '#c4b5fd', boxShadow: '4px 4px 10px rgba(167,139,250,0.4), inset 0 2px 4px rgba(255,255,255,0.7)' }} />
+        <div className="h-2 rounded-full bg-[#a78bfa]/60" style={{ width: '4rem', boxShadow: 'inset 1px 2px 3px rgba(255,255,255,0.5)' }} />
+        <div className="h-1.5 rounded-full bg-[#6b7280]/30" style={{ width: '3rem' }} />
+        <div className="flex gap-1.5 mt-1">
+          <div className="px-2 py-1 rounded-xl text-white" style={{ background: '#a78bfa', boxShadow: '3px 3px 8px rgba(167,139,250,0.4), inset 0 1px 3px rgba(255,255,255,0.4)', fontSize: '0px', width: '2rem', height: '1.25rem' }} />
+          <div className="px-2 py-1 rounded-xl" style={{ background: '#fbcfe8', boxShadow: '3px 3px 8px rgba(249,168,212,0.4), inset 0 1px 3px rgba(255,255,255,0.4)', width: '2rem', height: '1.25rem' }} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const styles = [
   {
     title: '簡約商務',
@@ -478,6 +536,26 @@ const styles = [
     bgColor: '#E8ECF0',
     textColor: '#4A5568',
     preview: <SoftUiPreview />,
+  },
+  {
+    title: '玻璃態',
+    subtitle: 'Glassmorphism',
+    description: '透明磨砂玻璃質感，深邃漸層背景搭配 backdrop-blur，打造現代感十足的沉浸式視覺。',
+    to: '/styles/glassmorphism',
+    accentColor: '#a78bfa',
+    bgColor: '#302b63',
+    textColor: '#ffffff',
+    preview: <GlassmorphismPreview />,
+  },
+  {
+    title: '黏土態',
+    subtitle: 'Claymorphism',
+    description: '膨脹感圓角搭配多層柔和陰影，活潑彩色的 3D 黏土視覺風格。',
+    to: '/styles/claymorphism',
+    accentColor: '#a78bfa',
+    bgColor: '#F5F0FF',
+    textColor: '#1F2937',
+    preview: <ClaymorphismPreview />,
   },
 ]
 

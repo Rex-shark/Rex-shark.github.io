@@ -10,6 +10,8 @@ import Steampunk from '@/pages/styles/Steampunk'
 import SwissModern from '@/pages/styles/SwissModern'
 import PixelArt from '@/pages/styles/PixelArt'
 import SoftUi from '@/pages/styles/SoftUi'
+import Glassmorphism from '@/pages/styles/Glassmorphism'
+import Claymorphism from '@/pages/styles/Claymorphism'
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/styles/swiss-modern" element={<SwissModern />} />
         <Route path="/styles/pixel-art" element={<PixelArt />} />
         <Route path="/styles/soft-ui" element={<SoftUi />} />
+        <Route path="/styles/glassmorphism" element={<Glassmorphism />} />
+        <Route path="/styles/claymorphism" element={<Claymorphism />} />
       </Routes>
     </HashRouter>
   )

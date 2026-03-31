@@ -24,6 +24,8 @@
 /#/styles/swiss-modern         → 瑞士現代主義
 /#/styles/pixel-art            → 像素藝術
 /#/styles/soft-ui              → 柔和UI進化版
+/#/styles/glassmorphism        → 玻璃態
+/#/styles/claymorphism         → 黏土態
 ```
 
 ### 目錄結構
@@ -78,6 +80,8 @@ src/
 | 8 | 瑞士現代主義 | `/styles/swiss-modern` | 黑白紅三色、12 欄網格、Inter + IBM Plex Mono | ✅ 完成 |
 | 9 | 像素藝術 | `/styles/pixel-art` | 深藍黑底螢光綠、Press Start 2P、CRT 掃描線 | ✅ 完成 |
 | 10 | 柔和UI進化版 | `/styles/soft-ui` | Neumorphism 凸起凹陷陰影、粉彩色系、Nunito + Poppins | ✅ 完成 |
+| 11 | 玻璃態 | `/styles/glassmorphism` | 深藍紫漸層、backdrop-blur 毛玻璃卡片、光暈球裝飾 | ✅ 完成 |
+| 12 | 黏土態 | `/styles/claymorphism` | 充氣膨脹感、inset 陰影高光、Fredoka One 圓潤字型 | ✅ 完成 |
 
 ---
 
