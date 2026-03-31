@@ -142,6 +142,44 @@ function JapaneseMinimalPreview() {
   )
 }
 
+/* 瑞士現代主義預覽 */
+function SwissModernPreview() {
+  return (
+    <div className="w-full h-full bg-[#FFFFFF] flex flex-col relative overflow-hidden">
+      {/* 左側紅色邊欄 */}
+      <div className="absolute left-0 top-0 bottom-0 w-4 bg-[#FF0000]" />
+      {/* 頂部粗線 */}
+      <div className="absolute top-0 left-4 right-0 h-1 bg-[#000000]" />
+      {/* 內容區 */}
+      <div className="ml-6 mt-4 flex flex-col gap-3 flex-1 justify-center pr-4">
+        {/* 超大標題 */}
+        <div className="w-20 h-8 bg-[#000000]" style={{ borderRadius: 0 }} />
+        {/* 紅色強調線 */}
+        <div className="flex items-center gap-1">
+          <div className="w-4 h-1 bg-[#FF0000]" />
+          <div className="w-12 h-px bg-[#000000]/20" />
+        </div>
+        {/* 文字行 */}
+        <div className="w-24 h-1.5 bg-[#333333]/60" style={{ borderRadius: 0 }} />
+        <div className="w-16 h-1.5 bg-[#333333]/30" style={{ borderRadius: 0 }} />
+        {/* 按鈕行：黑色矩形 */}
+        <div className="flex gap-2 mt-2">
+          <div className="w-14 h-5 bg-[#000000]" style={{ borderRadius: 0 }} />
+          <div className="w-14 h-5 border-2 border-[#000000]" style={{ borderRadius: 0 }} />
+        </div>
+      </div>
+      {/* 右下角幾何裝飾 */}
+      <div className="absolute bottom-4 right-4 flex flex-col gap-1">
+        <div className="w-4 h-4 bg-[#FF0000]" />
+        <div className="w-4 h-4 border-2 border-[#000000]" />
+        <div className="w-4 h-4 bg-[#000000]" />
+      </div>
+      {/* 底部粗線 */}
+      <div className="absolute bottom-0 left-4 right-0 h-1 bg-[#000000]" />
+    </div>
+  )
+}
+
 /* 蒸汽龐克預覽 */
 function SteampunkPreview() {
   return (
@@ -273,6 +311,73 @@ function VaporwavePreview() {
   )
 }
 
+/* 像素藝術預覽 */
+function PixelArtPreview() {
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center gap-3 relative overflow-hidden" style={{ background: '#0D0D1A' }}>
+      {/* 頂部彩虹像素條 */}
+      <div className="absolute top-0 left-0 right-0 h-2 flex">
+        {['#FF0000','#39FF14','#00BFFF','#FFD700','#FF0000','#39FF14','#00BFFF','#FFD700'].map((c, i) => (
+          <div key={i} className="flex-1" style={{ background: c }} />
+        ))}
+      </div>
+      {/* 像素螢幕框 */}
+      <div className="relative" style={{ border: '2px solid #39FF14', boxShadow: '0 0 8px #39FF1440', padding: '4px' }}>
+        <div className="w-10 h-10 bg-[#0D0D1A]" />
+        {/* 像素角落裝飾 */}
+        <div className="absolute -top-1 -left-1 w-2 h-2 bg-[#39FF14]" />
+        <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#39FF14]" />
+        <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-[#39FF14]" />
+        <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-[#39FF14]" />
+      </div>
+      {/* 點陣文字模擬 */}
+      <div className="w-20 h-2.5" style={{ background: '#39FF14', boxShadow: '0 0 6px #39FF1450', imageRendering: 'pixelated' }} />
+      <div className="w-14 h-1.5" style={{ background: '#C8D8E8', opacity: 0.5 }} />
+      {/* 像素按鈕 */}
+      <div className="flex gap-2 mt-1">
+        <div className="w-14 h-5 border-2 border-[#39FF14]" style={{ background: '#39FF1415' }} />
+        <div className="w-14 h-5 border-2 border-[#00BFFF]" style={{ background: '#00BFFF15' }} />
+      </div>
+    </div>
+  )
+}
+
+/* 柔和UI預覽 */
+function SoftUiPreview() {
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center gap-3 px-6" style={{ background: '#E8ECF0' }}>
+      {/* Neumorphism 凸起頭像 */}
+      <div
+        className="w-12 h-12 rounded-full"
+        style={{
+          background: '#E8ECF0',
+          boxShadow: '4px 4px 8px #c5c9ce, -4px -4px 8px #ffffff',
+        }}
+      />
+      {/* 凸起文字區 */}
+      <div
+        className="w-24 h-2.5 rounded-full"
+        style={{ background: '#E8ECF0', boxShadow: '2px 2px 4px #c5c9ce, -2px -2px 4px #ffffff' }}
+      />
+      <div
+        className="w-16 h-2 rounded-full"
+        style={{ background: '#E8ECF0', boxShadow: '2px 2px 4px #c5c9ce, -2px -2px 4px #ffffff' }}
+      />
+      {/* 凹陷按鈕 */}
+      <div className="flex gap-2 mt-1">
+        <div
+          className="w-14 h-5 rounded-lg"
+          style={{ background: '#7C9FD4', boxShadow: '2px 2px 4px #c5c9ce, -2px -2px 4px #ffffff' }}
+        />
+        <div
+          className="w-14 h-5 rounded-lg"
+          style={{ background: '#E8ECF0', boxShadow: 'inset 2px 2px 4px #c5c9ce, inset -2px -2px 4px #ffffff' }}
+        />
+      </div>
+    </div>
+  )
+}
+
 const styles = [
   {
     title: '簡約商務',
@@ -343,6 +448,36 @@ const styles = [
     bgColor: '#2C1810',
     textColor: '#E8D5A3',
     preview: <SteampunkPreview />,
+  },
+  {
+    title: '瑞士現代主義',
+    subtitle: 'Swiss Modern',
+    description: '嚴謹網格、Helvetica 排版美學。黑白紅三色，大膽字型層級，幾何圖形裝飾，文字即設計。',
+    to: '/styles/swiss-modern',
+    accentColor: '#FF0000',
+    bgColor: '#FFFFFF',
+    textColor: '#000000',
+    preview: <SwissModernPreview />,
+  },
+  {
+    title: '像素藝術',
+    subtitle: 'Pixel Art',
+    description: '8-bit 復古電玩美學，像素點陣字型搭配 CRT 掃描線，重現懷舊 chiptune 氛圍。',
+    to: '/styles/pixel-art',
+    accentColor: '#39FF14',
+    bgColor: '#0D0D1A',
+    textColor: '#C8D8E8',
+    preview: <PixelArtPreview />,
+  },
+  {
+    title: '柔和UI進化版',
+    subtitle: 'Soft UI / Neumorphism',
+    description: '如同實體按鈕的柔和凸起凹陷效果，粉彩色系搭配極簡設計語言。',
+    to: '/styles/soft-ui',
+    accentColor: '#7C9FD4',
+    bgColor: '#E8ECF0',
+    textColor: '#4A5568',
+    preview: <SoftUiPreview />,
   },
 ]
 

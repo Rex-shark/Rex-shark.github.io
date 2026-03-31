@@ -7,6 +7,9 @@ import JapaneseMinimal from '@/pages/styles/JapaneseMinimal'
 import Vaporwave from '@/pages/styles/Vaporwave'
 import Macbook from '@/pages/styles/Macbook'
 import Steampunk from '@/pages/styles/Steampunk'
+import SwissModern from '@/pages/styles/SwissModern'
+import PixelArt from '@/pages/styles/PixelArt'
+import SoftUi from '@/pages/styles/SoftUi'
 
 function App() {
   return (
@@ -20,6 +23,9 @@ function App() {
         <Route path="/styles/vaporwave" element={<Vaporwave />} />
         <Route path="/styles/macbook" element={<Macbook />} />
         <Route path="/styles/steampunk" element={<Steampunk />} />
+        <Route path="/styles/swiss-modern" element={<SwissModern />} />
+        <Route path="/styles/pixel-art" element={<PixelArt />} />
+        <Route path="/styles/soft-ui" element={<SoftUi />} />
       </Routes>
     </HashRouter>
   )

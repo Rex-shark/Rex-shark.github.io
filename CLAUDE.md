@@ -34,6 +34,26 @@ npm run preview   # 預覽 production 建置結果
 
 ## 架構重點
 
+### 風格導覽頁架構
+
+首頁為**風格導覽頁**（`StyleGallery`），展示多種設計風格的卡片，點擊後進入對應風格的完整首頁。使用 **HashRouter** 解決 GitHub Pages 靜態託管的 SPA 路由問題。
+
+路由結構：
+```
+/#/                            → 風格導覽頁（StyleGallery）
+/#/styles/<風格路由名>          → 各風格首頁
+```
+
+風格頁面位於 `src/pages/styles/`，每個頁面皆為獨立的 React 元件，包含：固定導覽列、Hero（含 `/me.png`）、技能區塊、專案區塊、聯絡區塊、Footer。
+
+### Subagent 架構
+
+新增風格頁面透過 `.claude/agents/style-page-creator.md` 定義的獨立 agent 執行，可並行啟動多個：
+
+- **模型**：預設 `sonnet`，複雜風格可覆蓋為 `opus`
+- **職責分工（Plan A）**：Subagent **只建立** `src/pages/styles/<PascalCase>.tsx`，**不修改** `App.tsx` 和 `StyleGallery.tsx`（由主 agent 統一整合，避免並行衝突）
+- **回報機制**：Subagent 完成後回報 import 名稱、路由路徑、卡片配色等資訊供主 agent 整合
+
 ### 路徑別名
 `@` 對應 `./src`（在 `vite.config.ts` 與 `tsconfig.json` 均已設定）。
 
@@ -46,6 +66,7 @@ npm run preview   # 預覽 production 建置結果
 - shadcn/ui 元件放在 `src/components/ui/`，透過 `npx shadcn add <component>` 新增
 - 樣式合併工具：`src/lib/utils.ts` 匯出的 `cn()`（`clsx` + `tailwind-merge`）
 - Icon 使用 Lucide React；SVG 精靈檔位於 `public/icons.svg`
+- 風格頁面中的 GitHub Icon 使用自訂 `GithubIcon` SVG 元件（定義在各風格頁面內）
 
 ## 部署
 
@@ -57,8 +78,8 @@ push 至 `main` 分支後，`.github/workflows/deploy.yml` 會自動觸發：
 
 網址：`https://rex-shark.github.io`
 
-## 目前開發狀態
+## 開發進度與計畫
 
-**首頁為風格選擇頁**：暫時性的連結頁面，列出多個按鈕，每個按鈕連至一個不同風格設計的首頁版本。目的是從多種風格中挑選最喜歡的方向。
+開發進度與計畫詳見 [spec/plan.md](spec/plan.md)。
 
-設計風格與架構細節**待定**，各風格頁面獨立設計、互不干擾。
+**重要規則**：每當完成計畫中的項目，或計畫有任何變更（新增、移除、調整優先順序），都必須**立即更新** `spec/plan.md`，確保該文件始終反映最新狀態。
