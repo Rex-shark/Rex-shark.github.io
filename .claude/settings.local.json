@@ -1,36 +1,20 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python .claude/skills/ui-ux-pro-max/scripts/search.py \"personal portfolio developer hand-drawn ghibli watercolor sketch fresh\" --design-system -p \"Rex Portfolio Ghibli\" -f markdown)",
-      "Bash(python -c \"import sys; content = sys.stdin.buffer.read\\(\\); print\\(content.decode\\(''''utf-8'''', errors=''''replace''''\\)\\)\")",
-      "Bash(PYTHONIOENCODING=utf-8 python .claude/skills/ui-ux-pro-max/scripts/search.py \"personal portfolio developer hand-drawn ghibli watercolor sketch fresh\" --design-system -p \"Rex Portfolio Ghibli\" -f markdown)",
       "Bash(gh api:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:api.github.com)",
-      "Bash(curl -s \"https://api.github.com/repos/anthropics/skills/contents/skills/skill-creator/SKILL.md\")",
-      "Bash(mkdir -p ~/.claude/skills)",
-      "Bash(curl -s \"https://raw.githubusercontent.com/anthropics/skills/main/skills/skill-creator/SKILL.md\" -o ~/.claude/skills/skill-creator.md)",
-      "Bash(echo $HOME)",
       "Bash(npm install:*)",
       "Bash(npm run:*)",
-      "Bash(npx shadcn@latest init -d)",
+      "Bash(npm list:*)",
       "Bash(npm -v)",
       "Bash(npm audit:*)",
+      "Bash(npx shadcn@latest init -d)",
       "Bash(npx ui-skills:*)",
-      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \"personal portfolio developer engineer professional minimal\" --design-system -p \"Rex Portfolio - Minimal Business\" -f markdown)",
-      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \"personal portfolio creative hand-drawn sketch playful illustration\" --design-system -p \"Rex Portfolio - Hand Drawn\" -f markdown)",
-      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \"hand-drawn sketch illustration warm cozy indie\" --domain style -n 3)",
-      "Bash(npm list:*)",
-      "Bash(node -e \"const l = require\\(''lucide-react''\\); console.log\\(Object.keys\\(l\\).filter\\(k => k.toLowerCase\\(\\).includes\\(''git''\\)\\)\\)\")",
-      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \"neon dark futuristic glitch portfolio personal\" --design-system -p \"Rex Portfolio - 賽博龐克\" -f markdown)",
-      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \"neon dark futuristic glitch cyberpunk\" --domain style -n 3)",
+      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py:*)",
       "Bash(git status:*)",
       "Bash(git worktree:*)",
-      "Bash(git branch:*)",
-      "Write(*)",
-      "Edit(*)",
-      "Bash(cd /Users/rex/IdeaProjects/Rex-shark.github.io && npm run build)",
-      "Bash(cd /Users/rex/IdeaProjects/Rex-shark.github.io && python3 .claude/skills/ui-ux-pro-max/scripts/search.py:*)"
+      "Bash(git branch:*)"
     ]
   }
 }
