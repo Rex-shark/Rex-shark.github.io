@@ -436,6 +436,65 @@ function ClaymorphismPreview() {
   )
 }
 
+/* 微互動預覽 */
+function MicroInteractionsPreview() {
+  return (
+    <div className="w-full h-full bg-[#F8F9FF] flex flex-col items-center justify-center gap-3 px-6">
+      {/* 模擬 Ripple 按鈕 */}
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-10 h-10 rounded-2xl bg-indigo-100 flex items-center justify-center">
+          <div className="w-5 h-5 rounded-full bg-indigo-500" />
+        </div>
+        <div className="w-24 h-2.5 rounded-full bg-slate-800" />
+        <div className="w-16 h-1.5 rounded-full bg-slate-400/40" />
+        <div className="flex gap-2 mt-1">
+          <div className="relative overflow-hidden w-16 h-6 rounded-xl bg-indigo-600 flex items-center justify-center">
+            <div className="absolute inset-0 rounded-full bg-white/20 scale-0" style={{ transformOrigin: 'center' }} />
+          </div>
+          <div className="w-16 h-6 rounded-xl border-2 border-indigo-600" />
+        </div>
+      </div>
+      {/* 彈跳 Tag 群 */}
+      <div className="flex gap-1.5 flex-wrap justify-center">
+        {['Java', 'React', 'TS'].map((t) => (
+          <span key={t} className="text-xs px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-600 border border-indigo-200">
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/* 便當盒網格預覽 */
+function BentoGridPreview() {
+  return (
+    <div className="w-full h-full bg-[#0F0F11] p-3 grid grid-cols-3 grid-rows-3 gap-1.5">
+      {/* 照片格 1×2 */}
+      <div className="col-span-1 row-span-2 rounded-xl border border-white/10 bg-[#1A1A1E] flex items-center justify-center">
+        <div className="w-8 h-8 rounded-lg bg-white/10" />
+      </div>
+      {/* 名字大格 2×1 */}
+      <div className="col-span-2 rounded-xl border border-indigo-500/30 flex items-center px-3" style={{ background: 'linear-gradient(135deg, #1E1B4B, #312E81)' }}>
+        <div className="w-14 h-3 rounded-full bg-white/60" />
+      </div>
+      {/* 簡介格 1×1 + Email 格 1×1 */}
+      <div className="col-span-1 rounded-xl bg-[#1A1A1E] border border-white/10" />
+      <div className="col-span-1 rounded-xl bg-[#1A1A1E] border border-white/10 flex items-center justify-center">
+        <div className="w-3 h-3 rounded-full bg-indigo-400/50" />
+      </div>
+      {/* 底部技能格 3個 */}
+      {['#F97316', '#22C55E', '#38BDF8'].map((c) => (
+        <div key={c} className="rounded-xl border border-white/5" style={{ background: `${c}12` }}>
+          <div className="w-full h-full flex items-center justify-center">
+            <div className="w-2 h-2 rounded-full" style={{ background: c }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 const styles = [
   {
     title: '簡約商務',
@@ -556,6 +615,26 @@ const styles = [
     bgColor: '#F5F0FF',
     textColor: '#1F2937',
     preview: <ClaymorphismPreview />,
+  },
+  {
+    title: '微互動',
+    subtitle: 'Micro-interactions',
+    description: '精心設計的動態回饋：Ripple 按鈕、3D Tilt 卡片、彈跳技能標籤，讓每個互動都有溫度。',
+    to: '/styles/micro-interactions',
+    accentColor: '#6366F1',
+    bgColor: '#F8F9FF',
+    textColor: '#1E293B',
+    preview: <MicroInteractionsPreview />,
+  },
+  {
+    title: '便當盒網格',
+    subtitle: 'Bento Grid',
+    description: '非對稱 Bento 格局設計，不同比例卡片組成的視覺節奏，呼應 Apple WWDC 簡報美學。',
+    to: '/styles/bento-grid',
+    accentColor: '#38BDF8',
+    bgColor: '#0F0F11',
+    textColor: '#FFFFFF',
+    preview: <BentoGridPreview />,
   },
 ]
 

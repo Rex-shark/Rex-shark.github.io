@@ -12,6 +12,8 @@ import PixelArt from '@/pages/styles/PixelArt'
 import SoftUi from '@/pages/styles/SoftUi'
 import Glassmorphism from '@/pages/styles/Glassmorphism'
 import Claymorphism from '@/pages/styles/Claymorphism'
+import MicroInteractions from '@/pages/styles/MicroInteractions'
+import BentoGrid from '@/pages/styles/BentoGrid'
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path="/styles/soft-ui" element={<SoftUi />} />
         <Route path="/styles/glassmorphism" element={<Glassmorphism />} />
         <Route path="/styles/claymorphism" element={<Claymorphism />} />
+        <Route path="/styles/micro-interactions" element={<MicroInteractions />} />
+        <Route path="/styles/bento-grid" element={<BentoGrid />} />
       </Routes>
     </HashRouter>
   )
