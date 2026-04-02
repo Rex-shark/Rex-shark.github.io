@@ -495,6 +495,35 @@ function BentoGridPreview() {
   )
 }
 
+/* 空間UI預覽 */
+function SpatialUiPreview() {
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center gap-3 relative overflow-hidden"
+      style={{ background: '#050508' }}>
+      {/* 星點 */}
+      {[...Array(20)].map((_, i) => (
+        <div key={i} className="absolute w-0.5 h-0.5 rounded-full bg-white/60"
+          style={{ top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`, opacity: 0.4 + Math.random() * 0.6 }} />
+      ))}
+      {/* 頭像光暈 */}
+      <div className="relative">
+        <div className="absolute inset-0 rounded-full blur-xl" style={{ background: 'rgba(76,201,240,0.4)', transform: 'scale(1.5)' }} />
+        <div className="relative w-10 h-10 rounded-full border border-white/20"
+          style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)' }} />
+      </div>
+      {/* 玻璃卡片們 */}
+      <div className="flex gap-1.5">
+        {['#4CC9F0', '#FFD60A', '#BF5AF2'].map((c) => (
+          <div key={c} className="w-10 h-6 rounded-xl border"
+            style={{ background: 'rgba(255,255,255,0.06)', borderColor: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(20px)', boxShadow: `0 0 12px ${c}30` }} />
+        ))}
+      </div>
+      {/* 文字列 */}
+      <div className="w-20 h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.2)' }} />
+    </div>
+  )
+}
+
 const styles = [
   {
     title: '簡約商務',
@@ -635,6 +664,16 @@ const styles = [
     bgColor: '#0F0F11',
     textColor: '#FFFFFF',
     preview: <BentoGridPreview />,
+  },
+  {
+    title: '空間 UI',
+    subtitle: 'Spatial UI — visionOS',
+    description: 'Apple visionOS 空間計算介面，深邃太空黑背景搭配玻璃態懸浮面板與冰藍光暈，極致沉浸感。',
+    to: '/styles/spatial-ui',
+    accentColor: '#4CC9F0',
+    bgColor: '#050508',
+    textColor: '#F5F5F7',
+    preview: <SpatialUiPreview />,
   },
 ]
 

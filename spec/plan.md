@@ -26,6 +26,7 @@
 /#/styles/soft-ui              → 柔和UI進化版
 /#/styles/glassmorphism        → 玻璃態
 /#/styles/claymorphism         → 黏土態
+/#/styles/spatial-ui           → 空間UI（visionOS）
 ```
 
 ### 目錄結構
@@ -84,6 +85,7 @@ src/
 | 12 | 黏土態 | `/styles/claymorphism` | 充氣膨脹感、inset 陰影高光、Fredoka One 圓潤字型 | ✅ 完成 |
 | 13 | 微互動 | `/styles/micro-interactions` | Ripple 按鈕、3D Tilt 卡片、彈跳 Tag、底線滑入導覽 | ✅ 完成 |
 | 14 | 便當盒網格 | `/styles/bento-grid` | 非對稱 CSS Grid、深色底多彩卡片、Apple WWDC 風格 | ✅ 完成 |
+| 15 | 空間 UI | `/styles/spatial-ui` | visionOS 玻璃態懸浮面板、星點背景、冰藍光暈、3D Tilt 卡片 | ✅ 完成 |
 
 ---
 
@@ -111,7 +113,7 @@ src/
 
 ## 待辦事項
 
-- [ ] 從 7 種風格中選定最終設計方向
+- [ ] 從 N 種風格中選定最終設計方向
 - [ ] 將選定的風格頁面升級為正式首頁
 - [ ] 加入暗色模式切換功能
 - [ ] SEO 優化（meta tags、Open Graph）
