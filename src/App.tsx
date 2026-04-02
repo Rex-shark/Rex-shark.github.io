@@ -14,6 +14,8 @@ import Glassmorphism from '@/pages/styles/Glassmorphism'
 import Claymorphism from '@/pages/styles/Claymorphism'
 import MicroInteractions from '@/pages/styles/MicroInteractions'
 import BentoGrid from '@/pages/styles/BentoGrid'
+import AntiPolish from '@/pages/styles/AntiPolish'
+import SpatialUi from '@/pages/styles/SpatialUi'
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
         <Route path="/styles/claymorphism" element={<Claymorphism />} />
         <Route path="/styles/micro-interactions" element={<MicroInteractions />} />
         <Route path="/styles/bento-grid" element={<BentoGrid />} />
+        <Route path="/styles/anti-polish" element={<AntiPolish />} />
+        <Route path="/styles/spatial-ui" element={<SpatialUi />} />
       </Routes>
     </HashRouter>
   )
