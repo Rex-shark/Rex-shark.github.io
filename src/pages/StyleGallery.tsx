@@ -436,6 +436,38 @@ function ClaymorphismPreview() {
   )
 }
 
+/* 反精緻美學預覽 */
+function AntiPolishPreview() {
+  return (
+    <div className="w-full h-full relative overflow-hidden" style={{ background: '#0D0D0D' }}>
+      {/* 格線紋理 */}
+      <div className="absolute inset-0 opacity-10" style={{
+        backgroundImage: 'linear-gradient(rgba(245,245,0,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(245,245,0,0.3) 1px, transparent 1px)',
+        backgroundSize: '16px 16px',
+      }} />
+      {/* 大背景字 */}
+      <div className="absolute top-2 left-2 text-5xl font-black leading-none select-none" style={{ color: 'transparent', WebkitTextStroke: '1px rgba(245,245,0,0.2)', fontFamily: 'Arial Black, sans-serif' }}>
+        RAW
+      </div>
+      {/* 主內容 */}
+      <div className="absolute inset-0 flex flex-col items-start justify-center gap-2 p-4">
+        <div className="px-2 py-0.5 text-xs font-bold" style={{ background: '#F5F500', color: '#0D0D0D', fontFamily: 'monospace', transform: 'rotate(-1deg)' }}>
+          REX
+        </div>
+        <div className="w-20 h-2.5" style={{ background: '#F0F0F0' }} />
+        <div className="w-14 h-1.5 mt-0.5" style={{ background: '#FF2200' }} />
+        {/* 旋轉卡片堆疊 */}
+        <div className="flex gap-2 mt-2">
+          <div className="w-12 h-7 border-2 border-[#F5F500]" style={{ transform: 'rotate(-2deg)' }} />
+          <div className="w-12 h-7" style={{ background: '#FF2200', transform: 'rotate(1.5deg)' }} />
+        </div>
+      </div>
+      {/* 螢光黃底部條 */}
+      <div className="absolute bottom-0 left-0 right-0 h-1.5" style={{ background: '#F5F500' }} />
+    </div>
+  )
+}
+
 /* 微互動預覽 */
 function MicroInteractionsPreview() {
   return (
@@ -674,6 +706,16 @@ const styles = [
     bgColor: '#050508',
     textColor: '#F5F5F7',
     preview: <SpatialUiPreview />,
+  },
+  {
+    title: '反精緻美學',
+    subtitle: 'Anti-Polish',
+    description: '刻意打破規則的粗礦美學，噪點、划痕與螢光撞色，拒絕一切完美主義。',
+    to: '/styles/anti-polish',
+    accentColor: '#F5F500',
+    bgColor: '#0D0D0D',
+    textColor: '#F0F0F0',
+    preview: <AntiPolishPreview />,
   },
 ]
 
