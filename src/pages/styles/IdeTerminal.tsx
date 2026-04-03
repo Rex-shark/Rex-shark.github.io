@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, ChevronDown, ChevronRight, FileJson, FileCode2, FileText, Blocks, TerminalSquare, X } from 'lucide-react'
+import { ArrowLeft, ChevronDown, FileJson, FileCode2, FileText, Blocks, X } from 'lucide-react'
 
 // 定義假檔案的結構
 type FileType = 'java' | 'json' | 'md'
@@ -15,7 +15,7 @@ interface CodeFile {
 }
 
 export default function IdeTerminal() {
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen] = useState(true)
   const [activeFileId, setActiveFileId] = useState<string>('about.java')
   const [openFiles, setOpenFiles] = useState<string[]>(['about.java', 'skills.json', 'projects.md'])
 
