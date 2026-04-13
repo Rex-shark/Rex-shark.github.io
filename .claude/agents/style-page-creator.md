@@ -4,6 +4,7 @@ description: 建立新風格首頁（設計系統搜尋 → 實作頁面 → 建
 model: sonnet
 tools: Read, Write, Edit, Bash, Glob, Grep
 permissionMode: bypassPermissions
+color: yellow
 ---
 
 # 風格頁面建立 Agent

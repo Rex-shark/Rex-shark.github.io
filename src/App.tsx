@@ -1,4 +1,13 @@
-import { HashRouter, Routes, Route } from 'react-router'
+import { useEffect } from 'react'
+import { HashRouter, Routes, Route, useLocation } from 'react-router'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
 import StyleGallery from '@/pages/StyleGallery'
 import MinimalBusiness from '@/pages/styles/MinimalBusiness'
 import HandDrawn from '@/pages/styles/HandDrawn'
@@ -17,10 +26,12 @@ import BentoGrid from '@/pages/styles/BentoGrid'
 import AntiPolish from '@/pages/styles/AntiPolish'
 import SpatialUi from '@/pages/styles/SpatialUi'
 import IdeTerminal from '@/pages/styles/IdeTerminal'
+import AccessibleEthical from '@/pages/styles/AccessibleEthical'
 
 function App() {
   return (
     <HashRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<StyleGallery />} />
         <Route path="/styles/minimal-business" element={<MinimalBusiness />} />
@@ -40,6 +51,7 @@ function App() {
         <Route path="/styles/anti-polish" element={<AntiPolish />} />
         <Route path="/styles/spatial-ui" element={<SpatialUi />} />
         <Route path="/styles/ide-terminal" element={<IdeTerminal />} />
+        <Route path="/styles/accessible-ethical" element={<AccessibleEthical />} />
       </Routes>
     </HashRouter>
   )

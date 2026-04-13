@@ -593,6 +593,44 @@ function IdeTerminalPreview() {
   )
 }
 
+function AccessibleEthicalPreview() {
+  return (
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: '#F8FAFF' }}>
+      {/* Skip link 示意 */}
+      <div className="h-2 w-full bg-white border-b border-[#E2E8F0] flex items-center px-2">
+        <div className="w-8 h-0.5 bg-[#1A56DB] rounded-full" />
+        <div className="ml-auto flex gap-1">
+          <div className="w-4 h-0.5 bg-[#0A0A0A] rounded-full" />
+          <div className="w-4 h-0.5 bg-[#0A0A0A] rounded-full" />
+        </div>
+      </div>
+      {/* 主要內容 */}
+      <div className="flex-1 flex flex-col items-center justify-center gap-2 p-3">
+        {/* WCAG 圖示卡片 */}
+        <div className="grid grid-cols-2 gap-1.5 w-full max-w-[90%]">
+          {['#1A56DB', '#059669', '#D97706', '#7C3AED'].map((color, i) => (
+            <div key={i} className="rounded-md bg-white p-1.5 flex flex-col items-center gap-0.5" style={{ border: `1.5px solid ${color}`, boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
+              <div className="w-3 h-3 rounded-full" style={{ background: color, opacity: 0.15 }} />
+              <div className="w-6 h-0.5 rounded-full" style={{ background: color }} />
+            </div>
+          ))}
+        </div>
+        {/* 合規標章 */}
+        <div className="flex gap-1 mt-1">
+          <div className="px-1.5 py-0.5 rounded-full bg-[#059669] flex items-center gap-0.5">
+            <div className="w-1 h-1 rounded-full bg-white" />
+            <div className="w-4 h-0.5 bg-white rounded-full" />
+          </div>
+          <div className="px-1.5 py-0.5 rounded-full bg-[#1A56DB] flex items-center gap-0.5">
+            <div className="w-1 h-1 rounded-full bg-white" />
+            <div className="w-4 h-0.5 bg-white rounded-full" />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const styles = [
   {
     title: '簡約商務',
@@ -763,6 +801,16 @@ const styles = [
     bgColor: '#1E1E1E',
     textColor: '#CCCCCC',
     preview: <IdeTerminalPreview />,
+  },
+  {
+    title: '無障礙倫理設計',
+    subtitle: 'Accessible & Ethical',
+    description: 'WCAG AAA 高對比配色、完整 focus 狀態、語義化 HTML，展現無障礙設計的美學可能。',
+    to: '/styles/accessible-ethical',
+    accentColor: '#1A56DB',
+    bgColor: '#F8FAFF',
+    textColor: '#0A0A0A',
+    preview: <AccessibleEthicalPreview />,
   },
 ]
 
