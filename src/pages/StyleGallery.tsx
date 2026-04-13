@@ -556,6 +556,43 @@ function SpatialUiPreview() {
   )
 }
 
+/* IDE / 終端機預覽 */
+function IdeTerminalPreview() {
+  return (
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: '#1E1E1E' }}>
+      {/* 頂部 Header */}
+      <div className="h-3 w-full bg-[#323233] flex items-center px-1.5 gap-1 border-b border-[#1E1E1E]">
+        <div className="w-1 h-1 rounded-full bg-[#FF5F56]" />
+        <div className="w-1 h-1 rounded-full bg-[#FFBD2E]" />
+        <div className="w-1 h-1 rounded-full bg-[#27C93F]" />
+      </div>
+      <div className="flex flex-1">
+        {/* 左側邊欄 */}
+        <div className="w-1/4 h-full bg-[#252526] border-r border-[#1E1E1E] flex flex-col gap-1 p-1">
+          <div className="w-6 h-0.5 bg-[#555] rounded-full mb-0.5" />
+          <div className="flex items-center gap-1 opacity-60"><div className="w-1.5 h-1.5 bg-[#569cd6]" /><div className="w-8 h-0.5 bg-[#CCC] rounded-full" /></div>
+          <div className="flex items-center gap-1 bg-[#37373D] rounded"><div className="w-1.5 h-1.5 bg-[#dcdcaa]" /><div className="w-10 h-0.5 bg-[#FFF] rounded-full" /></div>
+          <div className="flex items-center gap-1 opacity-60"><div className="w-1.5 h-1.5 bg-[#ce9178]" /><div className="w-12 h-0.5 bg-[#CCC] rounded-full" /></div>
+        </div>
+        {/* 右側編輯區 */}
+        <div className="flex-1 flex flex-col">
+          <div className="h-3 bg-[#252526] flex items-center">
+            <div className="h-full px-2 bg-[#1E1E1E] border-t border-[#007ACC] flex items-center justify-center">
+              <div className="w-6 h-0.5 bg-[#FFF] rounded-full" />
+            </div>
+          </div>
+          <div className="flex-1 p-2 flex flex-col gap-1.5">
+            <div className="w-12 h-0.5 bg-[#6A9955] rounded-full" />
+            <div className="w-20 h-0.5 bg-[#569CD6] rounded-full" />
+            <div className="w-16 h-0.5 bg-[#CE9178] rounded-full ml-1.5" />
+            <div className="w-10 h-0.5 bg-[#DCDCAA] rounded-full ml-1.5" />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const styles = [
   {
     title: '簡約商務',
@@ -716,6 +753,16 @@ const styles = [
     bgColor: '#0D0D0D',
     textColor: '#F0F0F0',
     preview: <AntiPolishPreview />,
+  },
+  {
+    title: 'IDE / 終端機',
+    subtitle: 'VS Code Style',
+    description: '仿造現代化編輯器 IDE 介面。左側檔案總管搭配右方語法高亮，完美展現技術人特質。',
+    to: '/styles/ide-terminal',
+    accentColor: '#007ACC',
+    bgColor: '#1E1E1E',
+    textColor: '#CCCCCC',
+    preview: <IdeTerminalPreview />,
   },
 ]
 
