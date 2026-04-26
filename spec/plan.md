@@ -30,6 +30,7 @@
 /#/styles/anti-polish          → 反精緻美學
 /#/styles/ide-terminal         → IDE / 終端機
 /#/styles/accessible-ethical   → 無障礙倫理設計
+/#/styles/github-profile       → GitHub 開發者檔案
 ```
 
 ### 目錄結構
@@ -92,6 +93,7 @@ src/
 | 16 | 反精緻美學 | `/styles/anti-polish` | Brutalist 粗礦、噪點划痕、螢光黃撞血紅、Anton 字型 | ✅ 完成 |
 | 17 | IDE / 終端機 | `/styles/ide-terminal` | VS Code 編輯器介面、語法高亮、檔案總管側欄 | ✅ 完成 |
 | 18 | 無障礙倫理設計 | `/styles/accessible-ethical` | WCAG AAA 高對比、Atkinson Hyperlegible 字型、完整 focus 狀態、skip-to-content | ✅ 完成 |
+| 19 | GitHub 開發者檔案 | `/styles/github-profile` | GitHub Primer Dark、貢獻熱力圖、Pinned Repos 卡片、語言統計條、shields.io badge | ✅ 完成 |
 
 ---
 

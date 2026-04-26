@@ -593,6 +593,53 @@ function IdeTerminalPreview() {
   )
 }
 
+function GithubProfilePreview() {
+  const contributionLevels = [0, 0, 1, 2, 3, 4, 2, 1, 0, 3, 4, 3, 1, 0, 2, 3, 4, 2, 1, 3, 0, 2, 4, 3, 1, 0, 2, 1, 3, 4, 2, 0, 1, 3, 2, 4, 1, 0, 2, 3, 1, 4, 2, 0, 3, 1, 2, 4, 0, 1, 3, 2, 1, 4, 0, 2]
+  const colors = ['#161B22', '#0E4429', '#006D32', '#26A641', '#39D353']
+  return (
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: '#0D1117' }}>
+      {/* Header */}
+      <div className="h-3 w-full flex items-center px-2 gap-1.5" style={{ background: '#161B22', borderBottom: '1px solid #30363D' }}>
+        <div className="w-2 h-2 rounded-full" style={{ background: '#3FB950' }} />
+        <div className="w-8 h-0.5 rounded-full" style={{ background: '#8B949E' }} />
+      </div>
+      {/* Content */}
+      <div className="flex-1 flex gap-1.5 p-2">
+        {/* Left: avatar */}
+        <div className="flex flex-col items-center gap-1">
+          <div className="w-8 h-8 rounded-full overflow-hidden" style={{ border: '1px solid #30363D' }}>
+            <img src="/me.png" alt="" className="w-full h-full object-cover" />
+          </div>
+          <div className="w-6 h-0.5 rounded-full" style={{ background: '#E6EDF3' }} />
+          <div className="w-8 h-0.5 rounded-full" style={{ background: '#8B949E' }} />
+          <div className="w-10 h-1.5 rounded-sm" style={{ background: '#238636' }} />
+        </div>
+        {/* Right: content */}
+        <div className="flex-1 flex flex-col gap-1.5">
+          {/* Pinned repos */}
+          <div className="grid grid-cols-2 gap-1">
+            {[['#58A6FF', '#3572A5'], ['#58A6FF', '#B07219'], ['#58A6FF', '#083FA1']].map(([link, lang], i) => (
+              <div key={i} className="rounded p-1" style={{ background: '#161B22', border: '1px solid #30363D' }}>
+                <div className="w-8 h-0.5 rounded-full mb-0.5" style={{ background: link }} />
+                <div className="flex items-center gap-0.5 mt-1">
+                  <div className="w-1.5 h-1.5 rounded-full" style={{ background: lang }} />
+                  <div className="w-4 h-0.5 rounded-full" style={{ background: '#8B949E' }} />
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Contribution graph */}
+          <div className="flex flex-wrap gap-px mt-auto">
+            {contributionLevels.map((level, i) => (
+              <div key={i} className="w-1 h-1 rounded-sm" style={{ background: colors[level] }} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function AccessibleEthicalPreview() {
   return (
     <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: '#F8FAFF' }}>
@@ -811,6 +858,16 @@ const styles = [
     bgColor: '#F8FAFF',
     textColor: '#0A0A0A',
     preview: <AccessibleEthicalPreview />,
+  },
+  {
+    title: 'GitHub 開發者檔案',
+    subtitle: 'GitHub Primer Dark',
+    description: '模仿 GitHub Primer Design System，貢獻熱力圖、Pinned Repos 卡片、語言統計條，完整的開發者個人頁面。',
+    to: '/styles/github-profile',
+    accentColor: '#3FB950',
+    bgColor: '#0D1117',
+    textColor: '#E6EDF3',
+    preview: <GithubProfilePreview />,
   },
 ]
 

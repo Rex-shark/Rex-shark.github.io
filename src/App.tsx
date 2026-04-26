@@ -27,6 +27,7 @@ import AntiPolish from '@/pages/styles/AntiPolish'
 import SpatialUi from '@/pages/styles/SpatialUi'
 import IdeTerminal from '@/pages/styles/IdeTerminal'
 import AccessibleEthical from '@/pages/styles/AccessibleEthical'
+import GithubProfile from '@/pages/styles/GithubProfile'
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
         <Route path="/styles/spatial-ui" element={<SpatialUi />} />
         <Route path="/styles/ide-terminal" element={<IdeTerminal />} />
         <Route path="/styles/accessible-ethical" element={<AccessibleEthical />} />
+        <Route path="/styles/github-profile" element={<GithubProfile />} />
       </Routes>
     </HashRouter>
   )

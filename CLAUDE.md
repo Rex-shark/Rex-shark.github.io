@@ -6,7 +6,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 語言規則
 
-我這ㄍ
 所有回應、說明與程式碼註解一律使用**繁體中文（台灣用語）**。
 
 ## 專案概述
