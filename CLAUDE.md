@@ -107,3 +107,47 @@ push 至 `main` 分支後，`.github/workflows/deploy.yml` 會自動觸發：
 
 目前資料檔：
 - [spec/projects/threads-bot.md](spec/projects/threads-bot.md) — ThreadsBot（本地 LLM 自動發文）
+
+## 好文分享資料來源
+
+**Finalist 頁面「好文分享」區塊**（外部好文、影片、開源專案的策展清單）的資料來源為 [spec/article/data.md](spec/article/data.md)。新增或調整文章時，需同步更新 `src/pages/styles/Finalist.tsx` 中的 `articles` 陣列。
+
+**data.md 格式**（每筆以空白行分隔）：
+
+```
+# url
+* https://...
+# title
+* 文章標題
+# tags
+* tag1 tag2 tag3        # 空白分隔，多 tag
+# date
+* 2026-04               # 統一到月（YYYY-MM），不到日
+```
+
+**Tag 正規化規則**（寫入 `articles` 時必須套用）：
+
+| 原始（data.md） | 正規化後 |
+|---|---|
+| `ai` | `AI` |
+| `agent` | `Agent` |
+| `skills` | `Skills` |
+| `github` / `gitHub` | `GitHub` |
+| `uiux` | `UIUX` |
+| `ai生圖` | `AI 生圖` |
+| `筆記` | `筆記` |
+| `java` | `Java` |
+
+**Tag 解析規則**：data.md 中 `# tags` 下的字串以**空白拆分**，例如 `AI Agent skills github` → `['AI', 'Agent', 'Skills', 'GitHub']`（4 個 tag）。**不要**把 `AI Agent` 視為單一 tag。
+
+**新 tag 處理**：若 data.md 出現上表沒有的新 tag，需同時：
+1. 加入 `Finalist.tsx` 的 `TAG_COLOR` 對照表並指派顏色
+2. 在 CLAUDE.md 此處的對照表補上一列
+
+**來源類型偵測（自動）**：URL 含 `youtube.com`/`youtu.be` → 影片、含 `github.com` → 倉庫、其他 → 文章。不需在 data.md 標註。
+
+**閱讀時間**：不顯示（混合影片 / 倉庫 / 文章，無法統一計算）。
+
+**規則**：
+- 不得編造日期：data.md 沒提供 date 就保留 `（待補）`，不要憑空填值
+- 不得編造摘要：頁面只顯示標題 + tag + 來源網域，不要為了視覺加假摘要

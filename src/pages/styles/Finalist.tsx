@@ -14,9 +14,9 @@ import {
   Download,
   ArrowRight,
   Calendar,
-  Clock,
   BookOpen,
-  ChevronRight,
+  Play,
+  FileText,
 } from 'lucide-react'
 
 /* ─── GitHub Icon ─── */
@@ -224,71 +224,136 @@ const projects: Project[] = [
   },
 ]
 
-interface Article {
-  category: string
-  categoryColor: string
-  date: string
-  readTime: string
-  title: string
-  summary: string
+/* ─── 好文分享：tag 配色與來源類型偵測 ─── */
+const TAG_COLOR: Record<string, string> = {
+  AI: '#6366F1',
+  Agent: '#8B5CF6',
+  Skills: '#10B981',
+  GitHub: '#475569',
+  UIUX: '#EC4899',
+  'AI 生圖': '#F43F5E',
+  '筆記': '#F59E0B',
+  Java: '#EA580C',
 }
 
+function getSourceType(url: string): 'video' | 'repo' | 'article' {
+  if (url.includes('youtube.com') || url.includes('youtu.be')) return 'video'
+  if (url.includes('github.com')) return 'repo'
+  return 'article'
+}
+
+function getDomain(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return ''
+  }
+}
+
+interface Article {
+  title: string
+  url: string
+  tags: string[]
+  date: string
+}
+
+/* 來源：spec/article/data.md（不要直接編輯這個陣列，改 data.md 後同步） */
 const articles: Article[] = [
   {
-    category: '技術分享',
-    categoryColor: '#3B82F6',
-    date: '2025-04-22',
-    readTime: '10 min read',
-    title: 'Spring Boot 3 整合 JWT 認證：從零到生產的完整實作',
-    summary: '手把手實作 JWT 簽發、刷新與黑名單機制，並比較 Spring Security 6 的設計變化。',
+    title: 'mattpocock-skills：真實工程師常用技能庫，github 超火開源 AI 程式設計技能組合',
+    url: 'https://www.youtube.com/watch?v=2nwnpyX90NY',
+    tags: ['AI', 'Skills', 'GitHub'],
+    date: '2026-04',
   },
   {
-    category: '系統分析',
-    categoryColor: '#8B5CF6',
-    date: '2025-04-08',
-    readTime: '15 min read',
-    title: '從需求訪談到資料模型：一次完整的系統分析流程',
-    summary: '以一個真實的進銷存系統為例，記錄訪談、用例圖、ERD 到資料字典的完整推導過程。',
+    title: 'Claude Code 之父 Boris Cherny 親授：8 個你沒在用的進階技巧',
+    url: 'https://www.techhanlin.tw/claude-code-tips-boris-cherny-advanced-techniques/',
+    tags: ['AI'],
+    date: '2026-04',
   },
   {
-    category: '工作心得',
-    categoryColor: '#EC4899',
-    date: '2025-03-25',
-    readTime: '6 min read',
-    title: '工程師如何寫好系統分析文件：給後端開發者的實用指南',
-    summary: '好的 SA 文件能省下 70% 的重工，分享四個關鍵章節與常見錯誤。',
+    title: '就算沒有設計師，你的專案也能長得像蘋果！AI 時代必備的 UI 魔法書',
+    url: 'https://github.com/VoltAgent/awesome-design-md',
+    tags: ['AI', 'UIUX', 'Skills', 'GitHub'],
+    date: '2026-04',
   },
   {
-    category: '學習筆記',
-    categoryColor: '#10B981',
-    date: '2025-03-12',
-    readTime: '8 min read',
-    title: 'React 19 Compiler 試用心得：自動 memo 化的真實效益',
-    summary: '實測 React 19 編譯器在中型專案的效能提升與限制，附 before/after 比較。',
+    title: '設計風格視覺網站',
+    url: 'https://getdesign.md/',
+    tags: ['UIUX'],
+    date: '2026-04',
   },
   {
-    category: '技術分享',
-    categoryColor: '#3B82F6',
-    date: '2025-02-28',
-    readTime: '12 min read',
-    title: 'Tailwind CSS v4 + Vite 8 升級實戰：踩坑與最佳實踐',
-    summary: '升級過程中遇到的設定變化、CSS 變數新寫法、以及效能改善的具體數據。',
+    title: 'RAG 技術深度解析與商業化落地指南！從原理到工程實戰！',
+    url: 'https://www.youtube.com/watch?v=orGQR7sNpSk',
+    tags: ['AI'],
+    date: '2026-04',
   },
   {
-    category: '系統分析',
-    categoryColor: '#8B5CF6',
-    date: '2025-02-14',
-    readTime: '11 min read',
-    title: 'ERD 設計實戰：從多對多關聯到第三正規化的決策過程',
-    summary: '透過電商訂單系統範例，說明何時該拆關聯表、何時該反正規化，以及索引策略的取捨。',
+    title: '200 份文件 10 秒變 Markdown？微軟開源 MarkItDown 從安裝到接進 AI Agent',
+    url: 'https://www.youtube.com/watch?v=J3BLAA_cAiY',
+    tags: ['AI', '筆記', 'Skills', 'GitHub'],
+    date: '2026-04',
   },
   {
-    category: '工作心得',
-    categoryColor: '#EC4899',
-    date: '2025-01-30',
-    readTime: '7 min read',
-    title: '從工程師到系統分析師：兩年轉型路上的五個體悟',
-    summary: '記錄從寫程式到帶需求的角色轉換，分享那些前端工程師職涯沒人告訴你的軟實力修練。',
+    title: 'Z-Image Turbo 本地安裝指南：文生圖 AI 模型',
+    url: 'https://www.freedidi.com/22006.html',
+    tags: ['AI', 'AI 生圖'],
+    date: '2026-04',
+  },
+  {
+    title: 'Obsidian 必裝插件｜新手第一週就該知道的 8 個神器',
+    url: 'https://www.youtube.com/watch?v=VthfkQFQJJg',
+    tags: ['筆記'],
+    date: '2026-04',
+  },
+  {
+    title: '矽谷頂尖 AI 大佬如何搭建個人 AI 知識庫？從 0 開始用 Claude Code + Obsidian 搭建 Karpathy 的 LLM Wiki 知識庫',
+    url: 'https://www.youtube.com/watch?v=CTyx5XF2KVA',
+    tags: ['AI', '筆記', 'Skills', 'GitHub'],
+    date: '2026-04',
+  },
+  {
+    title: '最近爆火的 Harness Engineering',
+    url: 'https://www.youtube.com/watch?v=3DlXq9nsQOE',
+    tags: ['AI', 'Agent'],
+    date: '2026-04',
+  },
+  {
+    title: 'ComfyUI 是什麼？快速認識新一代圖像生成工具',
+    url: 'https://www.leadadds.com/zh/learning-centre/what-is-comfyui/',
+    tags: ['AI', 'AI 生圖'],
+    date: '2026-04',
+  },
+  {
+    title: '這套數萬星的開源配置讓 AI 瞬間變身資深工程師！',
+    url: 'https://github.com/affaan-m/everything-claude-code',
+    tags: ['AI', 'Skills', 'GitHub'],
+    date: '2026-04',
+  },
+  {
+    title: '從 Prompt 到 Harness：Agent 生產化三層演化鏈',
+    url: 'https://www.youtube.com/watch?v=Mr78CQpNmsg',
+    tags: ['AI', 'Agent'],
+    date: '2026-04',
+  },
+  {
+    title: 'Camiol 用 JAVA + Heroku CLI 建立自己的 Line Robot',
+    url: 'https://hackmd.io/@camiol/rkkacf-j5',
+    tags: ['Java'],
+    date: '2026-04',
+  },
+  {
+    title: '你的數位足跡安全嗎？用這款萬星 GitHub 工具，一鍵搜出你註冊過的 3000 個網站！',
+    url: 'https://www.facebook.com/groups/datasci.tw/permalink/26677549721895732/',
+    tags: ['GitHub'],
+    date: '2026-04',
+  },
+  {
+    title: '用 Superpowers 幫你的 Coding Agent 建立標準 SOP！',
+    url: 'https://github.com/obra/superpowers',
+    tags: ['AI', 'Agent', 'Skills', 'GitHub'],
+    date: '2026-04',
   },
 ]
 
@@ -330,40 +395,39 @@ const itemVariants: Variants = {
 }
 
 /* ─── 文章列表項目 ─── */
+function SourceTypeIcon({ type }: { type: 'video' | 'repo' | 'article' }) {
+  if (type === 'video') return <Play size={14} className="text-rose-500 fill-rose-500" />
+  if (type === 'repo') return <GithubIcon className="w-3.5 h-3.5 text-slate-700" />
+  return <FileText size={14} className="text-indigo-500" />
+}
+
 function ArticleRow({ article, index }: { article: Article; index: number }) {
   const [hovered, setHovered] = useState(false)
+  const sourceType = getSourceType(article.url)
+  const domain = getDomain(article.url)
 
   return (
-    <motion.div
-      role="link"
-      tabIndex={0}
+    <motion.a
+      href={article.url}
+      target="_blank"
+      rel="noopener noreferrer"
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0, x: hovered ? 4 : 0 }}
       transition={{ duration: 0.22, ease: 'easeOut' as const, delay: index * 0.04 }}
-      className="group flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 px-5 py-4 rounded-xl cursor-pointer transition-colors duration-150"
+      className="group flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-5 px-5 py-4 rounded-xl cursor-pointer transition-colors duration-150 no-underline"
       style={{ backgroundColor: hovered ? '#F8F8FF' : 'transparent' }}
     >
-      {/* 左側：類別 + 日期 */}
-      <div className="flex items-center gap-3 sm:w-52 shrink-0">
-        <span
-          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap"
-          style={{
-            backgroundColor: `${article.categoryColor}14`,
-            color: article.categoryColor,
-            border: `1px solid ${article.categoryColor}30`,
-          }}
-        >
-          {article.category}
-        </span>
-        <span className="flex items-center gap-1 text-slate-400 text-xs whitespace-nowrap">
-          <Calendar size={11} />
-          {article.date}
+      {/* 左側：來源類型 icon */}
+      <div className="flex items-center gap-1.5 shrink-0 sm:pt-0.5">
+        <SourceTypeIcon type={sourceType} />
+        <span className="sm:hidden text-[11px] text-slate-400 uppercase tracking-wide">
+          {sourceType === 'video' ? '影片' : sourceType === 'repo' ? '倉庫' : '文章'}
         </span>
       </div>
 
-      {/* 中間：標題 + 摘要 */}
+      {/* 中間：標題 + 來源網域 + tags */}
       <div className="flex-1 min-w-0">
         <div className="relative inline-block">
           <span className="font-semibold text-slate-900 text-sm leading-snug group-hover:text-indigo-700 transition-colors">
@@ -382,64 +446,80 @@ function ArticleRow({ article, index }: { article: Article; index: number }) {
             )}
           </AnimatePresence>
         </div>
-        <p className="text-slate-500 text-xs mt-0.5 leading-relaxed line-clamp-1">{article.summary}</p>
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
+          {domain && (
+            <span className="text-[11px] text-slate-400 truncate max-w-[180px]">{domain}</span>
+          )}
+          {article.tags.map((tag) => {
+            const color = TAG_COLOR[tag] ?? '#64748B'
+            return (
+              <span
+                key={tag}
+                className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold whitespace-nowrap"
+                style={{
+                  backgroundColor: `${color}14`,
+                  color,
+                  border: `1px solid ${color}30`,
+                }}
+              >
+                {tag}
+              </span>
+            )
+          })}
+        </div>
       </div>
 
-      {/* 右側：閱讀時間 */}
-      <div className="flex items-center gap-1.5 text-slate-400 text-xs whitespace-nowrap shrink-0 sm:w-24 justify-end">
-        <Clock size={11} />
-        {article.readTime}
+      {/* 右側：日期 */}
+      <div className="flex items-center gap-1 text-slate-400 text-xs whitespace-nowrap shrink-0 sm:w-20 justify-end sm:pt-0.5">
+        <Calendar size={11} />
+        {article.date}
       </div>
-    </motion.div>
+    </motion.a>
   )
 }
 
 /* ─── 文章篩選與列表 ─── */
 function ArticleFilterAndList() {
-  const [activeCategory, setActiveCategory] = useState<string>('全部')
+  const [activeTag, setActiveTag] = useState<string>('全部')
 
-  const categories = [
-    { name: '全部', color: '#6366F1' },
-    { name: '技術分享', color: '#3B82F6' },
-    { name: '系統分析', color: '#8B5CF6' },
-    { name: '工作心得', color: '#EC4899' },
-    { name: '學習筆記', color: '#10B981' },
-  ]
+  const allTags = ['全部', ...Object.keys(TAG_COLOR)]
 
-  const filtered = activeCategory === '全部'
+  const filtered = activeTag === '全部'
     ? articles
-    : articles.filter((a) => a.category === activeCategory)
+    : articles.filter((a) => a.tags.includes(activeTag))
 
   const getCount = (name: string) =>
-    name === '全部' ? articles.length : articles.filter((a) => a.category === name).length
+    name === '全部' ? articles.length : articles.filter((a) => a.tags.includes(name)).length
 
   return (
     <>
       {/* 篩選 chip */}
       <div className="flex flex-wrap justify-center gap-2 mb-8">
-        {categories.map((cat) => {
-          const isActive = activeCategory === cat.name
-          const count = getCount(cat.name)
+        {allTags.map((tag) => {
+          const color = tag === '全部' ? '#6366F1' : (TAG_COLOR[tag] ?? '#64748B')
+          const isActive = activeTag === tag
+          const count = getCount(tag)
+          if (count === 0 && tag !== '全部') return null
           return (
             <motion.button
-              key={cat.name}
-              onClick={() => setActiveCategory(cat.name)}
+              key={tag}
+              onClick={() => setActiveTag(tag)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15, ease: 'easeOut' as const }}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition-colors duration-150"
               style={{
-                backgroundColor: isActive ? cat.color : `${cat.color}10`,
-                color: isActive ? '#FFFFFF' : cat.color,
-                border: `1px solid ${isActive ? cat.color : `${cat.color}30`}`,
+                backgroundColor: isActive ? color : `${color}10`,
+                color: isActive ? '#FFFFFF' : color,
+                border: `1px solid ${isActive ? color : `${color}30`}`,
               }}
             >
-              {cat.name}
+              {tag}
               <span
                 className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[10px] font-bold"
                 style={{
-                  backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : `${cat.color}1F`,
-                  color: isActive ? '#FFFFFF' : cat.color,
+                  backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : `${color}1F`,
+                  color: isActive ? '#FFFFFF' : color,
                 }}
               >
                 {count}
@@ -451,14 +531,14 @@ function ArticleFilterAndList() {
 
       {/* 文章列表 */}
       <motion.div
-        key={activeCategory}
+        key={activeTag}
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.22, ease: 'easeOut' as const }}
         className="divide-y divide-slate-100"
       >
         {filtered.map((article, index) => (
-          <ArticleRow key={article.title} article={article} index={index} />
+          <ArticleRow key={article.url} article={article} index={index} />
         ))}
         {filtered.length === 0 && (
           <div className="py-12 text-center text-slate-400 text-sm">這個分類目前沒有文章</div>
@@ -764,7 +844,7 @@ export default function Finalist() {
         </div>
       </motion.section>
 
-      {/* ─── 最新文章 ─── */}
+      {/* ─── 好文分享 ─── */}
       <motion.section
         id="articles"
         variants={sectionVariants}
@@ -775,24 +855,12 @@ export default function Finalist() {
       >
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8">
-            <p className="text-indigo-500 font-semibold text-xs tracking-widest uppercase mb-2">Articles</p>
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">最新文章</h2>
-            <p className="text-slate-400 text-sm">懸停列，感受位移與底線效果</p>
+            <p className="text-indigo-500 font-semibold text-xs tracking-widest uppercase mb-2">Bookmarks</p>
+            <h2 className="text-3xl font-bold text-slate-900 mb-2">好文分享</h2>
+            <p className="text-slate-400 text-sm">看到的好文章、影片、開源專案，按主題整理</p>
           </div>
 
           <ArticleFilterAndList />
-
-          <div className="mt-8 text-center">
-            <motion.button
-              type="button"
-              whileHover={{ x: 4 }}
-              transition={{ duration: 0.18, ease: 'easeOut' as const }}
-              className="inline-flex items-center gap-1.5 text-indigo-600 hover:text-indigo-700 font-medium text-sm cursor-pointer transition-colors bg-transparent border-0"
-            >
-              查看所有文章
-              <ChevronRight size={15} />
-            </motion.button>
-          </div>
         </div>
       </motion.section>
 
