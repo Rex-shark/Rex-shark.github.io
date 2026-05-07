@@ -593,6 +593,49 @@ function IdeTerminalPreview() {
   )
 }
 
+function FinalistPreview() {
+  return (
+    <div className="w-full h-full flex flex-col relative overflow-hidden bg-white">
+      {/* Header with underline nav */}
+      <div className="h-3 w-full flex items-center px-2 gap-1.5 border-b border-zinc-100">
+        <div className="w-3 h-0.5 rounded-full bg-[#6366F1]" />
+        <div className="ml-auto flex gap-1">
+          <div className="w-3 h-0.5 rounded-full bg-zinc-400" />
+          <div className="w-3 h-0.5 rounded-full bg-zinc-400" />
+          <div className="w-3 h-0.5 rounded-full bg-zinc-400" />
+        </div>
+      </div>
+      {/* Hero */}
+      <div className="flex items-center gap-2 p-2 border-b border-zinc-100">
+        <div className="flex-1 flex flex-col gap-0.5">
+          <div className="w-12 h-1 rounded-full bg-gradient-to-r from-[#6366F1] to-[#8B5CF6]" />
+          <div className="w-8 h-0.5 rounded-full bg-zinc-300" />
+          <div className="flex gap-0.5 mt-0.5">
+            <div className="w-5 h-1 rounded-sm bg-[#6366F1]" />
+            <div className="w-4 h-1 rounded-sm border border-zinc-300" />
+          </div>
+        </div>
+        <div className="w-5 h-5 rounded-full bg-zinc-200 border border-[#6366F1]" />
+      </div>
+      {/* Article list */}
+      <div className="flex-1 flex flex-col gap-1 p-2">
+        {[
+          ['#3B82F6', 8],
+          ['#8B5CF6', 10],
+          ['#EC4899', 7],
+          ['#10B981', 9],
+        ].map(([color, w], i) => (
+          <div key={i} className="flex items-center gap-1">
+            <div className="w-2 h-1 rounded-sm" style={{ background: color as string }} />
+            <div className="h-0.5 rounded-full bg-zinc-700" style={{ width: `${w}px` }} />
+            <div className="ml-auto w-2 h-0.5 rounded-full bg-zinc-300" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function GithubProfilePreview() {
   const contributionLevels = [0, 0, 1, 2, 3, 4, 2, 1, 0, 3, 4, 3, 1, 0, 2, 3, 4, 2, 1, 3, 0, 2, 4, 3, 1, 0, 2, 1, 3, 4, 2, 0, 1, 3, 2, 4, 1, 0, 2, 3, 1, 4, 2, 0, 3, 1, 2, 4, 0, 1, 3, 2, 1, 4, 0, 2]
   const colors = ['#161B22', '#0E4429', '#006D32', '#26A641', '#39D353']
@@ -868,6 +911,16 @@ const styles = [
     bgColor: '#0D1117',
     textColor: '#E6EDF3',
     preview: <GithubProfilePreview />,
+  },
+  {
+    title: '候選正式版',
+    subtitle: 'Finalist',
+    description: 'MicroInteractions 的收斂升級版——精簡漣漪、輕微縮放技能標籤、完整文章列表區塊，最接近正式首頁的候選設計。',
+    to: '/styles/finalist',
+    accentColor: '#6366F1',
+    bgColor: '#FFFFFF',
+    textColor: '#1E1B4B',
+    preview: <FinalistPreview />,
   },
 ]
 

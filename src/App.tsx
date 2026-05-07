@@ -28,6 +28,9 @@ import SpatialUi from '@/pages/styles/SpatialUi'
 import IdeTerminal from '@/pages/styles/IdeTerminal'
 import AccessibleEthical from '@/pages/styles/AccessibleEthical'
 import GithubProfile from '@/pages/styles/GithubProfile'
+import Finalist from '@/pages/styles/Finalist'
+import SpringBootApiDemo from '@/pages/projects/SpringBootApiDemo'
+import ThreadsBot from '@/pages/projects/ThreadsBot'
 
 function App() {
   return (
@@ -54,6 +57,9 @@ function App() {
         <Route path="/styles/ide-terminal" element={<IdeTerminal />} />
         <Route path="/styles/accessible-ethical" element={<AccessibleEthical />} />
         <Route path="/styles/github-profile" element={<GithubProfile />} />
+        <Route path="/styles/finalist" element={<Finalist />} />
+        <Route path="/projects/spring-boot-api" element={<SpringBootApiDemo />} />
+        <Route path="/projects/threads-bot" element={<ThreadsBot />} />
       </Routes>
     </HashRouter>
   )

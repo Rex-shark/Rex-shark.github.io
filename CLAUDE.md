@@ -83,3 +83,27 @@ push 至 `main` 分支後，`.github/workflows/deploy.yml` 會自動觸發：
 開發進度與計畫詳見 [spec/plan.md](spec/plan.md)。
 
 **重要規則**：每當完成計畫中的項目，或計畫有任何變更（新增、移除、調整優先順序），都必須**立即更新** `spec/plan.md`，確保該文件始終反映最新狀態。
+
+## 個人資料來源
+
+**所有與 Rex 個人相關的內容**（自介、技能清單、聯絡方式、專案描述、職位、身份、年資等）必須以 [spec/info.md](spec/info.md) 為唯一權威來源。
+
+**規則**：
+- 撰寫風格頁面文案、產生範例內容、回答「Rex 的某項資料」前，**必先讀取 `spec/info.md`**
+- 若 `info.md` 中標註 `（待補）` 的欄位，**不得自行編造**，應在輸出中保留 `（待補）` 或明確詢問使用者
+- 使用者補充新資訊時，**同步更新 `info.md`**，使其持續為最新版本
+- 既有風格頁面中的硬編碼資料（如 `MinimalBusiness.tsx` 內的 email、技能列表）若與 `info.md` 不一致，以 `info.md` 為準
+
+## 精選專案資料來源
+
+**精選專案的介紹資料**（用於 `src/pages/projects/` 底下的靜態頁面）統一存放於 [spec/projects/](spec/projects/) 目錄，每個專案一個 Markdown 檔（檔名為 kebab-case 的 slug，例如 `threads-bot.md`）。
+
+**規則**：
+- 製作或更新 `src/pages/projects/<Project>.tsx` 前，**必先讀取 `spec/projects/<slug>.md`**，並以該檔內容為唯一資料來源
+- **不得自行編造**：標註 `（待補）` 的欄位、未提供的截圖、未公布的數字（stars / forks 等）一律保留佔位或留白，不可虛構
+- 截圖佔位以灰底框 + `截圖待補` 字樣呈現；正式截圖應放於 `public/projects/<slug>/<name>.png`
+- subagent 製作頁面時，導覽列返回連結預設指向 `/styles/finalist`
+- 新增專案資料檔時，同步在此處或專案文件首段標註對應的頁面路由與元件路徑
+
+目前資料檔：
+- [spec/projects/threads-bot.md](spec/projects/threads-bot.md) — ThreadsBot（本地 LLM 自動發文）
