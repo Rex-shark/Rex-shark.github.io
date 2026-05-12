@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ size = 15 }: { size?: number }) {
   return (
@@ -67,9 +68,9 @@ export default function MinimalBusiness() {
             返回風格選擇
           </Link>
           <div className="flex items-center gap-5">
-            <a href="#about" className="text-sm text-[#3F3F46] hover:text-[#09090B] transition-colors">關於</a>
-            <a href="#skills" className="text-sm text-[#3F3F46] hover:text-[#09090B] transition-colors">技能</a>
-            <a href="#projects" className="text-sm text-[#3F3F46] hover:text-[#09090B] transition-colors">專案</a>
+            <a href="#about" onClick={handleHashClick} className="text-sm text-[#3F3F46] hover:text-[#09090B] transition-colors">關於</a>
+            <a href="#skills" onClick={handleHashClick} className="text-sm text-[#3F3F46] hover:text-[#09090B] transition-colors">技能</a>
+            <a href="#projects" onClick={handleHashClick} className="text-sm text-[#3F3F46] hover:text-[#09090B] transition-colors">專案</a>
             <a
               href="mailto:rexrex10050@gmail.com"
               className="text-sm px-3.5 py-1.5 bg-[#18181B] text-white rounded-lg hover:bg-[#2563EB] transition-colors cursor-pointer"

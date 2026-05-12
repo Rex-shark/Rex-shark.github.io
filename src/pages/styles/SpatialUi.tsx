@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -266,7 +267,7 @@ export default function SpatialUi() {
               <a
                 key={link.label}
                 href={link.href}
-                onClick={() => setActiveNav(link.href)}
+                onClick={(e) => { setActiveNav(link.href); handleHashClick(e) }}
                 className="relative px-4 py-1 text-sm rounded-full transition-colors duration-200 cursor-pointer"
                 style={{
                   color: activeNav === link.href ? '#F5F5F7' : 'rgba(245,245,247,0.55)',

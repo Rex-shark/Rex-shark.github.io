@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -228,6 +229,7 @@ export default function AntiPolish() {
               <a
                 key={item.label}
                 href={item.href}
+                onClick={handleHashClick}
                 className="cursor-pointer"
                 style={{
                   display: 'block',

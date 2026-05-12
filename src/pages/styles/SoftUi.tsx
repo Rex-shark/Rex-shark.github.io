@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink, Code2, Database, Server, Wrench } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -251,6 +252,7 @@ export default function SoftUi() {
               <a
                 key={nav.label}
                 href={nav.href}
+                onClick={handleHashClick}
                 className="px-3 py-1.5 rounded-lg text-sm font-medium cursor-pointer transition-all duration-200"
                 style={{ color: TEXT_MAIN }}
               >

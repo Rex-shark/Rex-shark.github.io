@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, Star, BookOpen, MapPin, Building2 } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 // ── GitHub Octocat SVG ──────────────────────────────────────────────
 function OctocatIcon({ size = 20 }: { size?: number }) {
@@ -343,6 +344,7 @@ export default function GithubProfile() {
               <a
                 key={item.href}
                 href={item.href}
+                onClick={handleHashClick}
                 className="px-3 py-1.5 rounded-md text-xs cursor-pointer transition-colors duration-150"
                 style={{ color: C.fgMuted }}
                 onMouseEnter={e => {

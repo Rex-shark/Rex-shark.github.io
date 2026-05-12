@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink, Terminal } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ size = 15 }: { size?: number }) {
   return (
@@ -167,6 +168,7 @@ export default function Cyberpunk() {
               <a
                 key={item.label}
                 href={item.href}
+                onClick={handleHashClick}
                 className="text-xs text-[#666] hover:text-[#00FF00] transition-colors font-mono"
               >
                 {item.label}

@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink, Code2, Server, Database, Layers } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -191,6 +192,7 @@ export default function Glassmorphism() {
               <a
                 key={label}
                 href={href}
+                onClick={handleHashClick}
                 className="text-sm text-white/60 hover:text-white transition-colors duration-200 cursor-pointer"
               >
                 {label}

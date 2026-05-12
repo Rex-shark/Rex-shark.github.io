@@ -18,6 +18,7 @@ import {
   Play,
   FileText,
 } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 /* ─── GitHub Icon ─── */
 function GithubIcon({ className }: { className?: string }) {
@@ -134,7 +135,8 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   return (
     <motion.a
       href={href}
-      className="relative text-slate-600 hover:text-indigo-600 text-sm font-medium transition-colors"
+      onClick={handleHashClick}
+      className="relative text-slate-600 hover:text-indigo-600 text-sm font-medium transition-colors cursor-pointer"
       whileHover="hover"
     >
       {children}

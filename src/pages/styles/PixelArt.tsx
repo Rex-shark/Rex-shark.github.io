@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -355,6 +356,7 @@ export default function PixelArt() {
               <a
                 key={label}
                 href={href}
+                onClick={handleHashClick}
                 className="text-[#C8D8E8] hover:text-[#39FF14] transition-colors duration-150 cursor-pointer hidden sm:block"
                 style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.5rem' }}
               >

@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 /* ── Google Fonts: Inter + IBM Plex Mono ─────────────────── */
 
@@ -163,6 +164,7 @@ export default function SwissModern() {
               <a
                 key={item.label}
                 href={item.href}
+                onClick={handleHashClick}
                 className="text-xs font-bold tracking-[0.1em] uppercase text-[#000000] hover:text-[#FF0000] transition-colors duration-150"
                 style={{ fontFamily: "'IBM Plex Mono', monospace" }}
               >

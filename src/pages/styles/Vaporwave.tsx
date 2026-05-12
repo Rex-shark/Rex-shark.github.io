@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ size = 15 }: { size?: number }) {
   return (
@@ -119,9 +120,9 @@ export default function Vaporwave() {
             返回風格選擇
           </Link>
           <div className="flex items-center gap-5" style={{ fontFamily: "'Rajdhani', sans-serif" }}>
-            <a href="#about" className="text-sm text-[#B967FF]/80 hover:text-[#FF71CE] transition-colors duration-200">關於</a>
-            <a href="#skills" className="text-sm text-[#B967FF]/80 hover:text-[#FF71CE] transition-colors duration-200">技能</a>
-            <a href="#projects" className="text-sm text-[#B967FF]/80 hover:text-[#FF71CE] transition-colors duration-200">專案</a>
+            <a href="#about" onClick={handleHashClick} className="text-sm text-[#B967FF]/80 hover:text-[#FF71CE] transition-colors duration-200">關於</a>
+            <a href="#skills" onClick={handleHashClick} className="text-sm text-[#B967FF]/80 hover:text-[#FF71CE] transition-colors duration-200">技能</a>
+            <a href="#projects" onClick={handleHashClick} className="text-sm text-[#B967FF]/80 hover:text-[#FF71CE] transition-colors duration-200">專案</a>
             <a
               href="mailto:rexrex10050@gmail.com"
               className="text-sm px-3.5 py-1.5 rounded-lg border border-[#FF71CE]/50 text-[#FF71CE] hover:bg-[#FF71CE]/15 transition-all duration-200 cursor-pointer"

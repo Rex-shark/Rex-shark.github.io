@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink, Code2, Server, Database, Layers } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -151,6 +152,7 @@ export default function Macbook() {
               <a
                 key={item.label}
                 href={item.href}
+                onClick={handleHashClick}
                 className="text-[13px] text-[#1C1C1E]/70 hover:text-[#1C1C1E] transition-colors duration-150 font-medium cursor-pointer"
               >
                 {item.label}

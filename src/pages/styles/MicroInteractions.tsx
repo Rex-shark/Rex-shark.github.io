@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { motion, useSpring, useMotionValue, useTransform } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink, Code2, Database, Server, Wrench, Star } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -117,6 +118,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   return (
     <motion.a
       href={href}
+      onClick={handleHashClick}
       className="relative text-slate-600 hover:text-indigo-600 text-sm font-medium transition-colors"
       whileHover="hover"
     >

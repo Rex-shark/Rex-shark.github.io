@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink, Code2, Database, Layers, Cpu } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -215,6 +216,7 @@ export default function Claymorphism() {
               <a
                 key={label}
                 href={href}
+                onClick={handleHashClick}
                 className="px-3 py-1.5 text-sm font-semibold text-[#6B7280] hover:text-[#A78BFA] rounded-2xl hover:bg-[#A78BFA]/10 transition-all cursor-pointer"
               >
                 {label}

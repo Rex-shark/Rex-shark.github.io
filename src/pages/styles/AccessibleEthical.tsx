@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink, CheckCircle, Eye, Keyboard, Users } from 'lucide-react'
+import { handleHashClick } from '@/lib/utils'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -168,6 +169,7 @@ export default function AccessibleEthical() {
       {/* Skip to main content - 無障礙跳過導航 */}
       <a
         href="#main-content"
+        onClick={handleHashClick}
         className={`
           sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100]
           focus:px-4 focus:py-2 focus:bg-[#1A56DB] focus:text-white focus:font-semibold
@@ -216,6 +218,7 @@ export default function AccessibleEthical() {
               <a
                 key={href}
                 href={href}
+                onClick={handleHashClick}
                 role="menuitem"
                 className={`
                   text-sm font-medium text-[#374151] hover:text-[#1A56DB]
