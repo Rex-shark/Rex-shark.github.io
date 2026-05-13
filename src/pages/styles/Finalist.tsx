@@ -215,6 +215,15 @@ const projects: Project[] = [
     href: 'https://github.com/Rex-shark/ThreadsBot',
     to: '/projects/threads-bot',
   },
+  {
+    title: 'Claude Code 原始碼研究',
+    desc: '從 sourcemap 還原 Claude Code v2.1.88，拆解 6 層架構與 14 區塊 System Prompt 設計，整理成 5 篇深度筆記。非官方研究，版權歸 Anthropic。',
+    tags: ['TypeScript', 'Research', 'AI Agent'],
+    color: '#9333EA',
+    stars: 0,
+    href: 'https://github.com/Rex-shark/claude-code-sourcemap',
+    to: '/projects/claude-code-sourcemap',
+  },
 ]
 
 /* ─── 好文分享：tag 配色與來源類型偵測 ─── */

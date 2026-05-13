@@ -107,6 +107,7 @@ push 至 `main` 分支後，`.github/workflows/deploy.yml` 會自動觸發：
 
 目前資料檔：
 - [spec/projects/threads-bot.md](spec/projects/threads-bot.md) — ThreadsBot（本地 LLM 自動發文）
+- [spec/projects/claude-code-sourcemap.md](spec/projects/claude-code-sourcemap.md) — Claude Code 原始碼研究（非官方還原與分析筆記）
 
 ## 好文分享資料來源
 

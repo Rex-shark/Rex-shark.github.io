@@ -90,6 +90,7 @@ public/
 | **個人網站** | 用 20 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。 | 直連 `/gallery` 觀賞其他 19 種風格 | 不做（網站本身即作品） | ✅ 完成 |
 | **Spring Boot API 範例** | RESTful API 範例，含 JWT 認證、角色控管、JPA 資料存取層。 | 進入 `/projects/spring-boot-api` | ✅ 已有 | ✅ 完成 |
 | **ThreadsBot** | 本地 LLM 自動爬新聞、改寫成 Threads 貼文，Spring Boot 3 + Spring AI + Ollama，零 API 成本。 | 進入 `/projects/threads-bot` | ✅ 已有 | ✅ 完成 |
+| **Claude Code 原始碼研究** | 從 sourcemap 還原 Claude Code v2.1.88 並寫成 5 篇深度分析筆記。非官方研究，版權歸 Anthropic。 | 進入 `/projects/claude-code-sourcemap` | 待做 | 🚧 卡片已上，showcase 頁待建 |
 
 ---
 
@@ -141,6 +142,7 @@ public/
 |------|------|----------|------|
 | Spring Boot API 範例 | `/projects/spring-boot-api` | （內嵌於頁面） | ✅ 完成 |
 | ThreadsBot | `/projects/threads-bot` | [spec/projects/threads-bot.md](projects/threads-bot.md) | ✅ 完成 |
+| Claude Code 原始碼研究 | `/projects/claude-code-sourcemap` | [spec/projects/claude-code-sourcemap.md](projects/claude-code-sourcemap.md) | 🚧 卡片完成，showcase 頁待建 |
 
 ---
 
