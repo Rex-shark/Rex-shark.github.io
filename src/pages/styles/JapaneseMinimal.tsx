@@ -99,11 +99,11 @@ export default function JapaneseMinimal() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#F7F5F0]/85 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-1.5 text-sm text-[#8C8578] hover:text-[#2C2C2C] transition-colors duration-200 cursor-pointer"
           >
             <ArrowLeft size={15} />
-            返回風格選擇
+            返回設計實驗室
           </Link>
           <div className="flex items-center gap-6">
             {['關於', '技能', '專案', '聯絡'].map((item, i) => (

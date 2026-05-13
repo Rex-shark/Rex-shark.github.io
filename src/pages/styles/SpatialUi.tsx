@@ -248,11 +248,11 @@ export default function SpatialUi() {
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           {/* 返回按鈕 */}
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-1.5 text-sm text-[#F5F5F7]/60 hover:text-[#4CC9F0] transition-colors duration-200 cursor-pointer"
           >
             <ArrowLeft size={15} />
-            返回風格選擇
+            返回設計實驗室
           </Link>
 
           {/* 中央導覽 pill 群 */}

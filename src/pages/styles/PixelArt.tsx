@@ -336,13 +336,13 @@ export default function PixelArt() {
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-1.5 transition-colors duration-200 cursor-pointer hover:text-[#39FF14] text-[#C8D8E8]"
             style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.5rem' }}
-            aria-label="返回風格選擇頁面"
+            aria-label="返回設計實驗室頁面"
           >
             <ArrowLeft size={14} />
-            <span className="hidden sm:inline">返回風格選擇</span>
+            <span className="hidden sm:inline">返回設計實驗室</span>
             <span className="sm:hidden">返回</span>
           </Link>
 

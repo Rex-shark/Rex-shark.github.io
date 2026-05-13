@@ -268,11 +268,11 @@ export default function Steampunk() {
           <div className="flex items-center gap-3">
             <Rivet />
             <Link
-              to="/"
+              to="/gallery"
               className="flex items-center gap-1.5 text-sm text-[#B87333] hover:text-[#DAA520] transition-colors duration-200 cursor-pointer"
             >
               <ArrowLeft size={15} />
-              返回風格選擇
+              返回設計實驗室
             </Link>
           </div>
 

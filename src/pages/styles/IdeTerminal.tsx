@@ -142,7 +142,7 @@ export default function IdeTerminal() {
       {/* 頂部標題列 (Title Bar) */}
       <header className="h-9 flex items-center justify-between px-4" style={{ background: '#323233', borderBottom: '1px solid #1E1E1E' }}>
         <div className="flex items-center gap-3">
-          <Link to="/" className="text-[#CCCCCC] hover:text-white transition-colors cursor-pointer group flex items-center gap-1.5" title="回到首頁">
+          <Link to="/gallery" className="text-[#CCCCCC] hover:text-white transition-colors cursor-pointer group flex items-center gap-1.5" title="回到設計實驗室">
             <ArrowLeft size={15} className="group-hover:-translate-x-0.5 transition-transform" />
           </Link>
           <div className="w-px h-4 bg-[#555]" />

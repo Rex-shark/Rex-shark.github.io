@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
+import { Link } from 'react-router'
+import { ArrowLeft } from 'lucide-react'
 import StyleCard from '@/components/gallery/StyleCard'
 
 const containerVariants: Variants = {
@@ -593,49 +595,6 @@ function IdeTerminalPreview() {
   )
 }
 
-function FinalistPreview() {
-  return (
-    <div className="w-full h-full flex flex-col relative overflow-hidden bg-white">
-      {/* Header with underline nav */}
-      <div className="h-3 w-full flex items-center px-2 gap-1.5 border-b border-zinc-100">
-        <div className="w-3 h-0.5 rounded-full bg-[#6366F1]" />
-        <div className="ml-auto flex gap-1">
-          <div className="w-3 h-0.5 rounded-full bg-zinc-400" />
-          <div className="w-3 h-0.5 rounded-full bg-zinc-400" />
-          <div className="w-3 h-0.5 rounded-full bg-zinc-400" />
-        </div>
-      </div>
-      {/* Hero */}
-      <div className="flex items-center gap-2 p-2 border-b border-zinc-100">
-        <div className="flex-1 flex flex-col gap-0.5">
-          <div className="w-12 h-1 rounded-full bg-gradient-to-r from-[#6366F1] to-[#8B5CF6]" />
-          <div className="w-8 h-0.5 rounded-full bg-zinc-300" />
-          <div className="flex gap-0.5 mt-0.5">
-            <div className="w-5 h-1 rounded-sm bg-[#6366F1]" />
-            <div className="w-4 h-1 rounded-sm border border-zinc-300" />
-          </div>
-        </div>
-        <div className="w-5 h-5 rounded-full bg-zinc-200 border border-[#6366F1]" />
-      </div>
-      {/* Article list */}
-      <div className="flex-1 flex flex-col gap-1 p-2">
-        {[
-          ['#3B82F6', 8],
-          ['#8B5CF6', 10],
-          ['#EC4899', 7],
-          ['#10B981', 9],
-        ].map(([color, w], i) => (
-          <div key={i} className="flex items-center gap-1">
-            <div className="w-2 h-1 rounded-sm" style={{ background: color as string }} />
-            <div className="h-0.5 rounded-full bg-zinc-700" style={{ width: `${w}px` }} />
-            <div className="ml-auto w-2 h-0.5 rounded-full bg-zinc-300" />
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function GithubProfilePreview() {
   const contributionLevels = [0, 0, 1, 2, 3, 4, 2, 1, 0, 3, 4, 3, 1, 0, 2, 3, 4, 2, 1, 3, 0, 2, 4, 3, 1, 0, 2, 1, 3, 4, 2, 0, 1, 3, 2, 4, 1, 0, 2, 3, 1, 4, 2, 0, 3, 1, 2, 4, 0, 1, 3, 2, 1, 4, 0, 2]
   const colors = ['#161B22', '#0E4429', '#006D32', '#26A641', '#39D353']
@@ -912,36 +871,42 @@ const styles = [
     textColor: '#E6EDF3',
     preview: <GithubProfilePreview />,
   },
-  {
-    title: '候選正式版',
-    subtitle: 'Finalist',
-    description: 'MicroInteractions 的收斂升級版——精簡漣漪、輕微縮放技能標籤、完整文章列表區塊，最接近正式首頁的候選設計。',
-    to: '/styles/finalist',
-    accentColor: '#6366F1',
-    bgColor: '#FFFFFF',
-    textColor: '#1E1B4B',
-    preview: <FinalistPreview />,
-  },
 ]
 
 export default function StyleGallery() {
   return (
     <div className="min-h-screen bg-[#F4F4F5] flex flex-col">
+      {/* 返回首頁 */}
+      <motion.div
+        className="pt-6 px-6 max-w-5xl w-full mx-auto"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+      >
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 text-zinc-500 hover:text-zinc-900 transition-colors text-sm font-medium cursor-pointer"
+        >
+          <ArrowLeft size={14} />
+          返回首頁
+        </Link>
+      </motion.div>
+
       {/* 頁首 */}
       <motion.header
-        className="pt-16 pb-10 text-center px-6"
+        className="pt-10 pb-10 text-center px-6"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
         <p className="text-xs font-semibold tracking-[0.2em] uppercase text-zinc-400 mb-3">
-          Rex · 個人網站
+          Design Lab · Rex
         </p>
         <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 mb-3">
-          選擇你喜歡的風格
+          設計實驗室
         </h1>
-        <p className="text-zinc-500 text-base max-w-md mx-auto">
-          點擊卡片預覽不同設計風格，找到最適合的方向
+        <p className="text-zinc-500 text-base max-w-xl mx-auto">
+          打造正式首頁前的 19 種設計風格實驗。每張卡片都是一個完整可瀏覽的首頁。
         </p>
       </motion.header>
 

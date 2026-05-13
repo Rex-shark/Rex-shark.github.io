@@ -10,7 +10,6 @@ import {
   Terminal,
   CheckCircle2,
   Server,
-  ExternalLink,
   Lightbulb,
   AlertTriangle,
 } from 'lucide-react'
@@ -144,7 +143,7 @@ export default function ThreadsBot() {
       <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link
-            to="/styles/finalist"
+            to="/"
             className="inline-flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 text-sm font-medium transition-colors cursor-pointer group"
           >
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-200" />
@@ -442,20 +441,11 @@ export default function ThreadsBot() {
       {/* CTA */}
       <section className="px-6 py-16 border-t border-slate-100 bg-gradient-to-br from-indigo-50/40 to-violet-50/40">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl font-bold text-slate-900 mb-3">想自己做一個？</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-3">想看更多細節？</h2>
           <p className="text-slate-500 mb-8 leading-relaxed">
-            原專案 docs 有一份手把手教學，從 Meta 開發者帳號、Threads Token 取得，到第一篇貼文發出，全部寫清楚。
+            原始碼、README、設定範例都在 GitHub repo，歡迎 fork 自己玩。
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href="https://github.com/Rex-shark/ThreadsBot/blob/master/docs/local-llm-threads-tutorial.md"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-indigo-600 text-white font-semibold text-sm hover:bg-indigo-700 transition-colors cursor-pointer"
-            >
-              閱讀完整教學
-              <ExternalLink size={14} />
-            </a>
             <a
               href="https://github.com/Rex-shark/ThreadsBot"
               target="_blank"
@@ -466,7 +456,7 @@ export default function ThreadsBot() {
               查看 GitHub Repo
             </a>
             <Link
-              to="/styles/finalist"
+              to="/"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-slate-200 text-slate-700 font-semibold text-sm hover:border-indigo-300 hover:text-indigo-600 transition-colors cursor-pointer"
             >
               <ArrowLeft size={15} />

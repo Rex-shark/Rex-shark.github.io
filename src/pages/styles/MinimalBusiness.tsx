@@ -61,11 +61,11 @@ export default function MinimalBusiness() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#FAFAFA]/90 backdrop-blur border-b border-black/6">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-1.5 text-sm text-[#3F3F46] hover:text-[#09090B] transition-colors cursor-pointer"
           >
             <ArrowLeft size={15} />
-            返回風格選擇
+            返回設計實驗室
           </Link>
           <div className="flex items-center gap-5">
             <a href="#about" onClick={handleHashClick} className="text-sm text-[#3F3F46] hover:text-[#09090B] transition-colors">關於</a>

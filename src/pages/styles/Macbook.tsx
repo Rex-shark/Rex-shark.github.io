@@ -134,11 +134,11 @@ export default function Macbook() {
         <div className="max-w-5xl mx-auto w-full flex items-center justify-between">
           {/* 左側 - 返回 */}
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-1.5 text-[13px] text-[#0071E3] hover:text-[#0077ED] transition-colors duration-150 cursor-pointer font-medium"
           >
             <ArrowLeft size={14} />
-            返回風格選擇
+            返回設計實驗室
           </Link>
 
           {/* 右側 - 錨點導覽 */}

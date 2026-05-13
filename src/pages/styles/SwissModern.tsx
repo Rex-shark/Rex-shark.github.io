@@ -135,12 +135,12 @@ export default function SwissModern() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#FFFFFF] border-b-4 border-[#000000]">
         <div className="max-w-screen-xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-2 text-xs font-bold tracking-[0.15em] uppercase text-[#000000] hover:text-[#FF0000] transition-colors duration-150 cursor-pointer"
             style={{ fontFamily: "'IBM Plex Mono', monospace" }}
           >
             <ArrowLeft size={14} strokeWidth={2.5} />
-            返回風格選擇
+            返回設計實驗室
           </Link>
 
           {/* 中央紅色識別線 */}

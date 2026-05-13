@@ -112,12 +112,12 @@ export default function Vaporwave() {
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur border-b border-[#FF71CE]/20" style={{ background: 'rgba(26,5,51,0.85)' }}>
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-1.5 text-sm text-[#B967FF]/80 hover:text-[#FF71CE] transition-colors duration-200 cursor-pointer"
             style={{ fontFamily: "'Rajdhani', sans-serif" }}
           >
             <ArrowLeft size={15} />
-            返回風格選擇
+            返回設計實驗室
           </Link>
           <div className="flex items-center gap-5" style={{ fontFamily: "'Rajdhani', sans-serif" }}>
             <a href="#about" onClick={handleHashClick} className="text-sm text-[#B967FF]/80 hover:text-[#FF71CE] transition-colors duration-200">關於</a>

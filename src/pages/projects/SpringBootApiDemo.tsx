@@ -130,7 +130,7 @@ export default function SpringBootApiDemo() {
       <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link
-            to="/styles/finalist"
+            to="/"
             className="inline-flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 text-sm font-medium transition-colors cursor-pointer group"
           >
             <ArrowLeft
@@ -323,7 +323,7 @@ export default function SpringBootApiDemo() {
               查看 GitHub Repo
             </a>
             <Link
-              to="/styles/finalist"
+              to="/"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-slate-200 text-slate-700 font-semibold text-sm hover:border-indigo-300 hover:text-indigo-600 transition-colors cursor-pointer"
             >
               <ArrowLeft size={15} />

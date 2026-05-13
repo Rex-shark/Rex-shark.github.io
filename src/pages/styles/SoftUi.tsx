@@ -233,12 +233,12 @@ export default function SoftUi() {
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* 返回按鈕 - 凸起 Neu 風格 */}
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm cursor-pointer transition-all duration-200"
             style={{ color: TEXT_MAIN, boxShadow: neuShadowSm, background: BG }}
           >
             <ArrowLeft size={15} />
-            返回風格選擇
+            返回設計實驗室
           </Link>
 
           {/* 頁內錨點 */}

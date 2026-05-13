@@ -37,7 +37,8 @@ function App() {
     <HashRouter>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<StyleGallery />} />
+        <Route path="/" element={<Finalist />} />
+        <Route path="/gallery" element={<StyleGallery />} />
         <Route path="/styles/minimal-business" element={<MinimalBusiness />} />
         <Route path="/styles/hand-drawn" element={<HandDrawn />} />
         <Route path="/styles/cyberpunk" element={<Cyberpunk />} />

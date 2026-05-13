@@ -189,17 +189,17 @@ export default function AccessibleEthical() {
       >
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link
-            to="/"
+            to="/gallery"
             className={`
               flex items-center gap-2 text-base font-medium text-[#374151]
               hover:text-[#0A0A0A] transition-colors duration-200 cursor-pointer
               rounded-md px-2 py-1 -ml-2
               ${focusClass}
             `}
-            aria-label="返回風格選擇頁面"
+            aria-label="返回設計實驗室頁面"
           >
             <ArrowLeft size={18} aria-hidden="true" />
-            返回風格選擇
+            返回設計實驗室
           </Link>
 
           {/* 桌面導覽連結 */}

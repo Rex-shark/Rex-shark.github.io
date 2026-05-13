@@ -316,14 +316,14 @@ export default function GithubProfile() {
           {/* 左側 */}
           <div className="flex items-center gap-4">
             <Link
-              to="/"
+              to="/gallery"
               className="flex items-center gap-1.5 text-xs cursor-pointer transition-colors duration-150"
               style={{ color: C.fgMuted }}
               onMouseEnter={e => (e.currentTarget.style.color = C.fg)}
               onMouseLeave={e => (e.currentTarget.style.color = C.fgMuted)}
             >
               <ArrowLeft size={13} />
-              返回風格選擇
+              返回設計實驗室
             </Link>
             <div style={{ width: 1, height: 16, background: C.border }} />
             <div className="flex items-center gap-2" style={{ color: C.fg }}>

@@ -217,11 +217,11 @@ export default function MicroInteractions() {
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <motion.div whileHover={{ x: -3 }} transition={{ type: 'spring', stiffness: 400 }}>
             <Link
-              to="/"
+              to="/gallery"
               className="inline-flex items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors text-sm font-medium"
             >
               <ArrowLeft size={16} />
-              返回風格選擇
+              返回設計實驗室
             </Link>
           </motion.div>
           <div className="hidden sm:flex items-center gap-6">

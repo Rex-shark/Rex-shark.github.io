@@ -202,7 +202,7 @@ export default function AntiPolish() {
       >
         <div className="max-w-6xl mx-auto px-4 h-12 flex items-center justify-between">
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-1.5 cursor-pointer"
             style={{
               fontFamily: "'Courier Prime', monospace",
@@ -214,7 +214,7 @@ export default function AntiPolish() {
             }}
           >
             <ArrowLeft size={14} />
-            [返回風格選擇]
+            [返回設計實驗室]
           </Link>
           <div
             className="hidden sm:flex items-center"

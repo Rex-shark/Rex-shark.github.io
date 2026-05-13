@@ -199,12 +199,12 @@ export default function Claymorphism() {
           }}
         >
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-1.5 text-sm font-700 text-[#6B7280] hover:text-[#A78BFA] transition-colors cursor-pointer"
             style={{ fontWeight: 700 }}
           >
             <ArrowLeft size={15} />
-            返回風格選擇
+            返回設計實驗室
           </Link>
           <div className="hidden sm:flex items-center gap-1">
             {[

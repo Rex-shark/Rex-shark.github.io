@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import { motion, useSpring, useMotionValue, useTransform, AnimatePresence } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import {
-  ArrowLeft,
   Mail,
   ExternalLink,
   Code2,
@@ -11,7 +10,6 @@ import {
   Server,
   Wrench,
   Star,
-  Download,
   ArrowRight,
   Calendar,
   BookOpen,
@@ -192,18 +190,19 @@ interface Project {
 const projects: Project[] = [
   {
     title: '個人網站',
-    desc: '風格導覽型個人網站，展示多種設計風格，使用 React + Vite 部署於 GitHub Pages。',
+    desc: '用 20 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。React 19 + Vite 8 + Tailwind v4，部署於 GitHub Pages。',
     tags: ['React', 'TypeScript', 'Tailwind CSS'],
     color: '#6366F1',
-    stars: 12,
-    href: 'https://github.com/Rex-shark',
+    stars: 0,
+    href: 'https://github.com/Rex-shark/Rex-shark.github.io',
+    to: '/gallery',
   },
   {
     title: 'Spring Boot API 範例',
     desc: '完整的 RESTful API 範例，包含 JWT 認證、角色控管、JPA 資料存取層。',
     tags: ['Java', 'Spring Boot', 'PostgreSQL'],
     color: '#8B5CF6',
-    stars: 28,
+    stars: 0,
     href: 'https://github.com/Rex-shark',
     to: '/projects/spring-boot-api',
   },
@@ -215,14 +214,6 @@ const projects: Project[] = [
     stars: 0,
     href: 'https://github.com/Rex-shark/ThreadsBot',
     to: '/projects/threads-bot',
-  },
-  {
-    title: '系統分析設計教學',
-    desc: 'UML、需求分析、架構設計的完整教材，適合想學習系統設計的開發者。',
-    tags: ['系統設計', 'UML', '架構'],
-    color: '#06B6D4',
-    stars: 19,
-    href: 'https://github.com/Rex-shark',
   },
 ]
 
@@ -569,23 +560,29 @@ export default function Finalist() {
         transition={{ duration: 0.45, ease: 'easeOut' as const }}
         className="fixed top-0 left-0 right-0 z-50 bg-white/85 backdrop-blur-md border-b border-slate-200/70"
       >
-        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <motion.div whileHover={{ x: -3 }} transition={{ type: 'spring', stiffness: 400 }}>
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors text-sm font-medium cursor-pointer"
-            >
-              <ArrowLeft size={15} />
-              返回風格選擇
-            </Link>
-          </motion.div>
-          <div className="hidden sm:flex items-center gap-7">
+        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between gap-6">
+          <Link
+            to="/"
+            className="text-slate-900 font-bold text-lg tracking-tight hover:text-indigo-600 transition-colors cursor-pointer"
+          >
+            Rex<span className="text-indigo-500">.</span>
+          </Link>
+          <div className="hidden md:flex items-center gap-7">
             <NavLink href="#about">關於</NavLink>
             <NavLink href="#skills">技能</NavLink>
             <NavLink href="#projects">專案</NavLink>
             <NavLink href="#articles">文章</NavLink>
             <NavLink href="#contact">聯絡</NavLink>
           </div>
+          <motion.div whileHover={{ x: 3 }} transition={{ type: 'spring', stiffness: 400 }}>
+            <Link
+              to="/gallery"
+              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 transition-colors text-sm font-medium cursor-pointer"
+            >
+              設計實驗室
+              <ArrowRight size={14} />
+            </Link>
+          </motion.div>
         </div>
       </motion.nav>
 
@@ -618,7 +615,8 @@ export default function Finalist() {
               variants={itemVariants}
               className="text-slate-500 text-lg leading-relaxed max-w-lg mb-9"
             >
-              熱衷於後端系統架構設計與系統分析方法論，擅長以 Spring Boot 打造穩健的 API 服務，並持續透過技術文章分享實戰經驗與學習心得。
+              從後端核心架構到前端使用者體驗，為複雜需求提供優雅的系統解決方案。
+              目前專注於 Agentic Engineering，探索 AI Agent 在軟體工程中的無限可能。
             </motion.p>
             <motion.div
               variants={itemVariants}
@@ -633,15 +631,6 @@ export default function Finalist() {
                   <ArrowRight size={15} />
                 </span>
               </RippleButton>
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold border-2 border-slate-300 text-slate-600 hover:border-indigo-400 hover:text-indigo-600 transition-colors duration-200 cursor-pointer"
-              >
-                <Download size={15} />
-                下載履歷
-              </motion.a>
             </motion.div>
           </motion.div>
 

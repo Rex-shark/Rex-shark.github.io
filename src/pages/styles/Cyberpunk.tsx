@@ -153,7 +153,7 @@ export default function Cyberpunk() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0D0D0D]/95 backdrop-blur border-b border-[#00FFFF]/20">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-1.5 text-sm text-[#00FFFF]/70 hover:text-[#00FFFF] transition-colors cursor-pointer font-mono"
           >
             <ArrowLeft size={15} />

@@ -176,11 +176,11 @@ export default function Glassmorphism() {
       >
         <div className="max-w-5xl mx-auto px-5 h-14 flex items-center justify-between">
           <Link
-            to="/"
+            to="/gallery"
             className="flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors duration-200 cursor-pointer"
           >
             <ArrowLeft size={15} />
-            返回風格選擇
+            返回設計實驗室
           </Link>
           <div className="hidden sm:flex items-center gap-6">
             {[
