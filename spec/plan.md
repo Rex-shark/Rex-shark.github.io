@@ -192,11 +192,40 @@ public/
    - 文案「返回風格選擇」→「返回設計實驗室」（Cyberpunk 保留 `cd ../` 風格特色）
 - [x] **build 通過 + 手動驗收路徑成立**
 
+### 🔍 SEO 優化計畫
+
+分三階段執行。
+
+#### Lv1 — 基礎 meta + sitemap ✅ 完成
+
+- [x] `<html lang>` 從 `en` 改為 `zh-Hant-TW`
+- [x] `<meta name="description">`
+- [x] **Open Graph**（og:type / url / title / description / image / locale / site_name）
+- [x] **Twitter Card**（summary_large_image）
+- [x] `<meta name="theme-color">` `#6366F1`
+- [x] `<link rel="canonical">`
+- [x] `public/robots.txt`
+- [x] `public/sitemap.xml`（首頁 + `/#/gallery`）
+- [x] **JSON-LD `Person` schema**
+- [ ] 部署後用 [Open Graph Debugger](https://www.opengraph.xyz/) 驗證（需推 main 觸發 deploy）
+- [ ] 之後做 1200×630 專屬 OG 圖取代 `/me.png`
+
+#### Lv2 — 解 HashRouter SEO 問題（中等工程，下次再做）
+
+- [ ] 改 BrowserRouter + GitHub Pages 404.html trick（[spa-github-pages 方案](https://github.com/rafgraph/spa-github-pages)）
+- [ ] sitemap.xml 列出所有路由（`/`、`/gallery`、`/styles/*` × 19、`/projects/*` × 4）
+- [ ] 把 19 個風格頁與所有 project showcase 頁的內部連結從 `#/xxx` 改成 `/xxx`
+
+#### Lv3 — 預先渲染（重工程，視 SEO 需求再評估）
+
+- [ ] 引入 vite-plugin-prerender 或改 SSG 方案
+- [ ] 每個路由 build 成獨立 HTML（含完整 title、description、OG）
+- [ ] 為主要頁面做專屬 OG 圖（首頁、ThreadsBot、Claude Code Sourcemap）
+
 ### 其他待辦
 
 - [ ] 補全 [spec/info.md](info.md) 的 `（待補）` 欄位（一句話自介、年資、聯絡偏好）
 - [ ] 把 [ThreadsBot tutorial 長文](https://github.com/Rex-shark/ThreadsBot/blob/master/docs/local-llm-threads-tutorial.md) 搬成站內 `/blog/local-llm-threads-tutorial`
 - [ ] 建 `/blog` 列表頁與文章詳情頁範本
 - [ ] 加入暗色模式切換功能
-- [ ] SEO 優化（meta tags、Open Graph、sitemap）
-- [ ] 效能優化（圖片壓縮、lazy loading、bundle 拆分 — 目前 730KB）
+- [ ] 效能優化（圖片壓縮、lazy loading、bundle 拆分 — 目前 750KB）
