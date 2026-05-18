@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rex · Java 全端工程師 / 系統分析師</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      GitHub Pages SPA redirect trick.
+      參考：https://github.com/rafgraph/spa-github-pages
+
+      訪客直連子路徑（例如 /projects/threads-bot）時 GitHub Pages 回 404，
+      改 serve 這個檔案；下面的 script 會把當前路徑暫存後 redirect 到根目錄，
+      根目錄的 index.html 接收後再把 URL 改回原本的路徑，SPA 接管渲染。
+    -->
+    <script>
+      (function () {
+        // 把 /projects/threads-bot?x=1 編碼成 /?/projects/threads-bot&x=1
+        // 接收端會再解碼回原狀
+        var l = window.location;
+        var pathSegmentsToKeep = 0; // GitHub Pages 使用者首頁 (xxx.github.io) 不需要保留任何 segment
+        l.replace(
+          l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+          l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+          l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          l.hash
+        );
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

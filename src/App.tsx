@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { HashRouter, Routes, Route, useLocation } from 'react-router'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -35,7 +35,7 @@ import ClaudeCodeSourcemap from '@/pages/projects/ClaudeCodeSourcemap'
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Finalist />} />
@@ -64,7 +64,7 @@ function App() {
         <Route path="/projects/threads-bot" element={<ThreadsBot />} />
         <Route path="/projects/claude-code-sourcemap" element={<ClaudeCodeSourcemap />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 

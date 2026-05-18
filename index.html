@@ -52,6 +52,31 @@
         ]
       }
     </script>
+
+    <!--
+      GitHub Pages SPA path recovery.
+      參考：https://github.com/rafgraph/spa-github-pages
+      1) 接收 404.html redirect 來的 "?/" 路徑，還原成真實 URL。
+      2) 相容舊版 HashRouter 連結：偵測 #/xxx hash 並轉成路徑導向。
+    -->
+    <script>
+      (function () {
+        var l = window.location;
+
+        // 1) 404.html 編碼的 ?/path 還原
+        if (l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function (s) {
+            return s.replace(/~and~/g, '&');
+          }).join('?');
+          window.history.replaceState(null, '', l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+
+        // 2) 舊 HashRouter 連結相容（外部已分享的 #/styles/xxx 仍可用）
+        if (l.hash.startsWith('#/')) {
+          window.history.replaceState(null, '', l.hash.slice(1));
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

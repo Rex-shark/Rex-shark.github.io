@@ -210,11 +210,17 @@ public/
 - [ ] 部署後用 [Open Graph Debugger](https://www.opengraph.xyz/) 驗證（需推 main 觸發 deploy）
 - [ ] 之後做 1200×630 專屬 OG 圖取代 `/me.png`
 
-#### Lv2 — 解 HashRouter SEO 問題（中等工程，下次再做）
+#### Lv2 — 解 HashRouter SEO 問題 ✅ 完成
 
-- [ ] 改 BrowserRouter + GitHub Pages 404.html trick（[spa-github-pages 方案](https://github.com/rafgraph/spa-github-pages)）
-- [ ] sitemap.xml 列出所有路由（`/`、`/gallery`、`/styles/*` × 19、`/projects/*` × 4）
-- [ ] 把 19 個風格頁與所有 project showcase 頁的內部連結從 `#/xxx` 改成 `/xxx`
+- [x] `HashRouter` → `BrowserRouter`（[src/App.tsx](../src/App.tsx)）
+- [x] `public/404.html` 加 GitHub Pages SPA redirect 腳本（編碼路徑進 `?/`）
+- [x] `index.html` 加接收腳本：還原 `?/path` 路徑 + 相容舊 `#/path` hash
+- [x] `sitemap.xml` 補完 25 條路由（首頁 + gallery + 3 projects + 19 styles），全部無 hash
+- [x] react-router 的 `<Link to="/xxx">` 不需改（自動跟 BrowserRouter 工作）
+- [ ] **部署後驗證**：
+  - 直接訪問 `https://rex-shark.github.io/projects/threads-bot` 應正常顯示頁面（不是 404）
+  - 訪問舊 hash URL `https://rex-shark.github.io/#/styles/finalist` 應 redirect 到 `/styles/finalist`
+  - GSC 重新提交 sitemap.xml 後應顯示「23+ 已發現網址」
 
 #### Lv3 — 預先渲染（重工程，視 SEO 需求再評估）
 

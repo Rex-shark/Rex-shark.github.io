@@ -1,13 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- 首頁 -->
   <url>
     <loc>https://rex-shark.github.io/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- 設計實驗室 -->
   <url>
-    <loc>https://rex-shark.github.io/#/gallery</loc>
+    <loc>https://rex-shark.github.io/gallery</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 精選專案 showcase 頁 -->
+  <url>
+    <loc>https://rex-shark.github.io/projects/spring-boot-api</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://rex-shark.github.io/projects/threads-bot</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rex-shark.github.io/projects/claude-code-sourcemap</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- 19 個設計風格實驗 -->
+  <url><loc>https://rex-shark.github.io/styles/minimal-business</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/hand-drawn</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/cyberpunk</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/japanese-minimal</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/vaporwave</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/steampunk</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/macbook</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/swiss-modern</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/pixel-art</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/soft-ui</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/glassmorphism</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/claymorphism</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/micro-interactions</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/bento-grid</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/spatial-ui</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/anti-polish</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/ide-terminal</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/accessible-ethical</loc><priority>0.5</priority></url>
+  <url><loc>https://rex-shark.github.io/styles/github-profile</loc><priority>0.5</priority></url>
 </urlset>
