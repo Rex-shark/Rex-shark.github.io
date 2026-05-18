@@ -113,7 +113,7 @@
 # date
 * 2026-04
 
-# url https://www.facebook.com/groups/datasci.tw/permalink/26677549721895732/?mibextid=wwXIfr&rdid=hezpzJQMY7qOkDpU#
+# url https://github.com/soxoj/maigret
 # title
 * 你的數位足跡安全嗎？用這款萬星 GitHub 工具，一鍵搜出你註冊過的 3000 個網站！
 # tags
@@ -128,3 +128,30 @@
 * AI Agent skills gitHub
 # date
 * 2026-04
+
+# url
+* https://www.youtube.com/watch?v=YcYJbqmDDHw
+# title
+* AI Agent Harness 架構師全解析
+# tags
+* AI Agent
+# date
+* 2026-05
+
+# url
+* https://www.facebook.com/groups/datasci.tw/permalink/26677549721895732/?mibextid=wwXIfr&rdid=hezpzJQMY7qOkDpU#
+# title
+* 想學好 Claude Code 嗎？這五層架構必看
+# tags
+* AI Agent
+# date
+* 2026-05
+
+# url
+* https://tools.wingzero.tw/article/sn/3916?fbclid=IwY2xjawR3G-1leHRuA2FlbQIxMABicmlkETFGdFh2QlRiWVkyNFJORG0zc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHl9D4-rEh1vnwV97HHi7m1u97qdd58l7c6ZY35kcZBBidCFUSQTA2FT_4mOZ_aem_D76aatAxxfaEJtC73t40IQ
+# title
+* Hackingtool：收錄大量資安與滲透測試工具的開源資源庫
+# tags
+* AI Agent github
+# date
+* 2026-05
