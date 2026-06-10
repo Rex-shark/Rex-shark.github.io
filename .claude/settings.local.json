@@ -14,7 +14,9 @@
       "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py:*)",
       "Bash(git status:*)",
       "Bash(git worktree:*)",
-      "Bash(git branch:*)"
+      "Bash(git branch:*)",
+      "Bash(awk 'NR>=263 && /^\\\\]/{print NR\": \"$0; exit} NR>=263{print NR\": \"$0}' src/pages/styles/Finalist.tsx)",
+      "Bash(:)"
     ]
   }
 }

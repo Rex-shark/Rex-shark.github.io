@@ -236,6 +236,7 @@ const TAG_COLOR: Record<string, string> = {
   'AI 生圖': '#F43F5E',
   '筆記': '#F59E0B',
   Java: '#EA580C',
+  '資安': '#DC2626',
 }
 
 function getSourceType(url: string): 'video' | 'repo' | 'article' {
@@ -348,7 +349,7 @@ const articles: Article[] = [
   {
     title: '你的數位足跡安全嗎？用這款萬星 GitHub 工具，一鍵搜出你註冊過的 3000 個網站！',
     url: 'https://github.com/soxoj/maigret',
-    tags: ['GitHub'],
+    tags: ['資安', 'GitHub'],
     date: '2026-04',
   },
   {
@@ -372,8 +373,32 @@ const articles: Article[] = [
   {
     title: 'Hackingtool：收錄大量資安與滲透測試工具的開源資源庫',
     url: 'https://tools.wingzero.tw/article/sn/3916?fbclid=IwY2xjawR3G-1leHRuA2FlbQIxMABicmlkETFGdFh2QlRiWVkyNFJORG0zc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHl9D4-rEh1vnwV97HHi7m1u97qdd58l7c6ZY35kcZBBidCFUSQTA2FT_4mOZ_aem_D76aatAxxfaEJtC73t40IQ',
-    tags: ['AI', 'Agent', 'GitHub'],
+    tags: ['AI', 'Agent', '資安', 'GitHub'],
     date: '2026-05',
+  },
+  {
+    title: '安全研究員被盜號，開源≠安全，供應鏈攻擊有多可怕？ | GitHub 投毒 | npm 投毒',
+    url: 'https://www.youtube.com/watch?v=twC-jwdAL2E',
+    tags: ['AI', '資安'],
+    date: '2026-06',
+  },
+  {
+    title: '現在的 AI，已經能自己當駭客挖漏洞、拿 root 了 | CTF 正在逐漸變成 AI 代理人戰爭',
+    url: 'https://www.youtube.com/watch?v=PRe_Mgyv9fY',
+    tags: ['AI', '資安'],
+    date: '2026-06',
+  },
+  {
+    title: 'Claude 新功能 Dynamic Workflow，一句話開上百個 agent 幫你幹活',
+    url: 'https://www.youtube.com/watch?v=4fpZhuJuIls',
+    tags: ['AI', 'Agent'],
+    date: '2026-06',
+  },
+  {
+    title: '別再亂裝 Skill 了！這 4 組 Skill 才是 Agent 的頂級生產力！',
+    url: 'https://www.youtube.com/watch?v=diU-Nbb1P_c',
+    tags: ['AI', 'Agent', 'Skills'],
+    date: '2026-06',
   },
 ]
 

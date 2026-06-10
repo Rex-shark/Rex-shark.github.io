@@ -117,7 +117,7 @@
 # title
 * 你的數位足跡安全嗎？用這款萬星 GitHub 工具，一鍵搜出你註冊過的 3000 個網站！
 # tags
-* gitHub
+* 資安 gitHub
 # date
 * 2026-04
 
@@ -152,6 +152,42 @@
 # title
 * Hackingtool：收錄大量資安與滲透測試工具的開源資源庫
 # tags
-* AI Agent github
+* AI Agent 資安 github
 # date
 * 2026-05
+
+# url
+* https://www.youtube.com/watch?v=twC-jwdAL2E
+# title
+* 安全研究員被盜號，開源≠安全，供應鏈攻擊有多可怕？ | GitHub 投毒 | npm 投毒
+# tags
+* AI 資安
+# date
+* 2026-06
+
+# url
+* https://www.youtube.com/watch?v=PRe_Mgyv9fY
+# title
+* 現在的 AI，已經能自己當駭客挖漏洞、拿 root 了 | CTF 正在逐漸變成 AI 代理人戰爭
+# tags
+* AI 資安
+# date
+* 2026-06
+
+# url
+* https://www.youtube.com/watch?v=4fpZhuJuIls
+# title
+* Claude 新功能 Dynamic Workflow，一句話開上百個 agent 幫你幹活
+# tags
+* AI Agent
+# date
+* 2026-06
+
+# url
+* https://www.youtube.com/watch?v=diU-Nbb1P_c
+# title
+* 別再亂裝 Skill 了！這 4 組 Skill 才是 Agent 的頂級生產力！
+# tags
+* AI Agent skill
+# date
+* 2026-06

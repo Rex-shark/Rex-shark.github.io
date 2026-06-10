@@ -138,6 +138,7 @@ push 至 `main` 分支後，`.github/workflows/deploy.yml` 會自動觸發：
 | `ai生圖` | `AI 生圖` |
 | `筆記` | `筆記` |
 | `java` | `Java` |
+| `資安` | `資安` |
 
 **Tag 解析規則**：data.md 中 `# tags` 下的字串以**空白拆分**，例如 `AI Agent skills github` → `['AI', 'Agent', 'Skills', 'GitHub']`（4 個 tag）。**不要**把 `AI Agent` 視為單一 tag。
 
