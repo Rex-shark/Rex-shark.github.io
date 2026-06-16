@@ -108,6 +108,7 @@ push 至 `main` 分支後，`.github/workflows/deploy.yml` 會自動觸發：
 目前資料檔：
 - [spec/projects/threads-bot.md](spec/projects/threads-bot.md) — ThreadsBot（本地 LLM 自動發文）
 - [spec/projects/claude-code-sourcemap.md](spec/projects/claude-code-sourcemap.md) — Claude Code 原始碼研究（非官方還原與分析筆記）
+- [spec/projects/ai-chatroom.md](spec/projects/ai-chatroom.md) — ai-chatroom（真人 + AI 夥伴 Luna 的多人即時聊天室；僅聊天室部分，不含 RBAC 後台）
 
 ## 好文分享資料來源
 

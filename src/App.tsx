@@ -32,6 +32,7 @@ import Finalist from '@/pages/styles/Finalist'
 import SpringBootApiDemo from '@/pages/projects/SpringBootApiDemo'
 import ThreadsBot from '@/pages/projects/ThreadsBot'
 import ClaudeCodeSourcemap from '@/pages/projects/ClaudeCodeSourcemap'
+import AiChatroom from '@/pages/projects/AiChatroom'
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
         <Route path="/projects/spring-boot-api" element={<SpringBootApiDemo />} />
         <Route path="/projects/threads-bot" element={<ThreadsBot />} />
         <Route path="/projects/claude-code-sourcemap" element={<ClaudeCodeSourcemap />} />
+        <Route path="/projects/ai-chatroom" element={<AiChatroom />} />
       </Routes>
     </BrowserRouter>
   )

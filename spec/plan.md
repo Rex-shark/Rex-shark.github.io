@@ -143,6 +143,7 @@ public/
 | Spring Boot API 範例 | `/projects/spring-boot-api` | （內嵌於頁面） | ✅ 完成 |
 | ThreadsBot | `/projects/threads-bot` | [spec/projects/threads-bot.md](projects/threads-bot.md) | ✅ 完成 |
 | Claude Code 原始碼研究 | `/projects/claude-code-sourcemap` | [spec/projects/claude-code-sourcemap.md](projects/claude-code-sourcemap.md) | 🚧 卡片完成，showcase 頁待建 |
+| ai-chatroom | `/projects/ai-chatroom` | [spec/projects/ai-chatroom.md](projects/ai-chatroom.md) | ✅ 完成（spec + 4 截圖 + 首頁卡片 + showcase 頁） |
 
 ---
 
@@ -233,5 +234,7 @@ public/
 - [ ] 補全 [spec/info.md](info.md) 的 `（待補）` 欄位（一句話自介、年資、聯絡偏好）
 - [ ] 把 [ThreadsBot tutorial 長文](https://github.com/Rex-shark/ThreadsBot/blob/master/docs/local-llm-threads-tutorial.md) 搬成站內 `/blog/local-llm-threads-tutorial`
 - [ ] 建 `/blog` 列表頁與文章詳情頁範本
+- [ ] **部落格草稿**（待 `/blog` 完成後上站）：
+  - [ ] [docs/blog/ai-chatroom.md](../docs/blog/ai-chatroom.md) — ai-chatroom 技術文（草稿；上站時補架構圖、確認 demo、調圖片路徑）
 - [ ] 加入暗色模式切換功能
 - [ ] 效能優化（圖片壓縮、lazy loading、bundle 拆分 — 目前 750KB）

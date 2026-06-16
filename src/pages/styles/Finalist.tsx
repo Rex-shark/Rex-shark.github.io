@@ -224,6 +224,15 @@ const projects: Project[] = [
     href: 'https://github.com/Rex-shark/claude-code-sourcemap',
     to: '/projects/claude-code-sourcemap',
   },
+  {
+    title: 'ai-chatroom',
+    desc: '真人與 AI 夥伴 Luna 🌙 同房即時聊天。Spring Boot 3 + Spring AI + WebSocket/STOMP，AI 以群組成員身分自主判斷回應或沉默。',
+    tags: ['Spring AI', 'WebSocket', 'React 19'],
+    color: '#0EA5E9',
+    stars: 0,
+    href: 'https://github.com/Rex-shark/ai-chatroom',
+    to: '/projects/ai-chatroom',
+  },
 ]
 
 /* ─── 好文分享：tag 配色與來源類型偵測 ─── */
