@@ -191,3 +191,21 @@
 * AI Agent skill
 # date
 * 2026-06
+
+# url
+* https://www.youtube.com/watch?v=xzrvAERmvRk
+# title
+* Cross Model Review 教學：自動化串接 Claude Code 跟 Codex
+# tags
+* AI
+# date
+* 2026-06
+
+# url
+* https://github.com/chatwoot/chatwoot
+# title
+* Chatwoot
+# tags
+* AI github
+# date
+* 2026-06

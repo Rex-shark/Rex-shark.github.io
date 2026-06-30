@@ -409,6 +409,18 @@ const articles: Article[] = [
     tags: ['AI', 'Agent', 'Skills'],
     date: '2026-06',
   },
+  {
+    title: 'Cross Model Review 教學：自動化串接 Claude Code 跟 Codex',
+    url: 'https://www.youtube.com/watch?v=xzrvAERmvRk',
+    tags: ['AI'],
+    date: '2026-06',
+  },
+  {
+    title: 'Chatwoot',
+    url: 'https://github.com/chatwoot/chatwoot',
+    tags: ['AI', 'GitHub'],
+    date: '2026-06',
+  },
 ]
 
 const aboutCards = [

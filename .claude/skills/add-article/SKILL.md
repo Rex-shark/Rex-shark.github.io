@@ -45,7 +45,29 @@ spec/article/data-pending.md  ──(解析+正規化)──>  Finalist.tsx 的 
 
 每筆 entry 必有 4 個欄位：`url` / `title` / `tags` / `date`。任一缺漏就停下來請使用者補上（**不可編造**）。
 
-### 2. 正規化欄位
+### 2. URL 去重檢查（重複則停下）
+
+逐筆把待上架的 URL 與**既有資料**比對，避免重複上架。比對來源**兩者都要查**：
+
+1. `spec/article/data.md` 裡所有 `* https://...` 的 URL
+2. `src/pages/styles/Finalist.tsx` 的 `articles[]` 中所有 `url:` 欄位
+
+**比對用「正規化 URL」**（只用於比對，實際寫入仍保留原始 URL）：
+
+- 去掉結尾斜線；
+- 去掉純追蹤參數：`fbclid`、`utm_*`、`si`、`mibextid`、`rdid`、`gclid` 等；
+- **YouTube** 以影片 id 為準（`watch?v=<id>` 或 `youtu.be/<id>` 視為同一支）；
+- **GitHub** 以 `github.com/<owner>/<repo>` 為準（忽略結尾 `/`、`.git`、子路徑）。
+
+判定與處理：
+
+- 正規化後**與既有任一 URL 相同** → 視為重複 → **停下**，列出是哪一筆 pending 撞上哪一筆既有，請使用者選擇：**跳過該筆 / 覆寫既有 / 中止整批**。不要自行決定。
+- 同一批 pending 內部若彼此重複 → 同樣停下回報，請使用者確認保留哪一筆。
+- 全部都不重複 → 進入下一步。
+
+> 快速查法：`grep -F "<影片id或 owner/repo>" spec/article/data.md src/pages/styles/Finalist.tsx`
+
+### 3. 正規化欄位
 
 依 `CLAUDE.md` 的「好文分享資料來源」章節規則：
 
@@ -76,7 +98,7 @@ spec/article/data-pending.md  ──(解析+正規化)──>  Finalist.tsx 的 
 - 轉換後的**繁中版本**同時寫入 `Finalist.tsx` 的 `articles[]` **與** `data.md`，兩處一致，不保留簡體原文。
 - 若某些專有名詞或語境不確定如何轉，**停下來請使用者確認**，不要硬翻。
 
-### 3. 偵測新 tag
+### 4. 偵測新 tag
 
 把正規化後的 tag 集合與 `src/pages/styles/Finalist.tsx` 中的 `TAG_COLOR` 比對：
 
@@ -86,7 +108,7 @@ spec/article/data-pending.md  ──(解析+正規化)──>  Finalist.tsx 的 
   2. 確認正規化後的呈現名稱（例如 `docker` → `Docker`）
   3. 同意後才繼續
 
-### 4. 寫入 `src/pages/styles/Finalist.tsx`
+### 5. 寫入 `src/pages/styles/Finalist.tsx`
 
 把每筆新文章**附加到 `articles[]` 陣列的最末端**（保持與 `data.md` 順序一致）。格式：
 
@@ -101,7 +123,7 @@ spec/article/data-pending.md  ──(解析+正規化)──>  Finalist.tsx 的 
 
 若有新 tag 已在 step 3 確認，順手把它加進 `TAG_COLOR` 物件並指派色號。
 
-### 5. 附加到 `spec/article/data.md`
+### 6. 附加到 `spec/article/data.md`
 
 把每筆 entry 以**標準格式**（步驟 1 第一種）附加到 `data.md` 末尾，每筆前加一個空白行作為分隔。順手把格式統一化（緊湊變體展開成標準格式）。
 
@@ -119,15 +141,15 @@ spec/article/data-pending.md  ──(解析+正規化)──>  Finalist.tsx 的 
 * 2026-05
 ```
 
-### 6. 清空 `spec/article/data-pending.md`
+### 7. 清空 `spec/article/data-pending.md`
 
 寫入空檔（保留檔案、清掉內容）。**不要刪除檔案本身**，使用者之後會再用。
 
-### 7. 驗證
+### 8. 驗證
 
 執行 `npm run build` 確認 TypeScript / Vite 通過。若失敗，回滾並回報錯誤。
 
-### 8. 完成回報
+### 9. 完成回報
 
 簡短摘要：
 - 處理了幾筆文章
@@ -142,7 +164,8 @@ spec/article/data-pending.md  ──(解析+正規化)──>  Finalist.tsx 的 
 | `data-pending.md` 完全空 | 回報「目前沒有待上架文章」，不做任何修改 |
 | 某筆 entry 缺欄位 | 停下，請使用者補上，不繼續 |
 | 偵測到新 tag | 停下，請使用者指派顏色 + 同步 CLAUDE.md，不繼續 |
-| URL 重複（已存在於 data.md） | 停下，請使用者確認是要跳過、覆寫、還是中止 |
+| URL 重複（已存在於 data.md 或 Finalist.tsx，見步驟 2） | 停下，列出撞到哪一筆，請使用者確認跳過 / 覆寫 / 中止 |
+| 同一批 pending 內部 URL 重複 | 停下回報，請使用者確認保留哪一筆 |
 | Build 失敗 | 回滾 Finalist.tsx + data.md 變更，pending 不清空 |
 
 ## 不可做的事
