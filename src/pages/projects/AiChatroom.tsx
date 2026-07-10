@@ -74,8 +74,8 @@ const features = [
   },
   {
     icon: ImagePlus,
-    title: 'Luna 情緒發圖（Function Calling）',
-    desc: 'Luna 開心 / 生氣時可透過 Tool 主動發情緒圖片，同情緒多張隨機挑一張，以 Markdown 圖片附在回覆。素材放 classpath，加圖免改碼，泡泡與多人房共用。',
+    title: 'Luna 情緒圖庫（看心情發圖）',
+    desc: 'Function Calling 工具 sendLunaImage(emotion, intent) 依當下情緒/情境挑圖：emotion 主鍵（15 種）+ intent 次鍵（17 種），子集為空退回只比對情緒，最終隨機挑一張。圖庫 89 張、metadata.json 驅動，加圖免改碼；泡泡與多人房共用。',
     color: '#F43F5E',
   },
 ]
@@ -86,7 +86,7 @@ const endpoints = [
   { method: 'POST', methodColor: '#10B981', path: '/api/v1/rooms', desc: '開房，回 6 碼房號' },
   { method: 'GET', methodColor: '#3B82F6', path: '/api/v1/rooms/{code}/exists', desc: '房號是否存在' },
   { method: 'PUT', methodColor: '#F59E0B', path: '/api/v1/rooms/{code}/persona', desc: '房主更新 Luna 人設' },
-  { method: 'GET', methodColor: '#3B82F6', path: '/api/v1/ai-images/**', desc: 'Luna 情緒圖片（公開）' },
+  { method: 'GET', methodColor: '#3B82F6', path: '/api/v1/luna-images/{file}.webp', desc: 'Luna 情緒圖片（公開靜態）' },
   { method: 'WS', methodColor: '#8B5CF6', path: '/ws → /topic/room/{code}', desc: '多人房 STOMP（join/send/leave）' },
 ]
 
@@ -282,6 +282,24 @@ export default function AiChatroom() {
               src="/projects/ai-chatroom/rooms-lobby.png"
               alt="多人聊天室開房表單"
               className="rounded-2xl border border-slate-200 w-full hover:-translate-y-1 transition-transform duration-300"
+            />
+          </motion.div>
+
+          {/* Luna 情緒圖庫實例 */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="mt-8"
+          >
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">
+              Luna 依情緒挑圖（emotion：embarrassed × intent：affection）
+            </p>
+            <img
+              src="/projects/ai-chatroom/luna-emotion-image.png"
+              alt="Luna 被誇獎後害羞，自主發出對應情緒的圖片"
+              className="rounded-2xl border border-slate-200 w-full max-w-md mx-auto hover:-translate-y-1 transition-transform duration-300"
             />
           </motion.div>
         </div>

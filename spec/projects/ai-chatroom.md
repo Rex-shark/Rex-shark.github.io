@@ -121,9 +121,10 @@ route: /projects/ai-chatroom
 - **安全**：人設以三引號結構化隔離 + 後端固定安全準則（防 prompt injection）。
 - **icon 建議**：`UserCog` / `Settings2`
 
-### 7. Luna 情緒發圖（Function Calling）
-- **說明**：Luna 可透過 Tool（`sendHappyImage` / `sendCuteAngry1Image`）在開心 / 生氣時主動發情緒圖片，同情緒多張時隨機挑一張，以 Markdown 圖片附在回覆。
-- **機制**：圖片 Tool 把選中的 URL 登記到 `ToolContext` 收集清單 → 串流結束後 `![](url)` 附加；泡泡與多人房共用同一機制。素材放 classpath `/ai-images/<情緒>/`，加圖免改碼。
+### 7. Luna 情緒圖庫（看心情發圖）
+- **說明**：Luna 依當下情緒/情境主動挑一張對應的圖貼進對話。單一 Function Calling 工具 `sendLunaImage(emotion, intent)`，兩維度挑圖：**emotion 主鍵（15 種）** + **intent 次鍵（17 種）**。目前圖庫 **89 張、涵蓋 15 種情緒**。
+- **挑圖演算法**（`LunaImageLibrary.pick`）：先用 emotion 取候選（無對應則回空、不發圖）→ 若給 intent 優先取同時符合的子集、子集為空退回只比對 emotion → 最終候選隨機挑一張。**優雅降級**：metadata 壞了或圖庫空，聊天主流程照跑。
+- **機制**：工具挑到圖 → URL 進 `ToolContext` 收集清單 → 串流結束後 `![](url)` 附加；泡泡與多人房共用、前端零改動。圖為 webp、`metadata.json` 驅動，加圖只要丟檔 + 更新 metadata、**不用改 Java**（圖由外部 `create-image-luna` 工廠生成交付）。
 - **注意**：依賴模型支援 Function Calling / Tool（Gemini 完整支援；Ollama 須選支援 tools 的模型）。
 - **icon 建議**：`ImagePlus` / `Smile`
 
@@ -138,7 +139,7 @@ route: /projects/ai-chatroom
 | POST | `/api/v1/rooms` | 開房，回 6 碼房號 |
 | GET | `/api/v1/rooms/{code}/exists` | 房號是否存在 |
 | PUT | `/api/v1/rooms/{code}/persona` | 房主更新 Luna 角色人設 |
-| GET | `/api/v1/ai-images/**` | Luna 情緒圖片（公開靜態資源） |
+| GET | `/api/v1/luna-images/{file}.webp` | Luna 情緒圖片（公開靜態資源） |
 | WS | `/ws` → `/topic/room/{code}` | 多人房 STOMP（join / send / leave） |
 
 **STOMP 目的地**：`/app/room/{code}/{join,send,leave}`
@@ -187,6 +188,9 @@ route: /projects/ai-chatroom
 | 2 | `ai-bubble.png` | AI 泡泡一對一：Luna 回覆「Rex 嗨～一句話自我介紹」實際對話 | 「AI 泡泡」功能卡片旁 |
 | 3 | `rooms-lobby.png` | 多人聊天室大廳「開房」表單（暱稱 + Luna 人設 + 建立房間） | 「多人聊天室」功能段落 |
 | 4 | `room-chat.png` | 房內實況：房號 / 在線成員（Luna + Rex 房主）/ 對象 chip / Luna 開場回覆 | ⭐ 多人房最強成果證明 |
+| 5 | `luna-emotion-image.png` | Luna 情緒圖庫實例：Rex 誇「你今天超可愛」，Luna 害羞回覆並自主發出對應情緒圖（emotion：embarrassed × intent：affection） | 「情緒圖庫」功能段落 |
+
+> 註：`luna-emotion-image.png` 為使用者實際操作截圖（非 puppeteer 擷取），已放入同目錄。
 
 ### 截圖樣式建議
 

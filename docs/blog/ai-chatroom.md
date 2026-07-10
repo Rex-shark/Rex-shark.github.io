@@ -84,17 +84,40 @@ repo: https://github.com/Rex-shark/ai-chatroom
 
 ---
 
-## 五、Luna 會「發情緒圖」：Function Calling 的小巧思
+## 五、Luna 會「看心情發圖」：情緒圖庫子系統
 
-Luna 開心或生氣時，可以主動發一張情緒圖片。實作是把發圖包成 Spring AI 的 Tool（`sendHappyImage` / `sendCuteAngry1Image`）：
+聊天不只有文字。Luna 會**依當下的情緒與情境，主動挑一張對應的圖**貼進對話——這是最近把原本寫死的「開心／生氣兩張圖」升級成一套**情緒圖庫子系統**後的成果。
 
-1. LLM 自主呼叫圖片 Tool；
-2. Tool 從該情緒的圖庫**隨機挑一張**，把 URL 登記進 `ToolContext` 的收集清單；
-3. 串流結束後，後端把選中的 URL 以 `![](url)` Markdown 附加到回覆。
+先看效果：Rex 說「你今天超可愛」，Luna 害羞地回「欸～突然這樣誇獎，人家會害羞啦！」，並自己配上一張害羞表情的圖：
 
-圖片素材放在 classpath `/ai-images/<情緒>/`，同一情緒要加圖只要丟檔、**不用改程式**。泡泡和多人房共用同一套機制。
+![Luna 依情緒發圖](/projects/ai-chatroom/luna-emotion-image.png)
 
-> ⚠️ 這功能依賴模型支援 Function Calling。Gemini 完整支援；Ollama 端若選了不支援 tools 的模型，Luna 就不會觸發發圖——這是正常行為，不是 bug。
+### 一個工具、兩個維度挑圖
+
+關鍵是一個 Function Calling 工具 `sendLunaImage(emotion, intent)`。LLM 不直接吐圖片，而是「表達我想發一張符合此刻情緒的圖」，帶兩個維度：
+
+- **emotion（主鍵，15 種）**：`happy` / `shy` / `teasing` / `angry` / `embarrassed` / `sleepy` / `confused` / `worried` / `surprised` / `sad` …
+- **intent（次鍵，17 種）**：`greeting` / `affection` / `comfort` / `celebration` / `encouragement` / `apology` / `farewell` …
+
+後端 `LunaImageLibrary.pick(emotion, intent)` 的挑圖邏輯：
+
+1. 先用 `emotion` 取候選；**沒有對應情緒就回空、不發圖**（不硬湊別的情緒）。
+2. 若也給了 `intent`，優先取同時符合的子集；**子集為空就退回只比對 emotion**。
+3. 在最終候選裡**隨機挑一張**。
+
+上面那張圖，就是 Luna 判斷此刻是 `embarrassed`（害羞）× `affection`（被示好）而挑出來的。目前圖庫 **89 張、涵蓋 15 種情緒**。
+
+### 資料驅動，加圖免改程式
+
+整套圖庫是 **`metadata.json` 驅動**的：每張 webp 圖在 metadata 裡登記 `emotion / intent / intensity / tags / note` 等欄位。圖片由另一個「圖片工廠」專案 `create-image-luna` 生成、最佳化成 webp 後交付；ai-chatroom 只當消費端，放進 classpath 打包，經 `GET /api/v1/luna-images/<檔名>.webp` 提供。
+
+要加新圖，只要丟 webp + 更新 metadata、重新打包，**完全不用改 Java 程式碼**。
+
+### 怎麼送到前端（沿用同一套機制）
+
+LLM 串流是純文字，圖片走「收集清單 + Markdown 附加」：工具挑到圖 → URL 進 `ToolContext` 收集清單 → 串流結束後以 `![](url)` 附加到回覆 → 前端 `react-markdown` + `rehype-sanitize` 渲染。**泡泡與多人房共用同一機制，前端零改動。**
+
+> ⚠️ 依賴模型支援 Function Calling（Gemini 完整支援；Ollama 端需選支援 tools 的模型）。而且做了**優雅降級**：就算 `metadata.json` 壞了或圖庫為空，`pick` 回空，聊天主流程照跑，只是 Luna 不發圖而已。
 
 ---
 
@@ -116,7 +139,7 @@ ai-chatroom 真正想驗證的一句話是：**AI 可以是「群組裡的一個
 - 用 `[SKIP]` + Redis 佇列序列化，讓 Luna 自主又不打架；
 - 把「對誰說話」做成有記憶的一級互動；
 - Spring AI 抽象雙 Provider，本地開發、雲端上 Tool；
-- Function Calling 發圖、結構化人設隔離補上體驗與安全。
+- 情緒圖庫（`sendLunaImage`）讓 Luna 看心情發圖、結構化人設隔離，補上體驗與安全。
 
 > 原始碼：<https://github.com/Rex-shark/ai-chatroom>
 
