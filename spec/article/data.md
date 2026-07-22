@@ -209,3 +209,30 @@
 * AI github
 # date
 * 2026-06
+
+# url
+* https://www.youtube.com/watch?v=JPGo_5fczaA
+# title
+* 模型越強，Superpowers 和 MattPocock-Skills 應該刪除誰？
+# tags
+* AI Agent skill
+# date
+* 2026-07
+
+# url
+* https://www.youtube.com/watch?v=sS-a64vMzZc
+# title
+* AI Agent的RAG與長期記憶是如何實現的？
+# tags
+* AI Agent skill
+# date
+* 2026-07
+
+# url
+* https://www.facebook.com/groups/1224997379198346/permalink/1350297953334954/?mibextid=wwXIfr&rdid=8AiDGGVn4NFxFiLp#
+# title
+* 生產環境選模型：Opus 4.6 / 4.7 / 4.8 / Fable 5 穩定度實測觀察
+# tags
+* AI Agent
+# date
+* 2026-07
