@@ -65,7 +65,7 @@ npm run preview   # 預覽 production 建置結果
 ### 元件慣例
 - shadcn/ui 元件放在 `src/components/ui/`，透過 `npx shadcn add <component>` 新增
 - 樣式合併工具：`src/lib/utils.ts` 匯出的 `cn()`（`clsx` + `tailwind-merge`）
-- Icon 使用 Lucide React；SVG 精靈檔位於 `public/icons.svg`
+- Icon 使用 Lucide React
 - 風格頁面中的 GitHub Icon 使用自訂 `GithubIcon` SVG 元件（定義在各風格頁面內）
 
 ## 部署
@@ -109,6 +109,7 @@ push 至 `main` 分支後，`.github/workflows/deploy.yml` 會自動觸發：
 - [spec/projects/threads-bot.md](spec/projects/threads-bot.md) — ThreadsBot（本地 LLM 自動發文）
 - [spec/projects/claude-code-sourcemap.md](spec/projects/claude-code-sourcemap.md) — Claude Code 原始碼研究（非官方還原與分析筆記）
 - [spec/projects/ai-chatroom.md](spec/projects/ai-chatroom.md) — ai-chatroom（真人 + AI 夥伴 Luna 的多人即時聊天室；僅聊天室部分，不含 RBAC 後台）
+- [spec/projects/rpgmaker-character-forge.md](spec/projects/rpgmaker-character-forge.md) — RPG Maker Character Forge（Codex Agent + ComfyUI 生成 RPG Maker 角色素材的 pipeline）
 
 ## 好文分享資料來源
 

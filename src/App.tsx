@@ -33,6 +33,7 @@ import SpringBootApiDemo from '@/pages/projects/SpringBootApiDemo'
 import ThreadsBot from '@/pages/projects/ThreadsBot'
 import ClaudeCodeSourcemap from '@/pages/projects/ClaudeCodeSourcemap'
 import AiChatroom from '@/pages/projects/AiChatroom'
+import RpgmakerCharacterForge from '@/pages/projects/RpgmakerCharacterForge'
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
         <Route path="/projects/threads-bot" element={<ThreadsBot />} />
         <Route path="/projects/claude-code-sourcemap" element={<ClaudeCodeSourcemap />} />
         <Route path="/projects/ai-chatroom" element={<AiChatroom />} />
+        <Route path="/projects/rpgmaker-character-forge" element={<RpgmakerCharacterForge />} />
       </Routes>
     </BrowserRouter>
   )

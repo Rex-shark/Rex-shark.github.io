@@ -83,7 +83,7 @@ public/
 
 ## 精選專案
 
-3 個專案，全部呈現在首頁專案區塊。**已移除「系統分析設計教學」**。
+6 個專案，全部呈現在首頁專案區塊。**已移除「系統分析設計教學」**。
 
 | 專案 | 卡片描述 | 點擊行為 | Showcase 頁 | 狀態 |
 |------|----------|----------|-------------|------|
@@ -91,6 +91,8 @@ public/
 | **Spring Boot API 範例** | RESTful API 範例，含 JWT 認證、角色控管、JPA 資料存取層。 | 進入 `/projects/spring-boot-api` | ✅ 已有 | ✅ 完成 |
 | **ThreadsBot** | 本地 LLM 自動爬新聞、改寫成 Threads 貼文，Spring Boot 3 + Spring AI + Ollama，零 API 成本。 | 進入 `/projects/threads-bot` | ✅ 已有 | ✅ 完成 |
 | **Claude Code 原始碼研究** | 從 sourcemap 還原 Claude Code v2.1.88 並寫成 5 篇深度分析筆記。非官方研究，版權歸 Anthropic。 | 進入 `/projects/claude-code-sourcemap` | 待做 | 🚧 卡片已上，showcase 頁待建 |
+| **ai-chatroom** | 真人與 AI 夥伴 Luna 🌙 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默。 | 進入 `/projects/ai-chatroom` | ✅ 已有 | ✅ 完成 |
+| **RPG Maker Character Forge** | 一張行走圖生出整套 RPG Maker 角色素材（立繪 / 16 表情 face / 敵人戰鬥圖），Codex Agent + ComfyUI。 | 進入 `/projects/rpgmaker-character-forge` | ✅ 已有 | ✅ 完成 |
 
 ---
 
@@ -143,7 +145,8 @@ public/
 | Spring Boot API 範例 | `/projects/spring-boot-api` | （內嵌於頁面） | ✅ 完成 |
 | ThreadsBot | `/projects/threads-bot` | [spec/projects/threads-bot.md](projects/threads-bot.md) | ✅ 完成 |
 | Claude Code 原始碼研究 | `/projects/claude-code-sourcemap` | [spec/projects/claude-code-sourcemap.md](projects/claude-code-sourcemap.md) | 🚧 卡片完成，showcase 頁待建 |
-| ai-chatroom | `/projects/ai-chatroom` | [spec/projects/ai-chatroom.md](projects/ai-chatroom.md) | ✅ 完成（spec + 4 截圖 + 首頁卡片 + showcase 頁） |
+| ai-chatroom | `/projects/ai-chatroom` | [spec/projects/ai-chatroom.md](projects/ai-chatroom.md) | ✅ 完成（spec + 5 截圖 + 首頁卡片 + showcase 頁） |
+| RPG Maker Character Forge | `/projects/rpgmaker-character-forge` | [spec/projects/rpgmaker-character-forge.md](projects/rpgmaker-character-forge.md) | ✅ 完成（spec + 3 截圖 + 首頁卡片 + showcase 頁） |
 
 ---
 

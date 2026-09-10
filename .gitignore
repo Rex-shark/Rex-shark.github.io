@@ -12,13 +12,16 @@ dist
 dist-ssr
 *.local
 
-# Claude Code worktrees
+# Claude Code
 .claude/worktrees/
+# 本機權限記錄，會累積本機路徑與指令，不進版控（settings.json 才是共享的）
+.claude/settings.local.json
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
+*.iml
 .DS_Store
 *.suo
 *.ntvs*

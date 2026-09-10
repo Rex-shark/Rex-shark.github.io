@@ -233,6 +233,15 @@ const projects: Project[] = [
     href: 'https://github.com/Rex-shark/ai-chatroom',
     to: '/projects/ai-chatroom',
   },
+  {
+    title: 'RPG Maker Character Forge',
+    desc: '一張行走圖生出整套 RPG Maker 角色素材：立繪、16 表情 face 圖、敵人戰鬥圖。Codex Agent 組提示詞 + ComfyUI 去背切割，產出還會自我驗收。',
+    tags: ['Python', 'ComfyUI', 'Codex Agent'],
+    color: '#D97706',
+    stars: 0,
+    href: 'https://github.com/Rex-shark/rpgmaker-character-forge',
+    to: '/projects/rpgmaker-character-forge',
+  },
 ]
 
 /* ─── 好文分享：tag 配色與來源類型偵測 ─── */
