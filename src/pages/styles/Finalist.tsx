@@ -9,7 +9,7 @@ import {
   Database,
   Server,
   Wrench,
-  Star,
+  Bot,
   ArrowRight,
   Calendar,
   BookOpen,
@@ -17,6 +17,8 @@ import {
   FileText,
 } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
+import type { SkillGroupKey } from '@/data/profile'
 
 /* ─── GitHub Icon ─── */
 function GithubIcon({ className }: { className?: string }) {
@@ -149,100 +151,23 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   )
 }
 
-/* ─── 資料 ─── */
-const skillGroups = [
-  {
-    label: '後端',
-    icon: Server,
-    color: '#6366F1',
-    skills: ['Java', 'Spring Boot', 'Spring Security', 'JPA/Hibernate'],
-  },
-  {
-    label: '前端',
-    icon: Code2,
-    color: '#8B5CF6',
-    skills: ['React', 'TypeScript', 'Tailwind CSS'],
-  },
-  {
-    label: '資料庫 / DevOps',
-    icon: Database,
-    color: '#06B6D4',
-    skills: ['PostgreSQL', 'Docker', 'GitHub Actions'],
-  },
-  {
-    label: '系統設計',
-    icon: Wrench,
-    color: '#10B981',
-    skills: ['系統分析', 'UML', 'ERD'],
-  },
-]
-
-interface Project {
-  title: string
-  desc: string
-  tags: string[]
-  color: string
-  stars: number
-  href: string
-  to?: string
+/* ─── 資料（內容來自 src/data/profile.ts，這裡只補上本頁的 icon 與配色） ─── */
+const SKILL_GROUP_STYLE: Record<SkillGroupKey, { icon: typeof Server; color: string }> = {
+  backend: { icon: Server, color: '#6366F1' },
+  frontend: { icon: Code2, color: '#8B5CF6' },
+  data: { icon: Database, color: '#06B6D4' },
+  ai: { icon: Bot, color: '#EC4899' },
+  design: { icon: Wrench, color: '#10B981' },
 }
 
-const projects: Project[] = [
-  {
-    title: '個人網站',
-    desc: '用 20 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。React 19 + Vite 8 + Tailwind v4，部署於 GitHub Pages。',
-    tags: ['React', 'TypeScript', 'Tailwind CSS'],
-    color: '#6366F1',
-    stars: 0,
-    href: 'https://github.com/Rex-shark/Rex-shark.github.io',
-    to: '/gallery',
-  },
-  {
-    title: 'Spring Boot API 範例',
-    desc: '完整的 RESTful API 範例，包含 JWT 認證、角色控管、JPA 資料存取層。',
-    tags: ['Java', 'Spring Boot', 'PostgreSQL'],
-    color: '#8B5CF6',
-    stars: 0,
-    href: 'https://github.com/Rex-shark',
-    to: '/projects/spring-boot-api',
-  },
-  {
-    title: 'ThreadsBot',
-    desc: '本地 LLM 自動爬新聞、改寫成 Threads 貼文。Spring Boot 3 + Spring AI + Ollama，零 API 成本。',
-    tags: ['Java', 'Spring AI', 'Ollama'],
-    color: '#10B981',
-    stars: 0,
-    href: 'https://github.com/Rex-shark/ThreadsBot',
-    to: '/projects/threads-bot',
-  },
-  {
-    title: 'Claude Code 原始碼研究',
-    desc: '從 sourcemap 還原 Claude Code v2.1.88，拆解 6 層架構與 14 區塊 System Prompt 設計，整理成 5 篇深度筆記。非官方研究，版權歸 Anthropic。',
-    tags: ['TypeScript', 'Research', 'AI Agent'],
-    color: '#9333EA',
-    stars: 0,
-    href: 'https://github.com/Rex-shark/claude-code-sourcemap',
-    to: '/projects/claude-code-sourcemap',
-  },
-  {
-    title: 'ai-chatroom',
-    desc: '真人與 AI 夥伴 Luna 🌙 同房即時聊天。Spring Boot 3 + Spring AI + WebSocket/STOMP，AI 以群組成員身分自主判斷回應或沉默。',
-    tags: ['Spring AI', 'WebSocket', 'React 19'],
-    color: '#0EA5E9',
-    stars: 0,
-    href: 'https://github.com/Rex-shark/ai-chatroom',
-    to: '/projects/ai-chatroom',
-  },
-  {
-    title: 'RPG Maker Character Forge',
-    desc: '一張行走圖生出整套 RPG Maker 角色素材：立繪、16 表情 face 圖、敵人戰鬥圖。Codex Agent 組提示詞 + ComfyUI 去背切割，產出還會自我驗收。',
-    tags: ['Python', 'ComfyUI', 'Codex Agent'],
-    color: '#D97706',
-    stars: 0,
-    href: 'https://github.com/Rex-shark/rpgmaker-character-forge',
-    to: '/projects/rpgmaker-character-forge',
-  },
-]
+const skillGroups = sharedSkillGroups.map((g) => ({ ...g, ...SKILL_GROUP_STYLE[g.key] }))
+
+const PROJECT_COLORS = ['#6366F1', '#10B981', '#9333EA', '#0EA5E9', '#D97706']
+
+const projects = sharedProjects.map((p, i) => ({
+  ...p,
+  color: PROJECT_COLORS[i % PROJECT_COLORS.length],
+}))
 
 /* ─── 好文分享：tag 配色與來源類型偵測 ─── */
 const TAG_COLOR: Record<string, string> = {
@@ -846,9 +771,11 @@ export default function Finalist() {
           >
             {skillGroups.map((group) => (
               <motion.div
-                key={group.label}
+                key={group.key}
                 variants={itemVariants}
-                className="bg-slate-50 rounded-2xl p-5 border border-slate-100 hover:border-indigo-100 transition-colors duration-200"
+                className={`bg-slate-50 rounded-2xl p-5 border border-slate-100 hover:border-indigo-100 transition-colors duration-200 ${
+                  group.key === 'ai' ? 'order-last sm:col-span-2 lg:col-span-4' : ''
+                }`}
               >
                 <div className="flex items-center gap-2 mb-4">
                   <div
@@ -886,9 +813,10 @@ export default function Finalist() {
             <p className="text-slate-400 text-sm">懸停卡片，感受 3D 傾斜效果</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {projects.map((p) => {
-              const cardInner = (
-                <div className="h-full bg-white rounded-2xl border border-slate-100 p-6 shadow-sm hover:shadow-lg hover:shadow-indigo-100 transition-shadow duration-300 group">
+            {projects.map((p) => (
+              <TiltCard key={p.slug} className="h-full">
+                {/* 整張卡由標題的 Link::after 撐滿；repo 連結放在 Link 之外，避免巢狀 <a> */}
+                <div className="relative h-full bg-white rounded-2xl border border-slate-100 p-6 shadow-sm hover:shadow-lg hover:shadow-indigo-100 transition-shadow duration-300 group">
                   <div className="flex items-start justify-between mb-4">
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center"
@@ -896,21 +824,15 @@ export default function Finalist() {
                     >
                       <GithubIcon className="w-5 h-5" />
                     </div>
-                    <div className="flex items-center gap-1 text-slate-400 text-xs">
-                      <Star size={12} />
-                      {p.stars}
-                    </div>
                   </div>
-                  <h3
-                    className={`font-bold text-slate-900 mb-2 ${p.to ? 'group-hover:text-indigo-600 transition-colors' : ''}`}
-                  >
-                    {p.title}
-                    {p.to && (
+                  <h3 className="font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
+                    <Link to={p.to} className="cursor-pointer after:absolute after:inset-0 after:rounded-2xl">
+                      {p.title}
                       <ArrowRight
                         size={14}
                         className="inline-block ml-1 -mt-0.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
                       />
-                    )}
+                    </Link>
                   </h3>
                   <p className="text-slate-500 text-sm leading-relaxed mb-4">{p.desc}</p>
                   <div className="flex items-center justify-between">
@@ -929,26 +851,15 @@ export default function Finalist() {
                       href={p.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-slate-300 hover:text-indigo-500 transition-colors cursor-pointer"
-                      onClick={(e) => e.stopPropagation()}
+                      aria-label={`${p.title} 的 GitHub 原始碼`}
+                      className="relative z-10 text-slate-300 hover:text-indigo-500 transition-colors cursor-pointer"
                     >
                       <ExternalLink size={14} />
                     </a>
                   </div>
                 </div>
-              )
-              return (
-                <TiltCard key={p.title} className="h-full">
-                  {p.to ? (
-                    <Link to={p.to} className="block h-full cursor-pointer">
-                      {cardInner}
-                    </Link>
-                  ) : (
-                    cardInner
-                  )}
-                </TiltCard>
-              )
-            })}
+              </TiltCard>
+            ))}
           </div>
         </div>
       </motion.section>
@@ -991,7 +902,7 @@ export default function Finalist() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <RippleButton
               variant="primary"
-              onClick={() => window.open('mailto:rexrex10050@gmail.com')}
+              onClick={() => window.open(`mailto:${profile.email}`)}
             >
               <span className="flex items-center gap-2">
                 <Mail size={16} />
@@ -999,7 +910,7 @@ export default function Finalist() {
               </span>
             </RippleButton>
             <motion.a
-              href="https://github.com/Rex-shark"
+              href={profile.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.03 }}
@@ -1016,7 +927,7 @@ export default function Finalist() {
 
       {/* Footer */}
       <footer className="py-8 text-center border-t border-slate-100">
-        <p className="text-slate-400 text-sm">© 2025 Rex · Java 全端工程師 & 系統分析師</p>
+        <p className="text-slate-400 text-sm">© {new Date().getFullYear()} Rex · Java 全端工程師 & 系統分析師</p>
         <p className="text-slate-300 text-xs mt-1">Built with React + Vite · Deployed on GitHub Pages</p>
       </footer>
     </div>

@@ -1,8 +1,10 @@
 import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { ArrowLeft, Mail, Star, BookOpen, MapPin, Building2 } from 'lucide-react'
+import { ArrowLeft, Mail, BookOpen, MapPin, ExternalLink } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import { profile, skillGroups, projects } from '@/data/profile'
+import type { Project, SkillGroupKey } from '@/data/profile'
 
 // ── GitHub Octocat SVG ──────────────────────────────────────────────
 function OctocatIcon({ size = 20 }: { size?: number }) {
@@ -26,12 +28,6 @@ const C = {
   brightGreen:    '#3FB950',
   accentBlue:     '#58A6FF',
   orange:         '#E3B341',
-  // contribution heatmap
-  heat0: '#161B22',
-  heat1: '#0E4429',
-  heat2: '#006D32',
-  heat3: '#26A641',
-  heat4: '#39D353',
 }
 
 // ── Framer Motion Variants ──────────────────────────────────────────
@@ -43,159 +39,36 @@ const fadeUp: Variants = {
   }),
 }
 
-// ── 貢獻熱力圖 ──────────────────────────────────────────────────────
-const HEAT_COLORS = [C.heat0, C.heat1, C.heat2, C.heat3, C.heat4]
-
-function generateContribData(): number[] {
-  const data: number[] = []
-  const seed = [0,0,0,1,0,0,0,1,2,1,0,0,2,3,2,1,0,0,0,2,4,3,2,1,0,0,1,2,3,4,3,2,1,0,0,0,1,1,2,3,2,1,0,0,2,3,4,3,2,1,0]
-  for (let i = 0; i < 52 * 7; i++) {
-    const base = seed[i % seed.length]
-    const jitter = Math.sin(i * 0.31 + 1.7) > 0.5 ? 1 : 0
-    data.push(Math.min(4, Math.max(0, base + (i % 7 === 0 || i % 7 === 6 ? 0 : jitter))))
-  }
-  return data
+// ── Pinned Repo 卡片（資料來自 src/data/profile.ts，這裡只補本頁的語言色點與版面） ──
+const LANG_COLOR: Record<string, string> = {
+  React:       '#61DAFB',
+  Java:        '#B07219',
+  TypeScript:  '#3178C6',
+  'Spring AI': '#6DB33F',
+  Python:      '#3572A5',
 }
 
-const contribData = generateContribData()
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-
-function ContribGraph() {
-  const weeks = 52
-  const days = 7
-  // 月份標籤：每 4 週放一個
-  const monthLabels = Array.from({ length: 13 }, (_, i) => ({
-    label: MONTHS[i % 12],
-    col: i * 4,
-  }))
-
-  return (
-    <div className="overflow-x-auto">
-      {/* 月份標籤 */}
-      <div className="flex mb-1" style={{ paddingLeft: 20 }}>
-        {monthLabels.map((m, i) => (
-          <div
-            key={i}
-            className="text-xs flex-shrink-0"
-            style={{
-              width: m.col === 0 ? 0 : `${4 * 14}px`,
-              color: C.fgMuted,
-              fontSize: 11,
-              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
-            }}
-          >
-            {m.label}
-          </div>
-        ))}
-      </div>
-
-      <div className="flex gap-0.5">
-        {/* 星期標籤 */}
-        <div className="flex flex-col gap-0.5 mr-1.5" style={{ marginTop: 2 }}>
-          {['', 'Mon', '', 'Wed', '', 'Fri', ''].map((d, i) => (
-            <div
-              key={i}
-              style={{
-                width: 14, height: 11,
-                fontSize: 9,
-                color: C.fgMuted,
-                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
-                textAlign: 'right',
-                paddingRight: 2,
-                lineHeight: '11px',
-              }}
-            >
-              {d}
-            </div>
-          ))}
-        </div>
-
-        {/* 方格 grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(${weeks}, 11px)`,
-            gridTemplateRows: `repeat(${days}, 11px)`,
-            gap: 2,
-          }}
-        >
-          {Array.from({ length: weeks }, (_, w) =>
-            Array.from({ length: days }, (_, d) => {
-              const idx = w * days + d
-              const level = contribData[idx] ?? 0
-              return (
-                <div
-                  key={`${w}-${d}`}
-                  title={`Level ${level}`}
-                  style={{
-                    width: 11, height: 11,
-                    borderRadius: 2,
-                    backgroundColor: HEAT_COLORS[level],
-                    border: `1px solid rgba(255,255,255,0.04)`,
-                  }}
-                />
-              )
-            })
-          )}
-        </div>
-      </div>
-
-      {/* 凡例 */}
-      <div className="flex items-center gap-1 mt-2 justify-end">
-        <span style={{ fontSize: 11, color: C.fgMuted }}>Less</span>
-        {HEAT_COLORS.map((c, i) => (
-          <div key={i} style={{ width: 11, height: 11, borderRadius: 2, backgroundColor: c, border: '1px solid rgba(255,255,255,0.04)' }} />
-        ))}
-        <span style={{ fontSize: 11, color: C.fgMuted }}>More</span>
-      </div>
-    </div>
-  )
-}
-
-// ── Pinned Repo 卡片 ────────────────────────────────────────────────
-interface PinnedRepo {
-  name: string
-  description: string
-  language: string
-  langColor: string
-  stars: number
-  href: string
-}
-
-const pinnedRepos: PinnedRepo[] = [
-  {
-    name: 'rex-shark.github.io',
-    description: '個人作品集網站，探索多種 UI 設計風格，以 React + Vite 建構並部署於 GitHub Pages。',
-    language: 'TypeScript',
-    langColor: '#3178C6',
-    stars: 3,
-    href: 'https://github.com/Rex-shark',
-  },
-  {
-    name: 'spring-boot-api-demo',
-    description: '完整的 RESTful API 範例專案，含 JWT 認證、RBAC 權限控管與 OpenAPI 文件。',
-    language: 'Java',
-    langColor: '#B07219',
-    stars: 12,
-    href: 'https://github.com/Rex-shark',
-  },
-  {
-    name: 'system-analysis-guide',
-    description: '從 UML 到系統設計的完整教學系列，含需求分析與實戰案例解析。',
-    language: 'Markdown',
-    langColor: '#083FA1',
-    stars: 7,
-    href: 'https://github.com/Rex-shark',
-  },
+// 5 張卡：lg 為 3 + 2（6 欄格線），sm 為 2 + 2 + 1（最後一張橫跨）
+const PINNED_SPAN = [
+  'lg:col-span-2',
+  'lg:col-span-2',
+  'lg:col-span-2',
+  'lg:col-span-3',
+  'sm:col-span-2 lg:col-span-3',
 ]
 
-function PinnedRepoCard({ repo, index }: { repo: PinnedRepo; index: number }) {
+/** 由 repo 網址最後一段推導 repo 名稱 */
+function repoNameOf(href: string): string {
+  return href.split('/').filter(Boolean).pop() ?? href
+}
+
+function PinnedRepoCard({ project, index }: { project: Project; index: number }) {
+  const lang = project.tags[0]
+  const restTags = project.tags.slice(1)
+
   return (
-    <motion.a
-      href={repo.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex flex-col p-4 rounded-md cursor-pointer transition-colors duration-200"
+    <motion.div
+      className={`relative flex flex-col p-4 rounded-md cursor-pointer transition-colors duration-200 ${PINNED_SPAN[index % PINNED_SPAN.length]}`}
       style={{
         background: C.canvasSubtle,
         border: `1px solid ${C.border}`,
@@ -205,83 +78,92 @@ function PinnedRepoCard({ repo, index }: { repo: PinnedRepo; index: number }) {
       whileInView="visible"
       viewport={{ once: true }}
       variants={fadeUp}
-      custom={index}
+      custom={index + 1}
       whileHover={{
         borderColor: C.borderHover,
         transition: { duration: 0.15 },
       }}
     >
-      <div className="flex items-center gap-2 mb-2">
+      <div className="flex items-center gap-2 mb-1 min-w-0">
         <BookOpen size={14} style={{ color: C.fgMuted, flexShrink: 0 }} />
-        <span style={{ color: C.accentBlue, fontWeight: 600, fontSize: 14 }}>
-          {repo.name}
-        </span>
-        <span
-          className="ml-auto px-1.5 py-0.5 text-xs rounded-full"
+        {/* 整張卡可點：Link 的 ::after 撐滿卡片，repo 連結以 z-10 疊在上層，避免巢狀 <a> */}
+        <Link
+          to={project.to}
+          className="min-w-0 truncate cursor-pointer hover:underline after:absolute after:inset-0 after:content-['']"
+          style={{ color: C.accentBlue, fontWeight: 600, fontSize: 14 }}
+        >
+          {repoNameOf(project.href)}
+        </Link>
+        <a
+          href={project.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`在 GitHub 開啟 ${repoNameOf(project.href)}`}
+          title="在 GitHub 開啟"
+          className="relative z-10 ml-auto flex items-center gap-1 px-1.5 py-0.5 rounded-full cursor-pointer transition-colors duration-150"
           style={{
             border: `1px solid ${C.border}`,
             color: C.fgMuted,
             fontSize: 11,
             whiteSpace: 'nowrap',
+            flexShrink: 0,
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.color = C.fg
+            e.currentTarget.style.borderColor = C.borderHover
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.color = C.fgMuted
+            e.currentTarget.style.borderColor = C.border
           }}
         >
-          Public
-        </span>
+          <OctocatIcon size={11} />
+          Repo
+          <ExternalLink size={10} />
+        </a>
       </div>
-      <p style={{ color: C.fgMuted, fontSize: 13, lineHeight: 1.6, flexGrow: 1 }}>
-        {repo.description}
+      <p style={{ color: C.fg, fontSize: 13, fontWeight: 600, marginBottom: 6 }}>
+        {project.title}
       </p>
-      <div className="flex items-center gap-4 mt-3">
+      <p style={{ color: C.fgMuted, fontSize: 13, lineHeight: 1.6, flexGrow: 1 }}>
+        {project.desc}
+      </p>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3">
         <div className="flex items-center gap-1.5">
           <span
             style={{
               width: 12, height: 12, borderRadius: '50%',
-              backgroundColor: repo.langColor, flexShrink: 0,
+              backgroundColor: LANG_COLOR[lang] ?? C.fgMuted, flexShrink: 0,
               display: 'inline-block',
             }}
           />
-          <span style={{ fontSize: 12, color: C.fgMuted }}>{repo.language}</span>
+          <span style={{ fontSize: 12, color: C.fgMuted }}>{lang}</span>
         </div>
-        <div className="flex items-center gap-1">
-          <Star size={13} style={{ color: C.fgMuted }} />
-          <span style={{ fontSize: 12, color: C.fgMuted }}>{repo.stars}</span>
-        </div>
+        {restTags.map(t => (
+          <span key={t} style={{ fontSize: 12, color: C.fgMuted }}>{t}</span>
+        ))}
       </div>
-    </motion.a>
+    </motion.div>
   )
 }
 
-// ── 語言統計條 ──────────────────────────────────────────────────────
-const langStats = [
-  { name: 'Java',       pct: 45, color: '#B07219' },
-  { name: 'TypeScript', pct: 30, color: '#3178C6' },
-  { name: 'CSS',        pct: 12, color: '#563D7C' },
-  { name: 'HTML',       pct: 8,  color: '#E34C26' },
-  { name: 'Other',      pct: 5,  color: '#8B949E' },
-]
+// ── Shields.io 風格 Badge（label = 技能分組、value = 技能名；不帶版本號） ──
+const GROUP_BADGE_COLOR: Record<SkillGroupKey, string> = {
+  backend:  '#B07219',
+  frontend: '#3178C6',
+  data:     '#336791',
+  ai:       '#8957E5',
+  design:   '#9E6A03',
+}
 
-// ── Shields.io 風格 Badge ───────────────────────────────────────────
-const skillBadges = [
-  { label: 'java',            value: '21',        labelBg: '#555', valueBg: '#B07219' },
-  { label: 'spring-boot',     value: '3.x',       labelBg: '#555', valueBg: '#6DB33F' },
-  { label: 'spring-security', value: 'JWT',       labelBg: '#555', valueBg: '#6DB33F' },
-  { label: 'JPA/Hibernate',   value: 'ORM',       labelBg: '#555', valueBg: '#59666C' },
-  { label: 'react',           value: '19',        labelBg: '#555', valueBg: '#20232A' },
-  { label: 'typescript',      value: 'strict',    labelBg: '#555', valueBg: '#3178C6' },
-  { label: 'tailwind-css',    value: 'v4',        labelBg: '#555', valueBg: '#0EA5E9' },
-  { label: 'postgresql',      value: '16',        labelBg: '#555', valueBg: '#336791' },
-  { label: 'docker',          value: 'compose',   labelBg: '#555', valueBg: '#2496ED' },
-  { label: 'github-actions',  value: 'CI/CD',     labelBg: '#555', valueBg: '#2088FF' },
-  { label: '系統分析設計',     value: 'UML',       labelBg: '#555', valueBg: '#E3B341' },
-]
-
-function Badge({ label, value, labelBg, valueBg }: { label: string; value: string; labelBg: string; valueBg: string }) {
+function Badge({ label, value, valueBg }: { label: string; value: string; valueBg: string }) {
   return (
-    <span className="inline-flex rounded overflow-hidden" style={{ fontSize: 12, height: 20, flexShrink: 0 }}>
-      <span style={{ background: labelBg, color: '#fff', padding: '0 6px', lineHeight: '20px', whiteSpace: 'nowrap' }}>
+    <span className="inline-flex max-w-full rounded overflow-hidden" style={{ fontSize: 12, minHeight: 20 }}>
+      <span style={{ background: '#555', color: '#fff', padding: '0 6px', lineHeight: '20px', whiteSpace: 'nowrap', flexShrink: 0 }}>
         {label}
       </span>
-      <span style={{ background: valueBg, color: '#fff', padding: '0 6px', lineHeight: '20px', whiteSpace: 'nowrap' }}>
+      {/* 長字串（如 Claude Code（Skills / Subagent / Hooks））在窄螢幕允許換行，不撐破版面 */}
+      <span style={{ background: valueBg, color: '#fff', padding: '0 6px', lineHeight: '20px', minWidth: 0 }}>
         {value}
       </span>
     </span>
@@ -328,7 +210,7 @@ export default function GithubProfile() {
             <div style={{ width: 1, height: 16, background: C.border }} />
             <div className="flex items-center gap-2" style={{ color: C.fg }}>
               <OctocatIcon size={22} />
-              <span style={{ fontSize: 15, fontWeight: 600, color: C.fg }}>Rex-shark</span>
+              <span style={{ fontSize: 15, fontWeight: 600, color: C.fg }}>{profile.githubHandle}</span>
             </div>
           </div>
 
@@ -336,7 +218,6 @@ export default function GithubProfile() {
           <div className="hidden sm:flex items-center gap-1">
             {[
               { label: '概覽', href: '#overview' },
-              { label: '貢獻', href: '#contributions' },
               { label: '專案', href: '#pinned' },
               { label: '技能', href: '#skills' },
               { label: '聯絡', href: '#contact' },
@@ -373,13 +254,13 @@ export default function GithubProfile() {
               className="flex-shrink-0 md:w-64 lg:w-72"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
+              transition={{ duration: 0.5, ease: 'easeOut' as const }}
             >
               {/* 大頭照 */}
               <div className="mb-4">
                 <img
-                  src="/me.png"
-                  alt="Rex"
+                  src={profile.avatar}
+                  alt={profile.name}
                   className="w-full rounded-full object-cover"
                   style={{
                     aspectRatio: '1/1',
@@ -390,17 +271,20 @@ export default function GithubProfile() {
               </div>
 
               {/* 名字與身份 */}
-              <h1 style={{ fontSize: 24, fontWeight: 700, color: C.fg, lineHeight: 1.25 }}>Rex</h1>
+              <h1 style={{ fontSize: 24, fontWeight: 700, color: C.fg, lineHeight: 1.25 }}>{profile.name}</h1>
               <p style={{ fontSize: 20, fontWeight: 300, color: C.fgMuted, marginTop: 2, marginBottom: 8 }}>
-                @Rex-shark
+                @{profile.githubHandle}
               </p>
               <p style={{ fontSize: 14, color: C.fg, lineHeight: 1.6, marginBottom: 16 }}>
-                Java 全端工程師 &amp; 系統分析師。熱衷穩健後端架構設計，持續分享 Java、Spring Boot 與系統設計實戰經驗。
+                {profile.title}
               </p>
 
-              {/* Follow 按鈕 */}
-              <button
-                className="w-full py-1.5 rounded-md text-sm font-medium cursor-pointer transition-colors duration-150"
+              {/* 前往 GitHub（取代原本沒有功能的 Follow 按鈕） */}
+              <a
+                href={profile.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center gap-2 py-1.5 rounded-md text-sm font-medium cursor-pointer transition-colors duration-150"
                 style={{
                   background: C.successGreen,
                   color: '#fff',
@@ -409,42 +293,26 @@ export default function GithubProfile() {
                 onMouseEnter={e => (e.currentTarget.style.background = C.successGreenHover)}
                 onMouseLeave={e => (e.currentTarget.style.background = C.successGreen)}
               >
-                Follow
-              </button>
+                <OctocatIcon size={15} />
+                在 GitHub 上查看
+              </a>
 
               {/* 基本資訊 */}
               <div className="mt-4 space-y-1.5">
                 <div className="flex items-center gap-2" style={{ color: C.fgMuted, fontSize: 14 }}>
-                  <Building2 size={15} />
-                  <span>Freelance / Open to Work</span>
-                </div>
-                <div className="flex items-center gap-2" style={{ color: C.fgMuted, fontSize: 14 }}>
                   <MapPin size={15} />
-                  <span>Taiwan</span>
+                  <span>{profile.location}</span>
                 </div>
-                <div className="flex items-center gap-2" style={{ color: C.fgMuted, fontSize: 14 }}>
-                  <Mail size={15} />
+                <div className="flex items-center gap-2 min-w-0" style={{ color: C.fgMuted, fontSize: 14 }}>
+                  <Mail size={15} style={{ flexShrink: 0 }} />
                   <a
-                    href="mailto:rexrex10050@gmail.com"
+                    href={`mailto:${profile.email}`}
                     style={{ color: C.accentBlue }}
-                    className="cursor-pointer hover:underline"
+                    className="cursor-pointer hover:underline truncate"
                   >
-                    rexrex10050@gmail.com
+                    {profile.email}
                   </a>
                 </div>
-              </div>
-
-              {/* stats */}
-              <div className="flex gap-4 mt-4">
-                {[
-                  { count: '22', label: 'followers' },
-                  { count: '8',  label: 'following' },
-                ].map(s => (
-                  <div key={s.label} style={{ fontSize: 14, color: C.fg }}>
-                    <span style={{ fontWeight: 700 }}>{s.count}</span>{' '}
-                    <span style={{ color: C.fgMuted }}>{s.label}</span>
-                  </div>
-                ))}
               </div>
             </motion.div>
 
@@ -453,7 +321,7 @@ export default function GithubProfile() {
               className="flex-1 min-w-0"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
+              transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' as const }}
             >
               {/* README.md 容器 */}
               <div
@@ -478,26 +346,31 @@ export default function GithubProfile() {
                 {/* Markdown 內容 */}
                 <div className="p-6">
                   <h2 style={{ fontSize: 22, fontWeight: 700, color: C.fg, marginBottom: 8, borderBottom: `1px solid ${C.border}`, paddingBottom: 8 }}>
-                    Hi there, I'm Rex
+                    Hi there, I'm {profile.name}
                   </h2>
 
-                  <p style={{ fontSize: 14, color: C.fg, lineHeight: 1.8, marginBottom: 16 }}>
-                    我是一位專注於 <span style={{ color: C.accentBlue }}>Java 全端開發</span>與<span style={{ color: C.accentBlue }}>系統分析設計</span>的工程師。
-                    喜歡設計穩健、可擴展的後端架構，也熱衷於把複雜的系統概念用清晰的方式呈現出來。
+                  <p style={{ fontSize: 14, color: C.accentBlue, lineHeight: 1.8, marginBottom: 8 }}>
+                    {profile.title}
                   </p>
+                  {profile.intro.map(line => (
+                    <p key={line} style={{ fontSize: 14, color: C.fg, lineHeight: 1.8, marginBottom: 8 }}>
+                      {line}
+                    </p>
+                  ))}
 
                   <h3 style={{ fontSize: 16, fontWeight: 600, color: C.fg, marginBottom: 8, marginTop: 20 }}>
                     About Me
                   </h3>
                   <ul style={{ fontSize: 14, color: C.fgMuted, lineHeight: 2, paddingLeft: 20, listStyleType: 'disc' }}>
-                    <li><span style={{ color: C.brightGreen }}>Backend</span>：Spring Boot, Spring Security, JPA/Hibernate</li>
-                    <li><span style={{ color: C.brightGreen }}>Frontend</span>：React, TypeScript, Tailwind CSS</li>
-                    <li><span style={{ color: C.brightGreen }}>DevOps</span>：Docker, GitHub Actions, PostgreSQL</li>
-                    <li><span style={{ color: C.brightGreen }}>Specialty</span>：系統分析設計、UML、需求分析</li>
+                    {skillGroups.map(g => (
+                      <li key={g.key}>
+                        <span style={{ color: C.brightGreen }}>{g.labelEn}</span>：{g.skills.join(', ')}
+                      </li>
+                    ))}
                   </ul>
 
                   <h3 style={{ fontSize: 16, fontWeight: 600, color: C.fg, marginBottom: 8, marginTop: 20 }}>
-                    Current Focus
+                    Profile
                   </h3>
 
                   {/* 程式碼區塊 */}
@@ -509,39 +382,38 @@ export default function GithubProfile() {
                       fontFamily: 'JetBrains Mono, ' + monoFont,
                       fontSize: 13,
                       lineHeight: 1.8,
+                      overflowX: 'auto',
                     }}
                   >
                     <div><span style={{ color: C.fgMuted }}>//</span> <span style={{ color: C.fgMuted }}>Developer Profile</span></div>
                     <div>
                       <span style={{ color: '#FF7B72' }}>const</span>{' '}
-                      <span style={{ color: C.accentBlue }}>rex</span>{' '}
+                      <span style={{ color: C.accentBlue }}>{profile.name.toLowerCase()}</span>{' '}
                       <span style={{ color: C.fg }}>=</span>{' '}
                       <span style={{ color: C.fg }}>{'{'}</span>
                     </div>
-                    <div style={{ paddingLeft: 16 }}>
-                      <span style={{ color: C.orange }}>name</span>
-                      <span style={{ color: C.fg }}>: </span>
-                      <span style={{ color: '#A5D6FF' }}>"Rex"</span>
-                      <span style={{ color: C.fg }}>,</span>
-                    </div>
-                    <div style={{ paddingLeft: 16 }}>
-                      <span style={{ color: C.orange }}>role</span>
-                      <span style={{ color: C.fg }}>: </span>
-                      <span style={{ color: '#A5D6FF' }}>"Java Full-Stack Engineer"</span>
-                      <span style={{ color: C.fg }}>,</span>
-                    </div>
+                    {[
+                      { k: 'name', v: profile.name },
+                      { k: 'role', v: profile.titleEn },
+                      { k: 'location', v: profile.location },
+                    ].map(row => (
+                      <div key={row.k} style={{ paddingLeft: 16 }}>
+                        <span style={{ color: C.orange }}>{row.k}</span>
+                        <span style={{ color: C.fg }}>: </span>
+                        <span style={{ color: '#A5D6FF' }}>"{row.v}"</span>
+                        <span style={{ color: C.fg }}>,</span>
+                      </div>
+                    ))}
                     <div style={{ paddingLeft: 16 }}>
                       <span style={{ color: C.orange }}>focus</span>
                       <span style={{ color: C.fg }}>: [</span>
-                      <span style={{ color: '#A5D6FF' }}>"Spring Boot"</span>
-                      <span style={{ color: C.fg }}>, </span>
-                      <span style={{ color: '#A5D6FF' }}>"System Design"</span>
+                      {skillGroups.map((g, i) => (
+                        <span key={g.key}>
+                          <span style={{ color: '#A5D6FF' }}>"{g.labelEn}"</span>
+                          {i < skillGroups.length - 1 && <span style={{ color: C.fg }}>, </span>}
+                        </span>
+                      ))}
                       <span style={{ color: C.fg }}>],</span>
-                    </div>
-                    <div style={{ paddingLeft: 16 }}>
-                      <span style={{ color: C.orange }}>available</span>
-                      <span style={{ color: C.fg }}>: </span>
-                      <span style={{ color: '#79C0FF' }}>true</span>
                     </div>
                     <div><span style={{ color: C.fg }}>{'}'}</span></div>
                   </div>
@@ -549,24 +421,6 @@ export default function GithubProfile() {
               </div>
             </motion.div>
           </div>
-        </section>
-
-        {/* ── 貢獻熱力圖 ──────────────────────────────────────── */}
-        <section id="contributions" className="max-w-6xl mx-auto px-4 py-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-            variants={fadeUp}
-            custom={0}
-            className="rounded-md p-5"
-            style={{ border: `1px solid ${C.border}`, background: C.canvasSubtle }}
-          >
-            <h3 style={{ fontSize: 14, color: C.fg, marginBottom: 16, fontWeight: 600 }}>
-              Rex's contributions in the last year
-            </h3>
-            <ContribGraph />
-          </motion.div>
         </section>
 
         {/* ── Pinned Repos ─────────────────────────────────────── */}
@@ -581,9 +435,9 @@ export default function GithubProfile() {
           >
             Pinned
           </motion.h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {pinnedRepos.map((repo, i) => (
-              <PinnedRepoCard key={repo.name} repo={repo} index={i + 1} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+            {projects.map((p, i) => (
+              <PinnedRepoCard key={p.slug} project={p} index={i} />
             ))}
           </div>
         </section>
@@ -600,43 +454,28 @@ export default function GithubProfile() {
             style={{ border: `1px solid ${C.border}`, background: C.canvasSubtle }}
           >
             <h3 style={{ fontSize: 14, fontWeight: 600, color: C.fg, marginBottom: 16 }}>
-              Languages &amp; Technologies
+              Tech Stack
             </h3>
 
-            {/* 語言比例條 */}
-            <div className="mb-4">
-              <div className="flex rounded-full overflow-hidden" style={{ height: 8 }}>
-                {langStats.map((l, i) => (
-                  <motion.div
-                    key={l.name}
-                    style={{ width: `${l.pct}%`, background: l.color }}
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.5, ease: 'easeOut' }}
-                    className="origin-left"
-                  />
-                ))}
-              </div>
-              <div className="flex flex-wrap gap-3 mt-3">
-                {langStats.map(l => (
-                  <div key={l.name} className="flex items-center gap-1.5">
-                    <span style={{ width: 10, height: 10, borderRadius: '50%', background: l.color, display: 'inline-block' }} />
-                    <span style={{ fontSize: 12, color: C.fg }}>{l.name}</span>
-                    <span style={{ fontSize: 12, color: C.fgMuted }}>{l.pct}%</span>
+            {/* 技術棧：依 skillGroups 分組的 badge，不帶比例與版本號 */}
+            <div>
+              {skillGroups.map((g, gi) => (
+                <div
+                  key={g.key}
+                  className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 py-3"
+                  style={{ borderTop: gi === 0 ? 'none' : `1px solid ${C.border}` }}
+                >
+                  <div className="flex items-center gap-1.5 sm:w-40 flex-shrink-0" style={{ paddingTop: 1 }}>
+                    <span style={{ width: 10, height: 10, borderRadius: '50%', background: GROUP_BADGE_COLOR[g.key], display: 'inline-block', flexShrink: 0 }} />
+                    <span style={{ fontSize: 12, color: C.fg }}>{g.label}</span>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* 技能 Badge */}
-            <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: 16, marginTop: 8 }}>
-              <p style={{ fontSize: 12, color: C.fgMuted, marginBottom: 10 }}>Tech Stack</p>
-              <div className="flex flex-wrap gap-2">
-                {skillBadges.map(b => (
-                  <Badge key={b.label} {...b} />
-                ))}
-              </div>
+                  <div className="flex flex-wrap gap-2 min-w-0">
+                    {g.skills.map(skill => (
+                      <Badge key={skill} label={g.key} value={skill} valueBg={GROUP_BADGE_COLOR[g.key]} />
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </motion.div>
         </section>
@@ -656,15 +495,15 @@ export default function GithubProfile() {
             <div style={{ borderTop: `1px solid ${C.border}`, marginBottom: 20 }} />
 
             <h2 style={{ fontSize: 22, fontWeight: 700, color: C.fg, marginBottom: 4 }}>
-              📫 Contact
+              Contact
             </h2>
             <p style={{ fontSize: 14, color: C.fgMuted, marginBottom: 20, lineHeight: 1.7 }}>
-              無論是合作提案、技術交流或是問題諮詢，都歡迎聯絡。
+              技術交流或任何問題，都歡迎來信聯絡。
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href="mailto:rexrex10050@gmail.com"
+                href={`mailto:${profile.email}`}
                 className="flex items-center gap-2 px-4 py-2 rounded-md cursor-pointer transition-colors duration-150 text-sm"
                 style={{
                   background: C.successGreen,
@@ -675,10 +514,10 @@ export default function GithubProfile() {
                 onMouseLeave={e => (e.currentTarget.style.background = C.successGreen)}
               >
                 <Mail size={15} />
-                rexrex10050@gmail.com
+                {profile.email}
               </a>
               <a
-                href="https://github.com/Rex-shark"
+                href={profile.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-md cursor-pointer transition-colors duration-150 text-sm"
@@ -697,7 +536,7 @@ export default function GithubProfile() {
                 }}
               >
                 <OctocatIcon size={15} />
-                github.com/Rex-shark
+                {profile.githubUrl.replace('https://', '')}
               </a>
             </div>
           </motion.div>
@@ -713,7 +552,7 @@ export default function GithubProfile() {
           color: C.fgMuted,
         }}
       >
-        &copy; 2025 Rex-shark &middot; Built with React + Vite &middot; Deployed on GitHub Pages
+        &copy; {new Date().getFullYear()} {profile.githubHandle} &middot; Built with React + Vite &middot; Deployed on GitHub Pages
       </footer>
     </div>
   )

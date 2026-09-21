@@ -1,8 +1,15 @@
 import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { ArrowLeft, Mail, ExternalLink } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Mail } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import {
+  profile,
+  skillGroups as sharedSkillGroups,
+  allSkills,
+  projects as sharedProjects,
+  type SkillGroupKey,
+} from '@/data/profile'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -98,52 +105,75 @@ const rawEntrance: Variants = {
   }),
 }
 
-const skills = [
-  { name: 'Java', level: 'EXPERT', bar: 92, color: '#FF2200' },
-  { name: 'Spring Boot', level: 'EXPERT', bar: 88, color: '#F5F500' },
-  { name: 'Spring Security', level: 'ADVANCED', bar: 80, color: '#FF2200' },
-  { name: 'JPA/Hibernate', level: 'ADVANCED', bar: 78, color: '#F5F500' },
-  { name: 'React', level: 'SOLID', bar: 75, color: '#FF2200' },
-  { name: 'TypeScript', level: 'SOLID', bar: 73, color: '#F5F500' },
-  { name: 'Tailwind CSS', level: 'SOLID', bar: 70, color: '#FF2200' },
-  { name: 'PostgreSQL', level: 'SOLID', bar: 72, color: '#F5F500' },
-  { name: 'Docker', level: 'WORKING', bar: 65, color: '#FF2200' },
-  { name: 'GitHub Actions', level: 'WORKING', bar: 60, color: '#F5F500' },
-  { name: '系統分析設計', level: 'EXPERT', bar: 85, color: '#FF2200' },
+/* ─── 資料（內容來自 src/data/profile.ts，這裡只補上本頁的配色、旋轉角度等裝飾） ─── */
+const SKILL_GROUP_DECOR: Record<SkillGroupKey, { accent: string; rotate: string; tapeLeft: string }> = {
+  backend: { accent: '#FF2200', rotate: '-1deg', tapeLeft: '18%' },
+  frontend: { accent: '#F5F500', rotate: '0.8deg', tapeLeft: '62%' },
+  data: { accent: '#FF2200', rotate: '-0.6deg', tapeLeft: '40%' },
+  ai: { accent: '#F5F500', rotate: '0.3deg', tapeLeft: '12%' },
+  design: { accent: '#FF2200', rotate: '1deg', tapeLeft: '55%' },
+}
+
+const skillGroups = sharedSkillGroups.map((g) => ({ ...g, ...SKILL_GROUP_DECOR[g.key] }))
+
+/* 技能貼紙的旋轉角度（純裝飾，依 index 循環） */
+const STICKER_ROTATE = [-2, 1.5, -1, 2, 0, -1.5]
+
+/* 由 profile 推導的主題化文字 */
+const ROLE_TAGS = profile.titleEn.split(' & ')
+const MARQUEE_TEXT = sharedSkillGroups.map((g) => g.labelEn.toUpperCase()).join(' ★ ')
+
+const PROJECT_DECOR = [
+  { rotate: '-2deg', accent: '#F5F500' },
+  { rotate: '1.5deg', accent: '#FF2200' },
+  { rotate: '-1deg', accent: '#F5F500' },
+  { rotate: '1deg', accent: '#FF2200' },
+  { rotate: '-1.2deg', accent: '#F5F500' },
 ]
 
-const projects = [
-  {
-    title: '個人網站',
-    desc: 'React + Vite 建構的 GitHub Pages 作品集，探索多種 UI 設計風格。',
-    tags: ['React', 'TypeScript', 'Tailwind'],
-    href: 'https://github.com/Rex-shark',
-    rotate: '-2deg',
-    offsetX: 0,
-    accent: '#F5F500',
-    num: '001',
-  },
-  {
-    title: 'Spring Boot API 範例',
-    desc: '完整的 RESTful API，含 JWT 認證、RBAC 權限控管與 OpenAPI 文件。',
-    tags: ['Java', 'Spring Boot', 'JWT'],
-    href: 'https://github.com/Rex-shark',
-    rotate: '1.5deg',
-    offsetX: 0,
-    accent: '#FF2200',
-    num: '002',
-  },
-  {
-    title: '系統分析設計教學',
-    desc: 'UML、需求分析到系統設計的完整教學系列，含實戰案例解析。',
-    tags: ['系統分析', 'UML', '教學'],
-    href: 'https://github.com/Rex-shark',
-    rotate: '-1deg',
-    offsetX: 0,
-    accent: '#F5F500',
-    num: '003',
-  },
-]
+const projects = sharedProjects.map((p, i) => ({
+  ...p,
+  ...PROJECT_DECOR[i % PROJECT_DECOR.length],
+  num: String(i + 1).padStart(3, '0'),
+}))
+
+/* 5 張卡：lg 為 3 + 2（6 欄格線），md 為 2 + 2 + 1（最後一張橫跨） */
+function projectSpan(i: number, total: number) {
+  const lg = i < 3 ? 'lg:col-span-2' : 'lg:col-span-3'
+  const md = i === total - 1 && total % 2 === 1 ? 'md:col-span-2' : ''
+  return `${md} ${lg}`
+}
+
+/* ── 技能貼紙（純標籤，不帶任何熟練度） ── */
+function SkillSticker({ label, index, accent }: { label: string; index: number; accent: string }) {
+  const variant = index % 3
+  const palette =
+    variant === 0
+      ? { background: accent, color: '#000', border: '2px solid #000' }
+      : variant === 1
+        ? { background: 'transparent', color: '#F0F0F0', border: '2px solid #F0F0F0' }
+        : { background: '#F0F0F0', color: '#000', border: '2px solid #000' }
+  return (
+    <span
+      style={{
+        ...palette,
+        display: 'inline-block',
+        maxWidth: '100%',
+        fontFamily: "'Space Mono', monospace",
+        fontSize: '0.82rem',
+        fontWeight: 700,
+        letterSpacing: '0.03em',
+        lineHeight: 1.35,
+        padding: '5px 10px',
+        overflowWrap: 'anywhere',
+        transform: `rotate(${STICKER_ROTATE[index % STICKER_ROTATE.length]}deg)`,
+        boxShadow: variant === 1 ? 'none' : `3px 3px 0 ${variant === 0 ? '#F0F0F0' : accent}`,
+      }}
+    >
+      {label}
+    </span>
+  )
+}
 
 /* ── 主元件 ── */
 export default function AntiPolish() {
@@ -291,9 +321,12 @@ export default function AntiPolish() {
             {/* 頂部標籤列 */}
             <div className="flex flex-wrap gap-2 mb-8">
               <ZineTag rotate={-2}>ISSUE #001</ZineTag>
-              <ZineTag rotate={1} color="#FF2200">JAVA DEV</ZineTag>
-              <ZineTag rotate={-1}>FULL STACK</ZineTag>
-              <ZineTag rotate={2} color="#FF2200">SYSTEM ANALYST</ZineTag>
+              {ROLE_TAGS.map((role, i) => (
+                <ZineTag key={role} rotate={i % 2 === 0 ? 1 : -1} color={i % 2 === 0 ? '#FF2200' : '#F5F500'}>
+                  {role}
+                </ZineTag>
+              ))}
+              <ZineTag rotate={2} color="#FF2200">{profile.location}</ZineTag>
             </div>
 
             <div className="flex flex-col lg:flex-row items-start gap-12">
@@ -328,7 +361,7 @@ export default function AntiPolish() {
                     position: 'relative',
                   }}
                 >
-                  <img src="/me.png" alt="Rex" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.1) brightness(0.95)' }} />
+                  <img src={profile.avatar} alt={profile.name} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.1) brightness(0.95)' }} />
                   {/* 覆蓋噪點 */}
                   <div
                     style={{
@@ -379,7 +412,7 @@ export default function AntiPolish() {
                       margin: 0,
                     }}
                   >
-                    REX
+                    {profile.name.toUpperCase()}
                   </h1>
                   {/* 螢光黃底色貼在部份文字後 */}
                   <div
@@ -411,7 +444,7 @@ export default function AntiPolish() {
                     paddingLeft: '12px',
                   }}
                 >
-                  Java 全端工程師 &amp; 系統分析師
+                  {profile.title}
                 </div>
 
                 {/* 簡介框 */}
@@ -420,7 +453,7 @@ export default function AntiPolish() {
                     border: '2px solid #F0F0F0',
                     padding: '16px',
                     marginBottom: '24px',
-                    maxWidth: '480px',
+                    maxWidth: '520px',
                     position: 'relative',
                     background: 'rgba(245,245,0,0.03)',
                   }}
@@ -450,23 +483,26 @@ export default function AntiPolish() {
                     }}
                     aria-hidden="true"
                   />
-                  <p
-                    style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: '0.85rem',
-                      lineHeight: 1.7,
-                      color: '#B0B0B0',
-                    }}
-                  >
-                    熱衷設計穩健的後端架構，持續分享 Java、Spring Boot 與系統設計的實戰經驗。
-                    不寫廢話，只做有用的東西。
-                  </p>
+                  {profile.intro.map((line, i) => (
+                    <p
+                      key={line}
+                      style={{
+                        fontFamily: "'Space Mono', monospace",
+                        fontSize: '0.85rem',
+                        lineHeight: 1.7,
+                        color: '#B0B0B0',
+                        marginTop: i === 0 ? 0 : '10px',
+                      }}
+                    >
+                      {line}
+                    </p>
+                  ))}
                 </div>
 
                 {/* CTA 按鈕 */}
                 <div className="flex flex-wrap gap-3">
                   <motion.a
-                    href="mailto:rexrex10050@gmail.com"
+                    href={`mailto:${profile.email}`}
                     className="flex items-center gap-2 cursor-pointer"
                     style={{
                       background: '#F5F500',
@@ -488,7 +524,7 @@ export default function AntiPolish() {
                     聯絡我
                   </motion.a>
                   <motion.a
-                    href="https://github.com/Rex-shark"
+                    href={profile.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 cursor-pointer"
@@ -537,7 +573,7 @@ export default function AntiPolish() {
               }}
             >
               {Array.from({ length: 12 }).map((_, i) => (
-                <span key={i}>JAVA ★ SPRING ★ REACT ★ SYSTEM DESIGN</span>
+                <span key={i}>{MARQUEE_TEXT} ★</span>
               ))}
             </div>
           </div>
@@ -602,83 +638,88 @@ export default function AntiPolish() {
                     alignSelf: 'center',
                   }}
                 >
-                  {skills.length} ITEMS LISTED
+                  {allSkills.length} ITEMS LISTED
                 </span>
               </div>
             </motion.div>
 
-            {/* 技能列表 */}
-            <div className="space-y-3">
-              {skills.map((skill, i) => (
+            {/* 技能分組：膠帶貼紙式純標籤；AI 組項目多，橫跨兩欄 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-flow-row-dense gap-x-8 gap-y-12">
+              {skillGroups.map((group, gi) => (
                 <motion.div
-                  key={skill.name}
+                  key={group.key}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: '-40px' }}
                   variants={rawEntrance}
-                  custom={i}
-                  className="relative"
+                  custom={gi}
+                  className={`relative ${group.key === 'ai' ? 'md:col-span-2' : ''}`}
                   style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 80px 200px',
-                    alignItems: 'center',
-                    gap: '12px',
-                    padding: '8px 12px',
-                    borderLeft: `4px solid ${skill.color}`,
-                    background: 'rgba(255,255,255,0.02)',
+                    rotate: group.rotate,
+                    border: `3px solid ${group.accent}`,
+                    background: '#111',
+                    padding: '28px 20px 22px',
+                    boxShadow: `6px 6px 0 ${group.accent}`,
                   }}
                 >
-                  {/* 技能名稱 */}
-                  <span
+                  {/* 膠帶 */}
+                  <div
+                    aria-hidden="true"
                     style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: '0.9rem',
-                      fontWeight: 700,
-                      letterSpacing: '0.05em',
-                      color: '#F0F0F0',
+                      position: 'absolute',
+                      top: '-11px',
+                      left: group.tapeLeft,
+                      width: '72px',
+                      height: '20px',
+                      background: group.accent === '#F5F500' ? '#FF2200' : '#F5F500',
+                      opacity: 0.85,
+                      transform: `rotate(${gi % 2 === 0 ? -3 : 2}deg)`,
                     }}
-                  >
-                    {skill.name}
-                  </span>
-                  {/* 等級標籤 */}
-                  <span
-                    style={{
-                      fontFamily: "'Courier Prime', monospace",
-                      fontSize: '0.6rem',
-                      fontWeight: 700,
-                      letterSpacing: '0.1em',
-                      color: skill.color,
-                      border: `1px solid ${skill.color}`,
-                      padding: '2px 6px',
-                      textAlign: 'center',
-                      background: 'transparent',
-                    }}
-                  >
-                    {skill.level}
-                  </span>
-                  {/* 進度條 */}
+                  />
+
+                  {/* 分組標題 */}
                   <div
                     style={{
-                      height: '10px',
-                      background: '#1A1A1A',
-                      border: '1px solid #333',
-                      position: 'relative',
-                      overflow: 'hidden',
+                      display: 'flex',
+                      alignItems: 'baseline',
+                      flexWrap: 'wrap',
+                      gap: '4px 10px',
+                      borderBottom: '2px dashed #333',
+                      paddingBottom: '10px',
+                      marginBottom: '16px',
                     }}
                   >
-                    <motion.div
+                    <h3
                       style={{
-                        position: 'absolute',
-                        left: 0,
-                        top: 0,
-                        height: '100%',
-                        background: skill.color,
+                        fontFamily: "'Anton', sans-serif",
+                        fontSize: '1.6rem',
+                        lineHeight: 1,
+                        letterSpacing: '0.02em',
+                        color: group.accent,
+                        margin: 0,
+                        textTransform: 'uppercase',
                       }}
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.bar}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: i * 0.04, ease: 'easeOut' as const }}
-                    />
+                    >
+                      {group.labelEn}
+                    </h3>
+                    <span
+                      style={{
+                        fontFamily: "'Courier Prime', monospace",
+                        fontSize: '0.75rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.1em',
+                        color: '#888',
+                      }}
+                    >
+                      / {group.label}
+                    </span>
+                  </div>
+
+                  {/* 技能貼紙 */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px 10px' }}>
+                    {group.skills.map((skill, i) => (
+                      <SkillSticker key={skill} label={skill} index={i} accent={group.accent} />
+                    ))}
                   </div>
                 </motion.div>
               ))}
@@ -735,20 +776,15 @@ export default function AntiPolish() {
             </motion.div>
 
             {/* 專案卡片 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-x-6 gap-y-12">
               {projects.map((project, i) => (
-                <motion.a
-                  key={project.title}
-                  href={project.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block relative cursor-pointer"
+                <motion.div
+                  key={project.slug}
+                  className={`relative ${projectSpan(i, projects.length)}`}
                   style={{
+                    rotate: project.rotate,
                     border: `3px solid ${project.accent}`,
-                    padding: '20px',
                     background: '#111',
-                    textDecoration: 'none',
-                    transform: `rotate(${project.rotate})`,
                     boxShadow: `6px 6px 0 ${project.accent}`,
                   }}
                   initial="hidden"
@@ -769,6 +805,7 @@ export default function AntiPolish() {
                 >
                   {/* 號碼標 */}
                   <div
+                    aria-hidden="true"
                     style={{
                       position: 'absolute',
                       top: '-16px',
@@ -786,65 +823,116 @@ export default function AntiPolish() {
                     {project.num}
                   </div>
 
-                  {/* 外部連結圖示 */}
-                  <ExternalLink
-                    size={12}
+                  {/* GitHub repo 連結（放在 Link 之外，避免巢狀連結） */}
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${project.title} GitHub repo`}
+                    className="cursor-pointer"
                     style={{
                       position: 'absolute',
-                      top: '12px',
+                      top: '-16px',
                       right: '12px',
-                      color: project.accent,
-                      opacity: 0.5,
-                    }}
-                  />
-
-                  <h3
-                    style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: '0.95rem',
-                      fontWeight: 700,
-                      letterSpacing: '0.03em',
-                      color: '#F0F0F0',
-                      marginBottom: '10px',
-                      lineHeight: 1.3,
-                    }}
-                  >
-                    {project.title}
-                  </h3>
-
-                  <p
-                    style={{
+                      zIndex: 2,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '5px',
                       fontFamily: "'Courier Prime', monospace",
-                      fontSize: '0.8rem',
-                      lineHeight: 1.6,
-                      color: '#888',
-                      marginBottom: '14px',
+                      fontSize: '0.65rem',
+                      fontWeight: 700,
+                      letterSpacing: '0.15em',
+                      background: '#000',
+                      color: project.accent,
+                      padding: '2px 8px',
+                      border: `2px solid ${project.accent}`,
+                      textDecoration: 'none',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = project.accent
+                      e.currentTarget.style.color = '#000'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = '#000'
+                      e.currentTarget.style.color = project.accent
                     }}
                   >
-                    {project.desc}
-                  </p>
+                    <GithubIcon className="w-3 h-3" />
+                    REPO
+                  </a>
 
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        style={{
-                          fontFamily: "'Courier Prime', monospace",
-                          fontSize: '0.65rem',
-                          fontWeight: 700,
-                          letterSpacing: '0.1em',
-                          textTransform: 'uppercase',
-                          color: '#000',
-                          background: project.accent,
-                          padding: '2px 6px',
-                          border: '1px solid #000',
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </motion.a>
+                  {/* 整張卡連到站內頁 */}
+                  <Link
+                    to={project.to}
+                    className="flex flex-col h-full cursor-pointer"
+                    style={{ padding: '24px 20px 20px', textDecoration: 'none' }}
+                  >
+                    <h3
+                      style={{
+                        fontFamily: "'Space Mono', monospace",
+                        fontSize: '0.95rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.03em',
+                        color: '#F0F0F0',
+                        marginBottom: '10px',
+                        lineHeight: 1.3,
+                        overflowWrap: 'anywhere',
+                      }}
+                    >
+                      {project.title}
+                    </h3>
+
+                    <p
+                      style={{
+                        fontFamily: "'Courier Prime', monospace",
+                        fontSize: '0.8rem',
+                        lineHeight: 1.65,
+                        color: '#888',
+                        marginBottom: '14px',
+                      }}
+                    >
+                      {project.desc}
+                    </p>
+
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: 'auto' }}>
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          style={{
+                            fontFamily: "'Courier Prime', monospace",
+                            fontSize: '0.65rem',
+                            fontWeight: 700,
+                            letterSpacing: '0.1em',
+                            textTransform: 'uppercase',
+                            color: '#000',
+                            background: project.accent,
+                            padding: '2px 6px',
+                            border: '1px solid #000',
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        marginTop: '16px',
+                        fontFamily: "'Courier Prime', monospace",
+                        fontSize: '0.68rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.15em',
+                        color: project.accent,
+                      }}
+                    >
+                      READ MORE
+                      <ArrowUpRight size={12} />
+                    </span>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -916,7 +1004,7 @@ export default function AntiPolish() {
                   </p>
 
                   <motion.a
-                    href="mailto:rexrex10050@gmail.com"
+                    href={`mailto:${profile.email}`}
                     className="inline-flex items-center gap-3 cursor-pointer"
                     style={{
                       fontFamily: "'Courier Prime', monospace",
@@ -935,7 +1023,7 @@ export default function AntiPolish() {
                     whileTap={{ x: 5, y: 5, boxShadow: '0px 0px 0 #FF2200' }}
                   >
                     <Mail size={16} />
-                    rexrex10050@gmail.com
+                    {profile.email}
                   </motion.a>
                 </div>
 
@@ -963,9 +1051,9 @@ export default function AntiPolish() {
                     CONTACT INFO
                   </div>
                   {[
-                    { label: 'EMAIL', value: 'rexrex10050@gmail.com' },
-                    { label: 'GITHUB', value: 'Rex-shark' },
-                    { label: 'STATUS', value: 'OPEN TO WORK' },
+                    { label: 'EMAIL', value: profile.email },
+                    { label: 'GITHUB', value: profile.githubHandle },
+                    { label: 'LOCATION', value: profile.location },
                   ].map((row) => (
                     <div key={row.label} style={{ marginBottom: '8px' }}>
                       <div
@@ -983,7 +1071,7 @@ export default function AntiPolish() {
                         style={{
                           fontFamily: "'Space Mono', monospace",
                           fontSize: '0.75rem',
-                          color: row.label === 'STATUS' ? '#F5F500' : '#B0B0B0',
+                          color: row.label === 'LOCATION' ? '#F5F500' : '#B0B0B0',
                           wordBreak: 'break-all',
                         }}
                       >
@@ -1018,7 +1106,7 @@ export default function AntiPolish() {
           }}
         >
           <a
-            href="https://github.com/Rex-shark"
+            href={profile.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="cursor-pointer"
@@ -1035,7 +1123,7 @@ export default function AntiPolish() {
             }}
           >
             <GithubIcon className="w-4 h-4" />
-            Rex-shark
+            {profile.githubHandle}
           </a>
           <span style={{ color: '#333' }}>|</span>
           <span
@@ -1057,7 +1145,7 @@ export default function AntiPolish() {
             color: '#333',
           }}
         >
-          © 2025 REX ━ NO RULES NO POLISH
+          © {new Date().getFullYear()} {profile.name.toUpperCase()} ━ NO RULES NO POLISH
         </div>
       </footer>
     </div>

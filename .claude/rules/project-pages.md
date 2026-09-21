@@ -12,4 +12,3 @@ paths:
 - 截圖放 `public/projects/<slug>/<name>.png`（英文檔名）；原始檔在 `spec/projects/img/`。缺圖時以灰底框 + `截圖待補` 呈現
 - 導覽列返回連結指向 `/`
 - 新增專案時同步：`spec/projects/<slug>.md`（首段標註路由與元件路徑）、`Finalist.tsx` 專案卡、`src/App.tsx`、`public/sitemap.xml`、`spec/plan.md`
-- Spring Boot API 範例無 spec 檔，內容內嵌於頁面

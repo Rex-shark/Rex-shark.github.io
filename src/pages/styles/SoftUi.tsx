@@ -1,8 +1,10 @@
 import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { ArrowLeft, Mail, ExternalLink, Code2, Database, Server, Wrench } from 'lucide-react'
+import { ArrowLeft, Mail, ExternalLink, Code2, Database, Server, Wrench, Bot } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
+import type { SkillGroupKey } from '@/data/profile'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -48,64 +50,33 @@ const scaleIn: Variants = {
   }),
 }
 
-/* ─── 資料 ─── */
-const skillGroups = [
-  {
-    category: 'Backend',
-    icon: Server,
-    items: ['Java', 'Spring Boot', 'Spring Security', 'JPA / Hibernate'],
-    color: '#7C9FD4',
-  },
-  {
-    category: 'Frontend',
-    icon: Code2,
-    items: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
-    color: '#9BB8A4',
-  },
-  {
-    category: 'Database',
-    icon: Database,
-    items: ['PostgreSQL', 'MySQL', 'Redis'],
-    color: '#C4A8D4',
-  },
-  {
-    category: 'DevOps',
-    icon: Wrench,
-    items: ['Docker', 'GitHub Actions', '系統分析設計'],
-    color: '#D4B896',
-  },
-]
+/* ─── 資料（內容來自 src/data/profile.ts，這裡只補上本頁的 icon 與配色） ─── */
+const SKILL_GROUP_STYLE: Record<SkillGroupKey, { icon: typeof Server; color: string }> = {
+  backend: { icon: Server, color: '#7C9FD4' },
+  frontend: { icon: Code2, color: '#9BB8A4' },
+  data: { icon: Database, color: '#C4A8D4' },
+  ai: { icon: Bot, color: '#D48CA0' },
+  design: { icon: Wrench, color: '#D4B896' },
+}
 
-const projects = [
-  {
-    title: '個人網站',
-    desc: '以 React + Vite 建構的 GitHub Pages 個人作品集，探索多種 UI 設計風格。',
-    tags: ['React', 'TypeScript', 'Tailwind'],
-    href: 'https://github.com/Rex-shark',
-    accentColor: '#7C9FD4',
-  },
-  {
-    title: 'Spring Boot API 範例',
-    desc: '完整的 RESTful API 專案，包含 JWT 認證、RBAC 權限控管與 OpenAPI 文件。',
-    tags: ['Java', 'Spring Boot', 'JWT'],
-    href: 'https://github.com/Rex-shark',
-    accentColor: '#9BB8A4',
-  },
-  {
-    title: '系統分析設計教學',
-    desc: 'UML、需求分析到系統設計的完整教學系列，含實戰案例解析。',
-    tags: ['系統分析', 'UML', '教學'],
-    href: 'https://github.com/Rex-shark',
-    accentColor: '#C4A8D4',
-  },
-]
+const skillGroups = sharedSkillGroups.map((g) => ({ ...g, ...SKILL_GROUP_STYLE[g.key] }))
+/* AI 組項目較多，獨立成寬版標籤卡片，其餘四組維持格狀卡片 */
+const mainSkillGroups = skillGroups.filter((g) => g.key !== 'ai')
+const aiGroup = skillGroups.find((g) => g.key === 'ai')!
+
+const PROJECT_COLORS = ['#7C9FD4', '#9BB8A4', '#C4A8D4', '#D4B896', '#D48CA0']
+
+const projects = sharedProjects.map((p, i) => ({
+  ...p,
+  accentColor: PROJECT_COLORS[i % PROJECT_COLORS.length],
+}))
 
 /* ─── 子元件：Neu 技能卡片 ─── */
 function SkillCard({
   group,
   index,
 }: {
-  group: (typeof skillGroups)[number]
+  group: (typeof mainSkillGroups)[number]
   index: number
 }) {
   const Icon = group.icon
@@ -130,10 +101,10 @@ function SkillCard({
         className="text-xs font-semibold tracking-widest uppercase mb-4"
         style={{ color: ACCENT }}
       >
-        {group.category}
+        {group.labelEn}
       </p>
       <ul className="space-y-2">
-        {group.items.map((item) => (
+        {group.skills.map((item) => (
           <li key={item} className="flex items-center gap-2 text-sm" style={{ color: TEXT_MAIN }}>
             {/* 凹陷小點 */}
             <span
@@ -157,11 +128,8 @@ function ProjectCard({
   index: number
 }) {
   return (
-    <motion.a
-      href={project.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block p-6 rounded-2xl cursor-pointer"
+    <motion.div
+      className="group relative p-6 rounded-2xl cursor-pointer"
       style={{ background: BG, boxShadow: neuShadowOut }}
       initial="hidden"
       whileInView="visible"
@@ -179,36 +147,44 @@ function ProjectCard({
         transition: { duration: 0.1, ease: 'easeOut' as const },
       }}
     >
-      {/* 頂部色條 */}
-      <div
-        className="w-full h-1 rounded-full mb-5"
-        style={{ background: `linear-gradient(90deg, ${project.accentColor}, ${project.accentColor}55)` }}
-      />
-      <div className="flex items-start justify-between mb-3">
-        <h3 className="font-semibold text-base" style={{ color: TEXT_DARK }}>
+      {/* GitHub repo 連結：放在 Link 之外，避免巢狀 <a> */}
+      <a
+        href={project.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        aria-label={`在 GitHub 查看 ${project.title}`}
+        className="absolute top-5 right-5 z-10 cursor-pointer"
+        style={{ color: ACCENT_LIGHT }}
+      >
+        <ExternalLink size={14} />
+      </a>
+
+      <Link to={project.to} className="block">
+        {/* 頂部色條 */}
+        <div
+          className="w-full h-1 rounded-full mb-5"
+          style={{ background: `linear-gradient(90deg, ${project.accentColor}, ${project.accentColor}55)` }}
+        />
+        <h3 className="font-semibold text-base pr-5" style={{ color: TEXT_DARK }}>
           {project.title}
         </h3>
-        <ExternalLink
-          size={14}
-          className="flex-shrink-0 mt-0.5 ml-2"
-          style={{ color: ACCENT_LIGHT }}
-        />
-      </div>
-      <p className="text-sm leading-relaxed mb-5" style={{ color: TEXT_MUTED }}>
-        {project.desc}
-      </p>
-      <div className="flex flex-wrap gap-2">
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-xs px-3 py-1 rounded-full"
-            style={{ background: BG, boxShadow: neuShadowIn, color: TEXT_MAIN }}
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-    </motion.a>
+        <p className="text-sm leading-relaxed mt-3 mb-5" style={{ color: TEXT_MUTED }}>
+          {project.desc}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="text-xs px-3 py-1 rounded-full"
+              style={{ background: BG, boxShadow: neuShadowIn, color: TEXT_MAIN }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </Link>
+    </motion.div>
   )
 }
 
@@ -282,7 +258,7 @@ export default function SoftUi() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase mb-6"
               style={{ background: BG, boxShadow: neuShadowIn, color: ACCENT }}
             >
-              Java Full-Stack Engineer
+              {profile.titleEn}
             </div>
 
             <h1
@@ -290,21 +266,22 @@ export default function SoftUi() {
               style={{ fontFamily: "'Poppins', sans-serif", color: TEXT_DARK }}
             >
               Hi, I'm{' '}
-              <span style={{ color: ACCENT }}>Rex</span>
+              <span style={{ color: ACCENT }}>{profile.name}</span>
             </h1>
 
             <p
               className="text-base leading-relaxed max-w-md mb-8"
               style={{ color: TEXT_MUTED }}
             >
-              Java 全端工程師 ＆ 系統分析師。專注於設計穩健的後端架構，
-              持續分享 Java、Spring Boot 與系統設計的實戰經驗。
+              {profile.intro[0]}
+              <br />
+              {profile.intro[1]}
             </p>
 
             {/* CTA 按鈕 */}
             <div className="flex items-center gap-4">
               <motion.a
-                href="mailto:rexrex10050@gmail.com"
+                href={`mailto:${profile.email}`}
                 className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold cursor-pointer"
                 style={{
                   background: ACCENT,
@@ -324,7 +301,7 @@ export default function SoftUi() {
                 聯絡我
               </motion.a>
               <motion.a
-                href="https://github.com/Rex-shark"
+                href={profile.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold cursor-pointer"
@@ -362,8 +339,8 @@ export default function SoftUi() {
                 style={{ boxShadow: neuShadowIn }}
               >
                 <img
-                  src="/me.png"
-                  alt="Rex"
+                  src={profile.avatar}
+                  alt={profile.name}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -416,10 +393,47 @@ export default function SoftUi() {
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {skillGroups.map((group, i) => (
-              <SkillCard key={group.category} group={group} index={i} />
+            {mainSkillGroups.map((group, i) => (
+              <SkillCard key={group.key} group={group} index={i} />
             ))}
           </div>
+
+          {/* AI / LLM：項目較多，獨立成寬版標籤卡片 */}
+          <motion.div
+            className="mt-6 p-6 rounded-2xl"
+            style={{ background: BG, boxShadow: neuShadowOut }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px' }}
+            variants={scaleIn}
+            custom={mainSkillGroups.length}
+          >
+            <div className="flex items-center gap-3 mb-5">
+              <div
+                className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: BG, boxShadow: neuShadowSm }}
+              >
+                <Bot size={20} style={{ color: aiGroup.color }} />
+              </div>
+              <p
+                className="text-xs font-semibold tracking-widest uppercase"
+                style={{ color: ACCENT }}
+              >
+                {aiGroup.labelEn}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2.5">
+              {aiGroup.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="text-xs px-3 py-1.5 rounded-full"
+                  style={{ background: BG, boxShadow: neuShadowIn, color: TEXT_MAIN }}
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </section>
 
         {/* ── Neu 分隔線 ── */}
@@ -454,9 +468,9 @@ export default function SoftUi() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, i) => (
-              <ProjectCard key={project.title} project={project} index={i} />
+              <ProjectCard key={project.slug} project={project} index={i} />
             ))}
           </div>
         </section>
@@ -492,7 +506,7 @@ export default function SoftUi() {
               想聊聊？
             </h2>
             <p className="max-w-sm mx-auto mb-10 leading-relaxed" style={{ color: TEXT_MUTED }}>
-              無論是合作提案、技術交流或是問題諮詢，都歡迎來信。
+              有任何想法或問題，歡迎透過下列方式聯絡我。
             </p>
 
             {/* 聯絡資訊卡 - 大凸起 */}
@@ -501,7 +515,7 @@ export default function SoftUi() {
               style={{ background: BG, boxShadow: `10px 10px 20px #c5c9ce, -10px -10px 20px #ffffff` }}
             >
               <motion.a
-                href="mailto:rexrex10050@gmail.com"
+                href={`mailto:${profile.email}`}
                 className="flex items-center justify-center gap-3 w-full px-6 py-4 rounded-2xl font-semibold cursor-pointer mb-4"
                 style={{
                   background: ACCENT,
@@ -519,11 +533,11 @@ export default function SoftUi() {
                 }}
               >
                 <Mail size={17} />
-                rexrex10050@gmail.com
+                {profile.email}
               </motion.a>
 
               <motion.a
-                href="https://github.com/Rex-shark"
+                href={profile.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-3 w-full px-6 py-4 rounded-2xl font-semibold cursor-pointer"
@@ -543,7 +557,7 @@ export default function SoftUi() {
                 }}
               >
                 <GithubIcon className="w-5 h-5" />
-                github.com/Rex-shark
+                github.com/{profile.githubHandle}
               </motion.a>
             </div>
           </motion.div>
@@ -558,7 +572,7 @@ export default function SoftUi() {
           borderTop: `1px solid #c5c9ce44`,
         }}
       >
-        © 2025 Rex. Built with React + Vite. Design: Soft UI / Neumorphism
+        © {new Date().getFullYear()} {profile.name}. Built with React + Vite. Design: Soft UI / Neumorphism
       </footer>
     </div>
   )

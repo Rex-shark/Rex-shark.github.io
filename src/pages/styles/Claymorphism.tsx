@@ -1,8 +1,10 @@
 import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { ArrowLeft, Mail, ExternalLink, Code2, Database, Layers, Cpu } from 'lucide-react'
+import { ArrowLeft, Mail, Code2, Database, Layers, Cpu, Bot } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
+import type { SkillGroupKey } from '@/data/profile'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -47,64 +49,33 @@ const popIn: Variants = {
   }),
 }
 
-/* ── 資料定義 ── */
-const skillGroups = [
-  {
-    category: 'Backend',
-    icon: Code2,
-    color: '#FF6B6B',
-    bg: '#FFF0F0',
-    items: ['Java', 'Spring Boot', 'Spring Security', 'JPA / Hibernate'],
-  },
-  {
-    category: 'Frontend',
-    icon: Layers,
-    color: '#4ECDC4',
-    bg: '#F0FFFE',
-    items: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
-  },
-  {
-    category: 'Database',
-    icon: Database,
-    color: '#FFE66D',
-    bg: '#FFFDE7',
-    items: ['PostgreSQL', 'MySQL', 'Redis'],
-  },
-  {
-    category: 'DevOps',
-    icon: Cpu,
-    color: '#A78BFA',
-    bg: '#F5F0FF',
-    items: ['Docker', 'GitHub Actions', 'Linux', 'Nginx'],
-  },
-]
+/* ── 資料（內容來自 src/data/profile.ts，這裡只補上本頁的 icon 與配色） ── */
+const SKILL_GROUP_STYLE: Record<SkillGroupKey, { icon: typeof Code2; color: string; bg: string }> = {
+  backend: { icon: Code2, color: '#FF6B6B', bg: '#FFF0F0' },
+  frontend: { icon: Layers, color: '#4ECDC4', bg: '#F0FFFE' },
+  data: { icon: Database, color: '#FFE66D', bg: '#FFFDE7' },
+  ai: { icon: Bot, color: '#EC4899', bg: '#FDF2F8' },
+  design: { icon: Cpu, color: '#A78BFA', bg: '#F5F0FF' },
+}
 
-const projects = [
-  {
-    title: '個人網站',
-    desc: '以 React + Vite 建構的 GitHub Pages 個人作品集，探索多種 UI 設計風格。',
-    tags: ['React', 'TypeScript', 'Tailwind'],
-    href: 'https://github.com/Rex-shark',
-    color: '#FF6B6B',
-    bg: 'linear-gradient(135deg, #FFF5F5 0%, #FFE4E4 100%)',
-  },
-  {
-    title: 'Spring Boot API 範例',
-    desc: '完整的 RESTful API 專案，包含 JWT 認證、RBAC 權限控管與 OpenAPI 文件。',
-    tags: ['Java', 'Spring Boot', 'JWT'],
-    href: 'https://github.com/Rex-shark',
-    color: '#4ECDC4',
-    bg: 'linear-gradient(135deg, #F0FFFE 0%, #D5F5F3 100%)',
-  },
-  {
-    title: '系統分析設計教學',
-    desc: 'UML、需求分析到系統設計的完整教學系列，含實戰案例解析。',
-    tags: ['系統分析', 'UML', '教學'],
-    href: 'https://github.com/Rex-shark',
-    color: '#A78BFA',
-    bg: 'linear-gradient(135deg, #F5F0FF 0%, #E8DFFE 100%)',
-  },
-]
+const skillGroups = sharedSkillGroups.map((g) => ({ ...g, ...SKILL_GROUP_STYLE[g.key] }))
+/* AI 組項目較多，獨立成寬版標籤雲卡片呈現，其餘四組維持格狀卡片 */
+const mainSkillGroups = skillGroups.filter((g) => g.key !== 'ai')
+const aiGroup = skillGroups.find((g) => g.key === 'ai')!
+
+/* AI 標籤雲的色彩循環（純裝飾，不代表任何數值） */
+const AI_TAG_COLORS = ['#EC4899', '#F472B6', '#C026D3', '#A78BFA', '#818CF8']
+
+const PROJECT_COLORS = ['#FF6B6B', '#4ECDC4', '#A78BFA', '#FFB347', '#6BCB77']
+
+const projects = sharedProjects.map((p, i) => {
+  const color = PROJECT_COLORS[i % PROJECT_COLORS.length]
+  return {
+    ...p,
+    color,
+    bg: `linear-gradient(135deg, ${color}14 0%, ${color}28 100%)`,
+  }
+})
 
 /* ── 裝飾性 Blob 泡泡 ── */
 function ClayBlob({
@@ -223,7 +194,7 @@ export default function Claymorphism() {
               </a>
             ))}
             <a
-              href="mailto:rexrex10050@gmail.com"
+              href={`mailto:${profile.email}`}
               className="ml-2 px-4 py-1.5 text-sm font-bold text-white rounded-2xl cursor-pointer transition-transform hover:scale-105 active:scale-95"
               style={{
                 background: 'linear-gradient(135deg, #A78BFA 0%, #818CF8 100%)',
@@ -259,7 +230,7 @@ export default function Claymorphism() {
               transition={{ delay: 0.15, duration: 0.5 }}
             >
               <span className="w-2 h-2 rounded-full bg-white/80" />
-              Java 全端工程師
+              {profile.title}
             </motion.div>
 
             <h1
@@ -276,19 +247,19 @@ export default function Claymorphism() {
                   backgroundClip: 'text',
                 }}
               >
-                Rex
+                {profile.name}
               </span>
             </h1>
 
             <p className="text-[#4B5563] text-lg leading-relaxed max-w-md mb-8 font-semibold">
-              Java 全端工程師 ＆ 系統分析師。
+              {profile.intro[0]}
               <br />
-              喜歡將複雜系統化繁為簡，打造流暢好用的後端服務。
+              {profile.intro[1]}
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
               <motion.a
-                href="mailto:rexrex10050@gmail.com"
+                href={`mailto:${profile.email}`}
                 className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white rounded-2xl cursor-pointer"
                 style={{
                   background: 'linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)',
@@ -302,7 +273,7 @@ export default function Claymorphism() {
                 聯絡我
               </motion.a>
               <motion.a
-                href="https://github.com/Rex-shark"
+                href={profile.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-[#374151] rounded-2xl cursor-pointer"
@@ -343,7 +314,7 @@ export default function Claymorphism() {
                 boxShadow: `${clayShadow('#A78BFA', 2)}, 0 0 0 4px rgba(255,255,255,0.8)`,
               }}
             >
-              <img src="/me.png" alt="Rex" className="w-full h-full object-cover" />
+              <img src={profile.avatar} alt={profile.name} className="w-full h-full object-cover" />
             </div>
             {/* 裝飾小球 */}
             <motion.div
@@ -404,11 +375,11 @@ export default function Claymorphism() {
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {skillGroups.map((group, i) => {
+            {mainSkillGroups.map((group, i) => {
               const Icon = group.icon
               return (
                 <motion.div
-                  key={group.category}
+                  key={group.key}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: '-50px' }}
@@ -433,10 +404,10 @@ export default function Claymorphism() {
                     <Icon size={20} color="white" />
                   </div>
                   <p className="text-xs font-black uppercase tracking-widest text-[#9CA3AF] mb-3">
-                    {group.category}
+                    {group.labelEn}
                   </p>
                   <ul className="space-y-1.5">
-                    {group.items.map((item) => (
+                    {group.skills.map((item) => (
                       <li key={item} className="flex items-center gap-2 text-sm font-semibold text-[#374151]">
                         <span
                           className="w-2 h-2 rounded-full flex-shrink-0"
@@ -451,39 +422,47 @@ export default function Claymorphism() {
             })}
           </div>
 
-          {/* 個別技能標籤雲 */}
+          {/* AI / LLM：項目較多，獨立成寬版標籤雲卡片 */}
           <motion.div
-            className="mt-8 flex flex-wrap gap-2.5"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
-            variants={floatIn}
-            custom={1}
+            viewport={{ once: true, margin: '-50px' }}
+            variants={popIn}
+            custom={mainSkillGroups.length}
+            className="mt-6 p-6 rounded-3xl"
+            style={{
+              background: aiGroup.bg,
+              boxShadow: clayShadow(aiGroup.color, 1.2),
+            }}
           >
-            {[
-              { label: 'Java', color: '#FF6B6B' },
-              { label: 'Spring Boot', color: '#FF8E53' },
-              { label: 'Spring Security', color: '#FFB347' },
-              { label: 'JPA/Hibernate', color: '#FFD93D' },
-              { label: 'React', color: '#4ECDC4' },
-              { label: 'TypeScript', color: '#45B7D1' },
-              { label: 'Tailwind CSS', color: '#96CEB4' },
-              { label: 'PostgreSQL', color: '#6C5CE7' },
-              { label: 'Docker', color: '#A78BFA' },
-              { label: 'GitHub Actions', color: '#74B9FF' },
-              { label: '系統分析設計', color: '#FD79A8' },
-            ].map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={popIn}
-                custom={i}
+            <div className="flex items-center gap-3 mb-5">
+              <div
+                className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0"
+                style={{
+                  background: `linear-gradient(135deg, ${aiGroup.color} 0%, ${aiGroup.color}CC 100%)`,
+                  boxShadow: clayShadow(aiGroup.color, 0.7),
+                }}
               >
-                <SkillTag label={s.label} color={s.color} />
-              </motion.div>
-            ))}
+                <Bot size={20} color="white" />
+              </div>
+              <p className="text-xs font-black uppercase tracking-widest text-[#9CA3AF]">
+                {aiGroup.labelEn}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2.5">
+              {aiGroup.skills.map((skill, i) => (
+                <motion.div
+                  key={skill}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={popIn}
+                  custom={i}
+                >
+                  <SkillTag label={skill} color={AI_TAG_COLORS[i % AI_TAG_COLORS.length]} />
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </section>
 
@@ -514,14 +493,11 @@ export default function Claymorphism() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, i) => (
-              <motion.a
-                key={project.title}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block p-6 rounded-3xl cursor-pointer"
+              <motion.div
+                key={project.slug}
+                className="group relative rounded-3xl cursor-pointer"
                 style={{
                   background: project.bg,
                   boxShadow: clayShadow(project.color, 1.4),
@@ -535,40 +511,55 @@ export default function Claymorphism() {
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: 'spring' as const, stiffness: 280, damping: 16 }}
               >
-                {/* 頂部色塊 */}
-                <div
-                  className="w-12 h-12 rounded-2xl mb-4 flex items-center justify-center"
-                  style={{
-                    background: `linear-gradient(135deg, ${project.color} 0%, ${project.color}AA 100%)`,
-                    boxShadow: clayShadow(project.color, 0.8),
-                  }}
+                {/* GitHub repo 連結：放在 Link 之外，避免巢狀 <a> */}
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  aria-label={`在 GitHub 查看 ${project.title}`}
+                  className="absolute top-4 right-4 z-10 flex items-center justify-center w-8 h-8 rounded-full text-white cursor-pointer"
+                  style={{ background: project.color, boxShadow: clayShadow(project.color, 0.5) }}
                 >
-                  <ExternalLink size={18} color="white" />
-                </div>
-                <h3
-                  className="text-lg font-black text-[#1F2937] mb-2 group-hover:text-current transition-colors"
-                  style={{ fontFamily: "'Fredoka One', cursive" }}
-                >
-                  {project.title}
-                </h3>
-                <p className="text-sm text-[#4B5563] leading-relaxed mb-4 font-semibold">
-                  {project.desc}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs px-2.5 py-0.5 rounded-full font-bold text-white"
-                      style={{
-                        background: project.color,
-                        boxShadow: clayShadow(project.color, 0.4),
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.a>
+                  <GithubIcon className="w-3.5 h-3.5" />
+                </a>
+
+                <Link to={project.to} className="block p-6">
+                  {/* 編號色塊 */}
+                  <div
+                    className="w-12 h-12 rounded-2xl mb-4 flex items-center justify-center text-sm font-black text-white"
+                    style={{
+                      background: `linear-gradient(135deg, ${project.color} 0%, ${project.color}AA 100%)`,
+                      boxShadow: clayShadow(project.color, 0.8),
+                    }}
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </div>
+                  <h3
+                    className="text-lg font-black text-[#1F2937] mb-2 pr-8 group-hover:text-current transition-colors"
+                    style={{ fontFamily: "'Fredoka One', cursive" }}
+                  >
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-[#4B5563] leading-relaxed mb-4 font-semibold">
+                    {project.desc}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs px-2.5 py-0.5 rounded-full font-bold text-white"
+                        style={{
+                          background: project.color,
+                          boxShadow: clayShadow(project.color, 0.4),
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </section>
@@ -618,11 +609,11 @@ export default function Claymorphism() {
                   想聊聊嗎？
                 </h2>
                 <p className="text-[#4B5563] font-semibold mb-8 max-w-sm mx-auto leading-relaxed">
-                  無論是合作提案、技術交流或是問題諮詢，隨時歡迎來信！
+                  有任何想法或問題，歡迎透過下列方式聯絡我。
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <motion.a
-                    href="mailto:rexrex10050@gmail.com"
+                    href={`mailto:${profile.email}`}
                     className="flex items-center gap-2 px-7 py-3.5 text-base font-bold text-white rounded-2xl cursor-pointer"
                     style={{
                       background: 'linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)',
@@ -633,10 +624,10 @@ export default function Claymorphism() {
                     transition={{ type: 'spring' as const, stiffness: 400, damping: 15 }}
                   >
                     <Mail size={18} />
-                    rexrex10050@gmail.com
+                    {profile.email}
                   </motion.a>
                   <motion.a
-                    href="https://github.com/Rex-shark"
+                    href={profile.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-7 py-3.5 text-base font-bold text-[#374151] rounded-2xl cursor-pointer"
@@ -659,7 +650,7 @@ export default function Claymorphism() {
       </main>
 
       <footer className="py-6 text-center text-sm font-semibold text-[#9CA3AF]">
-        © 2025 Rex. Built with React + Vite.
+        © {new Date().getFullYear()} {profile.name}. Built with React + Vite.
       </footer>
     </div>
   )

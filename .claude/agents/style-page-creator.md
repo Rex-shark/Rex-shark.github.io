@@ -25,7 +25,7 @@ color: yellow
 
 ## 步驟
 
-1. **讀規則與資料**：`.claude/rules/style-pages.md`、`.claude/rules/frontend.md`、`spec/info.md`（個人資料與技能以此為準，`（待補）` 不可編造）
+1. **讀規則與資料**：`.claude/rules/style-pages.md`、`.claude/rules/frontend.md`、`.claude/rules/personal-info.md`、`src/data/profile.ts`（個人資料、技能、專案一律 import 此檔，不可在頁面內另寫或編造）
 2. **設計系統**：
    ```bash
    python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<關鍵字> portfolio personal" --design-system -p "Rex Portfolio - <中文名>" -f markdown
@@ -34,7 +34,7 @@ color: yellow
    據此決定配色、字型、動畫、裝飾元素。
 3. **讀範例**：`src/pages/styles/MinimalBusiness.tsx`（結構）、`HandDrawn.tsx`（創意表現）；`GithubIcon` 直接沿用其中寫法
 4. **實作**：需要時載入 `frontend-ui`（無障礙、響應式）與 `interaction-design`（動畫時序）skill
-   - 專案區塊的卡片內容與 `Finalist.tsx` 的專案清單一致
+   - 技能用 `skillGroups`（含 AI 組）、專案用 `projects`；不做熟練度百分比、不顯示 stars
    - Google Fonts 在元件內以 `<link rel="stylesheet">` 載入
 5. **驗證**：`npm run build` 必須無型別錯誤（頁面尚未被路由引用屬正常）
 

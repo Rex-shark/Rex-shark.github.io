@@ -1,8 +1,14 @@
 import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { ArrowLeft, Mail, ExternalLink, Terminal } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Mail, Terminal } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import {
+  profile,
+  skillGroups as sharedSkillGroups,
+  projects as sharedProjects,
+  type SkillGroupKey,
+} from '@/data/profile'
 
 function GithubIcon({ size = 15 }: { size?: number }) {
   return (
@@ -21,36 +27,36 @@ const fadeUp: Variants = {
   }),
 }
 
-const skills = [
-  { category: 'BACKEND', items: ['Java', 'Spring Boot', 'Spring Security', 'JPA / Hibernate'], color: '#00FF00' },
-  { category: 'FRONTEND', items: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'], color: '#00FFFF' },
-  { category: 'DATABASE', items: ['PostgreSQL', 'MySQL', 'Redis'], color: '#FF00FF' },
-  { category: 'DEVOPS', items: ['Docker', 'GitHub Actions', 'Linux', 'Nginx'], color: '#FFD700' },
-]
+/* ─── 資料（內容來自 src/data/profile.ts，這裡只補上本頁的霓虹配色） ─── */
+const SKILL_GROUP_COLOR: Record<SkillGroupKey, string> = {
+  backend: '#00FF00',
+  frontend: '#00FFFF',
+  data: '#FF00FF',
+  ai: '#FFD700',
+  design: '#FF6B00',
+}
 
-const projects = [
-  {
-    title: '> personal_site.exe',
-    desc: 'React + Vite 建構的 GitHub Pages 個人作品集，探索多種 UI 設計風格。',
-    tags: ['React', 'TypeScript', 'Tailwind'],
-    href: 'https://github.com/Rex-shark',
-    accent: '#00FFFF',
-  },
-  {
-    title: '> spring_api.jar',
-    desc: '完整的 RESTful API 專案，包含 JWT 認證、RBAC 權限控管與 OpenAPI 文件。',
-    tags: ['Java', 'Spring Boot', 'JWT'],
-    href: 'https://github.com/Rex-shark',
-    accent: '#00FF00',
-  },
-  {
-    title: '> sys_design.md',
-    desc: 'UML、需求分析到系統設計的完整教學系列，含實戰案例解析。',
-    tags: ['系統分析', 'UML', '教學'],
-    href: 'https://github.com/Rex-shark',
-    accent: '#FF00FF',
-  },
-]
+const skills = sharedSkillGroups.map((g) => ({
+  ...g,
+  category: g.labelEn.toUpperCase(),
+  color: SKILL_GROUP_COLOR[g.key],
+}))
+
+const PROJECT_ACCENTS = ['#00FFFF', '#00FF00', '#FF00FF', '#FFD700', '#FF6B00']
+
+const projects = sharedProjects.map((p, i) => ({
+  ...p,
+  /* 主題化標題由 slug 推導，不另寫一份 */
+  exe: `> ${p.slug.replace(/-/g, '_')}.exe`,
+  accent: PROJECT_ACCENTS[i % PROJECT_ACCENTS.length],
+}))
+
+/* 5 張卡：lg 為 3 + 2（6 欄格線），sm 為 2 + 2 + 1（最後一張橫跨） */
+function projectSpan(i: number, total: number) {
+  const lg = i < 3 ? 'lg:col-span-2' : 'lg:col-span-3'
+  const sm = i === total - 1 && total % 2 === 1 ? 'sm:col-span-2' : ''
+  return `${sm} ${lg}`
+}
 
 /* 掃描線覆蓋層 */
 function Scanlines() {
@@ -113,26 +119,23 @@ function HudCorner({ position }: { position: 'tl' | 'tr' | 'bl' | 'br' }) {
   )
 }
 
-/* 技能進度條 - 終端風格 */
-function TerminalSkillBar({ label, level, color, delay }: { label: string; level: number; color: string; delay: number }) {
-  const blocks = 20
-  const filled = Math.round((level / 100) * blocks)
+/* 技能模組列 - 終端風格（不帶任何熟練度數值） */
+function TerminalModule({ label, color, delay }: { label: string; color: string; delay: number }) {
   return (
     <motion.div
-      className="flex items-center gap-3 font-mono text-sm"
+      className="flex items-start gap-3 font-mono text-sm"
       initial={{ opacity: 0, x: -16 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
-      transition={{ delay, duration: 0.4 }}
+      transition={{ delay, duration: 0.4, ease: 'easeOut' as const }}
     >
-      <span className="w-28 text-[#A0A0A0] flex-shrink-0">{label}</span>
-      <span style={{ color }}>
-        {'['}
-        <span style={{ color }}>{'█'.repeat(filled)}</span>
-        <span className="text-[#333]">{'░'.repeat(blocks - filled)}</span>
-        {']'}
+      <span
+        className="flex-shrink-0 text-xs leading-5 tracking-wider"
+        style={{ color, textShadow: `0 0 8px ${color}60` }}
+      >
+        [LOADED]
       </span>
-      <span className="text-[#666] text-xs">{level}%</span>
+      <span className="text-[#C0C0C0] leading-5 break-words min-w-0">{label}</span>
     </motion.div>
   )
 }
@@ -175,7 +178,7 @@ export default function Cyberpunk() {
               </a>
             ))}
             <a
-              href="mailto:rexrex10050@gmail.com"
+              href={`mailto:${profile.email}`}
               className="text-xs px-3 py-1.5 border border-[#FF00FF]/50 text-[#FF00FF] hover:bg-[#FF00FF]/10 transition-colors cursor-pointer font-mono"
             >
               &gt; contact
@@ -206,27 +209,32 @@ export default function Cyberpunk() {
               className="text-5xl sm:text-6xl font-black leading-tight mb-2 tracking-wider"
               style={{ fontFamily: "'Orbitron', sans-serif" }}
             >
-              <NeonText color="#00FFFF">REX</NeonText>
+              <NeonText color="#00FFFF">{profile.name.toUpperCase()}</NeonText>
             </h1>
             <div className="flex items-center gap-2 mb-6">
               <div className="w-2 h-2 rounded-full bg-[#00FF00] animate-pulse" />
               <p className="text-sm text-[#00FF00] font-mono">SYSTEM.ONLINE</p>
             </div>
             <p className="text-[#A0A0A0] text-base leading-relaxed max-w-lg mb-8 font-mono text-sm">
-              <span className="text-[#666]">&gt;</span> Java 全端工程師 ＆ 系統分析師。
-              <br />
-              <span className="text-[#666]">&gt;</span> 專注後端架構設計，持續分享 Java、Spring Boot 與系統設計的實戰經驗。
+              <span className="text-[#666]">&gt;</span>{' '}
+              <span className="text-[#E0E0E0]">{profile.title}</span>
+              {profile.intro.map((line) => (
+                <span key={line}>
+                  <br />
+                  <span className="text-[#666]">&gt;</span> {line}
+                </span>
+              ))}
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="mailto:rexrex10050@gmail.com"
+                href={`mailto:${profile.email}`}
                 className="flex items-center gap-2 px-5 py-2.5 border border-[#00FF00]/50 text-[#00FF00] text-sm font-mono hover:bg-[#00FF00]/10 hover:shadow-[0_0_15px_rgba(0,255,0,0.15)] transition-all duration-200 cursor-pointer"
               >
                 <Mail size={14} />
                 ./contact.sh
               </a>
               <a
-                href="https://github.com/Rex-shark"
+                href={profile.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-5 py-2.5 border border-[#FF00FF]/50 text-[#FF00FF] text-sm font-mono hover:bg-[#FF00FF]/10 hover:shadow-[0_0_15px_rgba(255,0,255,0.15)] transition-all duration-200 cursor-pointer"
@@ -257,8 +265,8 @@ export default function Cyberpunk() {
                 }}
               >
                 <img
-                  src="/me.png"
-                  alt="Rex"
+                  src={profile.avatar}
+                  alt={profile.name}
                   className="w-full h-full object-cover"
                   style={{ filter: 'saturate(0.7) contrast(1.1)' }}
                 />
@@ -268,7 +276,7 @@ export default function Cyberpunk() {
               {/* HUD 標籤 */}
               <div className="absolute -bottom-4 left-0 right-0 text-center">
                 <span className="text-[10px] font-mono text-[#00FFFF]/60 tracking-widest">
-                  ID:REX-SHARK // STATUS:ACTIVE
+                  ID:{profile.githubHandle.toUpperCase()} // STATUS:ACTIVE
                 </span>
               </div>
             </div>
@@ -303,35 +311,47 @@ export default function Cyberpunk() {
               <NeonText color="#00FF00">SKILLS</NeonText>
             </h2>
           </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
-            {skills.map((group, gi) => (
-              <motion.div
-                key={group.category}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-60px' }}
-                variants={fadeUp}
-                custom={gi}
-              >
-                <p
-                  className="text-xs font-mono tracking-[0.3em] mb-4"
-                  style={{ color: group.color, textShadow: `0 0 8px ${group.color}40` }}
+          {/* AI 組項目多、字串長：橫跨兩欄並在組內再分兩欄；dense 讓 design 組補進空格 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 grid-flow-row-dense gap-x-12 gap-y-10">
+            {skills.map((group, gi) => {
+              const wide = group.key === 'ai'
+              return (
+                <motion.div
+                  key={group.key}
+                  className={`relative border border-[#222] p-5 ${wide ? 'sm:col-span-2' : ''}`}
+                  style={{ borderColor: `${group.color}25` }}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '-60px' }}
+                  variants={fadeUp}
+                  custom={gi}
                 >
-                  [{group.category}]
-                </p>
-                <div className="space-y-2">
-                  {group.items.map((item, i) => (
-                    <TerminalSkillBar
-                      key={item}
-                      label={item}
-                      level={95 - gi * 5 - i * 4}
-                      color={group.color}
-                      delay={gi * 0.1 + i * 0.05}
-                    />
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+                  <div className="flex items-baseline justify-between gap-3 mb-4">
+                    <p
+                      className="text-xs font-mono tracking-[0.3em]"
+                      style={{ color: group.color, textShadow: `0 0 8px ${group.color}40` }}
+                    >
+                      [{group.category}]
+                    </p>
+                    <p className="text-[10px] font-mono text-[#555] tracking-widest">// {group.label}</p>
+                  </div>
+                  <div
+                    className={
+                      wide ? 'grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-2' : 'space-y-2'
+                    }
+                  >
+                    {group.skills.map((item, i) => (
+                      <TerminalModule
+                        key={item}
+                        label={item}
+                        color={group.color}
+                        delay={Math.min(i, 6) * 0.05}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              )
+            })}
           </div>
         </section>
 
@@ -363,14 +383,11 @@ export default function Cyberpunk() {
               <NeonText color="#FF00FF">PROJECTS</NeonText>
             </h2>
           </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5">
             {projects.map((project, i) => (
-              <motion.a
-                key={project.title}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block p-5 bg-[#0D0D0D] border border-[#333] hover:border-opacity-100 transition-all duration-300 cursor-pointer relative overflow-hidden"
+              <motion.div
+                key={project.slug}
+                className={`group relative bg-[#0D0D0D] border overflow-hidden ${projectSpan(i, projects.length)}`}
                 style={{
                   borderColor: `${project.accent}30`,
                   clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))',
@@ -386,36 +403,55 @@ export default function Cyberpunk() {
                 }}
               >
                 {/* 頂部裝飾線 */}
-                <div className="absolute top-0 left-0 right-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${project.accent}40, transparent)` }} />
+                <div className="absolute top-0 left-0 right-0 h-px pointer-events-none" style={{ background: `linear-gradient(90deg, transparent, ${project.accent}40, transparent)` }} />
 
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-mono text-sm font-bold" style={{ color: project.accent }}>
-                    {project.title}
+                {/* 整張卡連到站內頁 */}
+                <Link to={project.to} className="flex flex-col h-full p-5 cursor-pointer">
+                  <h3
+                    className="font-mono text-sm font-bold break-all pr-8 mb-1"
+                    style={{ color: project.accent }}
+                  >
+                    {project.exe}
                   </h3>
-                  <ExternalLink
-                    size={13}
-                    className="text-[#444] group-hover:text-[#888] transition-colors flex-shrink-0 mt-0.5"
-                  />
-                </div>
-                <p className="text-xs text-[#888] leading-relaxed mb-4 font-mono">
-                  {project.desc}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[10px] px-2 py-0.5 font-mono border"
-                      style={{
-                        borderColor: `${project.accent}30`,
-                        color: project.accent,
-                        background: `${project.accent}08`,
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.a>
+                  <p className="text-xs font-mono text-[#C0C0C0] mb-3">
+                    <span className="text-[#555]">//</span> {project.title}
+                  </p>
+                  <p className="text-xs text-[#888] leading-relaxed mb-4 font-mono">
+                    {project.desc}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5 mt-auto">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[10px] px-2 py-0.5 font-mono border"
+                        style={{
+                          borderColor: `${project.accent}30`,
+                          color: project.accent,
+                          background: `${project.accent}08`,
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <span className="mt-4 inline-flex items-center gap-1 text-[10px] font-mono text-[#555] group-hover:text-[#AAA] transition-colors tracking-widest">
+                    ./open
+                    <ArrowUpRight size={11} />
+                  </span>
+                </Link>
+
+                {/* GitHub repo 連結（放在 Link 之外，避免巢狀連結） */}
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${project.title} GitHub repo`}
+                  title="GitHub repo"
+                  className="absolute top-4 right-4 z-10 text-[#555] hover:text-[#E0E0E0] transition-colors cursor-pointer"
+                >
+                  <GithubIcon size={15} />
+                </a>
+              </motion.div>
             ))}
           </div>
         </section>
@@ -437,14 +473,14 @@ export default function Cyberpunk() {
               <NeonText color="#00FFFF">CONNECT</NeonText>
             </h2>
             <p className="text-[#888] mb-8 max-w-sm mx-auto font-mono text-sm">
-              合作提案、技術交流或問題諮詢，隨時建立連線。
+              技術交流或合作提案，隨時建立連線。
             </p>
             <a
-              href="mailto:rexrex10050@gmail.com"
+              href={`mailto:${profile.email}`}
               className="inline-flex items-center gap-2 px-6 py-3 border border-[#00FFFF]/50 text-[#00FFFF] font-mono text-sm hover:bg-[#00FFFF]/10 hover:shadow-[0_0_20px_rgba(0,255,255,0.15)] transition-all duration-200 cursor-pointer"
             >
               <Mail size={15} />
-              rexrex10050@gmail.com
+              {profile.email}
             </a>
           </motion.div>
         </section>
@@ -452,7 +488,7 @@ export default function Cyberpunk() {
 
       <footer className="border-t border-[#333]/50 py-6 text-center">
         <p className="text-[10px] font-mono text-[#444] tracking-widest">
-          &copy; 2025 REX // SYSTEM.VERSION.3.0 // ALL.RIGHTS.RESERVED
+          &copy; {new Date().getFullYear()} {profile.name.toUpperCase()} // SYSTEM.VERSION.3.0 // ALL.RIGHTS.RESERVED
         </p>
       </footer>
     </div>

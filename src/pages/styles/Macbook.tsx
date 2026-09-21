@@ -1,8 +1,10 @@
 import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { ArrowLeft, Mail, ExternalLink, Code2, Server, Database, Layers } from 'lucide-react'
+import { ArrowLeft, Mail, ChevronRight, Code2, Server, Database, Layers, Bot } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
+import type { SkillGroupKey } from '@/data/profile'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -37,80 +39,30 @@ const stagger: Variants = {
   visible: { transition: { staggerChildren: 0.1 } },
 }
 
-const skillGroups = [
-  {
-    category: 'Backend',
-    icon: Server,
-    items: [
-      { name: 'Java', pct: 92 },
-      { name: 'Spring Boot', pct: 88 },
-      { name: 'Spring Security', pct: 82 },
-      { name: 'JPA / Hibernate', pct: 80 },
-    ],
-  },
-  {
-    category: 'Frontend',
-    icon: Code2,
-    items: [
-      { name: 'React', pct: 78 },
-      { name: 'TypeScript', pct: 80 },
-      { name: 'Tailwind CSS', pct: 82 },
-    ],
-  },
-  {
-    category: 'Database & DevOps',
-    icon: Database,
-    items: [
-      { name: 'PostgreSQL', pct: 75 },
-      { name: 'Docker', pct: 70 },
-      { name: 'GitHub Actions', pct: 72 },
-    ],
-  },
-  {
-    category: '系統設計',
-    icon: Layers,
-    items: [
-      { name: '系統分析設計', pct: 85 },
-    ],
-  },
-]
-
-const projects = [
-  {
-    title: '個人網站',
-    desc: '以 React + Vite 建構的 GitHub Pages 個人作品集，探索多種 UI 設計風格，展示前端開發能力。',
-    tags: ['React', 'TypeScript', 'Tailwind CSS'],
-    href: 'https://github.com/Rex-shark',
-  },
-  {
-    title: 'Spring Boot API 範例',
-    desc: '完整的 RESTful API 專案，包含 JWT 認證、RBAC 權限控管與 OpenAPI 自動化文件。',
-    tags: ['Java', 'Spring Boot', 'JWT'],
-    href: 'https://github.com/Rex-shark',
-  },
-  {
-    title: '系統分析設計教學',
-    desc: 'UML、需求分析到系統設計的完整教學系列，含實戰案例解析與設計模式應用。',
-    tags: ['系統分析', 'UML', '教學'],
-    href: 'https://github.com/Rex-shark',
-  },
-]
-
-/* macOS 風格進度條 */
-function AppleProgressBar({ pct, delay }: { pct: number; delay: number }) {
-  return (
-    <div className="h-1.5 bg-black/8 rounded-full overflow-hidden">
-      <motion.div
-        className="h-full rounded-full"
-        style={{ background: 'linear-gradient(90deg, #0071E3, #34AADC)' }}
-        initial={{ width: 0 }}
-        whileInView={{ width: `${pct}%` }}
-        viewport={{ once: true }}
-        transition={{ delay, duration: 0.7, ease: 'easeOut' as const }}
-      />
-    </div>
-  )
+/* 資料來自 src/data/profile.ts，這裡只補上本頁的 icon、配色與版面欄寬 */
+const SKILL_GROUP_STYLE: Record<SkillGroupKey, { icon: typeof Server; color: string }> = {
+  backend: { icon: Server, color: '#0071E3' },
+  frontend: { icon: Code2, color: '#AF52DE' },
+  data: { icon: Database, color: '#34C759' },
+  ai: { icon: Bot, color: '#FF9500' },
+  design: { icon: Layers, color: '#FF2D55' },
 }
+
+const skillGroups = sharedSkillGroups.map((g) => ({ ...g, ...SKILL_GROUP_STYLE[g.key] }))
+
+/* 5 張卡：上排 3 張、下排 2 張（lg 以 6 欄格線對齊）；sm 兩欄時第一張橫跨整列 */
+const PROJECT_SPAN = [
+  'sm:col-span-2 lg:col-span-2',
+  'lg:col-span-2',
+  'lg:col-span-2',
+  'lg:col-span-3',
+  'lg:col-span-3',
+]
+
+const projects = sharedProjects.map((p, i) => ({
+  ...p,
+  span: PROJECT_SPAN[i] ?? 'lg:col-span-2',
+}))
 
 export default function Macbook() {
   return (
@@ -179,7 +131,7 @@ export default function Macbook() {
                 variants={fadeUp}
                 custom={0}
               >
-                Java Full-Stack Engineer
+                {profile.titleEn}
               </motion.p>
               <motion.h1
                 className="font-bold leading-tight mb-5"
@@ -188,20 +140,30 @@ export default function Macbook() {
                 custom={1}
               >
                 Hi, I'm{' '}
-                <span style={{ color: '#0071E3' }}>Rex</span>
+                <span style={{ color: '#0071E3' }}>{profile.name}</span>
               </motion.h1>
-              <motion.p
-                className="text-[17px] leading-relaxed mb-8 max-w-md"
-                style={{ color: '#3C3C43', lineHeight: 1.65 }}
-                variants={fadeUp}
-                custom={2}
-              >
-                Java 全端工程師 ＆ 系統分析師。熱衷於設計穩健的後端架構，並持續分享
-                Java、Spring Boot 與系統設計的實戰經驗。
-              </motion.p>
+              <motion.div className="mb-8 max-w-md" variants={fadeUp} custom={2}>
+                <p
+                  className="text-[17px] font-semibold mb-3"
+                  style={{ color: '#1C1C1E', letterSpacing: '-0.01em' }}
+                >
+                  {profile.title}
+                </p>
+                <div className="space-y-2">
+                  {profile.intro.map((line) => (
+                    <p
+                      key={line}
+                      className="text-[16px]"
+                      style={{ color: '#3C3C43', lineHeight: 1.65 }}
+                    >
+                      {line}
+                    </p>
+                  ))}
+                </div>
+              </motion.div>
               <motion.div className="flex items-center gap-3" variants={fadeUp} custom={3}>
                 <a
-                  href="mailto:rexrex10050@gmail.com"
+                  href={`mailto:${profile.email}`}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-[15px] font-semibold transition-all duration-200 cursor-pointer hover:brightness-90"
                   style={{ background: '#0071E3', letterSpacing: '-0.01em' }}
                 >
@@ -209,7 +171,7 @@ export default function Macbook() {
                   聯絡我
                 </a>
                 <a
-                  href="https://github.com/Rex-shark"
+                  href={profile.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[15px] font-semibold transition-all duration-200 cursor-pointer"
@@ -253,14 +215,14 @@ export default function Macbook() {
                 >
                   <WindowDots />
                   <span className="mx-auto text-[12px] font-medium" style={{ color: '#3C3C43' }}>
-                    Rex · 個人照片
+                    {profile.name} · 個人照片
                   </span>
                 </div>
                 {/* 照片 */}
                 <div className="w-56 h-56">
                   <img
-                    src="/me.png"
-                    alt="Rex"
+                    src={profile.avatar}
+                    alt={profile.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -298,57 +260,83 @@ export default function Macbook() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {skillGroups.map((group, gi) => {
-              const Icon = group.icon
-              return (
-                <motion.div
-                  key={group.category}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: '-40px' }}
-                  variants={fadeUp}
-                  custom={gi}
-                  className="p-5"
-                  style={{
-                    background: 'rgba(255,255,255,0.72)',
-                    backdropFilter: 'blur(20px)',
-                    WebkitBackdropFilter: 'blur(20px)',
-                    borderRadius: '16px',
-                    border: '0.5px solid rgba(0,0,0,0.1)',
-                    boxShadow: '0 2px 20px rgba(0,0,0,0.05)',
-                  }}
-                >
-                  <div className="flex items-center gap-2 mb-4">
-                    <div
-                      className="w-7 h-7 rounded-lg flex items-center justify-center"
-                      style={{ background: '#0071E3' }}
-                    >
-                      <Icon size={14} color="white" />
-                    </div>
-                    <span className="text-[13px] font-semibold" style={{ color: '#3C3C43' }}>
-                      {group.category}
-                    </span>
-                  </div>
-                  <div className="space-y-3">
-                    {group.items.map((item, ii) => (
-                      <div key={item.name}>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-[14px] font-medium" style={{ color: '#1C1C1E' }}>
-                            {item.name}
-                          </span>
-                          <span className="text-[12px]" style={{ color: '#8E8E93' }}>
-                            {item.pct}%
-                          </span>
-                        </div>
-                        <AppleProgressBar pct={item.pct} delay={gi * 0.1 + ii * 0.06} />
+          {/* 「系統設定」式視窗：每組一張分組清單，不帶任何熟練度數值 */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-40px' }}
+            variants={fadeUp}
+            custom={1}
+            className="overflow-hidden"
+            style={{
+              borderRadius: '18px',
+              border: '0.5px solid rgba(0,0,0,0.1)',
+              boxShadow: '0 4px 48px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.06)',
+              background: 'rgba(236,236,240,0.85)',
+            }}
+          >
+            <div
+              className="flex items-center px-4 h-10"
+              style={{
+                background: 'rgba(246,246,246,0.95)',
+                borderBottom: '0.5px solid rgba(0,0,0,0.1)',
+              }}
+            >
+              <WindowDots />
+              <span className="mx-auto pr-12 text-[12px] font-medium" style={{ color: '#3C3C43' }}>
+                系統設定 — 技術能力
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 grid-flow-dense gap-5 p-4 sm:p-6">
+              {skillGroups.map((group) => {
+                const Icon = group.icon
+                const wide = group.key === 'ai'
+                return (
+                  <div key={group.key} className={wide ? 'sm:col-span-2' : ''}>
+                    <div className="flex items-center gap-2.5 mb-2 px-1">
+                      <div
+                        className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                        style={{ background: group.color }}
+                      >
+                        <Icon size={14} color="white" />
                       </div>
-                    ))}
+                      <span className="text-[14px] font-semibold" style={{ color: '#1C1C1E' }}>
+                        {group.label}
+                      </span>
+                      <span className="text-[12px]" style={{ color: '#8E8E93' }}>
+                        {group.labelEn}
+                      </span>
+                    </div>
+                    <ul
+                      className={`overflow-hidden ${wide ? 'grid grid-cols-1 sm:grid-cols-2' : ''}`}
+                      style={{
+                        background: 'rgba(255,255,255,0.92)',
+                        borderRadius: '12px',
+                        border: '0.5px solid rgba(0,0,0,0.08)',
+                      }}
+                    >
+                      {group.skills.map((skill) => (
+                        <li
+                          key={skill}
+                          className="flex items-center justify-between gap-3 px-4 py-2.5"
+                          style={{ boxShadow: 'inset 0 -0.5px 0 rgba(0,0,0,0.08)' }}
+                        >
+                          <span
+                            className="text-[14px] font-medium min-w-0 break-words"
+                            style={{ color: '#1C1C1E' }}
+                          >
+                            {skill}
+                          </span>
+                          <ChevronRight size={14} className="flex-shrink-0" style={{ color: '#C7C7CC' }} />
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </motion.div>
-              )
-            })}
-          </div>
+                )
+              })}
+            </div>
+          </motion.div>
         </section>
 
         {/* 分隔線 */}
@@ -380,14 +368,11 @@ export default function Macbook() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5">
             {projects.map((project, i) => (
-              <motion.a
-                key={project.title}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block p-6 cursor-pointer"
+              <motion.div
+                key={project.slug}
+                className={`group relative ${project.span}`}
                 style={{
                   background: 'rgba(255,255,255,0.72)',
                   backdropFilter: 'blur(20px)',
@@ -407,42 +392,56 @@ export default function Macbook() {
                   transition: { duration: 0.2, ease: 'easeOut' as const },
                 }}
               >
-                {/* 視窗三點 */}
-                <div className="flex items-start justify-between mb-4">
-                  <WindowDots />
-                  <ExternalLink
-                    size={14}
-                    className="text-[#8E8E93] group-hover:text-[#0071E3] transition-colors duration-200 flex-shrink-0"
-                  />
-                </div>
-                <h3
-                  className="font-semibold text-[16px] mb-2"
-                  style={{ color: '#1C1C1E', letterSpacing: '-0.01em' }}
-                >
-                  {project.title}
-                </h3>
-                <p
-                  className="text-[13px] leading-relaxed mb-4"
-                  style={{ color: '#3C3C43' }}
-                >
-                  {project.desc}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[11px] px-2 py-0.5 font-medium rounded-full"
-                      style={{
-                        background: 'rgba(0,113,227,0.08)',
-                        color: '#0071E3',
-                        border: '0.5px solid rgba(0,113,227,0.2)',
-                      }}
-                    >
-                      {tag}
+                {/* 整張卡連到站內頁 */}
+                <Link to={project.to} className="flex flex-col h-full p-6 cursor-pointer">
+                  {/* 視窗標題列：三點 + 由 slug 推導的視窗名稱 */}
+                  <div className="flex items-center gap-3 mb-4 pr-9">
+                    <WindowDots />
+                    <span className="text-[11px] font-medium truncate" style={{ color: '#8E8E93' }}>
+                      {project.slug}
                     </span>
-                  ))}
-                </div>
-              </motion.a>
+                  </div>
+                  <h3
+                    className="font-semibold text-[16px] mb-2 group-hover:text-[#0071E3] transition-colors duration-200"
+                    style={{ letterSpacing: '-0.01em' }}
+                  >
+                    {project.title}
+                  </h3>
+                  <p
+                    className="text-[13px] leading-relaxed mb-4 flex-1"
+                    style={{ color: '#3C3C43' }}
+                  >
+                    {project.desc}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[11px] px-2 py-0.5 font-medium rounded-full"
+                        style={{
+                          background: 'rgba(0,113,227,0.08)',
+                          color: '#0071E3',
+                          border: '0.5px solid rgba(0,113,227,0.2)',
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
+
+                {/* GitHub repo 連結放在 Link 之外，避免巢狀 <a> */}
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${project.title} 的 GitHub 原始碼`}
+                  title="GitHub 原始碼"
+                  className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-[#8E8E93] hover:text-[#0071E3] hover:bg-black/5 transition-colors duration-200 cursor-pointer"
+                >
+                  <GithubIcon className="w-4 h-4" />
+                </a>
+              </motion.div>
             ))}
           </div>
         </section>
@@ -482,7 +481,7 @@ export default function Macbook() {
               variants={fadeUp}
               custom={2}
             >
-              無論是合作提案、技術交流或問題諮詢，都歡迎來信。
+              技術交流或任何想法，都歡迎來信。
             </motion.p>
 
             {/* 聯絡卡片 */}
@@ -516,15 +515,15 @@ export default function Macbook() {
                 <div className="space-y-3 mb-5">
                   <div style={{ borderBottom: '0.5px solid rgba(0,0,0,0.08)', paddingBottom: '10px' }}>
                     <span className="text-[12px] font-medium" style={{ color: '#8E8E93' }}>收件人</span>
-                    <p className="text-[14px] mt-0.5" style={{ color: '#1C1C1E' }}>rexrex10050@gmail.com</p>
+                    <p className="text-[14px] mt-0.5 break-all" style={{ color: '#1C1C1E' }}>{profile.email}</p>
                   </div>
                   <div style={{ borderBottom: '0.5px solid rgba(0,0,0,0.08)', paddingBottom: '10px' }}>
                     <span className="text-[12px] font-medium" style={{ color: '#8E8E93' }}>主旨</span>
-                    <p className="text-[14px] mt-0.5" style={{ color: '#8E8E93' }}>你好，Rex！我想...</p>
+                    <p className="text-[14px] mt-0.5" style={{ color: '#8E8E93' }}>你好，{profile.name}！我想...</p>
                   </div>
                 </div>
                 <a
-                  href="mailto:rexrex10050@gmail.com"
+                  href={`mailto:${profile.email}`}
                   className="flex items-center justify-center gap-2 w-full py-2.5 rounded-full text-white text-[15px] font-semibold transition-all duration-200 cursor-pointer hover:brightness-90"
                   style={{ background: '#0071E3', letterSpacing: '-0.01em' }}
                 >
@@ -545,7 +544,7 @@ export default function Macbook() {
           color: '#8E8E93',
         }}
       >
-        © 2025 Rex. Built with React + Vite.
+        © {new Date().getFullYear()} {profile.name}. Built with React + Vite.
       </footer>
     </div>
   )

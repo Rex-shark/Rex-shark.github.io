@@ -1,7 +1,9 @@
 import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { ArrowLeft, Mail, ExternalLink } from 'lucide-react'
+import { ArrowLeft, Mail } from 'lucide-react'
+import { profile, skillGroups, projects } from '@/data/profile'
+import type { SkillGroupKey } from '@/data/profile'
 
 function GithubIcon({ size = 15 }: { size?: number }) {
   return (
@@ -51,34 +53,8 @@ const staggerItem: Variants = {
   },
 }
 
-const skills = [
-  { category: '後端', items: ['Java', 'Spring Boot', 'Spring Security', 'JPA / Hibernate'] },
-  { category: '前端', items: ['React', 'TypeScript', 'Tailwind CSS'] },
-  { category: '資料庫', items: ['PostgreSQL'] },
-  { category: '維運', items: ['Docker', 'GitHub Actions'] },
-  { category: '分析', items: ['系統分析設計'] },
-]
-
-const projects = [
-  {
-    title: '個人網站',
-    desc: '以 React + Vite 建構的個人作品集，探索多種 UI 設計風格的可能性。',
-    tags: ['React', 'TypeScript', 'Tailwind'],
-    href: 'https://github.com/Rex-shark',
-  },
-  {
-    title: 'Spring Boot API 範例',
-    desc: '完整的 RESTful API 專案，包含 JWT 認證、RBAC 權限控管與 OpenAPI 文件。',
-    tags: ['Java', 'Spring Boot', 'JWT'],
-    href: 'https://github.com/Rex-shark',
-  },
-  {
-    title: '系統分析設計教學',
-    desc: 'UML、需求分析到系統設計的完整教學系列，含實戰案例解析。',
-    tags: ['系統分析', 'UML', '教學'],
-    href: 'https://github.com/Rex-shark',
-  },
-]
+/* 技能區：AI 組項目較多，於 md 以上佔兩欄寬度 */
+const AI_KEY: SkillGroupKey = 'ai'
 
 export default function JapaneseMinimal() {
   return (
@@ -138,8 +114,8 @@ export default function JapaneseMinimal() {
               <div className="relative">
                 <div className="w-48 h-48 rounded-full overflow-hidden ring-1 ring-[#2C2C2C]/[0.08]">
                   <img
-                    src="/me.png"
-                    alt="Rex"
+                    src={profile.avatar}
+                    alt={profile.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -169,28 +145,30 @@ export default function JapaneseMinimal() {
               custom={0}
             >
               <p className="text-sm tracking-[0.3em] text-[#8C8578] mb-4">
-                全端工程師 ・ 系統分析師
+                {profile.roles.join(' ・ ')}
               </p>
               <h1
                 className="text-5xl sm:text-6xl font-light mb-6 tracking-tight"
                 style={{ fontFamily: "'Noto Serif TC', serif" }}
               >
-                Rex
+                {profile.name}
               </h1>
               <div className="w-12 h-px bg-[#2C2C2C]/20 mb-6 mx-auto md:mx-0" />
-              <p className="text-[#5A5549] text-base leading-[1.9] max-w-sm">
-                以簡潔為本，構築穩健的後端架構。持續分享 Java、Spring Boot 與系統設計的實踐心得。
-              </p>
+              <div className="text-[#5A5549] text-base leading-[1.9] max-w-sm space-y-1">
+                {profile.intro.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
+              </div>
               <div className="flex items-center gap-4 mt-8 justify-center md:justify-start">
                 <a
-                  href="mailto:rexrex10050@gmail.com"
+                  href={`mailto:${profile.email}`}
                   className="group flex items-center gap-2 px-5 py-2.5 bg-[#2C2C2C] text-[#F7F5F0] text-sm tracking-wider hover:bg-[#3D3D3D] transition-colors duration-200 cursor-pointer"
                 >
                   <Mail size={14} />
                   聯絡我
                 </a>
                 <a
-                  href="https://github.com/Rex-shark"
+                  href={profile.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-5 py-2.5 border border-[#2C2C2C]/20 text-sm tracking-wider hover:border-[#2C2C2C]/50 transition-colors duration-200 cursor-pointer"
@@ -237,17 +215,27 @@ export default function JapaneseMinimal() {
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
           >
-            {skills.map((group) => (
-              <motion.div key={group.category} variants={staggerItem}>
+            {skillGroups.map((group) => (
+              <motion.div
+                key={group.key}
+                variants={staggerItem}
+                className={group.key === AI_KEY ? 'col-span-2' : ''}
+              >
                 <p
                   className="text-xs tracking-[0.2em] text-[#8C8578] mb-4 pb-2 border-b border-[#2C2C2C]/[0.06]"
                 >
-                  {group.category}
+                  {group.label}
                 </p>
-                <ul className="space-y-2.5">
-                  {group.items.map((item) => (
-                    <li key={item} className="text-sm text-[#2C2C2C]">
-                      {item}
+                <ul
+                  className={
+                    group.key === AI_KEY
+                      ? 'grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5'
+                      : 'space-y-2.5'
+                  }
+                >
+                  {group.skills.map((skill) => (
+                    <li key={skill} className="text-sm text-[#2C2C2C]">
+                      {skill}
                     </li>
                   ))}
                 </ul>
@@ -285,17 +273,14 @@ export default function JapaneseMinimal() {
 
           <div className="space-y-6">
             {projects.map((project, i) => (
-              <motion.a
-                key={project.title}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block py-8 px-6 -mx-6 hover:bg-[#EDE9E0]/50 transition-colors duration-250 cursor-pointer"
+              <motion.div
+                key={project.slug}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: '-60px' }}
                 variants={fadeIn}
                 custom={i}
+                className="relative py-8 px-6 -mx-6 hover:bg-[#EDE9E0]/50 transition-colors duration-250 cursor-pointer"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
@@ -311,7 +296,9 @@ export default function JapaneseMinimal() {
                         className="text-lg font-normal text-[#2C2C2C]"
                         style={{ fontFamily: "'Noto Serif TC', serif" }}
                       >
-                        {project.title}
+                        <Link to={project.to} className="after:absolute after:inset-0">
+                          {project.title}
+                        </Link>
                       </h3>
                     </div>
                     <p className="text-sm text-[#5A5549] leading-relaxed ml-[3.75rem] mb-3">
@@ -328,12 +315,17 @@ export default function JapaneseMinimal() {
                       ))}
                     </div>
                   </div>
-                  <ExternalLink
-                    size={14}
-                    className="text-[#8C8578]/40 group-hover:text-[#2C2C2C]/60 transition-colors duration-200 flex-shrink-0 mt-1"
-                  />
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${project.title} GitHub Repo`}
+                    className="relative z-10 text-[#8C8578]/50 hover:text-[#2C2C2C] transition-colors duration-200 flex-shrink-0 mt-1 cursor-pointer"
+                  >
+                    <GithubIcon size={14} />
+                  </a>
                 </div>
-              </motion.a>
+              </motion.div>
             ))}
           </div>
         </section>
@@ -369,11 +361,11 @@ export default function JapaneseMinimal() {
               無論是合作提案、技術交流或問題諮詢，都歡迎來信。
             </p>
             <a
-              href="mailto:rexrex10050@gmail.com"
+              href={`mailto:${profile.email}`}
               className="inline-flex items-center gap-2 px-7 py-3 bg-[#2C2C2C] text-[#F7F5F0] text-sm tracking-wider hover:bg-[#3D3D3D] transition-colors duration-200 cursor-pointer"
             >
               <Mail size={14} />
-              rexrex10050@gmail.com
+              {profile.email}
             </a>
           </motion.div>
         </section>
@@ -381,7 +373,7 @@ export default function JapaneseMinimal() {
 
       <footer className="py-8 text-center text-xs text-[#8C8578]/50 tracking-wider">
         <div className="w-6 h-px bg-[#2C2C2C]/[0.06] mx-auto mb-4" />
-        © 2025 Rex
+        © {new Date().getFullYear()} {profile.name}
       </footer>
     </div>
   )

@@ -2,8 +2,10 @@ import { useState, useRef } from 'react'
 import { Link } from 'react-router'
 import { motion, useSpring, useMotionValue, useTransform } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { ArrowLeft, Mail, ExternalLink, Code2, Database, Server, Wrench, Star } from 'lucide-react'
+import { ArrowLeft, Mail, ExternalLink, Code2, Database, Server, Wrench, Bot, Hand } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
+import type { SkillGroupKey } from '@/data/profile'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -104,7 +106,7 @@ function SkillTag({ label, icon: Icon, color }: { label: string; icon?: React.El
     <motion.span
       whileHover={{ scale: 1.15, rotate: [-1, 1, -1, 0], transition: { rotate: { duration: 0.3 } } }}
       whileTap={{ scale: 0.9 }}
-      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium cursor-pointer select-none"
+      className="inline-flex max-w-full items-center gap-1.5 px-3 py-1.5 rounded-2xl text-sm font-medium text-left cursor-pointer select-none"
       style={{ background: `${color}18`, color, border: `1.5px solid ${color}40` }}
     >
       {Icon && <Icon size={13} />}
@@ -134,57 +136,27 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   )
 }
 
-/* ─── 資料 ─── */
-const skillGroups = [
-  {
-    label: '後端',
-    icon: Server,
-    color: '#6366F1',
-    skills: ['Java', 'Spring Boot', 'Spring Security', 'JPA/Hibernate'],
-  },
-  {
-    label: '前端',
-    icon: Code2,
-    color: '#8B5CF6',
-    skills: ['React', 'TypeScript', 'Tailwind CSS'],
-  },
-  {
-    label: '資料庫',
-    icon: Database,
-    color: '#06B6D4',
-    skills: ['PostgreSQL'],
-  },
-  {
-    label: '工具',
-    icon: Wrench,
-    color: '#10B981',
-    skills: ['Docker', 'GitHub Actions', '系統分析設計'],
-  },
-]
+/* ─── 資料（內容來自 src/data/profile.ts，這裡只補上本頁的 icon、配色與版面） ─── */
+const SKILL_GROUP_STYLE: Record<SkillGroupKey, { icon: typeof Server; color: string; span: string }> = {
+  backend: { icon: Server, color: '#6366F1', span: '' },
+  frontend: { icon: Code2, color: '#8B5CF6', span: '' },
+  data: { icon: Database, color: '#06B6D4', span: '' },
+  // AI 組項目多、字串長，佔兩欄
+  ai: { icon: Bot, color: '#EC4899', span: 'sm:col-span-2' },
+  design: { icon: Wrench, color: '#10B981', span: '' },
+}
 
-const projects = [
-  {
-    title: '個人網站',
-    desc: '風格導覽型個人網站，展示多種設計風格，使用 React + Vite 部署於 GitHub Pages。',
-    tags: ['React', 'TypeScript', 'Tailwind CSS'],
-    color: '#6366F1',
-    stars: 12,
-  },
-  {
-    title: 'Spring Boot API 範例',
-    desc: '完整的 RESTful API 範例，包含 JWT 認證、角色控管、JPA 資料存取層。',
-    tags: ['Java', 'Spring Boot', 'PostgreSQL'],
-    color: '#8B5CF6',
-    stars: 28,
-  },
-  {
-    title: '系統分析設計教學',
-    desc: 'UML、需求分析、架構設計的完整教材，適合想學習系統設計的開發者。',
-    tags: ['系統設計', 'UML', '架構'],
-    color: '#06B6D4',
-    stars: 19,
-  },
-]
+const skillGroups = sharedSkillGroups.map((g) => ({ ...g, ...SKILL_GROUP_STYLE[g.key] }))
+
+const PROJECT_COLORS = ['#6366F1', '#8B5CF6', '#06B6D4', '#EC4899', '#10B981']
+// 5 張卡：md 以上為 3 + 2（6 欄格線）
+const PROJECT_SPAN = ['md:col-span-2', 'md:col-span-2', 'md:col-span-2', 'md:col-span-3', 'md:col-span-3']
+
+const projects = sharedProjects.map((p, i) => ({
+  ...p,
+  color: PROJECT_COLORS[i % PROJECT_COLORS.length],
+  span: PROJECT_SPAN[i % PROJECT_SPAN.length],
+}))
 
 /* ─── 動畫 Variants ─── */
 const sectionVariants: Variants = {
@@ -245,13 +217,14 @@ export default function MicroInteractions() {
             className="relative shrink-0"
           >
             <div className="w-44 h-44 rounded-3xl overflow-hidden border-4 border-white shadow-2xl shadow-indigo-200">
-              <img src="/me.png" alt="Rex" className="w-full h-full object-cover" />
+              <img src={profile.avatar} alt={profile.name} className="w-full h-full object-cover" />
             </div>
-            {/* 狀態指示器 */}
+            {/* 脈動裝飾點（純微互動裝飾，不代表任何狀態） */}
             <motion.div
+              aria-hidden="true"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ repeat: Infinity, duration: 2 }}
-              className="absolute -bottom-2 -right-2 bg-emerald-400 rounded-full w-6 h-6 border-4 border-white"
+              className="absolute -bottom-2 -right-2 bg-indigo-400 rounded-full w-6 h-6 border-4 border-white"
             />
           </motion.div>
 
@@ -263,29 +236,34 @@ export default function MicroInteractions() {
             className="text-center md:text-left"
           >
             <motion.p variants={itemVariants} className="text-indigo-500 font-semibold text-sm tracking-widest uppercase mb-2">
-              Java 全端工程師
+              {profile.title}
             </motion.p>
             <motion.h1
               variants={itemVariants}
               className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-4"
             >
-              Rex
+              {profile.name}
               <motion.span
+                aria-hidden="true"
                 animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
                 transition={{ duration: 1.5, delay: 1, repeat: Infinity, repeatDelay: 3 }}
-                className="inline-block ml-3"
+                className="inline-block ml-3 align-middle text-indigo-500 origin-bottom"
               >
-                👋
+                <Hand className="w-9 h-9 sm:w-11 sm:h-11" strokeWidth={2.2} />
               </motion.span>
             </motion.h1>
-            <motion.p variants={itemVariants} className="text-slate-500 text-lg leading-relaxed max-w-md mb-8">
-              熱愛構建優雅的系統架構與流暢的使用者體驗。每個細節都是一次讓互動更有溫度的機會。
-            </motion.p>
+            <motion.div variants={itemVariants} className="max-w-md mb-8 space-y-2 mx-auto md:mx-0">
+              {profile.intro.map((line) => (
+                <p key={line} className="text-slate-500 text-lg leading-relaxed">
+                  {line}
+                </p>
+              ))}
+            </motion.div>
             <motion.div variants={itemVariants} className="flex flex-wrap gap-3 justify-center md:justify-start">
               <RippleButton variant="primary" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
                 聯絡我
               </RippleButton>
-              <RippleButton variant="outline" onClick={() => window.open('https://github.com/Rex-shark', '_blank')}>
+              <RippleButton variant="outline" onClick={() => window.open(profile.githubUrl, '_blank', 'noopener,noreferrer')}>
                 GitHub
               </RippleButton>
             </motion.div>
@@ -320,14 +298,14 @@ export default function MicroInteractions() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="grid grid-flow-row-dense grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {skillGroups.map((group) => (
               <motion.div
                 key={group.label}
                 variants={itemVariants}
                 whileHover={{ y: -4 }}
-                className="bg-slate-50 rounded-2xl p-5 border border-slate-100"
+                className={`bg-slate-50 rounded-2xl p-5 border border-slate-100 ${group.span}`}
               >
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${group.color}18` }}>
@@ -358,21 +336,21 @@ export default function MicroInteractions() {
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold text-slate-900 mb-2 text-center">專案作品</h2>
           <p className="text-slate-400 text-center mb-12">懸停卡片，感受 3D 傾斜效果</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
             {projects.map((p) => (
-              <TiltCard key={p.title} className="h-full">
-                <div className="h-full bg-white rounded-2xl border border-slate-100 p-6 shadow-sm hover:shadow-lg hover:shadow-indigo-100 transition-shadow">
-                  <div className="flex items-start justify-between mb-4">
+              <TiltCard key={p.slug} className={`relative h-full ${p.span}`}>
+                {/* 整張卡連到站內頁；repo 連結放在 Link 之外（絕對定位），避免巢狀 <a> */}
+                <Link
+                  to={p.to}
+                  className="flex flex-col h-full bg-white rounded-2xl border border-slate-100 p-6 shadow-sm hover:shadow-lg hover:shadow-indigo-100 transition-shadow cursor-pointer focus-visible:outline-2 focus-visible:outline-indigo-500"
+                >
+                  <div className="mb-4">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${p.color}15`, color: p.color }}>
                       <GithubIcon className="w-5 h-5" />
                     </div>
-                    <div className="flex items-center gap-1 text-slate-400 text-xs">
-                      <Star size={12} />
-                      {p.stars}
-                    </div>
                   </div>
                   <h3 className="font-bold text-slate-900 mb-2">{p.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-4">{p.desc}</p>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-4 grow">{p.desc}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {p.tags.map((t) => (
                       <span key={t} className="text-xs px-2 py-0.5 rounded-full" style={{ background: `${p.color}12`, color: p.color }}>
@@ -380,7 +358,19 @@ export default function MicroInteractions() {
                       </span>
                     ))}
                   </div>
-                </div>
+                </Link>
+                <motion.a
+                  href={p.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`在 GitHub 開啟 ${p.title}`}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.94 }}
+                  className="absolute top-6 right-6 inline-flex items-center gap-1 text-xs font-medium text-slate-400 hover:text-indigo-600 transition-colors cursor-pointer px-2 py-1 rounded-lg hover:bg-indigo-50"
+                >
+                  GitHub
+                  <ExternalLink size={12} />
+                </motion.a>
               </TiltCard>
             ))}
           </div>
@@ -398,15 +388,15 @@ export default function MicroInteractions() {
       >
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-slate-900 mb-4">聯絡我</h2>
-          <p className="text-slate-500 mb-10 leading-relaxed">有任何合作想法或技術問題，歡迎隨時聯繫。</p>
+          <p className="text-slate-500 mb-10 leading-relaxed">技術交流或任何問題，歡迎來信聯繫。</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <RippleButton variant="primary" onClick={() => window.open('mailto:rexrex10050@gmail.com')}>
+            <RippleButton variant="primary" onClick={() => { window.location.href = `mailto:${profile.email}` }}>
               <span className="flex items-center gap-2">
                 <Mail size={16} />
-                rexrex10050@gmail.com
+                {profile.email}
               </span>
             </RippleButton>
-            <RippleButton variant="outline" onClick={() => window.open('https://github.com/Rex-shark', '_blank')}>
+            <RippleButton variant="outline" onClick={() => window.open(profile.githubUrl, '_blank', 'noopener,noreferrer')}>
               <span className="flex items-center gap-2">
                 <GithubIcon className="w-4 h-4" />
                 GitHub
@@ -419,7 +409,7 @@ export default function MicroInteractions() {
 
       {/* Footer */}
       <footer className="py-8 text-center text-slate-400 text-sm border-t border-slate-100">
-        © 2025 Rex · Java 全端工程師
+        © {new Date().getFullYear()} {profile.name} · {profile.title}
       </footer>
     </div>
   )

@@ -3,6 +3,8 @@ import { motion, useReducedMotion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
+import type { SkillGroupKey } from '@/data/profile'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -79,60 +81,30 @@ function PixelDivider() {
   )
 }
 
-/* ── 資料 ── */
-const skillGroups = [
-  {
-    category: 'BACKEND',
-    icon: '▸',
-    items: ['Java', 'Spring Boot', 'Spring Security', 'JPA/Hibernate'],
-    color: '#39FF14',
-  },
-  {
-    category: 'FRONTEND',
-    icon: '▸',
-    items: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
-    color: '#00FFFF',
-  },
-  {
-    category: 'DATABASE',
-    icon: '▸',
-    items: ['PostgreSQL', 'MySQL', 'Redis'],
-    color: '#FFD700',
-  },
-  {
-    category: 'DEVOPS',
-    icon: '▸',
-    items: ['Docker', 'GitHub Actions', '系統分析設計'],
-    color: '#FF6B9D',
-  },
-]
+/* ── 資料（內容來自 src/data/profile.ts，這裡只補上像素風配色） ── */
+const SKILL_GROUP_COLOR: Record<SkillGroupKey, string> = {
+  backend: '#39FF14',
+  frontend: '#00FFFF',
+  data: '#FFD700',
+  ai: '#FF6B9D',
+  design: '#9B59B6',
+}
 
-const projects = [
-  {
-    id: '001',
-    title: '個人網站',
-    desc: 'React + Vite 打造的 GitHub Pages 作品集，探索多種 UI 設計風格。',
-    tags: ['React', 'TypeScript', 'Tailwind'],
-    href: 'https://github.com/Rex-shark',
-    color: '#39FF14',
-  },
-  {
-    id: '002',
-    title: 'Spring Boot API',
-    desc: '完整 RESTful API 範例，含 JWT 認證、RBAC 權限與 OpenAPI 文件。',
-    tags: ['Java', 'Spring Boot', 'JWT'],
-    href: 'https://github.com/Rex-shark',
-    color: '#00FFFF',
-  },
-  {
-    id: '003',
-    title: '系統分析設計教學',
-    desc: 'UML 到系統設計的完整教學系列，附實戰案例解析。',
-    tags: ['系統分析', 'UML', '教學'],
-    href: 'https://github.com/Rex-shark',
-    color: '#FFD700',
-  },
-]
+const skillGroups = sharedSkillGroups.map((g) => ({
+  key: g.key,
+  category: g.labelEn.toUpperCase(),
+  icon: '▸',
+  items: g.skills,
+  color: SKILL_GROUP_COLOR[g.key],
+}))
+
+const PROJECT_COLORS = ['#39FF14', '#00FFFF', '#FFD700', '#FF6B9D', '#9B59B6']
+
+const projects = sharedProjects.map((p, i) => ({
+  ...p,
+  id: String(i + 1).padStart(3, '0'),
+  color: PROJECT_COLORS[i % PROJECT_COLORS.length],
+}))
 
 /* ── 動畫 Variants ── */
 const fadeInUp: Variants = {
@@ -157,13 +129,15 @@ const pixelIn: Variants = {
 function SkillCard({
   group,
   index,
+  wide,
 }: {
   group: (typeof skillGroups)[number]
   index: number
+  wide?: boolean
 }) {
   return (
     <motion.div
-      className="p-4 relative"
+      className={`p-4 relative ${wide ? 'sm:col-span-2' : ''}`}
       style={{
         background: '#0D0D1A',
         border: `2px solid ${group.color}`,
@@ -193,10 +167,10 @@ function SkillCard({
         {group.items.map((item) => (
           <li
             key={item}
-            className="text-xs flex items-center gap-2 text-[#C8D8E8]"
+            className="text-xs flex items-start gap-2 text-[#C8D8E8]"
             style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.55rem', lineHeight: '1.6' }}
           >
-            <span style={{ color: group.color }}>■</span>
+            <span className="mt-0.5" style={{ color: group.color }}>■</span>
             {item}
           </li>
         ))}
@@ -214,11 +188,8 @@ function ProjectCard({
   index: number
 }) {
   return (
-    <motion.a
-      href={project.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block p-5 relative group cursor-pointer"
+    <motion.div
+      className="p-5 relative group"
       style={{
         background: '#0D0D1A',
         border: `2px solid ${project.color}`,
@@ -240,7 +211,6 @@ function ProjectCard({
         y: 4,
         boxShadow: `0px 0px 0 ${project.color}`,
       }}
-      aria-label={`查看專案：${project.title}`}
     >
       {/* 專案編號 */}
       <div
@@ -262,7 +232,10 @@ function ProjectCard({
           fontSize: '0.65rem',
         }}
       >
-        {project.title}
+        {/* 拉伸連結：::after 撐滿整張卡，讓卡片整體可點，同時避免巢狀 <a> */}
+        <Link to={project.to} className="cursor-pointer after:absolute after:inset-0" aria-label={`查看專案：${project.title}`}>
+          {project.title}
+        </Link>
       </h3>
       <p
         className="text-[#A0B4C8] mb-4 leading-relaxed"
@@ -270,7 +243,7 @@ function ProjectCard({
       >
         {project.desc}
       </p>
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-1.5 mb-3">
         {project.tags.map((tag) => (
           <span
             key={tag}
@@ -285,7 +258,18 @@ function ProjectCard({
           </span>
         ))}
       </div>
-    </motion.a>
+      <a
+        href={project.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative z-10 inline-flex items-center gap-1.5 cursor-pointer hover:opacity-75 transition-opacity"
+        style={{ color: project.color, fontFamily: "'VT323', monospace", fontSize: '0.85rem' }}
+        aria-label={`查看 ${project.title} 原始碼（在新視窗開啟）`}
+      >
+        <GithubIcon className="w-3.5 h-3.5" />
+        SOURCE
+      </a>
+    </motion.div>
   )
 }
 
@@ -412,8 +396,8 @@ export default function PixelArt() {
               {/* 照片 */}
               <div className="w-40 h-40 sm:w-48 sm:h-48 overflow-hidden relative">
                 <img
-                  src="/me.png"
-                  alt="Rex 的個人照片"
+                  src={profile.avatar}
+                  alt={`${profile.name} 的個人照片`}
                   className="w-full h-full object-cover"
                   style={{
                     imageRendering: 'pixelated',
@@ -494,7 +478,7 @@ export default function PixelArt() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' as const }}
             >
-              HI, I&apos;M REX
+              HI, I&apos;M {profile.name.toUpperCase()}
               <BlinkCursor />
             </motion.h1>
 
@@ -505,7 +489,7 @@ export default function PixelArt() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.3 }}
             >
-              {['Java 全端工程師', '系統分析師'].map((tag) => (
+              {profile.roles.map((tag) => (
                 <span
                   key={tag}
                   className="px-3 py-1 text-[#0D0D1A] font-bold"
@@ -532,11 +516,12 @@ export default function PixelArt() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
             >
-              熱衷於設計穩健後端架構的 Java 工程師。
-              <br />
-              分享 Spring Boot 與系統設計的實戰經驗，
-              <br />
-              把複雜系統說得簡單易懂。
+              {profile.intro.map((line, i) => (
+                <span key={line}>
+                  {line}
+                  {i < profile.intro.length - 1 && <br />}
+                </span>
+              ))}
             </motion.p>
 
             {/* 操作按鈕 */}
@@ -547,7 +532,7 @@ export default function PixelArt() {
               transition={{ duration: 0.4, delay: 0.5 }}
             >
               <motion.a
-                href="mailto:rexrex10050@gmail.com"
+                href={`mailto:${profile.email}`}
                 className="flex items-center gap-2 px-4 py-2.5 text-[#0D0D1A] font-bold cursor-pointer"
                 style={{
                   background: '#39FF14',
@@ -558,14 +543,14 @@ export default function PixelArt() {
                 whileHover={{ x: 2, y: 2, boxShadow: '2px 2px 0 #1A4D1A' }}
                 whileTap={{ x: 4, y: 4, boxShadow: '0px 0px 0 #1A4D1A' }}
                 transition={{ duration: 0.1 }}
-                aria-label="發送電子郵件給 Rex"
+                aria-label={`發送電子郵件給 ${profile.name}`}
               >
                 <Mail size={13} />
                 聯絡我
               </motion.a>
 
               <motion.a
-                href="https://github.com/Rex-shark"
+                href={profile.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2.5 font-bold cursor-pointer"
@@ -580,7 +565,7 @@ export default function PixelArt() {
                 whileHover={{ x: 2, y: 2, boxShadow: '2px 2px 0 #004D4D' }}
                 whileTap={{ x: 4, y: 4, boxShadow: '0px 0px 0 #004D4D' }}
                 transition={{ duration: 0.1 }}
-                aria-label="前往 Rex 的 GitHub 頁面（在新視窗開啟）"
+                aria-label={`前往 ${profile.name} 的 GitHub 頁面（在新視窗開啟）`}
               >
                 <GithubIcon className="w-3.5 h-3.5" />
                 GITHUB
@@ -628,9 +613,9 @@ export default function PixelArt() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {skillGroups.map((group, i) => (
-              <SkillCard key={group.category} group={group} index={i} />
+              <SkillCard key={group.key} group={group} index={i} wide={group.key === 'ai'} />
             ))}
           </div>
         </section>
@@ -673,9 +658,9 @@ export default function PixelArt() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} />
+              <ProjectCard key={project.slug} project={project} index={i} />
             ))}
           </div>
         </section>
@@ -753,7 +738,7 @@ export default function PixelArt() {
             </p>
 
             <motion.a
-              href="mailto:rexrex10050@gmail.com"
+              href={`mailto:${profile.email}`}
               className="inline-flex items-center gap-3 px-6 py-4 text-[#0D0D1A] font-bold cursor-pointer"
               style={{
                 background: '#39FF14',
@@ -764,10 +749,10 @@ export default function PixelArt() {
               whileHover={{ x: 3, y: 3, boxShadow: '3px 3px 0 #1A4D1A, 0 0 20px #39FF1444' }}
               whileTap={{ x: 6, y: 6, boxShadow: '0px 0px 0 #1A4D1A' }}
               transition={{ duration: 0.1 }}
-              aria-label="發送電子郵件：rexrex10050@gmail.com"
+              aria-label={`發送電子郵件：${profile.email}`}
             >
               <Mail size={16} />
-              rexrex10050@gmail.com
+              {profile.email}
             </motion.a>
           </motion.div>
         </section>
@@ -797,7 +782,7 @@ export default function PixelArt() {
             color: '#39FF14',
           }}
         >
-          © 2025 REX
+          © {new Date().getFullYear()} {profile.name.toUpperCase()}
         </p>
         <p
           className="mt-2"

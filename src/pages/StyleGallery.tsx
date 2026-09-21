@@ -3,6 +3,7 @@ import type { Variants } from 'framer-motion'
 import { Link } from 'react-router'
 import { ArrowLeft } from 'lucide-react'
 import StyleCard from '@/components/gallery/StyleCard'
+import { profile } from '@/data/profile'
 
 const containerVariants: Variants = {
   hidden: {},
@@ -530,14 +531,20 @@ function BentoGridPreview() {
 }
 
 /* 空間UI預覽 */
+// 星點位置在模組載入時算一次，避免在 render 中呼叫 Math.random
+const PREVIEW_STARS = Array.from({ length: 20 }, () => ({
+  top: `${Math.random() * 100}%`,
+  left: `${Math.random() * 100}%`,
+  opacity: 0.4 + Math.random() * 0.6,
+}))
+
 function SpatialUiPreview() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-3 relative overflow-hidden"
       style={{ background: '#050508' }}>
       {/* 星點 */}
-      {[...Array(20)].map((_, i) => (
-        <div key={i} className="absolute w-0.5 h-0.5 rounded-full bg-white/60"
-          style={{ top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`, opacity: 0.4 + Math.random() * 0.6 }} />
+      {PREVIEW_STARS.map((star, i) => (
+        <div key={i} className="absolute w-0.5 h-0.5 rounded-full bg-white/60" style={star} />
       ))}
       {/* 頭像光暈 */}
       <div className="relative">
@@ -596,8 +603,6 @@ function IdeTerminalPreview() {
 }
 
 function GithubProfilePreview() {
-  const contributionLevels = [0, 0, 1, 2, 3, 4, 2, 1, 0, 3, 4, 3, 1, 0, 2, 3, 4, 2, 1, 3, 0, 2, 4, 3, 1, 0, 2, 1, 3, 4, 2, 0, 1, 3, 2, 4, 1, 0, 2, 3, 1, 4, 2, 0, 3, 1, 2, 4, 0, 1, 3, 2, 1, 4, 0, 2]
-  const colors = ['#161B22', '#0E4429', '#006D32', '#26A641', '#39D353']
   return (
     <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: '#0D1117' }}>
       {/* Header */}
@@ -620,7 +625,7 @@ function GithubProfilePreview() {
         <div className="flex-1 flex flex-col gap-1.5">
           {/* Pinned repos */}
           <div className="grid grid-cols-2 gap-1">
-            {[['#58A6FF', '#3572A5'], ['#58A6FF', '#B07219'], ['#58A6FF', '#083FA1']].map(([link, lang], i) => (
+            {[['#58A6FF', '#3572A5'], ['#58A6FF', '#B07219'], ['#58A6FF', '#083FA1'], ['#58A6FF', '#3178C6']].map(([link, lang], i) => (
               <div key={i} className="rounded p-1" style={{ background: '#161B22', border: '1px solid #30363D' }}>
                 <div className="w-8 h-0.5 rounded-full mb-0.5" style={{ background: link }} />
                 <div className="flex items-center gap-0.5 mt-1">
@@ -630,11 +635,11 @@ function GithubProfilePreview() {
               </div>
             ))}
           </div>
-          {/* Contribution graph */}
-          <div className="flex flex-wrap gap-px mt-auto">
-            {contributionLevels.map((level, i) => (
-              <div key={i} className="w-1 h-1 rounded-sm" style={{ background: colors[level] }} />
-            ))}
+          {/* README 區塊 */}
+          <div className="rounded p-1 mt-auto flex flex-col gap-0.5" style={{ background: '#161B22', border: '1px solid #30363D' }}>
+            <div className="w-6 h-0.5 rounded-full" style={{ background: '#E6EDF3' }} />
+            <div className="w-14 h-0.5 rounded-full" style={{ background: '#8B949E' }} />
+            <div className="w-10 h-0.5 rounded-full" style={{ background: '#8B949E' }} />
           </div>
         </div>
       </div>
@@ -854,7 +859,7 @@ const styles = [
   {
     title: '無障礙倫理設計',
     subtitle: 'Accessible & Ethical',
-    description: 'WCAG AAA 高對比配色、完整 focus 狀態、語義化 HTML，展現無障礙設計的美學可能。',
+    description: '以 WCAG 2.1 AA 為目標的高對比配色、完整 focus 狀態、語義化 HTML，展現無障礙設計的美學可能。',
     to: '/styles/accessible-ethical',
     accentColor: '#1A56DB',
     bgColor: '#F8FAFF',
@@ -864,7 +869,7 @@ const styles = [
   {
     title: 'GitHub 開發者檔案',
     subtitle: 'GitHub Primer Dark',
-    description: '模仿 GitHub Primer Design System，貢獻熱力圖、Pinned Repos 卡片、語言統計條，完整的開發者個人頁面。',
+    description: '模仿 GitHub Primer Design System，Pinned Repos 卡片、README 區塊、技術棧 badge，開發者個人頁面風格。',
     to: '/styles/github-profile',
     accentColor: '#3FB950',
     bgColor: '#0D1117',
@@ -933,7 +938,7 @@ export default function StyleGallery() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
-        Rex · rexrex10050@gmail.com
+        {profile.name} · {profile.email}
       </motion.footer>
     </div>
   )

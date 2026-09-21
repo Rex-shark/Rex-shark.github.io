@@ -35,7 +35,7 @@ BrowserRouter，路由定義於 `src/App.tsx`：
 
 | 主題 | 來源 |
 |---|---|
-| Rex 個人資料 | `spec/info.md` |
+| Rex 個人資料 | `spec/info.md`（程式端對應 `src/data/profile.ts`） |
 | 精選專案 | `spec/projects/<slug>.md` |
 | 好文分享 | `spec/article/data.md`（待上架：`data-pending.md`） |
 

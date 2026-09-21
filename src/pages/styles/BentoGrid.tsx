@@ -1,7 +1,23 @@
 import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { ArrowLeft, Mail, ExternalLink, Code2, Database, Server, Wrench, Globe, GitBranch, BookOpen } from 'lucide-react'
+import {
+  ArrowLeft,
+  Mail,
+  ExternalLink,
+  Code2,
+  Database,
+  Server,
+  Wrench,
+  Bot,
+  Globe,
+  GitBranch,
+  BookOpen,
+  MessageSquare,
+  Gamepad2,
+} from 'lucide-react'
+import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
+import type { SkillGroupKey } from '@/data/profile'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -26,7 +42,7 @@ function BentoCard({ children, className = '', style }: BentoCardProps) {
     <motion.div
       whileHover={{ y: -4, boxShadow: '0 20px 60px rgba(0,0,0,0.4)' }}
       transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-      className={`rounded-2xl border border-white/10 overflow-hidden cursor-pointer ${className}`}
+      className={`relative rounded-2xl border border-white/10 overflow-hidden ${className}`}
       style={{ background: '#1A1A1E', ...style }}
     >
       {children}
@@ -34,42 +50,36 @@ function BentoCard({ children, className = '', style }: BentoCardProps) {
   )
 }
 
-/* ─── 資料 ─── */
-const skillGroups = [
-  { label: 'Java', icon: Server, color: '#F97316', bg: '#F9731615', desc: '後端主力' },
-  { label: 'Spring Boot', icon: Server, color: '#22C55E', bg: '#22C55E15', desc: 'REST API' },
-  { label: 'React', icon: Code2, color: '#38BDF8', bg: '#38BDF815', desc: '前端框架' },
-  { label: 'PostgreSQL', icon: Database, color: '#A78BFA', bg: '#A78BFA15', desc: '關聯式資料庫' },
-  { label: 'Docker', icon: Wrench, color: '#FB7185', bg: '#FB718515', desc: '容器化部署' },
-  { label: 'TypeScript', icon: Code2, color: '#FBBF24', bg: '#FBBF2415', desc: '型別安全' },
-]
+/* ─── 資料（內容來自 src/data/profile.ts，這裡只補上本頁的圖示與配色） ─── */
+const SKILL_GROUP_ICON: Record<SkillGroupKey, typeof Server> = {
+  backend: Server,
+  frontend: Code2,
+  data: Database,
+  ai: Bot,
+  design: Wrench,
+}
+const SKILL_GROUP_COLOR: Record<SkillGroupKey, string> = {
+  backend: '#F97316',
+  frontend: '#38BDF8',
+  data: '#A78BFA',
+  ai: '#FB7185',
+  design: '#FBBF24',
+}
 
-const projects = [
-  {
-    title: '個人網站',
-    desc: '風格導覽型個人網站，展示多種設計風格，使用 React + Vite 部署於 GitHub Pages。',
-    tags: ['React', 'TypeScript', 'Tailwind CSS'],
-    color: '#38BDF8',
-    icon: Globe,
-    featured: true,
-  },
-  {
-    title: 'Spring Boot API 範例',
-    desc: '完整的 RESTful API 範例，包含 JWT 認證、角色控管。',
-    tags: ['Java', 'Spring Boot'],
-    color: '#22C55E',
-    icon: GitBranch,
-    featured: false,
-  },
-  {
-    title: '系統分析設計教學',
-    desc: 'UML、需求分析、架構設計完整教材。',
-    tags: ['UML', '架構'],
-    color: '#A78BFA',
-    icon: BookOpen,
-    featured: false,
-  },
-]
+const skillGroups = sharedSkillGroups.map((g) => ({
+  ...g,
+  icon: SKILL_GROUP_ICON[g.key],
+  color: SKILL_GROUP_COLOR[g.key],
+}))
+
+const PROJECT_COLORS = ['#38BDF8', '#22C55E', '#A78BFA', '#FB7185', '#FBBF24']
+const PROJECT_ICONS = [Globe, GitBranch, BookOpen, MessageSquare, Gamepad2]
+
+const projects = sharedProjects.map((p, i) => ({
+  ...p,
+  color: PROJECT_COLORS[i % PROJECT_COLORS.length],
+  icon: PROJECT_ICONS[i % PROJECT_ICONS.length],
+}))
 
 /* ─── 動畫 ─── */
 const containerVariants: Variants = {
@@ -145,11 +155,11 @@ export default function BentoGrid() {
           <motion.div variants={itemVariants} className="col-span-12 sm:col-span-4 row-span-2">
             <BentoCard className="h-full min-h-[280px] flex flex-col items-center justify-center p-8 gap-4">
               <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-white/20">
-                <img src="/me.png" alt="Rex" className="w-full h-full object-cover" />
+                <img src={profile.avatar} alt={profile.name} className="w-full h-full object-cover" />
               </div>
               <div className="text-center">
-                <p className="text-white/40 text-xs tracking-widest uppercase mb-1">Java 工程師</p>
-                <p className="text-white/80 text-sm">系統分析師</p>
+                <p className="text-white/40 text-xs tracking-widest uppercase mb-1">{profile.roles[0]}</p>
+                <p className="text-white/80 text-sm">{profile.roles[1]}</p>
               </div>
             </BentoCard>
           </motion.div>
@@ -161,18 +171,20 @@ export default function BentoGrid() {
               style={{ background: 'linear-gradient(135deg, #1E1B4B, #312E81)' }}
             >
               <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-2">
-                Rex
+                {profile.name}
               </h1>
-              <p className="text-indigo-300 text-lg">Java 全端工程師 & 系統分析師</p>
+              <p className="text-indigo-300 text-lg">{profile.title}</p>
             </BentoCard>
           </motion.div>
 
           {/* 簡介格 5 cols */}
           <motion.div variants={itemVariants} className="col-span-12 sm:col-span-5">
-            <BentoCard className="p-6 h-full">
-              <p className="text-white/60 text-sm leading-relaxed">
-                熱愛構建優雅的系統架構，從後端 API 設計到前端互動體驗，致力於讓每行程式碼都有意義。
-              </p>
+            <BentoCard className="p-6 h-full flex flex-col justify-center gap-1.5">
+              {profile.intro.map((line) => (
+                <p key={line} className="text-white/60 text-sm leading-relaxed">
+                  {line}
+                </p>
+              ))}
             </BentoCard>
           </motion.div>
 
@@ -183,7 +195,7 @@ export default function BentoGrid() {
               style={{ background: '#1A1A2E' }}
             >
               <Mail size={18} className="text-indigo-400 shrink-0" />
-              <span className="text-white/50 text-xs break-all">rexrex10050@gmail.com</span>
+              <span className="text-white/50 text-xs break-all">{profile.email}</span>
             </BentoCard>
           </motion.div>
         </motion.section>
@@ -204,15 +216,29 @@ export default function BentoGrid() {
             技能專長
           </motion.h2>
           <div className="grid grid-cols-12 gap-4">
-            {skillGroups.map((s) => (
-              <motion.div key={s.label} variants={itemVariants} className="col-span-6 sm:col-span-4 lg:col-span-2">
-                <BentoCard className="p-5 h-full flex flex-col gap-3" style={{ background: s.bg }}>
-                  <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: `${s.color}25` }}>
-                    <s.icon size={16} style={{ color: s.color }} />
+            {skillGroups.map((g) => (
+              <motion.div
+                key={g.key}
+                variants={itemVariants}
+                className={g.key === 'ai' ? 'col-span-12 order-last' : 'col-span-6 sm:col-span-3'}
+              >
+                <BentoCard className="p-5 h-full flex flex-col gap-3" style={{ background: `${g.color}0D`, borderColor: `${g.color}25` }}>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${g.color}25` }}>
+                      <g.icon size={16} style={{ color: g.color }} />
+                    </div>
+                    <p className="font-semibold text-white text-sm">{g.label}</p>
                   </div>
-                  <div>
-                    <p className="font-semibold text-white text-sm">{s.label}</p>
-                    <p className="text-white/40 text-xs mt-0.5">{s.desc}</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {g.skills.map((s) => (
+                      <span
+                        key={s}
+                        className="text-xs px-2.5 py-1 rounded-full"
+                        style={{ background: `${g.color}14`, color: g.color }}
+                      >
+                        {s}
+                      </span>
+                    ))}
                   </div>
                 </BentoCard>
               </motion.div>
@@ -238,54 +264,92 @@ export default function BentoGrid() {
           <div className="grid grid-cols-12 gap-4">
             {/* Featured 大格 */}
             {(() => {
-              const FeaturedIcon = projects[0].icon
+              const featured = projects[0]
+              const FeaturedIcon = featured.icon
               return (
-            <motion.div variants={itemVariants} className="col-span-12 md:col-span-8">
-              <BentoCard
-                className="p-8 min-h-[180px] flex flex-col justify-between"
-                style={{ background: `linear-gradient(135deg, ${projects[0].color}18, ${projects[0].color}08)`, borderColor: `${projects[0].color}30` }}
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${projects[0].color}25` }}>
-                    <FeaturedIcon size={20} style={{ color: projects[0].color }} />
-                  </div>
-                  <span className="text-xs px-2 py-0.5 rounded-full border" style={{ color: projects[0].color, borderColor: `${projects[0].color}40` }}>
-                    精選
-                  </span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2">{projects[0].title}</h3>
-                  <p className="text-white/50 text-sm leading-relaxed mb-4">{projects[0].desc}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {projects[0].tags.map((t) => (
-                      <span key={t} className="text-xs px-2.5 py-1 rounded-full" style={{ background: `${projects[0].color}15`, color: projects[0].color }}>
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </BentoCard>
-            </motion.div>
+                // 拉伸連結：標題 Link 的 ::after 撐滿整張卡，避免巢狀 <a>（BentoCard 本身已是 relative）
+                <motion.div variants={itemVariants} className="col-span-12">
+                  <BentoCard
+                    className="p-8 min-h-[180px] flex flex-col justify-between"
+                    style={{ background: `linear-gradient(135deg, ${featured.color}18, ${featured.color}08)`, borderColor: `${featured.color}30` }}
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${featured.color}25` }}>
+                        <FeaturedIcon size={20} style={{ color: featured.color }} />
+                      </div>
+                      <a
+                        href={featured.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative z-10 text-xs px-2 py-0.5 rounded-full border inline-flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity"
+                        style={{ color: featured.color, borderColor: `${featured.color}40` }}
+                        aria-label={`查看 ${featured.title} 原始碼（在新視窗開啟）`}
+                      >
+                        <GithubIcon className="w-3 h-3" />
+                        原始碼
+                      </a>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2">
+                        <Link
+                          to={featured.to}
+                          className="cursor-pointer after:absolute after:inset-0"
+                          aria-label={`查看專案：${featured.title}`}
+                        >
+                          {featured.title}
+                        </Link>
+                      </h3>
+                      <p className="text-white/50 text-sm leading-relaxed mb-4">{featured.desc}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {featured.tags.map((t) => (
+                          <span key={t} className="text-xs px-2.5 py-1 rounded-full" style={{ background: `${featured.color}15`, color: featured.color }}>
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </BentoCard>
+                </motion.div>
               )
             })()}
 
-            {/* 兩個小格 */}
-            <div className="col-span-12 md:col-span-4 flex flex-col gap-4">
-              {projects.slice(1).map((p) => {
-                const PIcon = p.icon
-                return (
-                <motion.div key={p.title} variants={itemVariants} className="flex-1">
+            {/* 其餘 4 個等寬格 */}
+            {projects.slice(1).map((p) => {
+              const PIcon = p.icon
+              return (
+                <motion.div key={p.slug} variants={itemVariants} className="col-span-6 lg:col-span-3">
                   <BentoCard
                     className="p-5 h-full flex flex-col justify-between"
                     style={{ background: `${p.color}08`, borderColor: `${p.color}20` }}
                   >
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: `${p.color}20` }}>
-                        <PIcon size={14} style={{ color: p.color }} />
+                    <div>
+                      <div className="flex items-start justify-between gap-2 mb-3">
+                        <div className="flex items-start gap-2 min-w-0">
+                          <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ background: `${p.color}20` }}>
+                            <PIcon size={14} style={{ color: p.color }} />
+                          </div>
+                          <h3 className="font-semibold text-white text-sm leading-snug pt-0.5">
+                            <Link
+                              to={p.to}
+                              className="cursor-pointer after:absolute after:inset-0"
+                              aria-label={`查看專案：${p.title}`}
+                            >
+                              {p.title}
+                            </Link>
+                          </h3>
+                        </div>
+                        <a
+                          href={p.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative z-10 text-white/30 hover:text-white/70 transition-colors cursor-pointer shrink-0 mt-0.5"
+                          aria-label={`查看 ${p.title} 原始碼（在新視窗開啟）`}
+                        >
+                          <ExternalLink size={13} />
+                        </a>
                       </div>
-                      <h3 className="font-semibold text-white text-sm">{p.title}</h3>
+                      <p className="text-white/40 text-xs leading-relaxed mb-3">{p.desc}</p>
                     </div>
-                    <p className="text-white/40 text-xs leading-relaxed mb-3">{p.desc}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {p.tags.map((t) => (
                         <span key={t} className="text-xs px-2 py-0.5 rounded-full" style={{ background: `${p.color}12`, color: p.color }}>
@@ -295,8 +359,8 @@ export default function BentoGrid() {
                     </div>
                   </BentoCard>
                 </motion.div>
-              )})}
-            </div>
+              )
+            })}
           </div>
         </motion.section>
 
@@ -323,11 +387,11 @@ export default function BentoGrid() {
                 <h3 className="text-2xl font-bold text-white mb-2">開始合作</h3>
                 <p className="text-white/50 text-sm mb-6 leading-relaxed">有任何專案想法或技術問題，歡迎隨時聯繫。</p>
                 <a
-                  href="mailto:rexrex10050@gmail.com"
+                  href={`mailto:${profile.email}`}
                   className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 transition-colors text-white px-5 py-2.5 rounded-xl text-sm font-medium cursor-pointer"
                 >
                   <Mail size={15} />
-                  rexrex10050@gmail.com
+                  {profile.email}
                 </a>
               </BentoCard>
             </motion.div>
@@ -336,11 +400,11 @@ export default function BentoGrid() {
               <BentoCard className="p-8 h-full flex flex-col justify-between">
                 <div className="flex items-center gap-3 mb-4">
                   <GithubIcon className="w-8 h-8 text-white/60" />
-                  <span className="text-white/60 font-medium">Rex-shark</span>
+                  <span className="text-white/60 font-medium">{profile.githubHandle}</span>
                 </div>
                 <p className="text-white/30 text-sm mb-5">探索更多開源專案與程式碼</p>
                 <a
-                  href="https://github.com/Rex-shark"
+                  href={profile.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 transition-colors text-white/70 hover:text-white px-4 py-2 rounded-xl text-sm cursor-pointer"
@@ -356,7 +420,7 @@ export default function BentoGrid() {
 
       {/* Footer */}
       <footer className="py-8 text-center text-white/20 text-sm border-t border-white/5">
-        © 2025 Rex · Java 全端工程師
+        © {new Date().getFullYear()} {profile.name} · {profile.title}
       </footer>
     </div>
   )

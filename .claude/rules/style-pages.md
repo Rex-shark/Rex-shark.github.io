@@ -11,7 +11,7 @@ paths:
 - 每頁為獨立元件 `src/pages/styles/<PascalCase>.tsx`，路由 `/styles/<kebab-case>`
 - 必備區塊：固定導覽列、Hero（含 `/me.png`）、技能、專案、聯絡、Footer
 - 導覽列返回連結指向 `/gallery`（文案「返回設計實驗室」）
-- 文案資料依 `spec/info.md`
+- 個人資料、技能、專案一律讀 `src/data/profile.ts`（見 `personal-info.md`）
 - `Finalist.tsx` 是正式首頁，不列入 StyleGallery
 
 ## 新增風格頁的分工

@@ -254,8 +254,7 @@ route: /projects/threads-bot
 ## 給 subagent 的頁面製作指引
 
 - **頁面路由**：`/projects/threads-bot`，元件位於 `src/pages/projects/ThreadsBot.tsx`。
-- **參考既有範例**：[`src/pages/projects/SpringBootApiDemo.tsx`](../../src/pages/projects/SpringBootApiDemo.tsx) 的版型與動畫節奏可直接沿用，再依本專案氣質調整。
-- **頂部導覽**：返回連結指向 `/styles/finalist`，右側保留 GitHub 連結。
+- **頂部導覽**：返回連結指向 `/`，右側保留 GitHub 連結。
 - **不可編造**：所有數字（stars、forks）目前**不放假數據**，沒資料就移除該區塊或顯示 `—`。
-- **文案語氣**：繁體中文（台灣用語），跟 SpringBootApiDemo 同調，技術詞彙保留原文。
-- **避免外部 Google Fonts**：沿用系統字體 + JetBrains Mono（已在 SpringBoot 範例中載入過）。
+- **文案語氣**：繁體中文（台灣用語），技術詞彙保留原文。
+- **避免外部 Google Fonts**：沿用系統字體 + JetBrains Mono。

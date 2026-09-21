@@ -4,6 +4,7 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ArrowLeft, Mail, ExternalLink } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import { profile, allSkills, projects as sharedProjects } from '@/data/profile'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -104,21 +105,21 @@ function TiltCard({ children, className, style }: { children: React.ReactNode; c
   )
 }
 
-/* 星星粒子背景 */
-function StarField() {
-  const stars = Array.from({ length: 80 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 1.5 + 0.5,
-    opacity: Math.random() * 0.5 + 0.1,
-    duration: Math.random() * 4 + 3,
-    delay: Math.random() * 5,
-  }))
+/* 星星粒子背景：位置為預先計算的常數，避免在 render 中呼叫 Math.random() */
+const STARS = Array.from({ length: 80 }, (_, i) => ({
+  id: i,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: Math.random() * 1.5 + 0.5,
+  opacity: Math.random() * 0.5 + 0.1,
+  duration: Math.random() * 4 + 3,
+  delay: Math.random() * 5,
+}))
 
+function StarField() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden">
-      {stars.map((star) => (
+      {STARS.map((star) => (
         <motion.div
           key={star.id}
           className="absolute rounded-full bg-white"
@@ -167,35 +168,15 @@ const floatVariants: Variants = {
   },
 }
 
-const skills = [
-  'Java', 'Spring Boot', 'Spring Security', 'JPA/Hibernate',
-  'React', 'TypeScript', 'Tailwind CSS', 'PostgreSQL',
-  'Docker', 'GitHub Actions', '系統分析設計',
-]
+/* 技能與專案內容來自 src/data/profile.ts，此處只補上本頁的強調色 */
+const skills = allSkills
 
-const projects = [
-  {
-    title: '個人網站',
-    desc: '以 React + Vite 建構的 GitHub Pages 個人作品集，探索多種 UI 設計風格。',
-    tags: ['React', 'TypeScript', 'Tailwind'],
-    href: 'https://github.com/Rex-shark',
-    accent: '#4CC9F0',
-  },
-  {
-    title: 'Spring Boot API 範例',
-    desc: '完整的 RESTful API 專案，包含 JWT 認證、RBAC 權限控管與 OpenAPI 文件。',
-    tags: ['Java', 'Spring Boot', 'JWT'],
-    href: 'https://github.com/Rex-shark',
-    accent: '#FFD60A',
-  },
-  {
-    title: '系統分析設計教學',
-    desc: 'UML、需求分析到系統設計的完整教學系列，含實戰案例解析。',
-    tags: ['系統分析', 'UML', '教學'],
-    href: 'https://github.com/Rex-shark',
-    accent: '#A78BFA',
-  },
-]
+const PROJECT_ACCENTS = ['#4CC9F0', '#FFD60A', '#A78BFA', '#FB7185', '#4ADE80']
+
+const projects = sharedProjects.map((p, i) => ({
+  ...p,
+  accent: PROJECT_ACCENTS[i % PROJECT_ACCENTS.length],
+}))
 
 const navLinks = [
   { label: '關於', href: '#about' },
@@ -204,12 +185,11 @@ const navLinks = [
   { label: '聯絡', href: '#contact' },
 ]
 
+/* 打字機副標：只輪播 profile.ts 佐證過的身份字串 */
+const SUBTITLE_TEXTS = [...profile.roles, profile.title]
+
 export default function SpatialUi() {
-  const subtitle = useTypewriter(
-    ['Java 全端工程師', '系統分析師', 'Spring Boot 開發者', '後端架構設計師'],
-    65,
-    2000
-  )
+  const subtitle = useTypewriter(SUBTITLE_TEXTS, 65, 2000)
   const [activeNav, setActiveNav] = useState('')
 
   return (
@@ -288,7 +268,7 @@ export default function SpatialUi() {
 
           {/* 右側聯絡按鈕 */}
           <a
-            href="mailto:rexrex10050@gmail.com"
+            href={`mailto:${profile.email}`}
             className="text-sm px-4 py-1.5 rounded-full transition-all duration-200 cursor-pointer"
             style={{
               background: 'rgba(76,201,240,0.12)',
@@ -332,7 +312,7 @@ export default function SpatialUi() {
                 boxShadow: '0 0 80px rgba(76,201,240,0.2), inset 0 1px 0 rgba(255,255,255,0.15)',
               }}
             >
-              <img src="/me.png" alt="Rex" className="w-full h-full object-cover" />
+              <img src={profile.avatar} alt={profile.name} className="w-full h-full object-cover" />
             </div>
             {/* 小光點裝飾 */}
             <div
@@ -362,7 +342,7 @@ export default function SpatialUi() {
               className="text-6xl sm:text-7xl md:text-8xl mb-4"
               style={{ fontWeight: 200, letterSpacing: '-0.02em', color: '#F5F5F7' }}
             >
-              Rex
+              {profile.name}
             </h1>
             {/* 打字機副標 */}
             <div className="h-8 mb-6 flex items-center justify-center">
@@ -385,13 +365,18 @@ export default function SpatialUi() {
               className="text-base md:text-lg leading-relaxed mx-auto mb-10 max-w-md"
               style={{ color: 'rgba(245,245,247,0.45)', fontWeight: 300 }}
             >
-              熱衷於設計穩健的後端架構，打造流暢的使用者體驗，持續分享 Java、Spring Boot 與系統設計的實戰心得。
+              {profile.intro.map((line, i) => (
+                <span key={line}>
+                  {line}
+                  {i < profile.intro.length - 1 && <br />}
+                </span>
+              ))}
             </p>
 
             {/* CTA 按鈕 */}
             <div className="flex items-center justify-center gap-4">
               <motion.a
-                href="mailto:rexrex10050@gmail.com"
+                href={`mailto:${profile.email}`}
                 className="flex items-center gap-2 px-6 py-3 rounded-2xl text-sm cursor-pointer"
                 style={{
                   background: 'rgba(76,201,240,0.15)',
@@ -412,7 +397,7 @@ export default function SpatialUi() {
                 聯絡我
               </motion.a>
               <motion.a
-                href="https://github.com/Rex-shark"
+                href={profile.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-6 py-3 rounded-2xl text-sm cursor-pointer"
@@ -517,10 +502,10 @@ export default function SpatialUi() {
               </h2>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {projects.map((project, i) => (
                 <motion.div
-                  key={project.title}
+                  key={project.slug}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: '-60px' }}
@@ -531,11 +516,9 @@ export default function SpatialUi() {
                     className="h-full"
                     style={{ transformStyle: 'preserve-3d' }}
                   >
-                    <a
-                      href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block h-full p-6 rounded-[32px] cursor-pointer group transition-all duration-300"
+                    {/* 拉伸連結：標題 Link 的 ::after 撐滿整張卡，避免巢狀 <a> */}
+                    <div
+                      className="relative h-full p-6 rounded-[32px] group transition-all duration-300"
                       style={{
                         ...glassStyle,
                         borderRadius: '32px',
@@ -552,13 +535,24 @@ export default function SpatialUi() {
                           className="text-base"
                           style={{ fontWeight: 400, color: '#F5F5F7' }}
                         >
-                          {project.title}
+                          <Link
+                            to={project.to}
+                            className="cursor-pointer after:absolute after:inset-0"
+                            aria-label={`查看專案：${project.title}`}
+                          >
+                            {project.title}
+                          </Link>
                         </h3>
-                        <ExternalLink
-                          size={14}
-                          className="flex-shrink-0 mt-0.5 transition-colors duration-200"
+                        <a
+                          href={project.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative z-10 flex-shrink-0 mt-0.5 transition-colors duration-200 cursor-pointer"
                           style={{ color: 'rgba(245,245,247,0.25)' }}
-                        />
+                          aria-label={`查看 ${project.title} 原始碼（在新視窗開啟）`}
+                        >
+                          <ExternalLink size={14} />
+                        </a>
                       </div>
                       <p
                         className="text-sm leading-relaxed mb-5"
@@ -581,7 +575,7 @@ export default function SpatialUi() {
                           </span>
                         ))}
                       </div>
-                    </a>
+                    </div>
                   </TiltCard>
                 </motion.div>
               ))}
@@ -656,7 +650,7 @@ export default function SpatialUi() {
                     transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' as const, delay: 0.3 }}
                   />
                   <motion.a
-                    href="mailto:rexrex10050@gmail.com"
+                    href={`mailto:${profile.email}`}
                     className="relative flex items-center gap-2.5 px-7 py-3.5 rounded-2xl text-sm cursor-pointer"
                     style={{
                       background: 'rgba(76,201,240,0.15)',
@@ -674,21 +668,21 @@ export default function SpatialUi() {
                     transition={{ duration: 0.15 }}
                   >
                     <Mail size={16} />
-                    rexrex10050@gmail.com
+                    {profile.email}
                   </motion.a>
                 </div>
 
                 {/* GitHub 連結 */}
                 <div className="relative mt-8">
                   <a
-                    href="https://github.com/Rex-shark"
+                    href={profile.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm cursor-pointer transition-colors duration-200"
                     style={{ color: 'rgba(245,245,247,0.35)' }}
                   >
                     <GithubIcon className="w-4 h-4" />
-                    github.com/Rex-shark
+                    github.com/{profile.githubHandle}
                   </a>
                 </div>
               </div>
@@ -703,7 +697,7 @@ export default function SpatialUi() {
           className="text-xs"
           style={{ color: 'rgba(245,245,247,0.2)', fontWeight: 300, letterSpacing: '0.05em' }}
         >
-          © 2025 Rex — Built with React + Vite
+          © {new Date().getFullYear()} {profile.name} — Built with React + Vite
         </p>
       </footer>
     </div>

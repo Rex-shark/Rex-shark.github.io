@@ -248,7 +248,7 @@ docker/     Nginx、Supervisor 與本機部署設定
 
 - **頁面路由**：`/projects/rpgmaker-character-forge`，元件位於 `src/pages/projects/RpgmakerCharacterForge.tsx`。
 - **參考既有範例**：[`src/pages/projects/AiChatroom.tsx`](../../src/pages/projects/AiChatroom.tsx)、[`ThreadsBot.tsx`](../../src/pages/projects/ThreadsBot.tsx) 的版型與動畫節奏可沿用。
-- **頂部導覽**：返回連結指向 `/styles/finalist`，右側保留 GitHub 連結。
+- **頂部導覽**：返回連結指向 `/`，右側保留 GitHub 連結。
 - **不可編造**：stars / forks 不放假數據，沒資料就移除該區塊或顯示 `—`。
 - **必須保留**：素材來源與版權聲明區塊（RPG Maker、落日迷宮之都）。
 - **文案語氣**：繁體中文（台灣用語），技術詞彙保留原文。

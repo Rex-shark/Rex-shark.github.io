@@ -16,17 +16,22 @@
 
   <!-- 精選專案 showcase 頁 -->
   <url>
-    <loc>https://rex-shark.github.io/projects/spring-boot-api</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://rex-shark.github.io/projects/threads-bot</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://rex-shark.github.io/projects/claude-code-sourcemap</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rex-shark.github.io/projects/ai-chatroom</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rex-shark.github.io/projects/rpgmaker-character-forge</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

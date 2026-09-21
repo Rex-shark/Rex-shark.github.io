@@ -17,7 +17,6 @@ Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist �
 /gallery                                → 設計實驗室（StyleGallery，含 19 種設計實驗）
 /styles/<風格路由名>                     → 各風格首頁（19 種）
 /styles/finalist                        → 同首頁元件（向下相容，避免已分享連結失效）
-/projects/spring-boot-api               → Spring Boot API 範例 showcase
 /projects/threads-bot                   → ThreadsBot showcase
 /projects/claude-code-sourcemap         → Claude Code 原始碼研究 showcase
 /projects/ai-chatroom                   → ai-chatroom showcase
@@ -35,7 +34,6 @@ src/
 │   ├── StyleGallery.tsx             # 設計實驗室（/gallery）
 │   ├── styles/                      # 19 個設計實驗風格 + Finalist.tsx（正式首頁）
 │   └── projects/                    # 精選專案 showcase 頁
-│       ├── SpringBootApiDemo.tsx
 │       ├── ThreadsBot.tsx
 │       ├── ClaudeCodeSourcemap.tsx
 │       ├── AiChatroom.tsx
@@ -79,8 +77,8 @@ public/
 1. **固定導覽列**：關於 / 技能 / 專案 / 文章 / 聯絡（右上）+ 「設計實驗室」連結到 `/gallery`
 2. **Hero**：自介、CTA
 3. **關於**：3 張 About 卡片
-4. **技能**：分後端 / 前端 / 資料庫 / 系統設計
-5. **精選專案**：6 張卡（見下方）
+4. **技能**：分後端 / 前端 / 資料庫 / AI・LLM / 系統設計
+5. **精選專案**：5 張卡（見下方）
 6. **好文分享**：來自 `spec/article/data.md`，含 tag 篩選
 7. **聯絡**：email、GitHub
 8. **Footer**
@@ -89,12 +87,11 @@ public/
 
 ## 精選專案
 
-6 個專案，全部呈現在首頁專案區塊。**已移除「系統分析設計教學」**。
+5 個專案，全部呈現在首頁專案區塊。**已移除「系統分析設計教學」與「Spring Boot API 範例」**（後者 2026-09 連同 showcase 頁、路由一併移除）。
 
 | 專案 | 卡片描述 | 點擊行為 | Showcase 頁 | 狀態 |
 |------|----------|----------|-------------|------|
 | **個人網站** | 用 20 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。 | 直連 `/gallery` 觀賞其他 19 種風格 | 不做（網站本身即作品） | ✅ 完成 |
-| **Spring Boot API 範例** | RESTful API 範例，含 JWT 認證、角色控管、JPA 資料存取層。 | 進入 `/projects/spring-boot-api` | ✅ 已有 | ✅ 完成 |
 | **ThreadsBot** | 本地 LLM 自動爬新聞、改寫成 Threads 貼文，Spring Boot 3 + Spring AI + Ollama，零 API 成本。 | 進入 `/projects/threads-bot` | ✅ 已有 | ✅ 完成 |
 | **Claude Code 原始碼研究** | 從 sourcemap 還原 Claude Code v2.1.88 並寫成 5 篇深度分析筆記。非官方研究，版權歸 Anthropic。 | 進入 `/projects/claude-code-sourcemap` | ✅ 已有 | ✅ 完成 |
 | **ai-chatroom** | 真人與 AI 夥伴 Luna 🌙 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默。 | 進入 `/projects/ai-chatroom` | ✅ 已有 | ✅ 完成 |
@@ -124,7 +121,7 @@ public/
 | 3  | 賽博龐克 | `/styles/cyberpunk` | 黑底霓虹、Orbitron + JetBrains Mono、掃描線 | ✅ 完成 |
 | 4  | 極簡日式 | `/styles/japanese-minimal` | 暖紙底色、圓相裝飾、侘寂美學 | ✅ 完成 |
 | 5  | 蒸氣波 | `/styles/vaporwave` | 紫粉漸層、透視網格、80 年代復古 | ✅ 完成 |
-| 6  | 蒸汽龐克 | `/styles/steampunk` | 深棕銅色、齒輪裝飾、壓力錶進度條 | ✅ 完成 |
+| 6  | 蒸汽龐克 | `/styles/steampunk` | 深棕銅色、齒輪裝飾、黃銅銘牌（壓力錶僅作裝飾，不代表數值） | ✅ 完成 |
 | 7  | 蘋果風格 | `/styles/macbook` | 毛玻璃、macOS 視窗裝飾、Apple 設計語言 | ✅ 完成 |
 | 8  | 瑞士現代主義 | `/styles/swiss-modern` | 黑白紅三色、12 欄網格、Inter + IBM Plex Mono | ✅ 完成 |
 | 9  | 像素藝術 | `/styles/pixel-art` | 深藍黑底螢光綠、Press Start 2P、CRT 掃描線 | ✅ 完成 |
@@ -136,8 +133,8 @@ public/
 | 15 | 空間 UI | `/styles/spatial-ui` | visionOS 玻璃態懸浮面板、星點背景、冰藍光暈、3D Tilt 卡片 | ✅ 完成 |
 | 16 | 反精緻美學 | `/styles/anti-polish` | Brutalist 粗礦、噪點划痕、螢光黃撞血紅、Anton 字型 | ✅ 完成 |
 | 17 | IDE / 終端機 | `/styles/ide-terminal` | VS Code 編輯器介面、語法高亮、檔案總管側欄 | ✅ 完成 |
-| 18 | 無障礙倫理設計 | `/styles/accessible-ethical` | WCAG AAA 高對比、Atkinson Hyperlegible 字型、完整 focus 狀態 | ✅ 完成 |
-| 19 | GitHub 開發者檔案 | `/styles/github-profile` | GitHub Primer Dark、貢獻熱力圖、Pinned Repos、語言統計條 | ✅ 完成 |
+| 18 | 無障礙倫理設計 | `/styles/accessible-ethical` | 以 WCAG 2.1 AA 為目標的高對比、Atkinson Hyperlegible 字型、完整 focus 狀態 | ✅ 完成 |
+| 19 | GitHub 開發者檔案 | `/styles/github-profile` | GitHub Primer Dark、Pinned Repos、README 區塊、技術棧 badge | ✅ 完成 |
 | ⭐  | **Finalist → 正式首頁** | `/`（兼容 `/styles/finalist`） | 白底 indigo/violet、3D Tilt、好文分享、文章篩選 | ✅ 升級為首頁 |
 
 ---
@@ -148,7 +145,6 @@ public/
 
 | 專案 | 路由 | 資料來源 | 狀態 |
 |------|------|----------|------|
-| Spring Boot API 範例 | `/projects/spring-boot-api` | （內嵌於頁面） | ✅ 完成 |
 | ThreadsBot | `/projects/threads-bot` | [spec/projects/threads-bot.md](projects/threads-bot.md) | ✅ 完成 |
 | Claude Code 原始碼研究 | `/projects/claude-code-sourcemap` | [spec/projects/claude-code-sourcemap.md](projects/claude-code-sourcemap.md) | ✅ 完成（spec + 首頁卡片 + showcase 頁） |
 | ai-chatroom | `/projects/ai-chatroom` | [spec/projects/ai-chatroom.md](projects/ai-chatroom.md) | ✅ 完成（spec + 5 截圖 + 首頁卡片 + showcase 頁） |
@@ -226,12 +222,12 @@ public/
 - ✅ `public/404.html` 加 GitHub Pages SPA redirect 腳本（編碼路徑進 `?/`）
 - ✅ `index.html` 加接收腳本：還原 `?/path` 路徑 + 相容舊 `#/path` hash
 - ✅ `sitemap.xml` 補完 24 條路由（首頁 + gallery + 3 projects + 19 styles），全部無 hash
-- ⬜ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條）
+- ✅ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條；其後移除 spring-boot-api，現為 25 條）
 - ✅ react-router 的 `<Link to="/xxx">` 不需改（自動跟 BrowserRouter 工作）
 - ⬜ **部署後驗證**：
   - 直接訪問 `https://rex-shark.github.io/projects/threads-bot` 應正常顯示頁面（不是 404）
   - 訪問舊 hash URL `https://rex-shark.github.io/#/styles/finalist` 應 redirect 到 `/styles/finalist`
-  - GSC 重新提交 sitemap.xml 後應顯示「23+ 已發現網址」
+  - GSC 重新提交 sitemap.xml 後應顯示 25 個已發現網址
 
 #### Lv3 — 預先渲染 ⬜（重工程，視 SEO 需求再評估）
 
@@ -251,7 +247,56 @@ CLAUDE.md 與 subagent 是專案早期寫的，內容冗長且互相重複。改
 - ✅ `add-article` skill 內對 CLAUDE.md 章節的引用改指向 `.claude/rules/articles.md`
 - ✅ 驗收：CLAUDE.md 167 → 68 行；agents 290 → 105 行；subagent 無 `bypassPermissions`；無殘留的失效引用
 
+### 🧪 設計實驗室資料去假化 + AI 技能 ✅
+
+19 個風格頁是早期產物，個人資料多為當時編造。目標：**每個數字、每個名詞都能在 `spec/` 找到出處**，並補上 AI 相關技能。
+
+#### 盤點結果（2026-09）
+
+| 類別 | 範圍 | 處置 |
+|---|---|---|
+| 三張舊專案卡（含已移除的「系統分析設計教學」），連結全指向 GitHub 個人首頁 | 19 頁 | 換成真實 5 專案 |
+| 技能熟練度百分比 / 等級（Java 92%、EXPERT…） | HandDrawn、SwissModern、Steampunk、Macbook、AntiPolish、Cyberpunk（公式算的） | 移除，改為純技能標籤（決策 B） |
+| 假 stars | MicroInteractions（12/28/19）、GithubProfile（3/12/7） | 移除 |
+| GitHub 假數據：22 followers / 8 following、語言比例、演算法生成的貢獻熱力圖、不存在的 repo 名 | GithubProfile + StyleGallery 預覽縮圖 | 全部移除（決策 C） |
+| 無出處的技能：MySQL、Linux、Nginx、MapStruct、Swagger/OpenAPI、需求分析 | 8 頁 + IdeTerminal | 移除（Redis、Vite、Java 21、Spring Boot 3.5、PostgreSQL 16 可由 `spec/projects/` 佐證，保留） |
+| 無出處的宣稱：「Taiwan」「Open to Work / Freelance」「24 小時內回覆」「1-2 個工作天回覆」「後端架構設計師」「無障礙設計諮詢」「Blog Series」 | SwissModern、GithubProfile、IdeTerminal、AntiPolish、AccessibleEthical、SpatialUi | 僅保留 Taiwan，其餘移除（決策 D） |
+| 「持續分享…實戰經驗」罐頭自介 | 約 12 頁 | 改寫為有出處的描述（做了哪些專案） |
+| 缺漏：`ERD`、`UML` 幾乎沒出現；**19 頁完全沒有 AI 字詞** | 19 頁 | 補上 |
+| 雜項：Footer 年份 2025、IdeTerminal 狀態列 `master*`、StyleGallery 寫 WCAG AAA 但頁內寫 AA | 多頁 | 順手修正 |
+
+#### 做法
+
+0. ✅ **移除「Spring Boot API 範例」**（Rex 決定，無公開 repo）：刪 `SpringBootApiDemo.tsx`、`App.tsx` 路由、`sitemap.xml`、Finalist 專案卡、`info.md` / README / rules 的相關記載
+1. ✅ **先補 `spec/info.md`**（唯一權威來源）
+   - 新增「AI / LLM」技能分類（清單見決策 A）
+   - 「專案」段落由 `（待補）` 改為 5 個精選專案（標題、一句描述、tags、repo、站內路由），內容取自 `spec/projects/*.md` 與 Finalist 現況
+   - 依決策 D 補上所在地 / 求職狀態，或維持 `（待補）`
+2. ✅ **建立共用資料模組 `src/data/profile.ts`**：`profile`、`skillGroups`（含 AI 組）、`projects`，內容 1:1 對應 `info.md`。之後改資料只改一處，不再 20 頁各寫一份
+3. ✅ **Finalist 改讀共用資料**，並加上 AI 技能組（正式首頁目前也沒有）
+4. ✅ **19 頁改讀共用資料**（平行 subagent，每個只改自己那一頁；裝飾欄位如配色、旋轉角度以 index 對應留在頁內）
+   - 專案卡：5 張，`to` 指向站內 showcase、`href` 指向真實 repo
+   - 各頁保留自己的主題語氣（Cyberpunk 的 `> xxx.exe`、PixelArt 的 `PLAYER 1` 等裝飾字不算假資料，保留）
+   - IdeTerminal：`About.java` / `skills.json` / `projects.md` 手刻內容依共用資料重寫
+5. ✅ **同步**：`StyleGallery.tsx` 預覽縮圖與卡片描述、`.claude/rules/personal-info.md`（加一條「頁面資料一律 import `src/data/profile.ts`」）、`style-page-creator` agent
+6. ✅ **驗收**
+   - ✅ `npm run build` 通過；`npm run lint` 由 10 個既有錯誤降為 1 個（僅剩 shadcn 產生的 `button.tsx`）
+   - ✅ 20 頁瀏覽器自動檢查：假資料關鍵字 0、熟練度百分比 0、每頁 5 張專案卡 + 5 個真實 repo 連結、AI 技能組皆在、巢狀 `<a>` 0、1280px 與 375px 皆無水平溢出
+   - ✅ 19 頁技能區 / 專案區逐頁截圖目視
+   - 全站 grep 不到：`系統分析設計教學`、`MySQL`、`Nginx`、`followers`、`Open to Work`、`小時內回覆`、`%` 熟練度
+   - 19 頁逐頁預覽：5 張專案卡可點、AI 技能組有出現、版面沒被多出的卡片撐壞
+
+#### 決策（2026-09 Rex 確認）
+
+- **A. AI 技能清單**：Spring AI、Ollama（本地 LLM）、Gemini API、Function Calling、RAG、Embedding / 向量資料庫、Prompt Engineering、AI Agent、MCP、Claude Code（Skills / Subagent / Hooks）、Codex、ComfyUI
+- **B. 熟練度**：**完全不顯示數值**。HandDrawn、SwissModern、Steampunk、Macbook、AntiPolish、Cyberpunk 六頁的進度條 / 壓力錶 / 等級條改為純技能標籤，版面重排但保留主題外觀（例如壓力錶可留作無刻度讀數的裝飾）
+- **C. GithubProfile**：**移除所有數字**（stars、followers / following、語言比例、貢獻熱力圖），不接 API；pinned repos 換成真實 repo。`StyleGallery.tsx` 的預覽縮圖與卡片描述同步拿掉熱力圖與語言統計
+- **D. 個人宣稱**：只保留「所在地：Taiwan」。Open to Work / Freelance、回覆時效、「後端架構設計師」、「無障礙設計諮詢」、「Blog Series」全部移除
+
 ### 其他待辦
+
+- ⬜ SwissModern 的 Hero / 聯絡區 12 欄網格未做響應式（手機有 2px 水平溢出，既有問題）
+- ⬜ HandDrawn 便利貼的「資料庫 / DevOps」圈線標題偏長會折行，可考慮縮短顯示或放寬
 
 - ⬜ 補全 [spec/info.md](info.md) 的 `（待補）` 欄位（一句話自介、年資、聯絡偏好）
 - ⬜ 把 [ThreadsBot tutorial 長文](https://github.com/Rex-shark/ThreadsBot/blob/master/docs/local-llm-threads-tutorial.md) 搬成站內 `/blog/local-llm-threads-tutorial`

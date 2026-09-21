@@ -1,8 +1,10 @@
 import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { ArrowLeft, Mail, ExternalLink, Code2, Server, Database, Layers } from 'lucide-react'
+import { ArrowLeft, Mail, ExternalLink, Code2, Server, Database, Layers, Bot } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
+import type { SkillGroupKey } from '@/data/profile'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -30,64 +32,30 @@ const fadeIn: Variants = {
   }),
 }
 
-// ── 資料 ───────────────────────────────────────────────────────
-const skillGroups = [
-  {
-    icon: Server,
-    category: 'Backend',
-    items: ['Java', 'Spring Boot', 'Spring Security', 'JPA / Hibernate'],
-    gradient: 'from-violet-500/30 to-purple-600/20',
-    accent: '#a78bfa',
-  },
-  {
-    icon: Code2,
-    category: 'Frontend',
-    items: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
-    gradient: 'from-sky-500/30 to-blue-600/20',
-    accent: '#38bdf8',
-  },
-  {
-    icon: Database,
-    category: 'Database',
-    items: ['PostgreSQL', 'MySQL', 'Redis'],
-    gradient: 'from-emerald-500/30 to-teal-600/20',
-    accent: '#34d399',
-  },
-  {
-    icon: Layers,
-    category: 'DevOps',
-    items: ['Docker', 'GitHub Actions', 'Linux', 'Nginx'],
-    gradient: 'from-rose-500/30 to-pink-600/20',
-    accent: '#fb7185',
-  },
-]
+// ── 資料（內容來自 src/data/profile.ts，這裡只補上本頁的 icon 與配色） ──
+const SKILL_GROUP_STYLE: Record<SkillGroupKey, { icon: typeof Server; gradient: string; accent: string }> = {
+  backend: { icon: Server, gradient: 'from-violet-500/30 to-purple-600/20', accent: '#a78bfa' },
+  frontend: { icon: Code2, gradient: 'from-sky-500/30 to-blue-600/20', accent: '#38bdf8' },
+  data: { icon: Database, gradient: 'from-emerald-500/30 to-teal-600/20', accent: '#34d399' },
+  ai: { icon: Bot, gradient: 'from-rose-500/30 to-pink-600/20', accent: '#fb7185' },
+  design: { icon: Layers, gradient: 'from-amber-500/30 to-orange-600/20', accent: '#fbbf24' },
+}
 
-const projects = [
-  {
-    title: '個人網站',
-    desc: '以 React + Vite 建構的 GitHub Pages 個人作品集，探索多種 UI 設計風格，展示前端技術深度。',
-    tags: ['React', 'TypeScript', 'Tailwind'],
-    href: 'https://github.com/Rex-shark',
-    gradient: 'from-violet-500/20 via-purple-500/10 to-transparent',
-    accentBorder: 'rgba(167,139,250,0.35)',
-  },
-  {
-    title: 'Spring Boot API 範例',
-    desc: '完整的 RESTful API 專案，包含 JWT 認證、RBAC 權限控管與 OpenAPI 文件，可作為後端起手式。',
-    tags: ['Java', 'Spring Boot', 'JWT'],
-    href: 'https://github.com/Rex-shark',
-    gradient: 'from-sky-500/20 via-blue-500/10 to-transparent',
-    accentBorder: 'rgba(56,189,248,0.35)',
-  },
-  {
-    title: '系統分析設計教學',
-    desc: 'UML、需求分析到系統設計的完整教學系列，含實戰案例解析，適合入門與進階學習。',
-    tags: ['系統分析', 'UML', '教學'],
-    href: 'https://github.com/Rex-shark',
-    gradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
-    accentBorder: 'rgba(52,211,153,0.35)',
-  },
-]
+const skillGroups = sharedSkillGroups.map((g) => ({ ...g, ...SKILL_GROUP_STYLE[g.key] }))
+/* AI 組項目較多，獨立成寬版徽章卡片，其餘四組維持格狀卡片 */
+const mainSkillGroups = skillGroups.filter((g) => g.key !== 'ai')
+const aiGroup = skillGroups.find((g) => g.key === 'ai')!
+
+const PROJECT_ACCENTS = ['#a78bfa', '#38bdf8', '#34d399', '#fb923c', '#f472b6']
+
+const projects = sharedProjects.map((p, i) => {
+  const accent = PROJECT_ACCENTS[i % PROJECT_ACCENTS.length]
+  return {
+    ...p,
+    accent,
+    accentBorder: `${accent}59`,
+  }
+})
 
 // ── 裝飾光暈元件 ───────────────────────────────────────────────
 function GlowOrb({
@@ -199,7 +167,7 @@ export default function Glassmorphism() {
               </a>
             ))}
             <a
-              href="mailto:rexrex10050@gmail.com"
+              href={`mailto:${profile.email}`}
               className="text-sm px-4 py-1.5 rounded-xl text-white font-medium transition-all duration-200 cursor-pointer"
               style={{
                 background: 'linear-gradient(135deg, rgba(139,92,246,0.7), rgba(56,189,248,0.7))',
@@ -237,7 +205,7 @@ export default function Glassmorphism() {
                 animate="visible"
                 custom={0}
               >
-                Java Full-Stack Engineer
+                {profile.titleEn}
               </motion.p>
               <h1
                 className="text-5xl sm:text-6xl font-extrabold leading-tight mb-5"
@@ -252,16 +220,17 @@ export default function Glassmorphism() {
                     backgroundClip: 'text',
                   }}
                 >
-                  Rex
+                  {profile.name}
                 </span>
               </h1>
               <p className="text-white/60 text-lg leading-relaxed max-w-md mb-8">
-                Java 全端工程師 ＆ 系統分析師。專注於設計穩健的後端架構，
-                持續分享 Java、Spring Boot 與系統設計的實戰經驗。
+                {profile.intro[0]}
+                <br />
+                {profile.intro[1]}
               </p>
               <div className="flex items-center gap-3 flex-wrap">
                 <motion.a
-                  href="mailto:rexrex10050@gmail.com"
+                  href={`mailto:${profile.email}`}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white transition-all duration-200 cursor-pointer"
                   style={{
                     background: 'linear-gradient(135deg, rgba(139,92,246,0.8), rgba(56,189,248,0.8))',
@@ -275,7 +244,7 @@ export default function Glassmorphism() {
                   聯絡我
                 </motion.a>
                 <motion.a
-                  href="https://github.com/Rex-shark"
+                  href={profile.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white/80 hover:text-white transition-all duration-200 cursor-pointer"
@@ -324,8 +293,8 @@ export default function Glassmorphism() {
                   }}
                 >
                   <img
-                    src="/me.png"
-                    alt="Rex - Java 全端工程師"
+                    src={profile.avatar}
+                    alt={`${profile.name} - ${profile.title}`}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -364,11 +333,11 @@ export default function Glassmorphism() {
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {skillGroups.map((group, i) => {
+            {mainSkillGroups.map((group, i) => {
               const Icon = group.icon
               return (
                 <motion.div
-                  key={group.category}
+                  key={group.key}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: '-40px' }}
@@ -390,11 +359,11 @@ export default function Glassmorphism() {
                         className="text-xs font-semibold tracking-wider uppercase"
                         style={{ color: group.accent }}
                       >
-                        {group.category}
+                        {group.labelEn}
                       </p>
                     </div>
                     <ul className="space-y-2">
-                      {group.items.map((item) => (
+                      {group.skills.map((item) => (
                         <li key={item} className="flex items-center gap-2 text-sm text-white/75">
                           <span
                             className="w-1 h-1 rounded-full flex-shrink-0"
@@ -409,6 +378,44 @@ export default function Glassmorphism() {
               )
             })}
           </div>
+
+          {/* AI / LLM：項目較多，獨立成寬版徽章卡片 */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-40px' }}
+            variants={fadeUp}
+            custom={mainSkillGroups.length}
+            className="mt-5"
+          >
+            <GlassCard className={`p-5 bg-gradient-to-br ${aiGroup.gradient}`}>
+              <div className="flex items-center gap-2 mb-4">
+                <div
+                  className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ background: `${aiGroup.accent}22`, border: `1px solid ${aiGroup.accent}44` }}
+                >
+                  <Bot size={16} style={{ color: aiGroup.accent }} />
+                </div>
+                <p
+                  className="text-xs font-semibold tracking-wider uppercase"
+                  style={{ color: aiGroup.accent }}
+                >
+                  {aiGroup.labelEn}
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {aiGroup.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="text-xs px-2.5 py-1 rounded-full text-white/75"
+                    style={{ background: `${aiGroup.accent}18`, border: `1px solid ${aiGroup.accent}44` }}
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </GlassCard>
+          </motion.div>
         </section>
 
         {/* ── 專案 ── */}
@@ -440,14 +447,11 @@ export default function Glassmorphism() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {projects.map((project, i) => (
-              <motion.a
-                key={project.title}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden"
+              <motion.div
+                key={project.slug}
+                className="group relative rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden"
                 style={{
                   background: 'rgba(255,255,255,0.06)',
                   backdropFilter: 'blur(16px)',
@@ -464,23 +468,28 @@ export default function Glassmorphism() {
                   borderColor: project.accentBorder,
                   background: 'rgba(255,255,255,0.1)',
                   transition: { duration: 0.25 },
-                } as Parameters<typeof motion.a>[0]['whileHover']}
+                } as Parameters<typeof motion.div>[0]['whileHover']}
               >
                 {/* 頂部漸層裝飾 */}
                 <div
-                  className={`h-1.5 w-full bg-gradient-to-r ${project.gradient}`}
+                  className="h-1.5 w-full"
                   style={{
-                    background: `linear-gradient(90deg, ${project.accentBorder.replace('0.35', '0.8')}, transparent)`,
+                    background: `linear-gradient(90deg, ${project.accent}CC, transparent)`,
                   }}
                 />
-                <div className="p-5">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-semibold text-white">{project.title}</h3>
-                    <ExternalLink
-                      size={14}
-                      className="text-white/30 group-hover:text-white/70 transition-colors duration-200 flex-shrink-0 mt-0.5"
-                    />
-                  </div>
+                {/* GitHub repo 連結：放在 Link 之外，避免巢狀 <a> */}
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  aria-label={`在 GitHub 查看 ${project.title}`}
+                  className="absolute top-4 right-4 z-10 text-white/30 hover:text-white/70 transition-colors duration-200 cursor-pointer"
+                >
+                  <ExternalLink size={14} />
+                </a>
+                <Link to={project.to} className="block p-5">
+                  <h3 className="font-semibold text-white pr-6 mb-3">{project.title}</h3>
                   <p className="text-sm text-white/55 leading-relaxed mb-4">{project.desc}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {project.tags.map((tag) => (
@@ -496,8 +505,8 @@ export default function Glassmorphism() {
                       </span>
                     ))}
                   </div>
-                </div>
-              </motion.a>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </section>
@@ -534,10 +543,10 @@ export default function Glassmorphism() {
                 想聊聊？
               </h2>
               <p className="text-white/50 mb-8 max-w-sm mx-auto leading-relaxed">
-                無論是合作提案、技術交流或是問題諮詢，都歡迎來信。
+                有任何想法或問題，歡迎透過下列方式聯絡我。
               </p>
               <motion.a
-                href="mailto:rexrex10050@gmail.com"
+                href={`mailto:${profile.email}`}
                 className="inline-flex items-center gap-2.5 px-7 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 cursor-pointer"
                 style={{
                   background: 'linear-gradient(135deg, rgba(139,92,246,0.85), rgba(56,189,248,0.85))',
@@ -548,7 +557,7 @@ export default function Glassmorphism() {
                 whileTap={{ scale: 0.97 }}
               >
                 <Mail size={16} />
-                rexrex10050@gmail.com
+                {profile.email}
               </motion.a>
             </GlassCard>
           </motion.div>
@@ -559,7 +568,7 @@ export default function Glassmorphism() {
         className="py-6 text-center text-xs text-white/25 border-t"
         style={{ borderColor: 'rgba(255,255,255,0.06)' }}
       >
-        © 2025 Rex. Built with React + Vite.
+        © {new Date().getFullYear()} {profile.name}. Built with React + Vite.
       </footer>
     </div>
   )

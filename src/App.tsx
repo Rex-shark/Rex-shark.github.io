@@ -29,7 +29,6 @@ import IdeTerminal from '@/pages/styles/IdeTerminal'
 import AccessibleEthical from '@/pages/styles/AccessibleEthical'
 import GithubProfile from '@/pages/styles/GithubProfile'
 import Finalist from '@/pages/styles/Finalist'
-import SpringBootApiDemo from '@/pages/projects/SpringBootApiDemo'
 import ThreadsBot from '@/pages/projects/ThreadsBot'
 import ClaudeCodeSourcemap from '@/pages/projects/ClaudeCodeSourcemap'
 import AiChatroom from '@/pages/projects/AiChatroom'
@@ -62,7 +61,6 @@ function App() {
         <Route path="/styles/accessible-ethical" element={<AccessibleEthical />} />
         <Route path="/styles/github-profile" element={<GithubProfile />} />
         <Route path="/styles/finalist" element={<Finalist />} />
-        <Route path="/projects/spring-boot-api" element={<SpringBootApiDemo />} />
         <Route path="/projects/threads-bot" element={<ThreadsBot />} />
         <Route path="/projects/claude-code-sourcemap" element={<ClaudeCodeSourcemap />} />
         <Route path="/projects/ai-chatroom" element={<AiChatroom />} />

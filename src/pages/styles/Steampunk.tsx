@@ -1,8 +1,10 @@
 import { Link } from 'react-router'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { ArrowLeft, Mail, ExternalLink, Cog, Wrench, Cpu, Database } from 'lucide-react'
+import { ArrowLeft, Mail, Cog, Wrench, Cpu, Database, DraftingCompass } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
+import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
+import type { SkillGroupKey } from '@/data/profile'
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -57,56 +59,63 @@ function GearSVG({
   )
 }
 
-/* 壓力錶進度條 */
-function PressureGauge({ label, pct, delay }: { label: string; pct: number; delay: number }) {
+/* 裝飾用壓力錶：純視覺，不代表任何數值（無刻度讀數、無百分比，指針只是隨機擺動） */
+function DecorGauge({ index = 0, size = 64 }: { index?: number; size?: number }) {
+  const reduceMotion = useReducedMotion()
+  const c = size / 2
+  const faceR = size * 0.4
+  const ticks = Array.from({ length: 9 }, (_, i) => -120 + i * 30)
+
   return (
-    <motion.div
-      className="mb-5"
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay, duration: 0.5, ease: 'easeOut' as const }}
-    >
-      <div className="flex justify-between mb-1.5">
-        <span className="text-sm text-[#E8D5A3]" style={{ fontFamily: "'Special Elite', cursive" }}>
-          {label}
-        </span>
-        <span className="text-xs text-[#B87333] font-bold">{pct}%</span>
-      </div>
-      <div
-        className="h-5 relative overflow-hidden"
+    <div className="relative flex-shrink-0" style={{ width: size, height: size }} aria-hidden="true">
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} fill="none">
+        <circle cx={c} cy={c} r={size * 0.47} fill="#8B5A2B" stroke="#DAA520" strokeWidth={1} />
+        <circle cx={c} cy={c} r={faceR} fill="#1A0E08" stroke="#B87333" strokeWidth={1.5} />
+        {ticks.map((deg) => {
+          const rad = ((deg - 90) * Math.PI) / 180
+          const r1 = faceR * 0.72
+          const r2 = faceR * 0.92
+          return (
+            <line
+              key={deg}
+              x1={c + r1 * Math.cos(rad)}
+              y1={c + r1 * Math.sin(rad)}
+              x2={c + r2 * Math.cos(rad)}
+              y2={c + r2 * Math.sin(rad)}
+              stroke="#B87333"
+              strokeWidth={1}
+              opacity={0.7}
+            />
+          )
+        })}
+      </svg>
+      <motion.div
+        className="absolute"
         style={{
-          background: '#1A0E08',
-          border: '2px solid #8B5A2B',
-          borderRadius: '2px',
-          boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5), inset 0 -1px 0 rgba(184,115,51,0.3)',
+          left: c - 1,
+          bottom: c,
+          width: 2,
+          height: faceR * 0.8,
+          background: 'linear-gradient(180deg, #DAA520, #B87333)',
+          transformOrigin: '50% 100%',
+          boxShadow: '0 0 4px rgba(218,165,32,0.5)',
         }}
-      >
-        {[20, 40, 60, 80].map((mark) => (
-          <div
-            key={mark}
-            className="absolute top-0 bottom-0 w-px opacity-40"
-            style={{ left: `${mark}%`, background: '#B87333' }}
-          />
-        ))}
-        <motion.div
-          className="h-full relative"
-          initial={{ width: 0 }}
-          whileInView={{ width: `${pct}%` }}
-          viewport={{ once: true }}
-          transition={{ delay: delay + 0.2, duration: 0.9, ease: 'easeOut' as const }}
-          style={{
-            background: `linear-gradient(90deg, #8B5A2B, #B87333, #CD853F, #DAA520)`,
-            boxShadow: '0 0 8px rgba(218,165,32,0.4)',
-          }}
-        >
-          <div
-            className="absolute top-0 left-0 right-0 h-1/2 opacity-30"
-            style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.4), transparent)' }}
-          />
-        </motion.div>
-      </div>
-    </motion.div>
+        animate={reduceMotion ? { rotate: 0 } : { rotate: [-40, 25, -15, 40, -5, -40] }}
+        transition={
+          reduceMotion
+            ? { duration: 0 }
+            : { duration: 6 + index * 0.7, repeat: Infinity, ease: 'easeInOut' as const }
+        }
+      />
+      <div
+        className="absolute w-2 h-2 rounded-full"
+        style={{
+          left: c - 4,
+          top: c - 4,
+          background: 'radial-gradient(circle at 35% 35%, #DAA520, #8B5A2B)',
+        }}
+      />
+    </div>
   )
 }
 
@@ -155,60 +164,48 @@ const fadeUp: Variants = {
   }),
 }
 
-const skills = [
-  { label: 'Java', pct: 92 },
-  { label: 'Spring Boot', pct: 88 },
-  { label: 'Spring Security', pct: 82 },
-  { label: 'JPA / Hibernate', pct: 80 },
-  { label: 'React / TypeScript', pct: 78 },
-  { label: 'PostgreSQL', pct: 75 },
-  { label: 'Docker', pct: 72 },
-  { label: '系統分析設計', pct: 85 },
+/* 資料來自 src/data/profile.ts，這裡只補上本頁的 icon 與版面欄寬 */
+const SKILL_GROUP_ICON: Record<SkillGroupKey, typeof Cog> = {
+  backend: Cog,
+  frontend: Wrench,
+  data: Database,
+  ai: Cpu,
+  design: DraftingCompass,
+}
+
+const skillGroups = sharedSkillGroups.map((g) => ({ ...g, icon: SKILL_GROUP_ICON[g.key] }))
+
+/* 5 張卡：上排 3 張、下排 2 張（lg 以 6 欄格線對齊）；sm 兩欄時第一張橫跨整列 */
+const PROJECT_SPAN = [
+  'sm:col-span-2 lg:col-span-2',
+  'lg:col-span-2',
+  'lg:col-span-2',
+  'lg:col-span-3',
+  'lg:col-span-3',
 ]
 
-const skillCategories = [
-  {
-    label: '後端引擎',
-    icon: Cog,
-    items: ['Java', 'Spring Boot', 'Spring Security', 'JPA / Hibernate'],
-  },
-  {
-    label: '前端介面',
-    icon: Wrench,
-    items: ['React', 'TypeScript', 'Tailwind CSS'],
-  },
-  {
-    label: '資料庫',
-    icon: Database,
-    items: ['PostgreSQL', 'Docker', 'GitHub Actions'],
-  },
-  {
-    label: '系統設計',
-    icon: Cpu,
-    items: ['系統分析設計'],
-  },
-]
+const projects = sharedProjects.map((p, i) => ({
+  ...p,
+  span: PROJECT_SPAN[i] ?? 'lg:col-span-2',
+}))
 
-const projects = [
-  {
-    title: '個人網站',
-    desc: 'React + Vite 建構的 GitHub Pages 個人作品集，探索多種 UI 設計風格。',
-    tags: ['React', 'TypeScript', 'Tailwind'],
-    href: 'https://github.com/Rex-shark',
-  },
-  {
-    title: 'Spring Boot API 範例',
-    desc: '完整的 RESTful API 專案，包含 JWT 認證、RBAC 權限控管與 OpenAPI 文件。',
-    tags: ['Java', 'Spring Boot', 'JWT'],
-    href: 'https://github.com/Rex-shark',
-  },
-  {
-    title: '系統分析設計教學',
-    desc: 'UML、需求分析到系統設計的完整教學系列，含實戰案例解析。',
-    tags: ['系統分析', 'UML', '教學'],
-    href: 'https://github.com/Rex-shark',
-  },
-]
+/* 羅馬數字（專案編號與 Footer 年份用） */
+function toRoman(num: number): string {
+  const table: [number, string][] = [
+    [1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
+    [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
+    [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I'],
+  ]
+  let n = num
+  let out = ''
+  for (const [value, symbol] of table) {
+    while (n >= value) {
+      out += symbol
+      n -= value
+    }
+  }
+  return out
+}
 
 export default function Steampunk() {
   return (
@@ -324,8 +321,8 @@ export default function Steampunk() {
                 <Rivet className="absolute -bottom-2 -right-2" />
 
                 <img
-                  src="/me.png"
-                  alt="Rex"
+                  src={profile.avatar}
+                  alt={profile.name}
                   className="w-full h-full object-cover"
                   style={{ filter: 'sepia(20%) contrast(1.05) brightness(0.95)' }}
                 />
@@ -365,7 +362,7 @@ export default function Steampunk() {
                   boxShadow: 'inset 0 1px 0 rgba(218,165,32,0.2)',
                 }}
               >
-                Java Full-Stack Engineer &amp; Systems Analyst
+                {profile.titleEn}
               </div>
 
               <h1
@@ -376,23 +373,26 @@ export default function Steampunk() {
                   textShadow: '2px 2px 8px rgba(218,165,32,0.3), 0 0 20px rgba(184,115,51,0.2)',
                 }}
               >
-                Rex
+                {profile.name}
               </h1>
 
               <p
                 className="text-lg leading-relaxed max-w-md mb-2"
                 style={{ color: '#C4A67A', fontFamily: "'IM Fell English', serif", fontStyle: 'italic' }}
               >
-                Java 全端工程師 ＆ 系統分析師
+                {profile.title}
               </p>
-              <p className="text-sm leading-relaxed max-w-md mb-8" style={{ color: '#A08060' }}>
-                熱衷於設計穩健的後端架構，以精密機械般的嚴謹打造每個系統。
-                持續分享 Java、Spring Boot 與系統設計的實戰心得。
-              </p>
+              <div className="max-w-md mb-8 space-y-2">
+                {profile.intro.map((line) => (
+                  <p key={line} className="text-sm leading-relaxed" style={{ color: '#A08060' }}>
+                    {line}
+                  </p>
+                ))}
+              </div>
 
               <div className="flex items-center gap-3">
                 <motion.a
-                  href="mailto:rexrex10050@gmail.com"
+                  href={`mailto:${profile.email}`}
                   className="flex items-center gap-2 px-5 py-2.5 text-sm cursor-pointer"
                   style={{
                     background: 'linear-gradient(135deg, #8B5A2B, #B87333)',
@@ -409,7 +409,7 @@ export default function Steampunk() {
                   聯絡我
                 </motion.a>
                 <motion.a
-                  href="https://github.com/Rex-shark"
+                  href={profile.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-5 py-2.5 text-sm cursor-pointer"
@@ -469,24 +469,12 @@ export default function Steampunk() {
             <p className="text-xs tracking-[0.2em] uppercase text-[#8B5A2B] ml-11">Technical Skills</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
-            <div>
-              {skills.slice(0, 4).map((s, i) => (
-                <PressureGauge key={s.label} label={s.label} pct={s.pct} delay={i * 0.08} />
-              ))}
-            </div>
-            <div>
-              {skills.slice(4).map((s, i) => (
-                <PressureGauge key={s.label} label={s.label} pct={s.pct} delay={(i + 4) * 0.08} />
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {skillCategories.map((cat, i) => (
+          {/* 每組一塊黃銅面板；壓力錶僅為裝飾，不代表任何數值 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 grid-flow-dense gap-5">
+            {skillGroups.map((group, gi) => (
               <motion.div
-                key={cat.label}
-                className="p-4 relative"
+                key={group.key}
+                className={`p-5 relative ${group.key === 'ai' ? 'md:col-span-2' : ''}`}
                 style={{
                   border: '1px solid #8B5A2B',
                   background: 'linear-gradient(135deg, #1A0E08, #2C1810)',
@@ -494,21 +482,61 @@ export default function Steampunk() {
                 }}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: '-40px' }}
                 variants={fadeUp}
-                custom={i}
+                custom={gi}
               >
+                <Rivet small className="absolute top-1.5 left-1.5" />
                 <Rivet small className="absolute top-1.5 right-1.5" />
+                <Rivet small className="absolute bottom-1.5 left-1.5" />
+                <Rivet small className="absolute bottom-1.5 right-1.5" />
 
-                <cat.icon size={18} className="mb-2" style={{ color: '#B87333' }} />
-                <p className="text-xs font-bold mb-2 tracking-wider" style={{ color: '#DAA520' }}>
-                  {cat.label}
-                </p>
-                <ul className="space-y-1">
-                  {cat.items.map((item) => (
-                    <li key={item} className="text-xs flex items-center gap-1.5" style={{ color: '#A08060' }}>
-                      <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: '#B87333' }} />
-                      {item}
+                <div className="flex items-center gap-4 mb-4">
+                  <DecorGauge index={gi} />
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <group.icon size={16} className="flex-shrink-0" style={{ color: '#B87333' }} />
+                      <h3
+                        className="text-lg font-bold"
+                        style={{ fontFamily: "'IM Fell English', serif", color: '#DAA520' }}
+                      >
+                        {group.label}
+                      </h3>
+                    </div>
+                    <p className="text-[11px] tracking-[0.2em] uppercase mt-0.5" style={{ color: '#8B5A2B' }}>
+                      {group.labelEn}
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  className="h-px mb-4"
+                  style={{ background: 'linear-gradient(90deg, #8B5A2B, #B87333 50%, transparent)' }}
+                />
+
+                {/* 黃銅銘牌 */}
+                <ul className="flex flex-wrap gap-2">
+                  {group.skills.map((skill) => (
+                    <li
+                      key={skill}
+                      className="flex items-center gap-2 px-2.5 py-1.5 text-xs leading-snug max-w-full"
+                      style={{
+                        background: 'linear-gradient(180deg, #CD853F, #B87333 45%, #8B5A2B)',
+                        border: '1px solid #DAA520',
+                        color: '#1A0E08',
+                        fontWeight: 700,
+                        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25), 1px 2px 4px rgba(0,0,0,0.6)',
+                      }}
+                    >
+                      <span
+                        className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                        style={{ background: '#1A0E08', opacity: 0.55 }}
+                      />
+                      <span className="min-w-0 break-words">{skill}</span>
+                      <span
+                        className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                        style={{ background: '#1A0E08', opacity: 0.55 }}
+                      />
                     </li>
                   ))}
                 </ul>
@@ -551,14 +579,11 @@ export default function Steampunk() {
             <p className="text-xs tracking-[0.2em] uppercase text-[#8B5A2B] ml-11">Featured Projects</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
             {projects.map((project, i) => (
-              <motion.a
-                key={project.title}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block p-6 relative cursor-pointer"
+              <motion.div
+                key={project.slug}
+                className={`group relative ${project.span}`}
                 style={{
                   background: 'linear-gradient(135deg, #1A0E08, #2C1810, #1A0E08)',
                   border: '1px solid #8B5A2B',
@@ -575,14 +600,18 @@ export default function Steampunk() {
                 }}
                 transition={{ duration: 0.2 }}
               >
-                <Rivet small className="absolute top-2 left-2" />
-                <Rivet small className="absolute top-2 right-2" />
-                <Rivet small className="absolute bottom-2 left-2" />
-                <Rivet small className="absolute bottom-2 right-2" />
+                <Rivet small className="absolute top-2 left-2 pointer-events-none" />
+                <Rivet small className="absolute top-2 right-2 pointer-events-none" />
+                <Rivet small className="absolute bottom-2 left-2 pointer-events-none" />
+                <Rivet small className="absolute bottom-2 right-2 pointer-events-none" />
 
-                <div className="flex items-start justify-between mb-3">
+                {/* 整張卡連到站內頁 */}
+                <Link to={project.to} className="flex flex-col h-full p-6 cursor-pointer">
+                  <span className="text-[11px] tracking-[0.25em] mb-2" style={{ color: '#8B5A2B' }}>
+                    No. {toRoman(i + 1)}
+                  </span>
                   <h3
-                    className="font-bold"
+                    className="font-bold mb-3 pr-10"
                     style={{
                       fontFamily: "'IM Fell English', serif",
                       color: '#DAA520',
@@ -591,37 +620,46 @@ export default function Steampunk() {
                   >
                     {project.title}
                   </h3>
-                  <ExternalLink
-                    size={14}
-                    className="flex-shrink-0 mt-0.5 text-[#8B5A2B] group-hover:text-[#DAA520] transition-colors duration-200"
+
+                  <p className="text-sm leading-relaxed mb-4 flex-1" style={{ color: '#A08060' }}>
+                    {project.desc}
+                  </p>
+
+                  <div
+                    className="h-px mb-3"
+                    style={{ background: 'linear-gradient(90deg, transparent, #8B5A2B, transparent)' }}
                   />
-                </div>
 
-                <p className="text-sm leading-relaxed mb-4" style={{ color: '#A08060' }}>
-                  {project.desc}
-                </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs px-2 py-0.5"
+                        style={{
+                          border: '1px solid #8B5A2B',
+                          color: '#B87333',
+                          background: 'rgba(139,90,43,0.15)',
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
 
-                <div
-                  className="h-px mb-3"
-                  style={{ background: 'linear-gradient(90deg, transparent, #8B5A2B, transparent)' }}
-                />
-
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs px-2 py-0.5"
-                      style={{
-                        border: '1px solid #8B5A2B',
-                        color: '#B87333',
-                        background: 'rgba(139,90,43,0.15)',
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.a>
+                {/* GitHub repo 連結放在 Link 之外，避免巢狀 <a> */}
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${project.title} 的 GitHub 原始碼`}
+                  title="GitHub 原始碼"
+                  className="absolute top-5 right-6 p-1.5 text-[#8B5A2B] hover:text-[#DAA520] transition-colors duration-200 cursor-pointer"
+                  style={{ border: '1px solid #8B5A2B', background: '#1A0E08' }}
+                >
+                  <GithubIcon className="w-3.5 h-3.5" />
+                </a>
+              </motion.div>
             ))}
           </div>
         </section>
@@ -662,7 +700,7 @@ export default function Steampunk() {
               className="text-base mb-10 max-w-sm mx-auto leading-relaxed"
               style={{ color: '#A08060', fontStyle: 'italic' }}
             >
-              無論是合作提案、技術交流或是問題諮詢，<br />
+              技術交流或任何想法，<br />
               歡迎傳送您的電報。
             </p>
 
@@ -687,7 +725,7 @@ export default function Steampunk() {
 
               <div className="flex flex-col gap-3">
                 <motion.a
-                  href="mailto:rexrex10050@gmail.com"
+                  href={`mailto:${profile.email}`}
                   className="flex items-center gap-3 px-5 py-3 cursor-pointer"
                   style={{
                     background: 'linear-gradient(135deg, #8B5A2B, #B87333)',
@@ -704,11 +742,11 @@ export default function Steampunk() {
                   transition={{ duration: 0.15 }}
                 >
                   <Mail size={16} />
-                  rexrex10050@gmail.com
+                  {profile.email}
                 </motion.a>
 
                 <motion.a
-                  href="https://github.com/Rex-shark"
+                  href={profile.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 px-5 py-3 cursor-pointer"
@@ -727,7 +765,7 @@ export default function Steampunk() {
                   transition={{ duration: 0.2 }}
                 >
                   <GithubIcon className="w-4 h-4" />
-                  github.com/Rex-shark
+                  github.com/{profile.githubHandle}
                 </motion.a>
               </div>
 
@@ -750,7 +788,9 @@ export default function Steampunk() {
       >
         <div className="flex items-center justify-center gap-3 mb-1">
           <Rivet />
-          <span style={{ letterSpacing: '0.15em' }}>REX &bull; MMXXVI</span>
+          <span style={{ letterSpacing: '0.15em' }}>
+            {profile.name.toUpperCase()} &bull; {toRoman(new Date().getFullYear())}
+          </span>
           <Rivet />
         </div>
         <span className="text-xs" style={{ color: '#5A3A1A' }}>
