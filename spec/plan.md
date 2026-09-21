@@ -10,58 +10,64 @@ Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist �
 
 ### 路由結構
 
-使用 **HashRouter**（解決 GitHub Pages 靜態託管的 SPA 路由問題）：
+使用 **BrowserRouter**（SEO Lv2 已從 HashRouter 遷移；GitHub Pages 的 SPA 路由由 `public/404.html` redirect + `index.html` 還原腳本解決，並相容舊 `#/path` 連結）：
 
 ```
-/#/                            → 正式首頁（Finalist 風格）
-/#/gallery                     → 設計風格導覽頁（原 StyleGallery，含 19 種設計實驗）
-/#/styles/<風格路由名>          → 各風格首頁（19 種，不含 Finalist）
-/#/projects/spring-boot-api    → Spring Boot API 範例 showcase
-/#/projects/threads-bot        → ThreadsBot 專案 showcase
+/                                       → 正式首頁（Finalist 風格）
+/gallery                                → 設計實驗室（StyleGallery，含 19 種設計實驗）
+/styles/<風格路由名>                     → 各風格首頁（19 種）
+/styles/finalist                        → 同首頁元件（向下相容，避免已分享連結失效）
+/projects/spring-boot-api               → Spring Boot API 範例 showcase
+/projects/threads-bot                   → ThreadsBot showcase
+/projects/claude-code-sourcemap         → Claude Code 原始碼研究 showcase
+/projects/ai-chatroom                   → ai-chatroom showcase
+/projects/rpgmaker-character-forge      → RPG Maker Character Forge showcase
 ```
-
-> **`/styles/finalist` 路由保留與否**：建議保留作為向下相容（Finalist 本身就是首頁內容），實作時讓兩者指向同一元件即可，避免外部已分享連結失效。
 
 ### 目錄結構
 
 ```
 src/
-├── App.tsx                          # HashRouter 路由設定
+├── App.tsx                          # BrowserRouter 路由設定
 ├── main.tsx                         # 進入點
 ├── index.css                        # 全域樣式與主題變數
 ├── pages/
-│   ├── Home.tsx                     # 正式首頁（從 Finalist.tsx 改造）
-│   ├── StyleGallery.tsx             # 設計風格導覽頁（搬到 /gallery）
-│   ├── styles/                      # 19 個設計實驗風格
+│   ├── StyleGallery.tsx             # 設計實驗室（/gallery）
+│   ├── styles/                      # 19 個設計實驗風格 + Finalist.tsx（正式首頁）
 │   └── projects/                    # 精選專案 showcase 頁
 │       ├── SpringBootApiDemo.tsx
-│       └── ThreadsBot.tsx
+│       ├── ThreadsBot.tsx
+│       ├── ClaudeCodeSourcemap.tsx
+│       ├── AiChatroom.tsx
+│       └── RpgmakerCharacterForge.tsx
 ├── components/
-│   ├── ui/                          # shadcn/ui 元件
-│   ├── gallery/
-│   │   └── StyleCard.tsx            # 風格卡片元件
-│   └── common/                      # 共用元件
-├── lib/
-│   └── utils.ts                     # cn() + handleHashClick()
-└── assets/                          # 靜態資源
+│   ├── ui/                          # shadcn/ui 元件（目前僅 button）
+│   └── gallery/
+│       └── StyleCard.tsx            # 風格卡片元件
+└── lib/
+    └── utils.ts                     # cn() + handleHashClick()
 
 spec/                                # 資料權威來源（不放程式）
 ├── plan.md                          # 本檔案
 ├── info.md                          # Rex 個人資訊（自介、技能、聯絡）
 ├── article/
-│   └── data.md                      # 好文分享策展清單
-├── projects/                        # 精選專案介紹
-│   ├── threads-bot.md
-│   └── img/                         # 原始截圖 + mermaid 流程圖
-└── (其他規格文件)
+│   ├── data.md                      # 好文分享策展清單（已上架）
+│   └── data-pending.md              # 待上架文章佇列（由 add-article skill 處理）
+└── projects/                        # 精選專案介紹（每專案一個 <slug>.md）
+    └── img/                         # 原始截圖 + mermaid 流程圖
+
+docs/
+└── blog/                            # 部落格草稿（待 /blog 完成後上站）
 
 public/
+├── 404.html                         # GitHub Pages SPA redirect
+├── robots.txt / sitemap.xml         # SEO
 └── projects/<slug>/                 # 部署用圖片（英文檔名）
 ```
 
 ### Subagent 架構
 
-- **新增風格頁**：透過 `.claude/agents/style-page-creator.md` 執行，可並行啟動多個
+- **新增風格頁**：透過 `style-page-creator` subagent 執行，可並行啟動多個（分工見 `.claude/rules/style-pages.md`）
 - **新增專案 showcase 頁**：使用 general-purpose agent，依 `spec/projects/<slug>.md` 製作
 
 ---
@@ -74,7 +80,7 @@ public/
 2. **Hero**：自介、CTA
 3. **關於**：3 張 About 卡片
 4. **技能**：分後端 / 前端 / 資料庫 / 系統設計
-5. **精選專案**：3 張卡（見下方）
+5. **精選專案**：6 張卡（見下方）
 6. **好文分享**：來自 `spec/article/data.md`，含 tag 篩選
 7. **聯絡**：email、GitHub
 8. **Footer**
@@ -90,7 +96,7 @@ public/
 | **個人網站** | 用 20 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。 | 直連 `/gallery` 觀賞其他 19 種風格 | 不做（網站本身即作品） | ✅ 完成 |
 | **Spring Boot API 範例** | RESTful API 範例，含 JWT 認證、角色控管、JPA 資料存取層。 | 進入 `/projects/spring-boot-api` | ✅ 已有 | ✅ 完成 |
 | **ThreadsBot** | 本地 LLM 自動爬新聞、改寫成 Threads 貼文，Spring Boot 3 + Spring AI + Ollama，零 API 成本。 | 進入 `/projects/threads-bot` | ✅ 已有 | ✅ 完成 |
-| **Claude Code 原始碼研究** | 從 sourcemap 還原 Claude Code v2.1.88 並寫成 5 篇深度分析筆記。非官方研究，版權歸 Anthropic。 | 進入 `/projects/claude-code-sourcemap` | 待做 | 🚧 卡片已上，showcase 頁待建 |
+| **Claude Code 原始碼研究** | 從 sourcemap 還原 Claude Code v2.1.88 並寫成 5 篇深度分析筆記。非官方研究，版權歸 Anthropic。 | 進入 `/projects/claude-code-sourcemap` | ✅ 已有 | ✅ 完成 |
 | **ai-chatroom** | 真人與 AI 夥伴 Luna 🌙 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默。 | 進入 `/projects/ai-chatroom` | ✅ 已有 | ✅ 完成 |
 | **RPG Maker Character Forge** | 一張行走圖生出整套 RPG Maker 角色素材（立繪 / 16 表情 face / 敵人戰鬥圖），Codex Agent + ComfyUI。 | 進入 `/projects/rpgmaker-character-forge` | ✅ 已有 | ✅ 完成 |
 
@@ -144,7 +150,7 @@ public/
 |------|------|----------|------|
 | Spring Boot API 範例 | `/projects/spring-boot-api` | （內嵌於頁面） | ✅ 完成 |
 | ThreadsBot | `/projects/threads-bot` | [spec/projects/threads-bot.md](projects/threads-bot.md) | ✅ 完成 |
-| Claude Code 原始碼研究 | `/projects/claude-code-sourcemap` | [spec/projects/claude-code-sourcemap.md](projects/claude-code-sourcemap.md) | 🚧 卡片完成，showcase 頁待建 |
+| Claude Code 原始碼研究 | `/projects/claude-code-sourcemap` | [spec/projects/claude-code-sourcemap.md](projects/claude-code-sourcemap.md) | ✅ 完成（spec + 首頁卡片 + showcase 頁） |
 | ai-chatroom | `/projects/ai-chatroom` | [spec/projects/ai-chatroom.md](projects/ai-chatroom.md) | ✅ 完成（spec + 5 截圖 + 首頁卡片 + showcase 頁） |
 | RPG Maker Character Forge | `/projects/rpgmaker-character-forge` | [spec/projects/rpgmaker-character-forge.md](projects/rpgmaker-character-forge.md) | ✅ 完成（spec + 3 截圖 + 首頁卡片 + showcase 頁） |
 
@@ -152,7 +158,7 @@ public/
 
 ## 資料權威來源（Single Source of Truth）
 
-所有「會被多處使用」的內容統一存放在 `spec/`。詳細規則見 [CLAUDE.md](../CLAUDE.md)。
+所有「會被多處使用」的內容統一存放在 `spec/`。詳細規則見 [CLAUDE.md](../CLAUDE.md) 與 `.claude/rules/`。
 
 | 主題 | 檔案 | 用途 |
 |------|------|------|
@@ -169,75 +175,88 @@ public/
 | `cn()` | `src/lib/utils.ts` | clsx + tailwind-merge | ✅ |
 | `handleHashClick()` | `src/lib/utils.ts` | 攔截 `<a href="#x">`，改用 scrollIntoView | ✅ |
 | `StyleCard` | `src/components/gallery/StyleCard.tsx` | 風格卡片 | ✅ |
-| `StyleGallery` | `src/pages/StyleGallery.tsx` | 設計實驗室導覽頁（待搬到 `/gallery`） | ✅ |
+| `StyleGallery` | `src/pages/StyleGallery.tsx` | 設計實驗室導覽頁（`/gallery`） | ✅ |
 
 ---
 
 ## 待辦事項
 
-### 🎯 首頁升級工程 ✅ 完成
+### 🎯 首頁升級工程 ✅
 
 採取精簡做法：直接修改 `Finalist.tsx`（不另建 Home.tsx），讓 `/` 與 `/styles/finalist` 共用同一元件。
 
-- [x] **修改 `Finalist.tsx`**
+- ✅ **修改 `Finalist.tsx`**
    - 頂部「返回風格選擇」改為「Rex.」品牌 + 右側「設計實驗室 →」連到 `/gallery`
-   - 專案區從 4 張縮為 3 張：移除「系統分析設計教學」；個人網站 desc 改寫並 `to: '/gallery'`
+   - 專案區從 4 張縮為 3 張（後續陸續新增專案，目前為 6 張）：移除「系統分析設計教學」；個人網站 desc 改寫並 `to: '/gallery'`
    - 移除 Hero 的「下載履歷」按鈕（避免假連結）
-- [x] **修改 `App.tsx`**
+- ✅ **修改 `App.tsx`**
    - `/` → `Finalist`
    - `/gallery` → `StyleGallery`
    - `/styles/finalist` 保留向下相容
-- [x] **修改 `StyleGallery.tsx`**
+- ✅ **修改 `StyleGallery.tsx`**
    - 標題改為「設計實驗室」、副標「打造正式首頁前的 19 種設計風格實驗」
    - 移除 Finalist 卡片與 `FinalistPreview` 元件
    - Header 加「返回首頁」連結
-- [x] **批次修改 19 個風格頁返回鍵**
+- ✅ **批次修改 19 個風格頁返回鍵**
    - `to="/"` → `to="/gallery"`
    - 文案「返回風格選擇」→「返回設計實驗室」（Cyberpunk 保留 `cd ../` 風格特色）
-- [x] **build 通過 + 手動驗收路徑成立**
+- ✅ **build 通過 + 手動驗收路徑成立**
 
 ### 🔍 SEO 優化計畫
 
 分三階段執行。
 
-#### Lv1 — 基礎 meta + sitemap ✅ 完成
+#### Lv1 — 基礎 meta + sitemap ✅（部署後驗證待辦）
 
-- [x] `<html lang>` 從 `en` 改為 `zh-Hant-TW`
-- [x] `<meta name="description">`
-- [x] **Open Graph**（og:type / url / title / description / image / locale / site_name）
-- [x] **Twitter Card**（summary_large_image）
-- [x] `<meta name="theme-color">` `#6366F1`
-- [x] `<link rel="canonical">`
-- [x] `public/robots.txt`
-- [x] `public/sitemap.xml`（首頁 + `/#/gallery`）
-- [x] **JSON-LD `Person` schema**
-- [ ] 部署後用 [Open Graph Debugger](https://www.opengraph.xyz/) 驗證（需推 main 觸發 deploy）
-- [ ] 之後做 1200×630 專屬 OG 圖取代 `/me.png`
+- ✅ `<html lang>` 從 `en` 改為 `zh-Hant-TW`
+- ✅ `<meta name="description">`
+- ✅ **Open Graph**（og:type / url / title / description / image / locale / site_name）
+- ✅ **Twitter Card**（summary_large_image）
+- ✅ `<meta name="theme-color">` `#6366F1`
+- ✅ `<link rel="canonical">`
+- ✅ `public/robots.txt`
+- ✅ `public/sitemap.xml`（初版：首頁 + gallery；Lv2 已改為無 hash 路徑）
+- ✅ **JSON-LD `Person` schema**
+- ⬜ 部署後用 [Open Graph Debugger](https://www.opengraph.xyz/) 驗證（需推 main 觸發 deploy）
+- ⬜ 之後做 1200×630 專屬 OG 圖取代 `/me.png`
 
-#### Lv2 — 解 HashRouter SEO 問題 ✅ 完成
+#### Lv2 — 解 HashRouter SEO 問題 ✅（部署後驗證待辦）
 
-- [x] `HashRouter` → `BrowserRouter`（[src/App.tsx](../src/App.tsx)）
-- [x] `public/404.html` 加 GitHub Pages SPA redirect 腳本（編碼路徑進 `?/`）
-- [x] `index.html` 加接收腳本：還原 `?/path` 路徑 + 相容舊 `#/path` hash
-- [x] `sitemap.xml` 補完 25 條路由（首頁 + gallery + 3 projects + 19 styles），全部無 hash
-- [x] react-router 的 `<Link to="/xxx">` 不需改（自動跟 BrowserRouter 工作）
-- [ ] **部署後驗證**：
+- ✅ `HashRouter` → `BrowserRouter`（[src/App.tsx](../src/App.tsx)）
+- ✅ `public/404.html` 加 GitHub Pages SPA redirect 腳本（編碼路徑進 `?/`）
+- ✅ `index.html` 加接收腳本：還原 `?/path` 路徑 + 相容舊 `#/path` hash
+- ✅ `sitemap.xml` 補完 24 條路由（首頁 + gallery + 3 projects + 19 styles），全部無 hash
+- ⬜ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條）
+- ✅ react-router 的 `<Link to="/xxx">` 不需改（自動跟 BrowserRouter 工作）
+- ⬜ **部署後驗證**：
   - 直接訪問 `https://rex-shark.github.io/projects/threads-bot` 應正常顯示頁面（不是 404）
   - 訪問舊 hash URL `https://rex-shark.github.io/#/styles/finalist` 應 redirect 到 `/styles/finalist`
   - GSC 重新提交 sitemap.xml 後應顯示「23+ 已發現網址」
 
-#### Lv3 — 預先渲染（重工程，視 SEO 需求再評估）
+#### Lv3 — 預先渲染 ⬜（重工程，視 SEO 需求再評估）
 
-- [ ] 引入 vite-plugin-prerender 或改 SSG 方案
-- [ ] 每個路由 build 成獨立 HTML（含完整 title、description、OG）
-- [ ] 為主要頁面做專屬 OG 圖（首頁、ThreadsBot、Claude Code Sourcemap）
+- ⬜ 引入 vite-plugin-prerender 或改 SSG 方案
+- ⬜ 每個路由 build 成獨立 HTML（含完整 title、description、OG）
+- ⬜ 為主要頁面做專屬 OG 圖（首頁、ThreadsBot、Claude Code Sourcemap）
+
+### 🧹 Claude 設定精簡 ✅
+
+CLAUDE.md 與 subagent 是專案早期寫的，內容冗長且互相重複。改採漸進式披露。
+
+- ✅ `CLAUDE.md` 精簡為核心指引（概述、指令、路由總覽、規則索引）
+- ✅ 主題規則拆到 `.claude/rules/`（`paths:` frontmatter，讀到對應檔案才載入）：
+  `frontend.md`、`routing.md`、`style-pages.md`、`project-pages.md`、`articles.md`、`personal-info.md`
+- ✅ subagent 重寫：移除與 CLAUDE.md / rules 重複的內容與硬編碼個資，改為引用
+- ✅ subagent 權限：拿掉 `bypassPermissions`；所需指令改列在共享的 `.claude/settings.json` allowlist
+- ✅ `add-article` skill 內對 CLAUDE.md 章節的引用改指向 `.claude/rules/articles.md`
+- ✅ 驗收：CLAUDE.md 167 → 68 行；agents 290 → 105 行；subagent 無 `bypassPermissions`；無殘留的失效引用
 
 ### 其他待辦
 
-- [ ] 補全 [spec/info.md](info.md) 的 `（待補）` 欄位（一句話自介、年資、聯絡偏好）
-- [ ] 把 [ThreadsBot tutorial 長文](https://github.com/Rex-shark/ThreadsBot/blob/master/docs/local-llm-threads-tutorial.md) 搬成站內 `/blog/local-llm-threads-tutorial`
-- [ ] 建 `/blog` 列表頁與文章詳情頁範本
-- [ ] **部落格草稿**（待 `/blog` 完成後上站）：
-  - [ ] [docs/blog/ai-chatroom.md](../docs/blog/ai-chatroom.md) — ai-chatroom 技術文（草稿；上站時補架構圖、確認 demo、調圖片路徑）
-- [ ] 加入暗色模式切換功能
-- [ ] 效能優化（圖片壓縮、lazy loading、bundle 拆分 — 目前 750KB）
+- ⬜ 補全 [spec/info.md](info.md) 的 `（待補）` 欄位（一句話自介、年資、聯絡偏好）
+- ⬜ 把 [ThreadsBot tutorial 長文](https://github.com/Rex-shark/ThreadsBot/blob/master/docs/local-llm-threads-tutorial.md) 搬成站內 `/blog/local-llm-threads-tutorial`
+- ⬜ 建 `/blog` 列表頁與文章詳情頁範本
+- ⬜ **部落格草稿**（待 `/blog` 完成後上站）：
+  - ⬜ [docs/blog/ai-chatroom.md](../docs/blog/ai-chatroom.md) — ai-chatroom 技術文（草稿；上站時補架構圖、確認 demo、調圖片路徑）
+- ⬜ 加入暗色模式切換功能
+- ⬜ 效能優化（圖片壓縮、lazy loading、bundle 拆分 — 目前 750KB）

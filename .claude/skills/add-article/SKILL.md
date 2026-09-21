@@ -69,7 +69,7 @@ spec/article/data-pending.md  ──(解析+正規化)──>  Finalist.tsx 的 
 
 ### 3. 正規化欄位
 
-依 `CLAUDE.md` 的「好文分享資料來源」章節規則：
+依 `.claude/rules/articles.md` 的規則：
 
 **Tag 正規化**（按表查表，不在表上的視為新 tag）：
 
@@ -103,7 +103,7 @@ spec/article/data-pending.md  ──(解析+正規化)──>  Finalist.tsx 的 
 把正規化後的 tag 集合與 `src/pages/styles/Finalist.tsx` 中的 `TAG_COLOR` 比對：
 
 - 全部都在 `TAG_COLOR` → 直接進入下一步
-- 出現新 tag（如 `Docker`、`Backend` 等）→ **暫停**，告訴使用者「偵測到新 tag X，需要為它指派顏色並更新 CLAUDE.md 的對照表」，請使用者：
+- 出現新 tag（如 `Docker`、`Backend` 等）→ **暫停**，告訴使用者「偵測到新 tag X，需要為它指派顏色並更新 `.claude/rules/articles.md` 的對照表」，請使用者：
   1. 指定顏色 hex
   2. 確認正規化後的呈現名稱（例如 `docker` → `Docker`）
   3. 同意後才繼續
@@ -163,7 +163,7 @@ spec/article/data-pending.md  ──(解析+正規化)──>  Finalist.tsx 的 
 |------|----------|
 | `data-pending.md` 完全空 | 回報「目前沒有待上架文章」，不做任何修改 |
 | 某筆 entry 缺欄位 | 停下，請使用者補上，不繼續 |
-| 偵測到新 tag | 停下，請使用者指派顏色 + 同步 CLAUDE.md，不繼續 |
+| 偵測到新 tag | 停下，請使用者指派顏色 + 同步 `.claude/rules/articles.md`，不繼續 |
 | URL 重複（已存在於 data.md 或 Finalist.tsx，見步驟 2） | 停下，列出撞到哪一筆，請使用者確認跳過 / 覆寫 / 中止 |
 | 同一批 pending 內部 URL 重複 | 停下回報，請使用者確認保留哪一筆 |
 | Build 失敗 | 回滾 Finalist.tsx + data.md 變更，pending 不清空 |
@@ -175,11 +175,11 @@ spec/article/data-pending.md  ──(解析+正規化)──>  Finalist.tsx 的 
 - ❌ 改動 `articles[]` 既有 entry 的順序
 - ❌ 改動 `TAG_COLOR` 既有色號（只能新增）
 - ❌ 刪除 `data-pending.md` 檔案（要清空內容但保留檔案）
-- ❌ 修改 `CLAUDE.md` 對照表，**除非**使用者在 step 3 明確同意新 tag
+- ❌ 修改 `.claude/rules/articles.md` 對照表，**除非**使用者在 step 3 明確同意新 tag
 
 ## 相關檔案
 
 - 輸入：`spec/article/data-pending.md`
 - 正式資料：`spec/article/data.md`
 - 前端：`src/pages/styles/Finalist.tsx`（`articles` 陣列 + `TAG_COLOR`）
-- 規範：`CLAUDE.md`「好文分享資料來源」章節
+- 規範：`.claude/rules/articles.md`
