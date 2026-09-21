@@ -236,3 +236,30 @@
 * AI Agent
 # date
 * 2026-07
+
+# url
+* https://github.com/bojieli/ai-agent-book
+# title
+* ai-agent 資料大全
+# tags
+* AI Agent GitHub
+# date
+* 2026-09
+
+# url
+* https://github.com/public-apis/public-apis
+# title
+* 免費公開 API 清單（Public APIs）
+# tags
+* GitHub
+# date
+* 2026-09
+
+# url
+* https://github.com/zhaoxuya520/reverse-skill
+# title
+* Reverse Skill：Claude Code / Codex 的反向工程與技能開發指南
+# tags
+* AI GitHub
+# date
+* 2026-09

@@ -448,6 +448,24 @@ const articles: Article[] = [
     tags: ['AI', 'Agent'],
     date: '2026-07',
   },
+  {
+    title: 'ai-agent 資料大全',
+    url: 'https://github.com/bojieli/ai-agent-book',
+    tags: ['AI', 'Agent', 'GitHub'],
+    date: '2026-09',
+  },
+  {
+    title: '免費公開 API 清單（Public APIs）',
+    url: 'https://github.com/public-apis/public-apis',
+    tags: ['GitHub'],
+    date: '2026-09',
+  },
+  {
+    title: 'Reverse Skill：Claude Code / Codex 的反向工程與技能開發指南',
+    url: 'https://github.com/zhaoxuya520/reverse-skill',
+    tags: ['AI', 'GitHub'],
+    date: '2026-09',
+  },
 ]
 
 const aboutCards = [
