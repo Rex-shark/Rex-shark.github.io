@@ -16,7 +16,7 @@ paths:
 
 ## 元件
 
-- shadcn/ui 元件放 `src/components/ui/`，以 `npx shadcn add <component>` 新增
+- shadcn/ui 元件放 `src/components/ui/`，以 `npx shadcn add <component>` 新增（該目錄已在 `eslint.config.js` 關閉 `react-refresh/only-export-components`，因 shadcn 會同時 export 元件與 variants）
 - Icon 用 Lucide React；GitHub icon 用各頁面內自訂的 `GithubIcon` SVG
 - 頁內錨點 `<a href="#x">` 用 `handleHashClick()`（`src/lib/utils.ts`）改走 `scrollIntoView`
 
