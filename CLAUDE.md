@@ -26,7 +26,7 @@ BrowserRouter，路由定義於 `src/App.tsx`：
 
 ```
 /                     → 正式首頁（src/pages/styles/Finalist.tsx）
-/gallery              → 設計實驗室（StyleGallery，19 種風格）
+/gallery              → 設計實驗室（StyleGallery，23 種風格）
 /styles/<name>        → 各風格首頁；/styles/finalist 同首頁（向下相容）
 /projects/<slug>      → 精選專案 showcase
 ```

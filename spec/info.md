@@ -77,7 +77,7 @@
 
 | 專案 | 一句描述 | tags | Repo | 站內路由 |
 |---|---|---|---|---|
-| 個人網站 | 用 20 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。 | React / TypeScript / Tailwind CSS | [Rex-shark.github.io](https://github.com/Rex-shark/Rex-shark.github.io) | `/gallery` |
+| 個人網站 | 用 24 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。 | React / TypeScript / Tailwind CSS | [Rex-shark.github.io](https://github.com/Rex-shark/Rex-shark.github.io) | `/gallery` |
 | ThreadsBot | 本地 LLM 自動爬新聞、改寫成 Threads 貼文。Spring Boot 3 + Spring AI + Ollama，零 API 成本。 | Java / Spring AI / Ollama | [ThreadsBot](https://github.com/Rex-shark/ThreadsBot) | `/projects/threads-bot` |
 | Claude Code 原始碼研究 | 從 sourcemap 還原 Claude Code v2.1.88 並整理成 5 篇深度筆記。非官方研究，版權歸 Anthropic。 | TypeScript / Research / AI Agent | [claude-code-sourcemap](https://github.com/Rex-shark/claude-code-sourcemap) | `/projects/claude-code-sourcemap` |
 | ai-chatroom | 真人與 AI 夥伴 Luna 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默。 | Spring AI / WebSocket / React 19 | [ai-chatroom](https://github.com/Rex-shark/ai-chatroom) | `/projects/ai-chatroom` |

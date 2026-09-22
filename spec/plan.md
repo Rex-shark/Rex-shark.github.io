@@ -2,7 +2,7 @@
 
 ## 專案目標
 
-Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist 風格**（白底 indigo/violet、3D Tilt 卡片、好文分享、文章分類篩選），位於 `/`。原本的多風格導覽頁（StyleGallery）作為「設計實驗室」保留於 `/gallery`，可從首頁連入觀賞其餘 19 種設計風格。
+Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist 風格**（白底 indigo/violet、3D Tilt 卡片、好文分享、文章分類篩選），位於 `/`。原本的多風格導覽頁（StyleGallery）作為「設計實驗室」保留於 `/gallery`，可從首頁連入觀賞其餘 23 種設計風格。
 
 ---
 
@@ -14,8 +14,8 @@ Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist �
 
 ```
 /                                       → 正式首頁（Finalist 風格）
-/gallery                                → 設計實驗室（StyleGallery，含 19 種設計實驗）
-/styles/<風格路由名>                     → 各風格首頁（19 種）
+/gallery                                → 設計實驗室（StyleGallery，含 23 種設計實驗）
+/styles/<風格路由名>                     → 各風格首頁（23 種）
 /styles/finalist                        → 同首頁元件（向下相容，避免已分享連結失效）
 /projects/threads-bot                   → ThreadsBot showcase
 /projects/claude-code-sourcemap         → Claude Code 原始碼研究 showcase
@@ -32,7 +32,7 @@ src/
 ├── index.css                        # 全域樣式與主題變數
 ├── pages/
 │   ├── StyleGallery.tsx             # 設計實驗室（/gallery）
-│   ├── styles/                      # 19 個設計實驗風格 + Finalist.tsx（正式首頁）
+│   ├── styles/                      # 23 個設計實驗風格 + Finalist.tsx（正式首頁）
 │   └── projects/                    # 精選專案 showcase 頁
 │       ├── ThreadsBot.tsx
 │       ├── ClaudeCodeSourcemap.tsx
@@ -91,7 +91,7 @@ public/
 
 | 專案 | 卡片描述 | 點擊行為 | Showcase 頁 | 狀態 |
 |------|----------|----------|-------------|------|
-| **個人網站** | 用 20 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。 | 直連 `/gallery` 觀賞其他 19 種風格 | 不做（網站本身即作品） | ✅ 完成 |
+| **個人網站** | 用 24 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。 | 直連 `/gallery` 觀賞其他 23 種風格 | 不做（網站本身即作品） | ✅ 完成 |
 | **ThreadsBot** | 本地 LLM 自動爬新聞、改寫成 Threads 貼文，Spring Boot 3 + Spring AI + Ollama，零 API 成本。 | 進入 `/projects/threads-bot` | ✅ 已有 | ✅ 完成 |
 | **Claude Code 原始碼研究** | 從 sourcemap 還原 Claude Code v2.1.88 並寫成 5 篇深度分析筆記。非官方研究，版權歸 Anthropic。 | 進入 `/projects/claude-code-sourcemap` | ✅ 已有 | ✅ 完成 |
 | **ai-chatroom** | 真人與 AI 夥伴 Luna 🌙 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默。 | 進入 `/projects/ai-chatroom` | ✅ 已有 | ✅ 完成 |
@@ -104,7 +104,7 @@ public/
 原 StyleGallery 改造為「設計實驗室」：
 
 - **入口**：首頁右上角導覽列、Footer，或首頁底部加一個「想看其他設計風格？」CTA
-- **內容**：保留 19 張風格預覽卡（不含 Finalist，因為它已是正式首頁）
+- **內容**：保留 23 張風格預覽卡（不含 Finalist，因為它已是正式首頁）
 - **頁面文案調整**：標題從「選擇你喜歡的設計風格」改為「設計實驗室 — 19 種設計風格實作筆記」之類，定位為作品/實驗，不再是「決定風格」的選擇器
 - **返回入口**：各風格頁面頂部「返回」連結從 `/` 改為 `/gallery`
 
@@ -135,7 +135,13 @@ public/
 | 17 | IDE / 終端機 | `/styles/ide-terminal` | VS Code 編輯器介面、語法高亮、檔案總管側欄 | ✅ 完成 |
 | 18 | 無障礙倫理設計 | `/styles/accessible-ethical` | 以 WCAG 2.1 AA 為目標的高對比、Atkinson Hyperlegible 字型、完整 focus 狀態 | ✅ 完成 |
 | 19 | GitHub 開發者檔案 | `/styles/github-profile` | GitHub Primer Dark、Pinned Repos、README 區塊、技術棧 badge | ✅ 完成 |
+| 20 | AI 原生介面 | `/styles/ai-native` | Agent 對話介面：寫死腳本的逐字串流、tool call 卡片呈現專案、快捷 chip（不接 LLM、無自由輸入）、中性底 + AI 紫 `#6366F1`（ui-ux-pro-max #43） | ✅ 完成 |
+| 21 | 雜誌編輯排版 | `/styles/editorial` | 一期雜誌專題：封面期號、首字放大、襯線內文多欄、pull quote、figure/figcaption、米白紙底 + 墨綠 `#1F4E3C`、Fraunces + Newsreader（ui-ux-pro-max #66） | ✅ 完成 |
+| 22 | 玻璃態・粉紅版 | `/styles/glassmorphism-pink` | 沿用 #11 版型：背景改深梅紅漸層、光暈球與主漸層改粉紅→蜜桃、玻璃卡片帶微粉色調、模糊略加強 | ✅ 完成 |
+| 23 | 柔和UI・加強版 | `/styles/soft-ui-pro` | 沿用 #10 版型：主色改青綠 `#2A9D8F`、經典 `#E0E5EC` 底 + `#A3B1C6` 深陰影、陰影距離加大、凸起面加 145° 漸層、主按鈕漸層，更立體 | ✅ 完成 |
 | ⭐  | **Finalist → 正式首頁** | `/`（兼容 `/styles/finalist`） | 白底 indigo/violet、3D Tilt、好文分享、文章篩選 | ✅ 升級為首頁 |
+
+**20、21 驗收標準**：資料全部 import `profile.ts`（不編造）、與既有 19 頁有明顯視覺差異、手機到桌面可用、`npm run build` 與 `npm run lint` 通過；整合後同步 `App.tsx`、`StyleGallery.tsx`（卡片 + 預覽縮圖）、`sitemap.xml`、本表與「19 種」相關文案。
 
 ---
 

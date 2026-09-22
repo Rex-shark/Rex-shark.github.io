@@ -685,6 +685,167 @@ function AccessibleEthicalPreview() {
   )
 }
 
+/* AI 原生介面預覽：Agent 頂欄 + 對話氣泡 + tool call 卡 + chip 列 */
+function AiNativePreview() {
+  return (
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: '#F5F5F5' }}>
+      {/* 頂欄：agent 名稱 + 線上狀態點 */}
+      <div className="h-4 w-full flex items-center px-2 gap-1 bg-white" style={{ borderBottom: '1px solid #E4E4E7' }}>
+        <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#10B981' }} />
+        <div className="w-10 h-1 rounded-full" style={{ background: '#09090B' }} />
+      </div>
+      <div className="flex-1 flex flex-col gap-1.5 p-2">
+        {/* Agent 回覆 + context 卡 */}
+        <div className="flex gap-1 items-start">
+          <div className="w-4 h-4 rounded-full overflow-hidden shrink-0">
+            <img src="/me.png" alt="" className="w-full h-full object-cover" />
+          </div>
+          <div className="rounded-md bg-white p-1 flex flex-col gap-0.5 w-[70%]" style={{ borderLeft: '2px solid #6366F1' }}>
+            <div className="w-full h-0.5 rounded-full" style={{ background: '#52525B' }} />
+            <div className="w-3/4 h-0.5 rounded-full" style={{ background: '#A1A1AA' }} />
+          </div>
+        </div>
+        {/* 使用者訊息 */}
+        <div className="self-end rounded-md px-1.5 py-1" style={{ background: '#6366F1' }}>
+          <div className="w-8 h-0.5 rounded-full bg-white" />
+        </div>
+        {/* tool call 卡 */}
+        <div className="rounded-md bg-white p-1 flex items-center gap-1 ml-5" style={{ border: '1px solid #E4E4E7' }}>
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#10B981' }} />
+          <div className="w-12 h-0.5 rounded-full" style={{ background: '#6366F1', fontFamily: 'monospace' }} />
+        </div>
+        {/* 打字指示器 */}
+        <div className="flex gap-0.5 ml-5">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="w-1 h-1 rounded-full" style={{ background: '#A1A1AA' }} />
+          ))}
+        </div>
+      </div>
+      {/* 底部 chip 列 */}
+      <div className="flex gap-1 justify-center pb-1.5">
+        {[0, 1, 2].map((i) => (
+          <div key={i} className="w-7 h-2 rounded-full bg-white" style={{ border: '1px solid #C7D2FE' }} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/* 雜誌編輯排版預覽：刊頭雙線 + 襯線大標 + 首字放大 + pull quote + 多欄索引 */
+function EditorialPreview() {
+  return (
+    <div className="w-full h-full flex flex-col relative overflow-hidden px-2.5 py-1.5" style={{ background: '#F7F4EC' }}>
+      {/* 刊頭 */}
+      <div className="flex flex-col items-center pb-1" style={{ borderBottom: '3px double #1A1613' }}>
+        <span className="text-[10px] font-bold tracking-[0.3em] leading-none" style={{ color: '#1A1613', fontFamily: 'Georgia, serif' }}>
+          REX
+        </span>
+      </div>
+      <div className="flex-1 flex gap-2 pt-1.5">
+        {/* 左：大標 + 首字放大內文 */}
+        <div className="flex-1 flex flex-col gap-1">
+          <div className="w-full h-2 rounded-sm" style={{ background: '#1A1613' }} />
+          <div className="w-2/3 h-2 rounded-sm" style={{ background: '#1A1613' }} />
+          <div className="flex gap-1 mt-0.5">
+            <span className="text-[14px] leading-none font-bold" style={{ color: '#1F4E3C', fontFamily: 'Georgia, serif' }}>R</span>
+            <div className="flex-1 flex flex-col gap-0.5 pt-0.5">
+              <div className="w-full h-0.5" style={{ background: '#6B645C' }} />
+              <div className="w-full h-0.5" style={{ background: '#6B645C' }} />
+              <div className="w-4/5 h-0.5" style={{ background: '#6B645C' }} />
+            </div>
+          </div>
+          {/* pull quote */}
+          <div className="pl-1 mt-0.5 flex flex-col gap-0.5" style={{ borderLeft: '2px solid #1F4E3C' }}>
+            <div className="w-full h-1 rounded-sm" style={{ background: '#1F4E3C' }} />
+            <div className="w-2/3 h-1 rounded-sm" style={{ background: '#1F4E3C' }} />
+          </div>
+        </div>
+        {/* 右：封面照 figure */}
+        <div className="w-[38%] flex flex-col gap-0.5">
+          <div className="w-full aspect-[3/4] overflow-hidden" style={{ border: '1px solid #1A1613' }}>
+            <img src="/me.png" alt="" className="w-full h-full object-cover grayscale" />
+          </div>
+          <div className="w-3/4 h-0.5" style={{ background: '#6B645C' }} />
+        </div>
+      </div>
+      {/* 多欄索引 */}
+      <div className="grid grid-cols-3 gap-1.5 pt-1" style={{ borderTop: '1px solid #1A1613' }}>
+        {[0, 1, 2].map((i) => (
+          <div key={i} className="flex items-center gap-0.5">
+            <div className="flex-1 h-0.5" style={{ borderTop: '1px dashed #6B645C' }} />
+            <div className="w-1.5 h-0.5" style={{ background: '#1F4E3C' }} />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/* 玻璃態・粉紅版預覽：深梅紅底 + 粉色光暈 + 微粉玻璃卡 */
+function GlassmorphismPinkPreview() {
+  return (
+    <div
+      className="w-full h-full flex flex-col items-center justify-center gap-3 relative overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #1f0a1a, #5a1843, #2d0f2a)' }}
+    >
+      {/* 光暈球 */}
+      <div className="absolute top-2 right-4 w-12 h-12 rounded-full opacity-35" style={{ background: '#ec4899', filter: 'blur(16px)' }} />
+      <div className="absolute bottom-4 left-2 w-10 h-10 rounded-full opacity-30" style={{ background: '#fda4af', filter: 'blur(14px)' }} />
+      {/* 玻璃卡片 */}
+      <div
+        className="w-28 rounded-xl p-3 flex flex-col gap-2"
+        style={{
+          background: 'rgba(255,236,245,0.09)',
+          border: '1px solid rgba(255,255,255,0.18)',
+          backdropFilter: 'blur(14px)',
+        }}
+      >
+        <div className="w-8 h-8 rounded-full" style={{ background: 'rgba(244,114,182,0.45)', border: '1px solid rgba(255,255,255,0.2)' }} />
+        <div className="h-2 rounded-full bg-white/40" style={{ width: '80%' }} />
+        <div className="h-1.5 rounded-full bg-white/20" style={{ width: '60%' }} />
+        <div className="flex gap-1 mt-1">
+          <div className="flex-1 h-4 rounded-lg" style={{ background: 'linear-gradient(135deg, rgba(236,72,153,0.8), rgba(253,164,175,0.8))', border: '1px solid rgba(255,255,255,0.2)' }} />
+          <div className="flex-1 h-4 rounded-lg" style={{ background: 'rgba(255,236,245,0.09)', border: '1px solid rgba(255,255,255,0.15)' }} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* 柔和UI・加強版預覽：更深的陰影、凸面漸層、青綠主色 */
+function SoftUiProPreview() {
+  const raised = 'linear-gradient(145deg, #f0f5fc, #cacfd6)'
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center gap-3 px-6" style={{ background: '#E0E5EC' }}>
+      {/* 凸起頭像（凸面漸層） */}
+      <div
+        className="w-12 h-12 rounded-full"
+        style={{ background: raised, boxShadow: '6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff' }}
+      />
+      {/* 凸起文字區 */}
+      <div
+        className="w-24 h-2.5 rounded-full"
+        style={{ background: raised, boxShadow: '3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff' }}
+      />
+      <div
+        className="w-16 h-2 rounded-full"
+        style={{ background: raised, boxShadow: '3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff' }}
+      />
+      {/* 主按鈕 + 凹陷按鈕 */}
+      <div className="flex gap-2 mt-1">
+        <div
+          className="w-14 h-5 rounded-lg"
+          style={{ background: 'linear-gradient(145deg, #3DB8A9, #238478)', boxShadow: '4px 4px 8px #2A9D8F73, -3px -3px 6px #ffffff' }}
+        />
+        <div
+          className="w-14 h-5 rounded-lg"
+          style={{ background: '#E0E5EC', boxShadow: 'inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff' }}
+        />
+      </div>
+    </div>
+  )
+}
+
 const styles = [
   {
     title: '簡約商務',
@@ -876,6 +1037,46 @@ const styles = [
     textColor: '#E6EDF3',
     preview: <GithubProfilePreview />,
   },
+  {
+    title: 'AI 原生介面',
+    subtitle: 'AI-Native UI',
+    description: '整頁化為「Rex Agent」對話介面：打字指示器、逐字串流回覆、tool call 卡片列出專案、context 卡片呈現技能。示範對話，非即時 AI。',
+    to: '/styles/ai-native',
+    accentColor: '#6366F1',
+    bgColor: '#F5F5F5',
+    textColor: '#09090B',
+    preview: <AiNativePreview />,
+  },
+  {
+    title: '雜誌編輯排版',
+    subtitle: 'Editorial Grid',
+    description: '把個人網站排成一期雜誌專題：刊頭雙線、非對稱分欄、襯線內文、首字放大與 pull quote，技能排成多欄目錄，專案化作特稿版面。',
+    to: '/styles/editorial',
+    accentColor: '#1F4E3C',
+    bgColor: '#F7F4EC',
+    textColor: '#1A1613',
+    preview: <EditorialPreview />,
+  },
+  {
+    title: '玻璃態・粉紅版',
+    subtitle: 'Glassmorphism Pink',
+    description: '玻璃態的粉紅變體：同一套毛玻璃版型，換上深梅紅漸層背景、粉紅到蜜桃的光暈與主色，玻璃面帶一點粉色調。',
+    to: '/styles/glassmorphism-pink',
+    accentColor: '#f472b6',
+    bgColor: '#5a1843',
+    textColor: '#ffffff',
+    preview: <GlassmorphismPinkPreview />,
+  },
+  {
+    title: '柔和UI・加強版',
+    subtitle: 'Soft UI Pro',
+    description: '柔和 UI 的立體強化版：陰影更深更遠、凸起面加上光源漸層，主色換成青綠，實體按鈕感更明顯。',
+    to: '/styles/soft-ui-pro',
+    accentColor: '#2A9D8F',
+    bgColor: '#E0E5EC',
+    textColor: '#3F4A5C',
+    preview: <SoftUiProPreview />,
+  },
 ]
 
 export default function StyleGallery() {
@@ -911,7 +1112,7 @@ export default function StyleGallery() {
           設計實驗室
         </h1>
         <p className="text-zinc-500 text-base max-w-xl mx-auto">
-          打造正式首頁前的 19 種設計風格實驗。每張卡片都是一個完整可瀏覽的首頁。
+          23 種設計風格實驗。每張卡片都是一個完整可瀏覽的首頁。
         </p>
       </motion.header>
 

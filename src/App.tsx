@@ -28,6 +28,10 @@ import SpatialUi from '@/pages/styles/SpatialUi'
 import IdeTerminal from '@/pages/styles/IdeTerminal'
 import AccessibleEthical from '@/pages/styles/AccessibleEthical'
 import GithubProfile from '@/pages/styles/GithubProfile'
+import AiNative from '@/pages/styles/AiNative'
+import Editorial from '@/pages/styles/Editorial'
+import GlassmorphismPink from '@/pages/styles/GlassmorphismPink'
+import SoftUiPro from '@/pages/styles/SoftUiPro'
 import Finalist from '@/pages/styles/Finalist'
 import ThreadsBot from '@/pages/projects/ThreadsBot'
 import ClaudeCodeSourcemap from '@/pages/projects/ClaudeCodeSourcemap'
@@ -60,6 +64,10 @@ function App() {
         <Route path="/styles/ide-terminal" element={<IdeTerminal />} />
         <Route path="/styles/accessible-ethical" element={<AccessibleEthical />} />
         <Route path="/styles/github-profile" element={<GithubProfile />} />
+        <Route path="/styles/ai-native" element={<AiNative />} />
+        <Route path="/styles/editorial" element={<Editorial />} />
+        <Route path="/styles/glassmorphism-pink" element={<GlassmorphismPink />} />
+        <Route path="/styles/soft-ui-pro" element={<SoftUiPro />} />
         <Route path="/styles/finalist" element={<Finalist />} />
         <Route path="/projects/threads-bot" element={<ThreadsBot />} />
         <Route path="/projects/claude-code-sourcemap" element={<ClaudeCodeSourcemap />} />
