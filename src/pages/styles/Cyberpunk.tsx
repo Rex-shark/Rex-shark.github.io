@@ -51,9 +51,11 @@ const projects = sharedProjects.map((p, i) => ({
   accent: PROJECT_ACCENTS[i % PROJECT_ACCENTS.length],
 }))
 
-/* 5 張卡：lg 為 3 + 2（6 欄格線），sm 為 2 + 2 + 1（最後一張橫跨） */
+/* 依張數排版：lg 每排 3 張（6 欄格線），最後一排剩 2 張各佔一半、剩 1 張滿版；sm 張數為奇數時最後一張橫跨 */
 function projectSpan(i: number, total: number) {
-  const lg = i < 3 ? 'lg:col-span-2' : 'lg:col-span-3'
+  const rem = total % 3
+  const inLastRow = rem !== 0 && i >= total - rem
+  const lg = !inLastRow ? 'lg:col-span-2' : rem === 2 ? 'lg:col-span-3' : 'lg:col-span-6'
   const sm = i === total - 1 && total % 2 === 1 ? 'sm:col-span-2' : ''
   return `${sm} ${lg}`
 }

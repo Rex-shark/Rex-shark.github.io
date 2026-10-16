@@ -131,4 +131,12 @@ export const projects: Project[] = [
     href: 'https://github.com/Rex-shark/rpgmaker-character-forge',
     to: '/projects/rpgmaker-character-forge',
   },
+  {
+    slug: 'drama-3',
+    title: 'Drama 3 TTS 工作台',
+    desc: '在 Apple Silicon Mac 上離線操作 Fish Audio Drama 3 語音模型：多角色劇本、聲音複製、表演標籤、串流播放。FastAPI 封裝 mlx-audio + React 19，零 API 成本。',
+    tags: ['Python', 'FastAPI', 'MLX'],
+    href: 'https://github.com/Rex-shark/drama-3',
+    to: '/projects/drama-3',
+  },
 ]

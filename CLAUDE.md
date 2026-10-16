@@ -15,7 +15,8 @@ React 19 + Vite 8、TypeScript strict、Tailwind CSS v4（`@tailwindcss/vite`，
 
 ```bash
 npm run dev       # 本地開發
-npm run build     # tsc --noEmit + 建置至 dist/
+npm run build     # tsc -b（型別檢查）+ vite build 至 dist/
+npm run typecheck # 僅型別檢查（tsc --noEmit -p tsconfig.app.json）
 npm run lint      # ESLint
 npm run preview   # 預覽 production 建置
 ```

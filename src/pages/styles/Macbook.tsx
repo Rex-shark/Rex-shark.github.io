@@ -50,18 +50,18 @@ const SKILL_GROUP_STYLE: Record<SkillGroupKey, { icon: typeof Server; color: str
 
 const skillGroups = sharedSkillGroups.map((g) => ({ ...g, ...SKILL_GROUP_STYLE[g.key] }))
 
-/* 5 張卡：上排 3 張、下排 2 張（lg 以 6 欄格線對齊）；sm 兩欄時第一張橫跨整列 */
-const PROJECT_SPAN = [
-  'sm:col-span-2 lg:col-span-2',
-  'lg:col-span-2',
-  'lg:col-span-2',
-  'lg:col-span-3',
-  'lg:col-span-3',
-]
+/* 依張數排版：lg 每排 3 張（6 欄格線），最後一排剩 2 張各佔一半、剩 1 張滿版；sm 兩欄且張數為奇數時第一張橫跨整列 */
+function projectSpan(i: number, total: number) {
+  const rem = total % 3
+  const inLastRow = rem !== 0 && i >= total - rem
+  const lg = !inLastRow ? 'lg:col-span-2' : rem === 2 ? 'lg:col-span-3' : 'lg:col-span-6'
+  const sm = i === 0 && total % 2 === 1 ? 'sm:col-span-2' : ''
+  return `${sm} ${lg}`
+}
 
 const projects = sharedProjects.map((p, i) => ({
   ...p,
-  span: PROJECT_SPAN[i] ?? 'lg:col-span-2',
+  span: projectSpan(i, sharedProjects.length),
 }))
 
 export default function Macbook() {

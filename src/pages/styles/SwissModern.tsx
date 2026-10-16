@@ -402,14 +402,19 @@ export default function SwissModern() {
               </span>
             </div>
 
-            {/* 專案卡片：6 欄網格，上排 2 張各佔 3 欄、下排 3 張各佔 2 欄。
+            {/* 專案卡片：6 欄網格，每排 3 張各佔 2 欄；張數不是 3 的倍數時，
+                餘數放第一排當寬卡（5 張 = 上 2 寬、下 3 窄）。
                 格線用 gap + 黑底露出，任何斷點都不必逐張算邊框。 */}
             <div className="grid grid-cols-1 md:grid-cols-6 gap-1 bg-[#000000]">
               {projects.map((project, i) => (
                 <motion.article
                   key={project.slug}
                   className={`group relative flex flex-col p-8 bg-[#FFFFFF] hover:bg-[#000000] transition-colors duration-200 ${
-                    i < 2 ? 'md:col-span-3' : 'md:col-span-2'
+                    i >= projects.length % 3
+                      ? 'md:col-span-2'
+                      : projects.length % 3 === 2
+                        ? 'md:col-span-3'
+                        : 'md:col-span-6'
                   }`}
                   initial="hidden"
                   whileInView="visible"

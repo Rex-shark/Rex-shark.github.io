@@ -148,14 +148,19 @@ const SKILL_GROUP_STYLE: Record<SkillGroupKey, { icon: typeof Server; color: str
 
 const skillGroups = sharedSkillGroups.map((g) => ({ ...g, ...SKILL_GROUP_STYLE[g.key] }))
 
-const PROJECT_COLORS = ['#6366F1', '#8B5CF6', '#06B6D4', '#EC4899', '#10B981']
-// 5 張卡：md 以上為 3 + 2（6 欄格線）
-const PROJECT_SPAN = ['md:col-span-2', 'md:col-span-2', 'md:col-span-2', 'md:col-span-3', 'md:col-span-3']
+const PROJECT_COLORS = ['#6366F1', '#8B5CF6', '#06B6D4', '#EC4899', '#10B981', '#F59E0B']
+
+// 依張數排版：md 以上每排 3 張（6 欄格線），最後一排剩 2 張各佔一半、剩 1 張滿版
+function projectSpan(i: number, total: number) {
+  const rem = total % 3
+  const inLastRow = rem !== 0 && i >= total - rem
+  return !inLastRow ? 'md:col-span-2' : rem === 2 ? 'md:col-span-3' : 'md:col-span-6'
+}
 
 const projects = sharedProjects.map((p, i) => ({
   ...p,
   color: PROJECT_COLORS[i % PROJECT_COLORS.length],
-  span: PROJECT_SPAN[i % PROJECT_SPAN.length],
+  span: projectSpan(i, sharedProjects.length),
 }))
 
 /* ─── 動畫 Variants ─── */

@@ -162,7 +162,7 @@ const SKILL_GROUP_STYLE: Record<SkillGroupKey, { icon: typeof Server; color: str
 
 const skillGroups = sharedSkillGroups.map((g) => ({ ...g, ...SKILL_GROUP_STYLE[g.key] }))
 
-const PROJECT_COLORS = ['#6366F1', '#10B981', '#9333EA', '#0EA5E9', '#D97706']
+const PROJECT_COLORS = ['#6366F1', '#10B981', '#9333EA', '#0EA5E9', '#D97706', '#E11D48']
 
 const projects = sharedProjects.map((p, i) => ({
   ...p,

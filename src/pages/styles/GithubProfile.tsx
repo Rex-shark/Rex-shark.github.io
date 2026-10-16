@@ -49,13 +49,14 @@ const LANG_COLOR: Record<string, string> = {
 }
 
 // 5 張卡：lg 為 3 + 2（6 欄格線），sm 為 2 + 2 + 1（最後一張橫跨）
-const PINNED_SPAN = [
-  'lg:col-span-2',
-  'lg:col-span-2',
-  'lg:col-span-2',
-  'lg:col-span-3',
-  'sm:col-span-2 lg:col-span-3',
-]
+/* 依張數排版：lg 每排 3 張（6 欄格線），最後一排剩 2 張各佔一半、剩 1 張滿版；sm 張數為奇數時最後一張滿版 */
+function pinnedSpan(i: number, total: number) {
+  const rem = total % 3
+  const inLastRow = rem !== 0 && i >= total - rem
+  const lg = !inLastRow ? 'lg:col-span-2' : rem === 2 ? 'lg:col-span-3' : 'lg:col-span-6'
+  const sm = i === total - 1 && total % 2 === 1 ? 'sm:col-span-2' : ''
+  return `${sm} ${lg}`
+}
 
 /** 由 repo 網址最後一段推導 repo 名稱 */
 function repoNameOf(href: string): string {
@@ -68,7 +69,7 @@ function PinnedRepoCard({ project, index }: { project: Project; index: number })
 
   return (
     <motion.div
-      className={`relative flex flex-col p-4 rounded-md cursor-pointer transition-colors duration-200 ${PINNED_SPAN[index % PINNED_SPAN.length]}`}
+      className={`relative flex flex-col p-4 rounded-md cursor-pointer transition-colors duration-200 ${pinnedSpan(index, projects.length)}`}
       style={{
         background: C.canvasSubtle,
         border: `1px solid ${C.border}`,

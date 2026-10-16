@@ -15,6 +15,7 @@ import {
   BookOpen,
   MessageSquare,
   Gamepad2,
+  AudioLines,
 } from 'lucide-react'
 import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
 import type { SkillGroupKey } from '@/data/profile'
@@ -72,8 +73,17 @@ const skillGroups = sharedSkillGroups.map((g) => ({
   color: SKILL_GROUP_COLOR[g.key],
 }))
 
-const PROJECT_COLORS = ['#38BDF8', '#22C55E', '#A78BFA', '#FB7185', '#FBBF24']
-const PROJECT_ICONS = [Globe, GitBranch, BookOpen, MessageSquare, Gamepad2]
+const PROJECT_COLORS = ['#38BDF8', '#22C55E', '#A78BFA', '#FB7185', '#FBBF24', '#F472B6']
+const PROJECT_ICONS = [Globe, GitBranch, BookOpen, MessageSquare, Gamepad2, AudioLines]
+
+/* 大格以外的卡片：lg 每排 3 張（12 欄格線），最後一排剩 2 張各佔一半、剩 1 張滿版；手機兩欄且張數為奇數時最後一張滿版 */
+function restSpan(i: number, total: number) {
+  const rem = total % 3
+  const inLastRow = rem !== 0 && i >= total - rem
+  const lg = !inLastRow ? 'lg:col-span-4' : rem === 2 ? 'lg:col-span-6' : 'lg:col-span-12'
+  const base = i === total - 1 && total % 2 === 1 ? 'col-span-12' : 'col-span-6'
+  return `${base} ${lg}`
+}
 
 const projects = sharedProjects.map((p, i) => ({
   ...p,
@@ -313,11 +323,11 @@ export default function BentoGrid() {
               )
             })()}
 
-            {/* 其餘 4 個等寬格 */}
-            {projects.slice(1).map((p) => {
+            {/* 其餘專案 */}
+            {projects.slice(1).map((p, i, rest) => {
               const PIcon = p.icon
               return (
-                <motion.div key={p.slug} variants={itemVariants} className="col-span-6 lg:col-span-3">
+                <motion.div key={p.slug} variants={itemVariants} className={restSpan(i, rest.length)}>
                   <BentoCard
                     className="p-5 h-full flex flex-col justify-between"
                     style={{ background: `${p.color}08`, borderColor: `${p.color}20` }}

@@ -43,14 +43,14 @@ const orderedSkillGroups = [
   ...skillGroups.filter((g) => g.key === 'ai'),
 ]
 
-/* 5 張專案卡：lg 為 3 + 2（6 欄格線），sm 為 2 + 2 + 1（最後一張滿版） */
-const PROJECT_SPAN = [
-  'lg:col-span-2',
-  'lg:col-span-2',
-  'lg:col-span-2',
-  'lg:col-span-3',
-  'sm:col-span-2 lg:col-span-3',
-]
+/* 依張數排版：lg 每排 3 張（6 欄格線），最後一排剩 2 張各佔一半、剩 1 張滿版；sm 張數為奇數時最後一張滿版 */
+function projectSpan(i: number, total: number) {
+  const rem = total % 3
+  const inLastRow = rem !== 0 && i >= total - rem
+  const lg = !inLastRow ? 'lg:col-span-2' : rem === 2 ? 'lg:col-span-3' : 'lg:col-span-6'
+  const sm = i === total - 1 && total % 2 === 1 ? 'sm:col-span-2' : ''
+  return `${sm} ${lg}`
+}
 
 /* 本頁設計重點（描述這個頁面的設計目標，非合規認證） */
 const designBadges = ['設計目標：WCAG 2.1 AA', '鍵盤可操作', '語意化標籤與 ARIA', '高對比配色', '尊重減少動態設定']
@@ -495,7 +495,7 @@ export default function AccessibleEthical() {
                   group relative flex flex-col p-6 bg-white rounded-xl border-2 border-[#D1D5DB]
                   hover:border-[#1A56DB] focus-within:border-[#1A56DB] hover:shadow-lg
                   transition-[border-color,box-shadow] duration-200
-                  ${PROJECT_SPAN[i % PROJECT_SPAN.length]}
+                  ${projectSpan(i, projects.length)}
                 `}
                 {...motionProps(fadeUp, i + 1)}
                 whileHover={reduced ? {} : { y: -3 }}

@@ -21,6 +21,7 @@ Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist �
 /projects/claude-code-sourcemap         → Claude Code 原始碼研究 showcase
 /projects/ai-chatroom                   → ai-chatroom showcase
 /projects/rpgmaker-character-forge      → RPG Maker Character Forge showcase
+/projects/drama-3                       → Drama 3 TTS 工作台 showcase
 ```
 
 ### 目錄結構
@@ -37,7 +38,8 @@ src/
 │       ├── ThreadsBot.tsx
 │       ├── ClaudeCodeSourcemap.tsx
 │       ├── AiChatroom.tsx
-│       └── RpgmakerCharacterForge.tsx
+│       ├── RpgmakerCharacterForge.tsx
+│       └── Drama3.tsx
 ├── components/
 │   ├── ui/                          # shadcn/ui 元件（目前僅 button）
 │   └── gallery/
@@ -78,7 +80,7 @@ public/
 2. **Hero**：自介、CTA
 3. **關於**：3 張 About 卡片
 4. **技能**：分後端 / 前端 / 資料庫 / AI・LLM / 系統設計
-5. **精選專案**：5 張卡（見下方）
+5. **精選專案**：6 張卡（見下方）
 6. **好文分享**：來自 `spec/article/data.md`，含 tag 篩選
 7. **聯絡**：email、GitHub
 8. **Footer**
@@ -87,7 +89,7 @@ public/
 
 ## 精選專案
 
-5 個專案，全部呈現在首頁專案區塊。**已移除「系統分析設計教學」與「Spring Boot API 範例」**（後者 2026-09 連同 showcase 頁、路由一併移除）。
+6 個專案，全部呈現在首頁專案區塊。**已移除「系統分析設計教學」與「Spring Boot API 範例」**（後者 2026-09 連同 showcase 頁、路由一併移除）。
 
 | 專案 | 卡片描述 | 點擊行為 | Showcase 頁 | 狀態 |
 |------|----------|----------|-------------|------|
@@ -96,6 +98,7 @@ public/
 | **Claude Code 原始碼研究** | 從 sourcemap 還原 Claude Code v2.1.88 並寫成 5 篇深度分析筆記。非官方研究，版權歸 Anthropic。 | 進入 `/projects/claude-code-sourcemap` | ✅ 已有 | ✅ 完成 |
 | **ai-chatroom** | 真人與 AI 夥伴 Luna 🌙 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默。 | 進入 `/projects/ai-chatroom` | ✅ 已有 | ✅ 完成 |
 | **RPG Maker Character Forge** | 一張行走圖生出整套 RPG Maker 角色素材（立繪 / 16 表情 face / 敵人戰鬥圖），Codex Agent + ComfyUI。 | 進入 `/projects/rpgmaker-character-forge` | ✅ 已有 | ✅ 完成 |
+| **Drama 3 TTS 工作台** | 在 Apple Silicon Mac 上離線操作 Fish Audio Drama 3 語音模型：多角色劇本、聲音複製、表演標籤、串流播放。 | 進入 `/projects/drama-3` | ✅ 已有 | ✅ 完成（repo 待公開） |
 
 ---
 
@@ -105,7 +108,7 @@ public/
 
 - **入口**：首頁右上角導覽列、Footer，或首頁底部加一個「想看其他設計風格？」CTA
 - **內容**：保留 23 張風格預覽卡（不含 Finalist，因為它已是正式首頁）
-- **頁面文案調整**：標題從「選擇你喜歡的設計風格」改為「設計實驗室 — 19 種設計風格實作筆記」之類，定位為作品/實驗，不再是「決定風格」的選擇器
+- **頁面文案調整**：標題從「選擇你喜歡的設計風格」改為「設計實驗室」，副標寫明風格數（目前「23 種設計風格實驗」，新增風格時同步），定位為作品/實驗，不再是「決定風格」的選擇器
 - **返回入口**：各風格頁面頂部「返回」連結從 `/` 改為 `/gallery`
 
 ---
@@ -155,6 +158,7 @@ public/
 | Claude Code 原始碼研究 | `/projects/claude-code-sourcemap` | [spec/projects/claude-code-sourcemap.md](projects/claude-code-sourcemap.md) | ✅ 完成（spec + 首頁卡片 + showcase 頁） |
 | ai-chatroom | `/projects/ai-chatroom` | [spec/projects/ai-chatroom.md](projects/ai-chatroom.md) | ✅ 完成（spec + 5 截圖 + 首頁卡片 + showcase 頁） |
 | RPG Maker Character Forge | `/projects/rpgmaker-character-forge` | [spec/projects/rpgmaker-character-forge.md](projects/rpgmaker-character-forge.md) | ✅ 完成（spec + 3 截圖 + 首頁卡片 + showcase 頁） |
+| Drama 3 TTS 工作台 | `/projects/drama-3` | [spec/projects/drama-3.md](projects/drama-3.md) | ✅ 完成（spec + 2 截圖 + 首頁卡片 + showcase 頁；配色沿用該專案的「紙張與墨」） |
 
 ---
 
@@ -189,7 +193,7 @@ public/
 
 - ✅ **修改 `Finalist.tsx`**
    - 頂部「返回風格選擇」改為「Rex.」品牌 + 右側「設計實驗室 →」連到 `/gallery`
-   - 專案區從 4 張縮為 3 張（後續陸續新增專案，目前為 6 張）：移除「系統分析設計教學」；個人網站 desc 改寫並 `to: '/gallery'`
+   - 專案區從 4 張縮為 3 張（後續陸續新增專案、移除 Spring Boot API 範例，目前為 5 張）：移除「系統分析設計教學」；個人網站 desc 改寫並 `to: '/gallery'`
    - 移除 Hero 的「下載履歷」按鈕（避免假連結）
 - ✅ **修改 `App.tsx`**
    - `/` → `Finalist`
@@ -228,12 +232,12 @@ public/
 - ✅ `public/404.html` 加 GitHub Pages SPA redirect 腳本（編碼路徑進 `?/`）
 - ✅ `index.html` 加接收腳本：還原 `?/path` 路徑 + 相容舊 `#/path` hash
 - ✅ `sitemap.xml` 補完 24 條路由（首頁 + gallery + 3 projects + 19 styles），全部無 hash
-- ✅ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條；其後移除 spring-boot-api，現為 25 條）
+- ✅ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條；其後移除 spring-boot-api 為 25 條；再新增 4 個風格頁為 29 條；再新增 `/projects/drama-3`，現為 30 條）
 - ✅ react-router 的 `<Link to="/xxx">` 不需改（自動跟 BrowserRouter 工作）
 - ⬜ **部署後驗證**：
   - 直接訪問 `https://rex-shark.github.io/projects/threads-bot` 應正常顯示頁面（不是 404）
   - 訪問舊 hash URL `https://rex-shark.github.io/#/styles/finalist` 應 redirect 到 `/styles/finalist`
-  - GSC 重新提交 sitemap.xml 後應顯示 25 個已發現網址
+  - GSC 重新提交 sitemap.xml 後應顯示 30 個已發現網址
 
 #### Lv3 — 預先渲染 ⬜（重工程，視 SEO 需求再評估）
 
@@ -286,7 +290,7 @@ CLAUDE.md 與 subagent 是專案早期寫的，內容冗長且互相重複。改
    - IdeTerminal：`About.java` / `skills.json` / `projects.md` 手刻內容依共用資料重寫
 5. ✅ **同步**：`StyleGallery.tsx` 預覽縮圖與卡片描述、`.claude/rules/personal-info.md`（加一條「頁面資料一律 import `src/data/profile.ts`」）、`style-page-creator` agent
 6. ✅ **驗收**
-   - ✅ `npm run build` 通過；`npm run lint` 由 10 個既有錯誤降為 1 個（僅剩 shadcn 產生的 `button.tsx`）
+   - ✅ `npm run build` 通過；`npm run lint` 由 10 個既有錯誤降為 1 個（僅剩 shadcn 產生的 `button.tsx`；後續已在 `eslint.config.js` 對 `src/components/ui/` 關閉該規則，現為 0 個）
    - ✅ 20 頁瀏覽器自動檢查：假資料關鍵字 0、熟練度百分比 0、每頁 5 張專案卡 + 5 個真實 repo 連結、AI 技能組皆在、巢狀 `<a>` 0、1280px 與 375px 皆無水平溢出
    - ✅ 19 頁技能區 / 專案區逐頁截圖目視
    - 全站 grep 不到：`系統分析設計教學`、`MySQL`、`Nginx`、`followers`、`Open to Work`、`小時內回覆`、`%` 熟練度
@@ -299,8 +303,18 @@ CLAUDE.md 與 subagent 是專案早期寫的，內容冗長且互相重複。改
 - **C. GithubProfile**：**移除所有數字**（stars、followers / following、語言比例、貢獻熱力圖），不接 API；pinned repos 換成真實 repo。`StyleGallery.tsx` 的預覽縮圖與卡片描述同步拿掉熱力圖與語言統計
 - **D. 個人宣稱**：只保留「所在地：Taiwan」。Open to Work / Freelance、回覆時效、「後端架構設計師」、「無障礙設計諮詢」、「Blog Series」全部移除
 
+### 🎙 新增精選專案：Drama 3 TTS 工作台 ✅（2026-10-16）
+
+- ✅ `spec/projects/drama-3.md`（取自 drama-3 的 README 與 spec/）、截圖複製到 `public/projects/drama-3/`
+- ✅ `spec/info.md` 專案表、`src/data/profile.ts` 新增第 6 個專案；首頁與 23 個風格頁皆讀共用資料自動出現
+- ✅ showcase 頁 `src/pages/projects/Drama3.tsx`、`App.tsx` 路由、`sitemap.xml`
+- ✅ 原本寫死「5 張 = 3 + 2」的 9 個風格頁（Cyberpunk、AntiPolish、AccessibleEthical、GithubProfile、Macbook、Steampunk、MicroInteractions、HandDrawn、SwissModern）與 BentoGrid 改為依張數計算欄寬，之後增減專案不必再改
+- ✅ 驗收：build、lint 通過；24 頁 × 1280 / 700 / 375 px 自動檢查皆有第 6 張卡與 repo 連結、網格每排排滿、無新增水平溢出
+- ⬜ **部署前**把 GitHub repo `Rex-shark/drama-3` 設為公開（目前私有，連結對訪客會是 404）
+
 ### 其他待辦
 
+- ⬜ 確認既有 repo 連結：`Rex-shark/ai-chatroom` 與 `Rex-shark/ThreadsBot` 不在公開 repo 清單（2026-10-16 查詢；公開的是 `ai-chat-room`），需公開 repo 或改連結
 - ⬜ SwissModern 的 Hero / 聯絡區 12 欄網格未做響應式（手機有 2px 水平溢出，既有問題）
 - ⬜ HandDrawn 便利貼的「資料庫 / DevOps」圈線標題偏長會折行，可考慮縮短顯示或放寬
 

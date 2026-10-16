@@ -37,6 +37,7 @@ import ThreadsBot from '@/pages/projects/ThreadsBot'
 import ClaudeCodeSourcemap from '@/pages/projects/ClaudeCodeSourcemap'
 import AiChatroom from '@/pages/projects/AiChatroom'
 import RpgmakerCharacterForge from '@/pages/projects/RpgmakerCharacterForge'
+import Drama3 from '@/pages/projects/Drama3'
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
         <Route path="/projects/claude-code-sourcemap" element={<ClaudeCodeSourcemap />} />
         <Route path="/projects/ai-chatroom" element={<AiChatroom />} />
         <Route path="/projects/rpgmaker-character-forge" element={<RpgmakerCharacterForge />} />
+        <Route path="/projects/drama-3" element={<Drama3 />} />
       </Routes>
     </BrowserRouter>
   )

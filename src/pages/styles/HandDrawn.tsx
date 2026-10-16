@@ -130,9 +130,12 @@ function SkillNote({ group, index }: { group: SkillGroup; index: number }) {
 
 /* ── 專案卡 ─────────────────────────────────────────────── */
 function ProjectCard({ project, index }: { project: Project; index: number }) {
-  // 5 張卡排成「上 2 寬、下 3 窄」；平板兩欄時最後一張補滿整列
-  const span = index < 2 ? 'md:col-span-3' : 'md:col-span-2'
-  const isLast = index === projects.length - 1
+  // md 每排 3 張窄卡；張數不是 3 的倍數時，餘數放第一排當寬卡（5 張 = 上 2 寬、下 3 窄）
+  // 平板兩欄且張數為奇數時，最後一張補滿整列
+  const total = projects.length
+  const rem = total % 3
+  const span = index >= rem ? 'md:col-span-2' : rem === 2 ? 'md:col-span-3' : 'md:col-span-6'
+  const isLast = index === total - 1 && total % 2 === 1
 
   return (
     <motion.article
