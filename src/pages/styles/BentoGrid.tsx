@@ -12,7 +12,6 @@ import {
   Bot,
   Globe,
   GitBranch,
-  BookOpen,
   MessageSquare,
   Gamepad2,
   AudioLines,
@@ -73,8 +72,8 @@ const skillGroups = sharedSkillGroups.map((g) => ({
   color: SKILL_GROUP_COLOR[g.key],
 }))
 
-const PROJECT_COLORS = ['#38BDF8', '#22C55E', '#A78BFA', '#FB7185', '#FBBF24', '#F472B6']
-const PROJECT_ICONS = [Globe, GitBranch, BookOpen, MessageSquare, Gamepad2, AudioLines]
+const PROJECT_COLORS = ['#38BDF8', '#22C55E', '#FB7185', '#FBBF24', '#F472B6']
+const PROJECT_ICONS = [Globe, GitBranch, MessageSquare, Gamepad2, AudioLines]
 
 /* 大格以外的卡片：lg 每排 3 張（12 欄格線），最後一排剩 2 張各佔一半、剩 1 張滿版；手機兩欄且張數為奇數時最後一張滿版 */
 function restSpan(i: number, total: number) {

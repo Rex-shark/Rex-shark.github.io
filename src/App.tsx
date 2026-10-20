@@ -34,7 +34,6 @@ import GlassmorphismPink from '@/pages/styles/GlassmorphismPink'
 import SoftUiPro from '@/pages/styles/SoftUiPro'
 import Finalist from '@/pages/styles/Finalist'
 import ThreadsBot from '@/pages/projects/ThreadsBot'
-import ClaudeCodeSourcemap from '@/pages/projects/ClaudeCodeSourcemap'
 import AiChatroom from '@/pages/projects/AiChatroom'
 import RpgmakerCharacterForge from '@/pages/projects/RpgmakerCharacterForge'
 import Drama3 from '@/pages/projects/Drama3'
@@ -71,7 +70,6 @@ function App() {
         <Route path="/styles/soft-ui-pro" element={<SoftUiPro />} />
         <Route path="/styles/finalist" element={<Finalist />} />
         <Route path="/projects/threads-bot" element={<ThreadsBot />} />
-        <Route path="/projects/claude-code-sourcemap" element={<ClaudeCodeSourcemap />} />
         <Route path="/projects/ai-chatroom" element={<AiChatroom />} />
         <Route path="/projects/rpgmaker-character-forge" element={<RpgmakerCharacterForge />} />
         <Route path="/projects/drama-3" element={<Drama3 />} />

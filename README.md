@@ -12,7 +12,7 @@ Rex 的 GitHub Pages 個人網站，部署於 [rex-shark.github.io](https://rex-
 
 - **首頁**（`/`）：自我介紹、技能、精選專案、好文分享、聯絡
 - **設計實驗室**（`/gallery`）：23 種設計風格的首頁實作
-- **精選專案 showcase**（`/projects/<slug>`）：ThreadsBot、Claude Code 原始碼研究、ai-chatroom、RPG Maker Character Forge、Drama 3 TTS 工作台
+- **精選專案 showcase**（`/projects/<slug>`）：ThreadsBot、ai-chatroom、RPG Maker Character Forge、Drama 3 TTS 工作台
 - **規劃中**：`/blog` 技術文章（詳見 [spec/plan.md](spec/plan.md)）
 
 ## 技術

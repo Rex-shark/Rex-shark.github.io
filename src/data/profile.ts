@@ -108,14 +108,6 @@ export const projects: Project[] = [
     to: '/projects/threads-bot',
   },
   {
-    slug: 'claude-code-sourcemap',
-    title: 'Claude Code 原始碼研究',
-    desc: '從 sourcemap 還原 Claude Code v2.1.88，拆解 6 層架構與 14 區塊 System Prompt 設計，整理成 5 篇深度筆記。非官方研究，版權歸 Anthropic。',
-    tags: ['TypeScript', 'Research', 'AI Agent'],
-    href: 'https://github.com/Rex-shark/claude-code-sourcemap',
-    to: '/projects/claude-code-sourcemap',
-  },
-  {
     slug: 'ai-chatroom',
     title: 'ai-chatroom',
     desc: '真人與 AI 夥伴 Luna 🌙 同房即時聊天。Spring Boot 3 + Spring AI + WebSocket/STOMP，AI 以群組成員身分自主判斷回應或沉默。',

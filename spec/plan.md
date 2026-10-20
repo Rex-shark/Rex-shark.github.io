@@ -18,7 +18,6 @@ Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist �
 /styles/<風格路由名>                     → 各風格首頁（23 種）
 /styles/finalist                        → 同首頁元件（向下相容，避免已分享連結失效）
 /projects/threads-bot                   → ThreadsBot showcase
-/projects/claude-code-sourcemap         → Claude Code 原始碼研究 showcase
 /projects/ai-chatroom                   → ai-chatroom showcase
 /projects/rpgmaker-character-forge      → RPG Maker Character Forge showcase
 /projects/drama-3                       → Drama 3 TTS 工作台 showcase
@@ -36,7 +35,6 @@ src/
 │   ├── styles/                      # 23 個設計實驗風格 + Finalist.tsx（正式首頁）
 │   └── projects/                    # 精選專案 showcase 頁
 │       ├── ThreadsBot.tsx
-│       ├── ClaudeCodeSourcemap.tsx
 │       ├── AiChatroom.tsx
 │       ├── RpgmakerCharacterForge.tsx
 │       └── Drama3.tsx
@@ -80,7 +78,7 @@ public/
 2. **Hero**：自介、CTA
 3. **關於**：3 張 About 卡片
 4. **技能**：分後端 / 前端 / 資料庫 / AI・LLM / 系統設計
-5. **精選專案**：6 張卡（見下方）
+5. **精選專案**：5 張卡（見下方）
 6. **好文分享**：來自 `spec/article/data.md`，含 tag 篩選
 7. **聯絡**：email、GitHub
 8. **Footer**
@@ -89,13 +87,12 @@ public/
 
 ## 精選專案
 
-6 個專案，全部呈現在首頁專案區塊。**已移除「系統分析設計教學」與「Spring Boot API 範例」**（後者 2026-09 連同 showcase 頁、路由一併移除）。
+5 個專案，全部呈現在首頁專案區塊。**已移除「系統分析設計教學」、「Spring Boot API 範例」與「Claude Code 原始碼研究」**（Spring Boot API 範例 2026-09、Claude Code 原始碼研究 2026-10 連同 showcase 頁、路由一併移除）。
 
 | 專案 | 卡片描述 | 點擊行為 | Showcase 頁 | 狀態 |
 |------|----------|----------|-------------|------|
 | **個人網站** | 用 24 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。 | 直連 `/gallery` 觀賞其他 23 種風格 | 不做（網站本身即作品） | ✅ 完成 |
 | **ThreadsBot** | 本地 LLM 自動爬新聞、改寫成 Threads 貼文，Spring Boot 3 + Spring AI + Ollama，零 API 成本。 | 進入 `/projects/threads-bot` | ✅ 已有 | ✅ 完成 |
-| **Claude Code 原始碼研究** | 從 sourcemap 還原 Claude Code v2.1.88 並寫成 5 篇深度分析筆記。非官方研究，版權歸 Anthropic。 | 進入 `/projects/claude-code-sourcemap` | ✅ 已有 | ✅ 完成 |
 | **ai-chatroom** | 真人與 AI 夥伴 Luna 🌙 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默。 | 進入 `/projects/ai-chatroom` | ✅ 已有 | ✅ 完成 |
 | **RPG Maker Character Forge** | 一張行走圖生出整套 RPG Maker 角色素材（立繪 / 16 表情 face / 敵人戰鬥圖），Codex Agent + ComfyUI。 | 進入 `/projects/rpgmaker-character-forge` | ✅ 已有 | ✅ 完成 |
 | **Drama 3 TTS 工作台** | 在 Apple Silicon Mac 上離線操作 Fish Audio Drama 3 語音模型：多角色劇本、聲音複製、表演標籤、串流播放。 | 進入 `/projects/drama-3` | ✅ 已有 | ✅ 完成（repo 待公開） |
@@ -155,7 +152,6 @@ public/
 | 專案 | 路由 | 資料來源 | 狀態 |
 |------|------|----------|------|
 | ThreadsBot | `/projects/threads-bot` | [spec/projects/threads-bot.md](projects/threads-bot.md) | ✅ 完成 |
-| Claude Code 原始碼研究 | `/projects/claude-code-sourcemap` | [spec/projects/claude-code-sourcemap.md](projects/claude-code-sourcemap.md) | ✅ 完成（spec + 首頁卡片 + showcase 頁） |
 | ai-chatroom | `/projects/ai-chatroom` | [spec/projects/ai-chatroom.md](projects/ai-chatroom.md) | ✅ 完成（spec + 5 截圖 + 首頁卡片 + showcase 頁） |
 | RPG Maker Character Forge | `/projects/rpgmaker-character-forge` | [spec/projects/rpgmaker-character-forge.md](projects/rpgmaker-character-forge.md) | ✅ 完成（spec + 3 截圖 + 首頁卡片 + showcase 頁） |
 | Drama 3 TTS 工作台 | `/projects/drama-3` | [spec/projects/drama-3.md](projects/drama-3.md) | ✅ 完成（spec + 2 截圖 + 首頁卡片 + showcase 頁；配色沿用該專案的「紙張與墨」） |
@@ -232,18 +228,18 @@ public/
 - ✅ `public/404.html` 加 GitHub Pages SPA redirect 腳本（編碼路徑進 `?/`）
 - ✅ `index.html` 加接收腳本：還原 `?/path` 路徑 + 相容舊 `#/path` hash
 - ✅ `sitemap.xml` 補完 24 條路由（首頁 + gallery + 3 projects + 19 styles），全部無 hash
-- ✅ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條；其後移除 spring-boot-api 為 25 條；再新增 4 個風格頁為 29 條；再新增 `/projects/drama-3`，現為 30 條）
+- ✅ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條；其後移除 spring-boot-api 為 25 條；再新增 4 個風格頁為 29 條；再新增 `/projects/drama-3` 為 30 條；移除 `/projects/claude-code-sourcemap`，現為 29 條）
 - ✅ react-router 的 `<Link to="/xxx">` 不需改（自動跟 BrowserRouter 工作）
 - ⬜ **部署後驗證**：
   - 直接訪問 `https://rex-shark.github.io/projects/threads-bot` 應正常顯示頁面（不是 404）
   - 訪問舊 hash URL `https://rex-shark.github.io/#/styles/finalist` 應 redirect 到 `/styles/finalist`
-  - GSC 重新提交 sitemap.xml 後應顯示 30 個已發現網址
+  - GSC 重新提交 sitemap.xml 後應顯示 29 個已發現網址
 
 #### Lv3 — 預先渲染 ⬜（重工程，視 SEO 需求再評估）
 
 - ⬜ 引入 vite-plugin-prerender 或改 SSG 方案
 - ⬜ 每個路由 build 成獨立 HTML（含完整 title、description、OG）
-- ⬜ 為主要頁面做專屬 OG 圖（首頁、ThreadsBot、Claude Code Sourcemap）
+- ⬜ 為主要頁面做專屬 OG 圖（首頁、ThreadsBot、Drama 3）
 
 ### 🧹 Claude 設定精簡 ✅
 
@@ -311,6 +307,12 @@ CLAUDE.md 與 subagent 是專案早期寫的，內容冗長且互相重複。改
 - ✅ 原本寫死「5 張 = 3 + 2」的 9 個風格頁（Cyberpunk、AntiPolish、AccessibleEthical、GithubProfile、Macbook、Steampunk、MicroInteractions、HandDrawn、SwissModern）與 BentoGrid 改為依張數計算欄寬，之後增減專案不必再改
 - ✅ 驗收：build、lint 通過；24 頁 × 1280 / 700 / 375 px 自動檢查皆有第 6 張卡與 repo 連結、網格每排排滿、無新增水平溢出
 - ⬜ **部署前**把 GitHub repo `Rex-shark/drama-3` 設為公開（目前私有，連結對訪客會是 404）
+
+### 🗑 移除精選專案：Claude Code 原始碼研究 ✅（2026-10-16，Rex 決定）
+
+- ✅ 刪除 `src/pages/projects/ClaudeCodeSourcemap.tsx`、`spec/projects/claude-code-sourcemap.md`
+- ✅ 移除 `App.tsx` 路由、`sitemap.xml`（現為 29 條）、`profile.ts` / `info.md` 專案、README 記載
+- ✅ BentoGrid 的專案 icon 依順序對應，同步拿掉研究筆記用的 `BookOpen`
 
 ### 其他待辦
 
