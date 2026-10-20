@@ -93,7 +93,7 @@ public/
 |------|----------|----------|-------------|------|
 | **個人網站** | 用 24 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。 | 直連 `/gallery` 觀賞其他 23 種風格 | 不做（網站本身即作品） | ✅ 完成 |
 | **ThreadsBot** | 本地 LLM 自動爬新聞、改寫成 Threads 貼文，Spring Boot 3 + Spring AI + Ollama，零 API 成本。 | 進入 `/projects/threads-bot` | ✅ 已有 | ✅ 完成 |
-| **ai-chatroom** | 真人與 AI 夥伴 Luna 🌙 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默。 | 進入 `/projects/ai-chatroom` | ✅ 已有 | ✅ 完成 |
+| **ai-chatroom** | 真人與 AI 夥伴 Lumi 🐾 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默，還會自己換場並生成背景圖。 | 進入 `/projects/ai-chatroom` | ✅ 已有 | ✅ 完成 |
 | **RPG Maker Character Forge** | 一張行走圖生出整套 RPG Maker 角色素材（立繪 / 16 表情 face / 敵人戰鬥圖），Codex Agent + ComfyUI。 | 進入 `/projects/rpgmaker-character-forge` | ✅ 已有 | ✅ 完成 |
 | **Drama 3 TTS 工作台** | 在 Apple Silicon Mac 上離線操作 Fish Audio Drama 3 語音模型：多角色劇本、聲音複製、表演標籤、串流播放。 | 進入 `/projects/drama-3` | ✅ 已有 | ✅ 完成（repo 待公開） |
 
@@ -152,7 +152,7 @@ public/
 | 專案 | 路由 | 資料來源 | 狀態 |
 |------|------|----------|------|
 | ThreadsBot | `/projects/threads-bot` | [spec/projects/threads-bot.md](projects/threads-bot.md) | ✅ 完成 |
-| ai-chatroom | `/projects/ai-chatroom` | [spec/projects/ai-chatroom.md](projects/ai-chatroom.md) | ✅ 完成（spec + 5 截圖 + 首頁卡片 + showcase 頁） |
+| ai-chatroom | `/projects/ai-chatroom` | [spec/projects/ai-chatroom.md](projects/ai-chatroom.md) | ✅ 完成（spec + 8 截圖 + 首頁卡片 + showcase 頁；2026-10-19 依 README 更新） |
 | RPG Maker Character Forge | `/projects/rpgmaker-character-forge` | [spec/projects/rpgmaker-character-forge.md](projects/rpgmaker-character-forge.md) | ✅ 完成（spec + 3 截圖 + 首頁卡片 + showcase 頁） |
 | Drama 3 TTS 工作台 | `/projects/drama-3` | [spec/projects/drama-3.md](projects/drama-3.md) | ✅ 完成（spec + 2 截圖 + 首頁卡片 + showcase 頁；配色沿用該專案的「紙張與墨」） |
 
@@ -314,6 +314,14 @@ CLAUDE.md 與 subagent 是專案早期寫的，內容冗長且互相重複。改
 - ✅ 移除 `App.tsx` 路由、`sitemap.xml`（現為 29 條）、`profile.ts` / `info.md` 專案、README 記載
 - ✅ BentoGrid 的專案 icon 依順序對應，同步拿掉研究筆記用的 `BookOpen`
 
+### 💬 ai-chatroom 依 README 更新 ✅（2026-10-19）
+
+- ✅ AI 角色更名 Luna 🌙 → Lumi 🐾（spec、showcase 頁、`profile.ts` / `info.md` 卡片描述）
+- ✅ 新增「自動情境生圖」：Lumi 呼叫 `changeScene` 換場、本機 ComfyUI 生成全房共享背景（showcase 頁新增區塊 + 3 張新圖，Hero 改用新截圖）
+- ✅ 情緒圖庫 89 → 109 張、15 → 16 種情緒；`sendLumiImage`、`/api/v1/lumi-images/**`；STOMP 補 `SCENE_*` 事件
+- ✅ 修正：多人房不使用 `ChatMemory`（每次自 Redis 取最近 K 則歷史），原頁面寫「記憶以 roomCode 隔離」有誤
+- ⬜ 重拍 4 張舊截圖（`ai-bubble`、`room-chat`、`rooms-lobby`、`luna-emotion-image`，畫面仍是 Luna 🌙），目前頁面以圖說註明「攝於更名前」
+
 ### 其他待辦
 
 - ⬜ 確認既有 repo 連結：`Rex-shark/ai-chatroom` 與 `Rex-shark/ThreadsBot` 不在公開 repo 清單（2026-10-16 查詢；公開的是 `ai-chat-room`），需公開 repo 或改連結
@@ -324,6 +332,6 @@ CLAUDE.md 與 subagent 是專案早期寫的，內容冗長且互相重複。改
 - ⬜ 把 [ThreadsBot tutorial 長文](https://github.com/Rex-shark/ThreadsBot/blob/master/docs/local-llm-threads-tutorial.md) 搬成站內 `/blog/local-llm-threads-tutorial`
 - ⬜ 建 `/blog` 列表頁與文章詳情頁範本
 - ⬜ **部落格草稿**（待 `/blog` 完成後上站）：
-  - ⬜ [docs/blog/ai-chatroom.md](../docs/blog/ai-chatroom.md) — ai-chatroom 技術文（草稿；上站時補架構圖、確認 demo、調圖片路徑）
+  - ⬜ [docs/blog/ai-chatroom.md](../docs/blog/ai-chatroom.md) — ai-chatroom 技術文（草稿；上站時補架構圖、確認 demo、調圖片路徑；**並依 2026-10 現況改寫**：角色 Luna → Lumi、圖庫 89 → 109 張 / 15 → 16 種情緒、`sendLunaImage` → `sendLumiImage`、多人房不用 `ChatMemory`、補上自動情境生圖）
 - ⬜ 加入暗色模式切換功能
 - ⬜ 效能優化（圖片壓縮、lazy loading、bundle 拆分 — 目前 750KB）

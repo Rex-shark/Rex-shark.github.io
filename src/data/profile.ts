@@ -110,7 +110,7 @@ export const projects: Project[] = [
   {
     slug: 'ai-chatroom',
     title: 'ai-chatroom',
-    desc: '真人與 AI 夥伴 Luna 🌙 同房即時聊天。Spring Boot 3 + Spring AI + WebSocket/STOMP，AI 以群組成員身分自主判斷回應或沉默。',
+    desc: '真人與 AI 夥伴 Lumi 🐾 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默，還會自己換場並用 ComfyUI 生成背景圖。Spring Boot 3 + Spring AI + WebSocket/STOMP。',
     tags: ['Spring AI', 'WebSocket', 'React 19'],
     href: 'https://github.com/Rex-shark/ai-chatroom',
     to: '/projects/ai-chatroom',

@@ -79,7 +79,7 @@
 |---|---|---|---|---|
 | 個人網站 | 用 24 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。 | React / TypeScript / Tailwind CSS | [Rex-shark.github.io](https://github.com/Rex-shark/Rex-shark.github.io) | `/gallery` |
 | ThreadsBot | 本地 LLM 自動爬新聞、改寫成 Threads 貼文。Spring Boot 3 + Spring AI + Ollama，零 API 成本。 | Java / Spring AI / Ollama | [ThreadsBot](https://github.com/Rex-shark/ThreadsBot) | `/projects/threads-bot` |
-| ai-chatroom | 真人與 AI 夥伴 Luna 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默。 | Spring AI / WebSocket / React 19 | [ai-chatroom](https://github.com/Rex-shark/ai-chatroom) | `/projects/ai-chatroom` |
+| ai-chatroom | 真人與 AI 夥伴 Lumi 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默，還會自己換場並生成背景圖。 | Spring AI / WebSocket / React 19 | [ai-chatroom](https://github.com/Rex-shark/ai-chatroom) | `/projects/ai-chatroom` |
 | RPG Maker Character Forge | 一張行走圖生出整套 RPG Maker 角色素材（立繪 / 16 表情 face / 敵人戰鬥圖）。 | Python / ComfyUI / Codex Agent | [rpgmaker-character-forge](https://github.com/Rex-shark/rpgmaker-character-forge) | `/projects/rpgmaker-character-forge` |
 | Drama 3 TTS 工作台 | 在 Apple Silicon Mac 上離線操作 Fish Audio Drama 3 語音模型：多角色劇本、聲音複製、表演標籤、串流播放。 | Python / FastAPI / MLX | [drama-3](https://github.com/Rex-shark/drama-3) | `/projects/drama-3` |
 
