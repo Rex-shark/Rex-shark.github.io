@@ -322,6 +322,17 @@ CLAUDE.md 與 subagent 是專案早期寫的，內容冗長且互相重複。改
 - ✅ 修正：多人房不使用 `ChatMemory`（每次自 Redis 取最近 K 則歷史），原頁面寫「記憶以 roomCode 隔離」有誤
 - ⬜ 重拍 4 張舊截圖（`ai-bubble`、`room-chat`、`rooms-lobby`、`luna-emotion-image`，畫面仍是 Luna 🌙），目前頁面以圖說註明「攝於更名前」
 
+### 🔖 首頁「好文分享」改為「優質網站分享」⬜（2026-10-26 提出）
+
+把首頁的好文分享區換成推薦清單，收錄兩種內容：**YouTube 頻道**（名稱、連結、介紹）與**網站**（名稱、連結、介紹）。好文分享區**先保留不移除**，等新區塊上線再決定。
+
+- ✅ 版面提案：四種版面（A 卡片牆 / B 雙欄分區 / C 精選 + 清單 / D 主題目錄），存於 [docs/design/curated-sites-layouts.html](../docs/design/curated-sites-layouts.html)（直接用瀏覽器開），線上版 https://claude.ai/artifact/W89dFtGyR7Gm1pwdoMEkNE 。提案內的頻道與網站是範例資料，不是 Rex 的推薦
+- ⬜ Rex 選定版面（或混搭，例如 A 的卡片 + D 的主題分組）
+- ⬜ Rex 提供頻道與網站清單
+- ⬜ 建立資料來源（建議 `spec/sites/data.md`，沿用 `data.md` 格式；欄位 `type`、`name`、`url`、`intro`，選填 `handle`、`tags`、`lang`）並寫對應的 `.claude/rules` 規則
+- ⬜ 實作到 `Finalist.tsx`；正式版可改用頻道頭像 / 網站 favicon 取代字母頭像
+- ⬜ 決定好文分享區的去留（移除時同步 `data.md`、`data-pending.md`、`add-article` skill、`.claude/rules/articles.md`）
+
 ### 其他待辦
 
 - ⬜ 確認既有 repo 連結：`Rex-shark/ai-chatroom` 與 `Rex-shark/ThreadsBot` 不在公開 repo 清單（2026-10-16 查詢；公開的是 `ai-chat-room`），需公開 repo 或改連結

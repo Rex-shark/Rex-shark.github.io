@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- 「優質網站分享」區塊版面提案（2026-10-26）。線上版：https://claude.ai/artifact/W89dFtGyR7Gm1pwdoMEkNE -->
+<title>優質網站分享版面</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* 版面概念：沿用 rex-shark.github.io 正式首頁（白底、indigo / violet、slate 中性色），同一份範例資料套四種版面，用分頁切換比較 */
+:root {
+  --bg: #ffffff;
+  --surface: #f6f7fb;
+  --card: #ffffff;
+  --line: #e3e6ef;
+  --fg: #111427;
+  --muted: #5d6480;
+  --faint: #959bb4;
+  --accent: #6366f1;
+  --accent-2: #8b5cf6;
+  --accent-soft: #eef0ff;
+  --yt: #d92d2d;
+  --yt-soft: #fdeeee;
+  --web: #0b7f99;
+  --web-soft: #e6f6f9;
+  --a1: #6366f1; --a2: #8b5cf6; --a3: #0ea5e9; --a4: #10b981; --a5: #f59e0b; --a6: #ec4899;
+  --on-avatar: #ffffff;
+  --shadow: 0 1px 2px rgba(17, 20, 39, .04), 0 8px 24px -12px rgba(17, 20, 39, .12);
+  --font-display: "Geist", "Noto Sans TC", system-ui, sans-serif;
+  --font-body: "Noto Sans TC", "Geist", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c0e1a; --surface: #12152a; --card: #171a33; --line: #272b4b;
+    --fg: #e8eaf7; --muted: #a4a9c8; --faint: #6e7497;
+    --accent: #8e91fa; --accent-2: #a98bfa; --accent-soft: #1d2048;
+    --yt: #f47a7a; --yt-soft: #2b1519; --web: #43c6dd; --web-soft: #0f2a31;
+    --a1: #7c7ff5; --a2: #9d7cf6; --a3: #2ba9e6; --a4: #22b886; --a5: #d99a1c; --a6: #e05aa0;
+    --on-avatar: #0c0e1a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px -14px rgba(0, 0, 0, .6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0c0e1a; --surface: #12152a; --card: #171a33; --line: #272b4b;
+  --fg: #e8eaf7; --muted: #a4a9c8; --faint: #6e7497;
+  --accent: #8e91fa; --accent-2: #a98bfa; --accent-soft: #1d2048;
+  --yt: #f47a7a; --yt-soft: #2b1519; --web: #43c6dd; --web-soft: #0f2a31;
+  --a1: #7c7ff5; --a2: #9d7cf6; --a3: #2ba9e6; --a4: #22b886; --a5: #d99a1c; --a6: #e05aa0;
+  --on-avatar: #0c0e1a;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px -14px rgba(0, 0, 0, .6);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 64px;
+}
+a { color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 28px; }
+
+/* ── 頁首 ── */
+.intro { display: grid; gap: 10px; }
+.intro .kicker { font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.intro h1 { font-size: clamp(26px, 4vw, 34px); font-weight: 700; letter-spacing: -.01em; }
+.intro p { color: var(--muted); max-width: 62ch; }
+.sample-badge { display: inline-flex; align-items: center; gap: 6px; width: fit-content; font-size: 12px; font-weight: 500; color: var(--muted); background: var(--surface); border: 1px dashed var(--line); padding: 3px 10px; border-radius: 999px; }
+
+/* ── 分頁 ── */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+.tab { font: inherit; font-size: 14px; font-weight: 500; color: var(--muted); background: transparent; border: 1px solid transparent; border-radius: 10px; padding: 8px 14px; cursor: pointer; display: inline-flex; align-items: baseline; gap: 8px; }
+.tab .num { font-family: var(--font-mono); font-size: 12px; color: var(--faint); }
+.tab:hover { color: var(--fg); background: var(--surface); }
+.tab[aria-selected="true"] { color: var(--accent); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 25%, transparent); }
+.tab[aria-selected="true"] .num { color: var(--accent); }
+
+/* ── 模擬首頁區塊外框 ── */
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: clamp(24px, 5vw, 56px) clamp(16px, 4vw, 48px); }
+.sec-head { text-align: center; display: grid; gap: 6px; margin-bottom: 28px; }
+.sec-head .eyebrow { font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+.sec-head h2 { font-size: clamp(24px, 3.4vw, 30px); font-weight: 700; }
+.sec-head p { color: var(--faint); font-size: 14px; }
+
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 4px; }
+.note { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; background: var(--bg); }
+.note h3 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.note p, .note li { font-size: 13.5px; color: var(--muted); }
+.note ul { margin: 0; padding-left: 18px; }
+
+/* ── 共用小元件 ── */
+.avatar { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--on-avatar); background: var(--c, var(--a1)); }
+.avatar.site { border-radius: 12px; }
+.avatar.sm { width: 34px; height: 34px; font-size: 14px; }
+.avatar.sm.site { border-radius: 9px; }
+.avatar.lg { width: 64px; height: 64px; font-size: 24px; }
+.kind { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+.kind svg { width: 12px; height: 12px; }
+.kind.yt { color: var(--yt); background: var(--yt-soft); }
+.kind.web { color: var(--web); background: var(--web-soft); }
+.handle { font-family: var(--font-mono); font-size: 12.5px; color: var(--faint); overflow-wrap: anywhere; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 12px; color: var(--accent); background: var(--accent-soft); padding: 1px 9px; border-radius: 6px; }
+.lang { font-size: 12px; color: var(--muted); border: 1px solid var(--line); padding: 0 8px; border-radius: 6px; }
+.go { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: var(--accent); }
+.go svg { width: 14px; height: 14px; transition: transform .2s; }
+a:hover .go svg, .go:hover svg { transform: translateX(3px); }
+
+/* ── 版面 1：卡片牆 ── */
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+.chip { font: inherit; font-size: 13px; color: var(--muted); background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 5px 14px; cursor: pointer; }
+.chip[aria-pressed="true"] { color: var(--on-avatar); background: var(--accent); border-color: var(--accent); }
+.grid-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 860px) { .grid-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .grid-cards { grid-template-columns: 1fr; } }
+.gcard { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow); transition: transform .2s, border-color .2s; min-width: 0; }
+.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.gcard .top { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.gcard .who { min-width: 0; display: grid; }
+.gcard .who h3 { font-size: 16px; font-weight: 600; line-height: 1.35; }
+.gcard .desc { color: var(--muted); font-size: 14px; flex: 1; }
+.gcard .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+
+/* ── 版面 2：雙欄分區 ── */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 760px) { .split { grid-template-columns: 1fr; } }
+.col { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; min-width: 0; }
+.col-head { display: flex; align-items: center; gap: 10px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.col-head h3 { font-size: 15px; font-weight: 600; }
+.col-head .count { margin-left: auto; font-family: var(--font-mono); font-size: 12px; color: var(--faint); }
+.col-head .ico { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; }
+.col-head .ico svg { width: 15px; height: 15px; }
+.col.yt .ico { color: var(--yt); background: var(--yt-soft); }
+.col.web .ico { color: var(--web); background: var(--web-soft); }
+.row { display: flex; gap: 14px; padding: 14px 20px; border-bottom: 1px solid var(--line); align-items: flex-start; min-width: 0; transition: background .15s; }
+.row:last-child { border-bottom: 0; }
+.row:hover { background: var(--surface); }
+.row .body { min-width: 0; flex: 1; display: grid; gap: 2px; }
+.row .name { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.row .name strong { font-family: var(--font-display); font-size: 15px; font-weight: 600; }
+.row .desc { font-size: 13.5px; color: var(--muted); }
+.row .arrow { flex: none; color: var(--faint); margin-top: 8px; }
+.row .arrow svg { width: 16px; height: 16px; transition: transform .2s, color .2s; }
+.row:hover .arrow svg { transform: translateX(3px); color: var(--accent); }
+
+/* ── 版面 3：精選 + 清單 ── */
+.feat { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 820px) { .feat { grid-template-columns: 1fr; } }
+.hero-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 28px; display: grid; gap: 16px; box-shadow: var(--shadow); position: relative; overflow: hidden; min-width: 0; }
+.hero-card::before { content: ""; position: absolute; inset: 0 0 auto; height: 96px; background: linear-gradient(120deg, var(--accent-soft), color-mix(in srgb, var(--accent-2) 14%, var(--card))); }
+.hero-card > * { position: relative; }
+.hero-card .label { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.hero-card .top { display: flex; gap: 16px; align-items: center; margin-top: 36px; min-width: 0; }
+.hero-card .top > div { min-width: 0; display: grid; gap: 2px; }
+.hero-card h3 { font-size: 22px; font-weight: 700; }
+.hero-card .desc { color: var(--muted); }
+.why { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; color: var(--fg); font-size: 14px; }
+.why span { display: block; font-size: 12px; color: var(--faint); margin-bottom: 2px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; width: fit-content; font-size: 14px; font-weight: 600; color: var(--on-avatar); background: var(--accent); padding: 10px 18px; border-radius: 12px; }
+.btn svg { width: 15px; height: 15px; }
+.mini-list { display: grid; gap: 10px; min-width: 0; }
+.mini { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; min-width: 0; transition: border-color .2s; }
+.mini:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.mini .body { min-width: 0; flex: 1; display: grid; }
+.mini strong { font-family: var(--font-display); font-size: 14.5px; font-weight: 600; }
+.mini .desc { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── 版面 4：主題目錄 ── */
+.dir { display: grid; gap: 28px; }
+.group h3 { font-size: 13px; font-weight: 600; letter-spacing: .08em; color: var(--muted); display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.group h3::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.group h3 .n { font-family: var(--font-mono); font-weight: 400; color: var(--faint); letter-spacing: 0; }
+.dir-table { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.drow { display: grid; grid-template-columns: 36px minmax(140px, 220px) minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--line); transition: background .15s; }
+.drow:last-child { border-bottom: 0; }
+.drow:hover { background: var(--surface); }
+.drow .nm { min-width: 0; display: grid; }
+.drow .nm strong { font-family: var(--font-display); font-size: 14.5px; font-weight: 600; }
+.drow .desc { font-size: 13.5px; color: var(--muted); min-width: 0; }
+@media (max-width: 700px) {
+  .drow { grid-template-columns: 36px minmax(0, 1fr) auto; }
+  .drow .desc { grid-column: 2 / -1; grid-row: 2; }
+}
+
+/* ── 資料格式 ── */
+.format { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 760px) { .format { grid-template-columns: 1fr; } }
+.format h2 { font-size: 20px; font-weight: 700; grid-column: 1 / -1; }
+.format > p { grid-column: 1 / -1; color: var(--muted); max-width: 70ch; }
+.fields { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--card); }
+.field { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.field:last-child { border-bottom: 0; }
+.field code { font-family: var(--font-mono); color: var(--accent); }
+.field span { color: var(--muted); }
+.field em { font-style: normal; font-size: 12px; color: var(--faint); margin-left: 6px; }
+pre.sample { margin: 0; overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; font-family: var(--font-mono); font-size: 13px; line-height: 1.65; color: var(--fg); }
+pre.sample .c { color: var(--faint); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="intro">
+    <p class="kicker">rex-shark.github.io · 首頁區塊提案</p>
+    <h1>優質網站分享：四種版面</h1>
+    <p>取代現在的「好文分享」。同一份資料套四種排法，用下方分頁切換比較；每種版面底下寫了適合的情境。收錄兩種內容：YouTube 頻道（名稱、連結、介紹），以及網站（名稱、連結、介紹）。</p>
+    <span class="sample-badge">範例資料：用知名頻道與網站示意版面，正式內容等你提供</span>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="版面選擇">
+    <button class="tab" role="tab" id="tab-cards" aria-controls="cards" data-view="cards"><span class="num">A</span>卡片牆</button>
+    <button class="tab" role="tab" id="tab-split" aria-controls="split" data-view="split"><span class="num">B</span>雙欄分區</button>
+    <button class="tab" role="tab" id="tab-featured" aria-controls="featured" data-view="featured"><span class="num">C</span>精選 + 清單</button>
+    <button class="tab" role="tab" id="tab-directory" aria-controls="directory" data-view="directory"><span class="num">D</span>主題目錄</button>
+  </nav>
+
+  <!-- A 卡片牆 -->
+  <section class="panel" id="cards" role="tabpanel" aria-labelledby="tab-cards">
+    <div class="stage">
+      <div class="sec-head">
+        <p class="eyebrow">Recommended</p>
+        <h2>優質網站分享</h2>
+        <p>值得追的 YouTube 頻道與實用網站</p>
+      </div>
+      <div class="chips" role="group" aria-label="篩選類型">
+        <button class="chip" data-filter="all" aria-pressed="true">全部</button>
+        <button class="chip" data-filter="yt" aria-pressed="false">YouTube 頻道</button>
+        <button class="chip" data-filter="web" aria-pressed="false">網站</button>
+      </div>
+      <div class="grid-cards" id="grid-cards"></div>
+    </div>
+  </section>
+
+  <!-- B 雙欄分區 -->
+  <section class="panel" id="split" role="tabpanel" aria-labelledby="tab-split" hidden>
+    <div class="stage">
+      <div class="sec-head">
+        <p class="eyebrow">Recommended</p>
+        <h2>優質網站分享</h2>
+        <p>值得追的 YouTube 頻道與實用網站</p>
+      </div>
+      <div class="split" id="split-cols"></div>
+    </div>
+  </section>
+
+  <!-- C 精選 + 清單 -->
+  <section class="panel" id="featured" role="tabpanel" aria-labelledby="tab-featured" hidden>
+    <div class="stage">
+      <div class="sec-head">
+        <p class="eyebrow">Recommended</p>
+        <h2>優質網站分享</h2>
+        <p>值得追的 YouTube 頻道與實用網站</p>
+      </div>
+      <div class="feat" id="feat"></div>
+    </div>
+  </section>
+
+  <!-- D 主題目錄 -->
+  <section class="panel" id="directory" role="tabpanel" aria-labelledby="tab-directory" hidden>
+    <div class="stage">
+      <div class="sec-head">
+        <p class="eyebrow">Recommended</p>
+        <h2>優質網站分享</h2>
+        <p>依主題整理的 YouTube 頻道與實用網站</p>
+      </div>
+      <div class="dir" id="dir"></div>
+    </div>
+  </section>
+
+  <div class="notes" id="notes" aria-live="polite"></div>
+
+  <section class="format">
+    <h2>你提供資料時，每筆需要這些欄位</h2>
+    <p>沿用 <code>spec/article/data.md</code> 的寫法，改成新檔（例如 <code>spec/sites/data.md</code>）。四種版面用的是同一組欄位，選哪個都不用改資料。</p>
+    <div class="fields">
+      <div class="field"><code>type</code><span>youtube 或 site</span></div>
+      <div class="field"><code>name</code><span>頻道或網站名稱</span></div>
+      <div class="field"><code>url</code><span>連結</span></div>
+      <div class="field"><code>intro</code><span>介紹，一到兩句</span></div>
+      <div class="field"><code>handle</code><span>YouTube 的 @帳號<em>選填，沒填就從網址抓</em></span></div>
+      <div class="field"><code>tags</code><span>主題，空白分隔<em>選填，D 版面用來分組</em></span></div>
+      <div class="field"><code>lang</code><span>中文 / 英文 / 日文<em>選填</em></span></div>
+    </div>
+<pre class="sample"><span class="c"># type</span>
+* youtube
+<span class="c"># name</span>
+* ByteByteGo
+<span class="c"># url</span>
+* https://www.youtube.com/@ByteByteGo
+<span class="c"># intro</span>
+* 系統設計圖解頻道，用動畫拆解快取、
+  訊息佇列、資料庫擴展等後端架構題目。
+<span class="c"># tags</span>
+* 系統設計 後端
+<span class="c"># lang</span>
+* 英文</pre>
+  </section>
+</div>
+
+<script>
+const ICON = {
+  yt: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>',
+  web: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>',
+}
+
+/* 範例資料：用來示意版面，不是 Rex 的推薦清單 */
+const items = [
+  { type: 'yt', name: '李宏毅 Hung-yi Lee', handle: '@HungyiLeeNTU', url: 'https://www.youtube.com/@HungyiLeeNTU', intro: '台大機器學習課程的公開影片，用中文講解生成式 AI 與深度學習的原理，例子生動，入門門檻低。', tags: ['AI'], lang: '中文', why: '想從原理理解 LLM，又想用中文學，這是最好的起點。' },
+  { type: 'yt', name: 'ByteByteGo', handle: '@ByteByteGo', url: 'https://www.youtube.com/@ByteByteGo', intro: '系統設計圖解頻道，用動畫拆解快取、訊息佇列、資料庫擴展等後端架構題目。', tags: ['後端與架構'], lang: '英文' },
+  { type: 'yt', name: 'Fireship', handle: '@Fireship', url: 'https://www.youtube.com/@Fireship', intro: '「100 秒看懂」系列最出名，用很短的篇幅講清楚一個框架或工具的核心概念，追新技術很有效率。', tags: ['前端與 Web'], lang: '英文' },
+  { type: 'yt', name: '3Blue1Brown', handle: '@3blue1brown', url: 'https://www.youtube.com/@3blue1brown', intro: '用動畫把數學視覺化，神經網路與 Transformer 系列是理解 LLM 運作的好入口。', tags: ['AI'], lang: '英文' },
+  { type: 'yt', name: 'Two Minute Papers', handle: '@TwoMinutePapers', url: 'https://www.youtube.com/@TwoMinutePapers', intro: '每集幾分鐘介紹一篇新的 AI 研究成果，適合快速掌握研究趨勢。', tags: ['AI'], lang: '英文' },
+  { type: 'web', name: 'roadmap.sh', handle: 'roadmap.sh', url: 'https://roadmap.sh', intro: '各技術領域的學習路線圖，後端、前端、DevOps 都有，附資源連結，適合規劃下一步要學什麼。', tags: ['後端與架構'] },
+  { type: 'web', name: 'Refactoring.Guru', handle: 'refactoring.guru', url: 'https://refactoring.guru', intro: '設計模式與重構的圖解教學，每個模式都附 Java 等多種語言的範例。', tags: ['後端與架構'] },
+  { type: 'web', name: 'MDN Web Docs', handle: 'developer.mozilla.org', url: 'https://developer.mozilla.org', intro: 'Web 標準最可靠的參考文件，HTML、CSS、JavaScript 的 API 說明與瀏覽器相容性表都在這裡。', tags: ['前端與 Web'] },
+  { type: 'web', name: 'Can I use', handle: 'caniuse.com', url: 'https://caniuse.com', intro: '查詢 CSS 與 Web API 在各瀏覽器的支援度，上線前確認相容性用。', tags: ['前端與 Web'] },
+  { type: 'web', name: 'Hugging Face', handle: 'huggingface.co', url: 'https://huggingface.co', intro: '開源模型、資料集與線上 Demo 的集散地，找模型、讀模型卡、直接試用都很方便。', tags: ['AI'] },
+]
+const PALETTE = ['--a1', '--a2', '--a3', '--a4', '--a5', '--a6']
+items.forEach((it, i) => { it.color = `var(${PALETTE[i % PALETTE.length]})` })
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
+const initial = (name) => esc(name.trim()[0].toUpperCase())
+const avatar = (it, size = '') => `<span class="avatar ${it.type === 'web' ? 'site' : ''} ${size}" style="--c:${it.color}" aria-hidden="true">${initial(it.name)}</span>`
+const kind = (it) => it.type === 'yt'
+  ? `<span class="kind yt">${ICON.yt}YouTube 頻道</span>`
+  : `<span class="kind web">${ICON.web}網站</span>`
+const tagList = (it) => `<div class="tags">${it.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}${it.lang ? `<span class="lang">${esc(it.lang)}</span>` : ''}</div>`
+const linkAttrs = (it) => `href="${esc(it.url)}" target="_blank" rel="noopener noreferrer"`
+const yts = items.filter((i) => i.type === 'yt')
+const webs = items.filter((i) => i.type === 'web')
+
+/* A 卡片牆 */
+function renderCards(filter) {
+  const list = filter === 'all' ? items : items.filter((i) => i.type === filter)
+  document.getElementById('grid-cards').innerHTML = list.map((it) => `
+    <a class="gcard" ${linkAttrs(it)}>
+      <div class="top">${avatar(it)}<div class="who"><h3>${esc(it.name)}</h3><span class="handle">${esc(it.handle)}</span></div></div>
+      <p class="desc">${esc(it.intro)}</p>
+      ${tagList(it)}
+      <div class="foot">${kind(it)}<span class="go">${it.type === 'yt' ? '前往頻道' : '前往網站'}${ICON.arrow}</span></div>
+    </a>`).join('')
+}
+document.querySelectorAll('.chip').forEach((chip) => chip.addEventListener('click', () => {
+  document.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', String(c === chip)))
+  renderCards(chip.dataset.filter)
+}))
+renderCards('all')
+
+/* B 雙欄分區 */
+const column = (cls, title, icon, list) => `
+  <div class="col ${cls}">
+    <div class="col-head"><span class="ico">${icon}</span><h3>${title}</h3><span class="count">${list.length} 個</span></div>
+    ${list.map((it) => `
+      <a class="row" ${linkAttrs(it)}>
+        ${avatar(it, 'sm')}
+        <div class="body">
+          <div class="name"><strong>${esc(it.name)}</strong><span class="handle">${esc(it.handle)}</span>${it.lang ? `<span class="lang">${esc(it.lang)}</span>` : ''}</div>
+          <p class="desc">${esc(it.intro)}</p>
+        </div>
+        <span class="arrow">${ICON.arrow}</span>
+      </a>`).join('')}
+  </div>`
+document.getElementById('split-cols').innerHTML = column('yt', 'YouTube 頻道', ICON.yt, yts) + column('web', '網站', ICON.web, webs)
+
+/* C 精選 + 清單 */
+const hero = items[0]
+document.getElementById('feat').innerHTML = `
+  <article class="hero-card">
+    <p class="label">精選</p>
+    <div class="top">${avatar(hero, 'lg')}<div><h3>${esc(hero.name)}</h3><span class="handle">${esc(hero.handle)}</span></div></div>
+    <p class="desc">${esc(hero.intro)}</p>
+    <p class="why"><span>為什麼推薦</span>${esc(hero.why)}</p>
+    ${tagList(hero)}
+    <a class="btn" ${linkAttrs(hero)}>${ICON.yt}前往頻道</a>
+  </article>
+  <div class="mini-list">
+    ${items.slice(1).map((it) => `
+      <a class="mini" ${linkAttrs(it)} title="${esc(it.intro)}">
+        ${avatar(it, 'sm')}
+        <div class="body"><strong>${esc(it.name)}</strong><span class="desc">${esc(it.intro)}</span></div>
+        ${kind(it)}
+      </a>`).join('')}
+  </div>`
+
+/* D 主題目錄 */
+const groups = {}
+items.forEach((it) => { (groups[it.tags[0]] ||= []).push(it) })
+document.getElementById('dir').innerHTML = Object.entries(groups).map(([g, list]) => `
+  <div class="group">
+    <h3>${esc(g)} <span class="n">${list.length}</span></h3>
+    <div class="dir-table">
+      ${list.map((it) => `
+        <a class="drow" ${linkAttrs(it)}>
+          ${avatar(it, 'sm')}
+          <span class="nm"><strong>${esc(it.name)}</strong><span class="handle">${esc(it.handle)}</span></span>
+          <span class="desc">${esc(it.intro)}</span>
+          ${kind(it)}
+        </a>`).join('')}
+    </div>
+  </div>`).join('')
+
+/* 各版面的適用情境 */
+const NOTES = {
+  cards: [
+    ['適合', '數量在 6 到 15 個之間、每筆介紹長短接近時。和首頁「精選專案」的卡片語言一致，整頁最統一。'],
+    ['特點', '上方可篩選「YouTube 頻道 / 網站」；手機會變成單欄長卡。'],
+    ['要注意', '數量一多會拉得很長，可能要加「顯示更多」。'],
+  ],
+  split: [
+    ['適合', '頻道和網站數量差不多，想讓訪客一眼分清楚「要看影片」還是「要查網站」。'],
+    ['特點', '列表式比卡片緊湊，介紹可以寫長一點也不會撐壞版面。手機會變成上下兩段。'],
+    ['要注意', '兩邊數量差很多時，一欄會比另一欄長很多。'],
+  ],
+  featured: [
+    ['適合', '有一個你特別想推的頻道或網站，想多寫一段「為什麼推薦」。'],
+    ['特點', '精選大卡多一個 why 欄位；右側清單只露出一行介紹，滑過可看全文。精選可以定期換。'],
+    ['要注意', '需要你多提供一段推薦理由；清單項目的介紹會被截斷。'],
+  ],
+  directory: [
+    ['適合', '收藏會越來越多（20 個以上），想依主題（AI、後端、前端⋯）分組瀏覽。'],
+    ['特點', '最省空間，像書籤目錄；頻道和網站混在同一主題下，用標籤區分。'],
+    ['要注意', '視覺最樸素；每筆需要填主題 tags 才能分組。'],
+  ],
+}
+function renderNotes(view) {
+  document.getElementById('notes').innerHTML = NOTES[view].map(([h, p]) => `<div class="note"><h3>${h}</h3><p>${p}</p></div>`).join('')
+}
+
+/* 分頁切換：網址帶 #cards / #split / #featured / #directory 可直接開對應版面 */
+const VIEWS = ['cards', 'split', 'featured', 'directory']
+function show(view) {
+  if (!VIEWS.includes(view)) view = 'cards'
+  document.querySelectorAll('.tab').forEach((t) => {
+    const on = t.dataset.view === view
+    t.setAttribute('aria-selected', String(on))
+    t.tabIndex = on ? 0 : -1
+  })
+  document.querySelectorAll('.panel').forEach((p) => { p.hidden = p.id !== view })
+  renderNotes(view)
+}
+document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => show(t.dataset.view)))
+document.querySelector('.tabs').addEventListener('keydown', (e) => {
+  if (!['ArrowLeft', 'ArrowRight'].includes(e.key)) return
+  const tabs = [...document.querySelectorAll('.tab')]
+  const i = tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true')
+  const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]
+  next.focus(); show(next.dataset.view)
+})
+show(location.hash.slice(1))
+</script>
+</body>
+</html>
