@@ -40,7 +40,7 @@ const DISPLAY = { fontFamily: '"Lexend", "Noto Sans TC", sans-serif' }
 
 const techStack = [
   'Fish Audio Drama 3',
-  'mlx-audio',
+  'mlx-audio 0.6.3',
   'MLX / Metal',
   'Python 3.12',
   'FastAPI',
@@ -108,16 +108,17 @@ const syntax = [
   { type: '導演筆記', code: 'Direction: … / Line: …', example: 'Direction: 像在深夜廣播，語速慢' },
 ]
 
+/* 2026-11-03 實測：各情境 10 次 × 兩組 top_k */
 const interruptRates = [
-  { scene: '一句塞 5 個表演標籤', rate: '4bit 3/3、8bit 2/3、bf16 3/3' },
-  { scene: '無參考音檔的一般句子', rate: '8bit 3 次中 1 次' },
-  { scene: '一般有參考音檔的句子', rate: '偶發' },
+  { version: '4bit', weight: '2026-10-29', noRef: '0/20', tags: '0/20', ok: true },
+  { version: 'bf16', weight: '2026-10-29', noRef: '0/20', tags: '0/20', ok: true },
+  { version: '8bit', weight: '2026-10-15 舊', noRef: '5/20', tags: '9/20', ok: false },
 ]
 
 const variants = [
-  { id: '4bit', disk: '22 GB', peak: '55 GB', load: '0.7 秒', rtf: '2.1x', note: '最快，標籤密集句最不穩' },
-  { id: '8bit', disk: '39 GB', peak: '72 GB', load: '1.4 秒', rtf: '1.8x', note: '建議預設', recommended: true },
-  { id: 'bf16', disk: '67 GB', peak: '103 GB', load: '8.6 秒', rtf: '1.3x', note: '128 GB 機器會到記憶體警告' },
+  { id: '4bit', weight: '2026-10-29', disk: '22 GB', peak: '32 GB', load: '0.7 秒', rtf: '2.5x', note: '零中斷、最快、最省記憶體', recommended: true },
+  { id: '8bit', weight: '2026-10-15 舊', disk: '39 GB', peak: '50 GB', load: '1.4 秒', rtf: '1.9x', note: '等社群用新權重重轉，目前中斷率約三成' },
+  { id: 'bf16', weight: '2026-10-29', disk: '67 GB', peak: '81 GB', load: '9.6 秒', rtf: '1.4x', note: '原版品質，零中斷，128 GB 機器可跑' },
 ]
 
 const decisions = [
@@ -127,7 +128,7 @@ const decisions = [
   },
   {
     title: '只呼叫 mlx-audio 公開 API',
-    desc: '只用 load_model 與 model.generate，不改第三方碼；上游更新時只需重跑 uv sync。',
+    desc: '只用 load_model 與 model.generate，不改第三方碼；上游更新時只需重跑 uv sync。Drama 3 進了正式版後，改鎖 PyPI 的 mlx-audio 0.6.3，不再鎖 git commit。',
   },
   {
     title: 'MLX 推理固定在一條常駐執行緒',
@@ -138,8 +139,8 @@ const decisions = [
     desc: 'MLX 同一進程共用 GPU，一次只能做一件事。單人工具不需要佇列，排隊反而讓串流與狀態難以預期；前端在 busy 時禁用按鈕。',
   },
   {
-    title: '每次產生結束清 MLX 快取',
-    desc: 'MLX 保留緩衝快取，8bit 連續請求會從 40 GB 長到 76 GB 不回落；呼叫 mx.clear_cache() 換取穩定的記憶體用量。',
+    title: 'top_k 預設不設上限',
+    desc: 'mlx-audio 0.6.3 起主 token 不設 top-k 上限；舊權重實測明確傳 30 會讓中斷率約加倍（8/31 對 17/31）。API 收到 0 或省略時，後端轉成 None 再呼叫，直接傳 0 會讓取樣拋例外。',
   },
   {
     title: '串流用 raw PCM，不用 WAV',
@@ -149,7 +150,7 @@ const decisions = [
 
 const commands = [
   { use: '後端環境（可重複執行）', cmd: 'bash server/setup.sh' },
-  { use: '下載模型（擇一或全部）', cmd: 'bash models/download.sh 8bit' },
+  { use: '下載模型（擇一或全部）', cmd: 'bash models/download.sh 4bit' },
   { use: '啟動後端（:8793）', cmd: 'bash server/run-server.sh' },
   { use: '無模型時用模擬後端', cmd: 'MOCK=1 bash server/run-server.sh' },
   { use: '啟動前端（:5173）', cmd: 'cd frontend && npm install && npm run dev' },
@@ -157,8 +158,8 @@ const commands = [
 
 const limitations = [
   '跑的不是 Fish Audio 官方推理：MLX 權重由社群（stickerdaniel）轉換，Fish Audio 未釋出也未背書。',
-  'mlx-audio 對 Drama 3 的支援還沒進正式 release，本專案鎖在特定 commit，上游之後的變動不保證相容。',
-  '中斷偵測抓不到「出聲之後才轉成低音量雜訊」的失敗，會拖到長度上限（約 47 秒）。',
+  '8bit 社群尚未以新權重重轉，仍是舊權重，中斷率約三成；重轉後重測再決定是否改回建議。',
+  '中斷偵測抓不到「出聲之後才轉成低音量雜訊」的失敗，會拖到長度上限（約 47 秒）；新權重 100 次測試出現 1 次。',
   '麥克風錄音功能未在自動化測試中驗證（瀏覽器窗格無法授權麥克風）。',
   '同一段文字每次結果不同，沒有固定種子。',
   '載入秒數為檔案已在系統快取的熱載入，冷讀會更久。',
@@ -360,21 +361,40 @@ export default function Drama3() {
           <SectionLabel>Known Model Behavior</SectionLabel>
           <h2 className="text-2xl sm:text-3xl font-medium mb-3" style={DISPLAY}>模型會中斷：偵測它，而不是假裝沒有</h2>
           <p className="text-sm mb-8 max-w-3xl leading-relaxed" style={{ color: MUTED }}>
-            產生到一半會沒聲音，這是模型本身的行為，三個版本都會發生。中斷的樣子不是音訊變短，而是講幾秒後轉成靜音，一路拖到長度上限。
+            產生到一半會沒聲音，是模型權重版本的問題。Fish Audio 在 2026-10-29 悄悄換了一版 RL 權重，社群用它重轉的 4bit 與 bf16 實測零中斷；8bit 還是舊權重，中斷率約三成。中斷的樣子不是音訊變短，而是講幾秒後轉成靜音，一路拖到長度上限。
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start">
             <div className="lg:col-span-2 space-y-4">
               <div className="border" style={{ borderColor: LINE, backgroundColor: PAPER }}>
                 <p className="px-5 pt-4 pb-2 text-[11px] uppercase tracking-[0.16em]" style={{ ...MONO, color: MUTED }}>
-                  實測中斷率（2026-10-15）
+                  實測中斷次數（2026-11-03）
                 </p>
+                <div
+                  className="grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)] gap-x-3 px-5 py-2 border-t text-[11px]"
+                  style={{ ...MONO, borderColor: LINE, color: MUTED }}
+                >
+                  <span>版本・權重</span>
+                  <span className="text-right">無參考句</span>
+                  <span className="text-right">5 個標籤</span>
+                </div>
                 {interruptRates.map((r) => (
-                  <div key={r.scene} className="px-5 py-3 border-t" style={{ borderColor: LINE }}>
-                    <p className="text-sm font-medium">{r.scene}</p>
-                    <p className="text-[13px] mt-0.5" style={{ ...MONO, color: ALERT }}>{r.rate}</p>
+                  <div
+                    key={r.version}
+                    className="grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)] gap-x-3 items-baseline px-5 py-3 border-t"
+                    style={{ borderColor: LINE }}
+                  >
+                    <span className="min-w-0">
+                      <span className="text-sm font-medium">{r.version}</span>
+                      <span className="block text-[11px]" style={{ ...MONO, color: MUTED }}>{r.weight}</span>
+                    </span>
+                    <span className="text-right text-[13px] tabular-nums" style={{ ...MONO, color: r.ok ? INK : ALERT }}>{r.noRef}</span>
+                    <span className="text-right text-[13px] tabular-nums" style={{ ...MONO, color: r.ok ? INK : ALERT }}>{r.tags}</span>
                   </div>
                 ))}
+                <p className="px-5 py-3 border-t text-xs leading-relaxed" style={{ borderColor: LINE, color: MUTED }}>
+                  各情境 10 次 × 兩組 top_k。光升級 mlx-audio 沒有改善舊 8bit，改善來自新權重。
+                </p>
               </div>
               <div className="border p-5" style={{ borderColor: LINE, backgroundColor: PAPER }}>
                 <div className="flex items-center gap-2 mb-2">
@@ -382,7 +402,7 @@ export default function Drama3() {
                   <p className="text-sm font-medium">後端的對策</p>
                 </div>
                 <p className="text-sm leading-relaxed" style={{ color: MUTED }}>
-                  在取段迴圈偵測「出聲後連續 6 秒無聲」或「開頭 6 秒沒出聲」就主動停止，提示重新產生，通常重試一次就過。一行只放 1 到 2 個標籤、給參考音檔、句子短一點可降低中斷率。
+                  在取段迴圈偵測「出聲後連續 6 秒無聲」或「開頭 6 秒沒出聲」就主動停止，提示重新產生。換上新權重後仍保留這層保險；門檻維持 6 秒，新權重正常句內部最長停頓只有 1.8 秒。
                 </p>
               </div>
             </div>
@@ -410,7 +430,7 @@ export default function Drama3() {
           </div>
           <h2 className="text-2xl sm:text-3xl font-medium mb-3" style={DISPLAY}>版本與硬體需求</h2>
           <p className="text-sm mb-8 max-w-3xl leading-relaxed" style={{ color: MUTED }}>
-            實測機器：M5 Max、128 GB 統一記憶體。記憶體要看行程峰值而不是權重大小——產生中 MLX 快取會再多 28–30 GB。
+            實測機器：M5 Max、128 GB 統一記憶體，2026-11-03 以 mlx-audio 0.6.3 重測。記憶體要看行程峰值而不是權重大小，帶參考音檔的請求開頭會瞬間多 5–7 GB。三個版本的取樣預設都是 1.0 / 0.9 / top_k 不限。
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {variants.map((v) => (
@@ -430,6 +450,8 @@ export default function Drama3() {
                   )}
                 </div>
                 <dl className="grid grid-cols-2 gap-y-2 text-sm" style={MONO}>
+                  <dt className="opacity-60">權重</dt>
+                  <dd className="text-right">{v.weight}</dd>
                   <dt className="opacity-60">磁碟</dt>
                   <dd className="text-right">{v.disk}</dd>
                   <dt className="opacity-60">行程峰值</dt>

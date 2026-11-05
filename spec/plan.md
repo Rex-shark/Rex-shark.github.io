@@ -95,7 +95,7 @@ public/
 | **ThreadsBot** | 本地 LLM 自動爬新聞、改寫成 Threads 貼文，Spring Boot 3 + Spring AI + Ollama，零 API 成本。 | 進入 `/projects/threads-bot` | ✅ 已有 | ✅ 完成 |
 | **ai-chatroom** | 真人與 AI 夥伴 Lumi 🐾 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默，還會自己換場並生成背景圖。 | 進入 `/projects/ai-chatroom` | ✅ 已有 | ✅ 完成 |
 | **RPG Maker Character Forge** | 一張行走圖生出整套 RPG Maker 角色素材（立繪 / 16 表情 face / 敵人戰鬥圖），Codex Agent + ComfyUI。 | 進入 `/projects/rpgmaker-character-forge` | ✅ 已有 | ✅ 完成 |
-| **Drama 3 TTS 工作台** | 在 Apple Silicon Mac 上離線操作 Fish Audio Drama 3 語音模型：多角色劇本、聲音複製、表演標籤、串流播放。 | 進入 `/projects/drama-3` | ✅ 已有 | ✅ 完成（repo 待公開） |
+| **Drama 3 TTS 工作台** | 在 Apple Silicon Mac 上離線操作 Fish Audio Drama 3 語音模型：多角色劇本、聲音複製、表演標籤、串流播放。 | 進入 `/projects/drama-3` | ✅ 已有 | ✅ 完成 |
 
 ---
 
@@ -306,7 +306,8 @@ CLAUDE.md 與 subagent 是專案早期寫的，內容冗長且互相重複。改
 - ✅ showcase 頁 `src/pages/projects/Drama3.tsx`、`App.tsx` 路由、`sitemap.xml`
 - ✅ 原本寫死「5 張 = 3 + 2」的 9 個風格頁（Cyberpunk、AntiPolish、AccessibleEthical、GithubProfile、Macbook、Steampunk、MicroInteractions、HandDrawn、SwissModern）與 BentoGrid 改為依張數計算欄寬，之後增減專案不必再改
 - ✅ 驗收：build、lint 通過；24 頁 × 1280 / 700 / 375 px 自動檢查皆有第 6 張卡與 repo 連結、網格每排排滿、無新增水平溢出
-- ⬜ **部署前**把 GitHub repo `Rex-shark/drama-3` 設為公開（目前私有，連結對訪客會是 404）
+- ✅ GitHub repo `Rex-shark/drama-3` 已設為公開（2026-11-05 確認）
+- ✅ 2026-11-05 依 drama-3 的 Epic 4 升級驗證（2026-11-03）更新 spec 與 showcase 頁：mlx-audio 改鎖 0.6.3、4bit / bf16 換 2026-10-29 新權重、建議預設 8bit → 4bit、中斷率表改依權重版本、三版本行程峰值 / 載入 / 倍率重測值、取樣預設 1.0 / 0.9 / top_k 不限（設計決策「清 MLX 快取」換成「top_k 不設上限」）
 
 ### 🗑 移除精選專案：Claude Code 原始碼研究 ✅（2026-10-16，Rex 決定）
 
