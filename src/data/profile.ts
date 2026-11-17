@@ -148,3 +148,19 @@ export const projects: Project[] = [
     to: '/projects/pokemon-agent-pets',
   },
 ]
+
+/** 私人專案：repo 不公開，沒有 GitHub 連結，只有站內介紹頁 */
+export type PrivateProject = Omit<Project, 'href'> & { href?: undefined }
+
+export const privateProjects: PrivateProject[] = [
+  {
+    slug: 'codex-forge',
+    title: 'codex-forge',
+    desc: '把 AI 技術顧問接進需求討論群聊：擁有者 @小助手Lumi，Codex CLI 讀完整段討論與附件，回覆流程圖與可點的 HTML 原型；另有 Claude Code 驅動的 Live2D 貓。',
+    tags: ['Spring Boot 4', 'Codex CLI', 'Claude Code'],
+    to: '/projects/codex-forge',
+  },
+]
+
+/** 正式首頁的精選專案：公開專案＋私人專案（風格實驗頁只列有 repo 的 projects） */
+export const featuredProjects: (Project | PrivateProject)[] = [...projects, ...privateProjects]

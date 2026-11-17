@@ -15,9 +15,10 @@ import {
   BookOpen,
   Play,
   FileText,
+  Lock,
 } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
-import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
+import { profile, skillGroups as sharedSkillGroups, featuredProjects as sharedProjects } from '@/data/profile'
 import type { SkillGroupKey } from '@/data/profile'
 
 /* ─── GitHub Icon ─── */
@@ -162,7 +163,7 @@ const SKILL_GROUP_STYLE: Record<SkillGroupKey, { icon: typeof Server; color: str
 
 const skillGroups = sharedSkillGroups.map((g) => ({ ...g, ...SKILL_GROUP_STYLE[g.key] }))
 
-const PROJECT_COLORS = ['#6366F1', '#10B981', '#9333EA', '#0EA5E9', '#D97706', '#E11D48', '#0D9488']
+const PROJECT_COLORS = ['#6366F1', '#10B981', '#9333EA', '#0EA5E9', '#D97706', '#E11D48', '#0D9488', '#9C3F1D']
 
 const projects = sharedProjects.map((p, i) => ({
   ...p,
@@ -822,7 +823,7 @@ export default function Finalist() {
                       className="w-10 h-10 rounded-xl flex items-center justify-center"
                       style={{ background: `${p.color}14`, color: p.color }}
                     >
-                      <GithubIcon className="w-5 h-5" />
+                      {p.href ? <GithubIcon className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
                     </div>
                   </div>
                   <h3 className="font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
@@ -847,15 +848,19 @@ export default function Finalist() {
                         </span>
                       ))}
                     </div>
-                    <a
-                      href={p.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${p.title} 的 GitHub 原始碼`}
-                      className="relative z-10 text-slate-300 hover:text-indigo-500 transition-colors cursor-pointer"
-                    >
-                      <ExternalLink size={14} />
-                    </a>
+                    {p.href ? (
+                      <a
+                        href={p.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${p.title} 的 GitHub 原始碼`}
+                        className="relative z-10 text-slate-300 hover:text-indigo-500 transition-colors cursor-pointer"
+                      >
+                        <ExternalLink size={14} />
+                      </a>
+                    ) : (
+                      <span className="shrink-0 text-xs text-slate-400">私人專案</span>
+                    )}
                   </div>
                 </div>
               </TiltCard>

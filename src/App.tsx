@@ -39,6 +39,7 @@ import RpgmakerCharacterForge from '@/pages/projects/RpgmakerCharacterForge'
 import Drama3 from '@/pages/projects/Drama3'
 import FishingWork from '@/pages/projects/FishingWork'
 import PokemonAgentPets from '@/pages/projects/PokemonAgentPets'
+import CodexForge from '@/pages/projects/CodexForge'
 
 function App() {
   return (
@@ -77,6 +78,7 @@ function App() {
         <Route path="/projects/drama-3" element={<Drama3 />} />
         <Route path="/projects/fishing-work" element={<FishingWork />} />
         <Route path="/projects/pokemon-agent-pets" element={<PokemonAgentPets />} />
+        <Route path="/projects/codex-forge" element={<CodexForge />} />
       </Routes>
     </BrowserRouter>
   )

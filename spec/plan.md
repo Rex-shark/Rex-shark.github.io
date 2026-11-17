@@ -23,6 +23,7 @@ Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist �
 /projects/drama-3                       → Drama 3 TTS 工作台 showcase
 /projects/fishing-work                  → fishing-work showcase（強調 AI 應用）
 /projects/pokemon-agent-pets            → 寶可夢牧場 Agent showcase
+/projects/codex-forge                   → codex-forge showcase（私人專案，無 repo 連結）
 ```
 
 ### 目錄結構
@@ -91,7 +92,7 @@ public/
 
 ## 精選專案
 
-7 個專案，全部呈現在首頁專案區塊。**已移除「系統分析設計教學」、「Spring Boot API 範例」與「Claude Code 原始碼研究」**（Spring Boot API 範例 2026-09、Claude Code 原始碼研究 2026-10 連同 showcase 頁、路由一併移除）。
+8 個專案（7 個公開＋1 個私人），全部呈現在首頁專案區塊；23 個風格頁只列有 repo 的 7 個公開專案（`projects`），首頁讀 `featuredProjects`（含 `privateProjects`）。**已移除「系統分析設計教學」、「Spring Boot API 範例」與「Claude Code 原始碼研究」**（Spring Boot API 範例 2026-09、Claude Code 原始碼研究 2026-10 連同 showcase 頁、路由一併移除）。
 
 | 專案 | 卡片描述 | 點擊行為 | Showcase 頁 | 狀態 |
 |------|----------|----------|-------------|------|
@@ -102,6 +103,7 @@ public/
 | **Drama 3 TTS 工作台** | 在 Apple Silicon Mac 上離線操作 Fish Audio Drama 3 語音模型：多角色劇本、聲音複製、表演標籤、串流播放。 | 進入 `/projects/drama-3` | ✅ 已有 | ✅ 完成 |
 | **fishing-work** | 偽裝成 VS Code、簡報、Meet、Excel 的區網遊戲平台；繪圖比賽由本機 AI 當評審（Clef 看圖打分、gemma4 寫評語）。 | 進入 `/projects/fishing-work` | ✅ 已有 | ✅ 完成（repo 待公開） |
 | **寶可夢牧場 Agent** | 讓 AI agent 的工作狀態看得見的 3D 桌寵：每個 Claude Code／Codex session 認養一隻寶可夢。 | 進入 `/projects/pokemon-agent-pets` | ✅ 已有 | ✅ 完成（repo 待公開） |
+| **codex-forge** 🔒 | 把 AI 技術顧問接進需求討論群聊：擁有者 @小助手Lumi，Codex CLI 讀完整段討論與附件回覆；另有 Claude Code 驅動的 Live2D 貓。 | 進入 `/projects/codex-forge`（卡片顯示「私人專案」，不放 repo 連結） | ✅ 已有 | ✅ 完成（私人專案） |
 
 ---
 
@@ -163,6 +165,7 @@ public/
 | Drama 3 TTS 工作台 | `/projects/drama-3` | [spec/projects/drama-3.md](projects/drama-3.md) | ✅ 完成（spec + 2 截圖 + 首頁卡片 + showcase 頁；配色沿用該專案的「紙張與墨」） |
 | fishing-work | `/projects/fishing-work` | [spec/projects/fishing-work.md](projects/fishing-work.md) | ✅ 完成（spec + 9 截圖 + 首頁卡片 + showcase 頁；頁面主軸為 AI 應用；配色沿用該專案的 VS Code Dark+） |
 | 寶可夢牧場 Agent | `/projects/pokemon-agent-pets` | [spec/projects/pokemon-agent-pets.md](projects/pokemon-agent-pets.md) | ✅ 完成（spec + 8 張場景地圖 + 2 張有寶可夢的實景截圖 + 首頁卡片 + showcase 頁；泡泡狀態另以網頁元件重繪圖例） |
+| codex-forge 🔒 | `/projects/codex-forge` | [spec/projects/codex-forge.md](projects/codex-forge.md) | ✅ 完成（spec + 15 截圖 + 首頁卡片 + showcase 頁；私人專案不放連結；配色沿用該專案前台的「紙偶定格」） |
 
 ---
 
@@ -236,7 +239,7 @@ public/
 - ✅ `public/404.html` 加 GitHub Pages SPA redirect 腳本（編碼路徑進 `?/`）
 - ✅ `index.html` 加接收腳本：還原 `?/path` 路徑 + 相容舊 `#/path` hash
 - ✅ `sitemap.xml` 補完 24 條路由（首頁 + gallery + 3 projects + 19 styles），全部無 hash
-- ✅ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條；其後移除 spring-boot-api 為 25 條；再新增 4 個風格頁為 29 條；再新增 `/projects/drama-3` 為 30 條；移除 `/projects/claude-code-sourcemap` 為 29 條；再新增 `/projects/fishing-work`、`/projects/pokemon-agent-pets`，現為 31 條）
+- ✅ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條；其後移除 spring-boot-api 為 25 條；再新增 4 個風格頁為 29 條；再新增 `/projects/drama-3` 為 30 條；移除 `/projects/claude-code-sourcemap` 為 29 條；再新增 `/projects/fishing-work`、`/projects/pokemon-agent-pets` 為 31 條；再新增 `/projects/codex-forge`，現為 32 條）
 - ✅ react-router 的 `<Link to="/xxx">` 不需改（自動跟 BrowserRouter 工作）
 - ⬜ **部署後驗證**：
   - 直接訪問 `https://rex-shark.github.io/projects/threads-bot` 應正常顯示頁面（不是 404）
@@ -339,6 +342,16 @@ CLAUDE.md 與 subagent 是專案早期寫的，內容冗長且互相重複。改
 - ✅ 寶可夢牧場 Agent：8 張純場景截圖＋README 兩張有寶可夢角色的實景截圖（`map-lake-left-pets` 當 Hero、`map-snow-pets` 放泡泡狀態區；Rex 2026-11-17 決定放上），皆由透明背景 PNG 轉 WebP（保留透明、10 張共約 0.6 MB；先前轉 JPG 會把透明處填成白底）；泡泡狀態另以網頁元件重繪圖例。名稱依 Rex 2026-11-17 指示加上「Agent」
 - ⬜ **部署前**把 `Rex-shark/fishing-work`、`Rex-shark/pokemon-agent-pets` 設為公開（2026-11-17 查詢皆為私有，連結對訪客會是 404）
 - ⬜ 卡牌組（`card-deck/`）的 `cards.ts` 會檢查每個專案都有 `DETAILS`，新增兩個專案後需補 `details.ts` 才能啟動（卡牌組暫停中，恢復時處理）
+
+### 🔒 新增私人專案：codex-forge ✅（2026-11-17）
+
+Rex 指示加入但**不公開** repo。
+
+- ✅ `spec/projects/codex-forge.md`（取自該專案 README 2026-11-17 與 `docs/project-intro.md`；數字以較新的 README 為準）。依該專案介紹文件，不寫 repo 位置、本機路徑、測試帳號、email、真實客戶名稱
+- ✅ `profile.ts` 新增 `PrivateProject` 型別、`privateProjects`、`featuredProjects`（公開＋私人）；`projects` 維持只有公開專案，所以 23 個風格頁不受影響、不會出現沒有連結的 GitHub 按鈕
+- ✅ 首頁 `Finalist.tsx` 改讀 `featuredProjects`：第 8 色赤陶紅；沒有 `href` 的卡片 icon 換成鎖頭、右下角顯示「私人專案」
+- ✅ showcase 頁 `CodexForge.tsx`（紙偶定格配色）；15 張 WebP 截圖（取自專案 `docs/screenshots/web/`，約 1.2 MB）；`App.tsx` 路由、`sitemap.xml`、`info.md`、README
+- ⬜ 卡牌組（`card-deck/`）恢復時，視需要補 codex-forge 的卡
 
 ### 🔖 首頁「好文分享」改為「優質網站分享」⬜（2026-10-26 提出）
 
