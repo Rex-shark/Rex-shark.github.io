@@ -15,6 +15,8 @@ import {
   MessageSquare,
   Gamepad2,
   AudioLines,
+  Fish,
+  PawPrint,
 } from 'lucide-react'
 import { profile, skillGroups as sharedSkillGroups, projects as sharedProjects } from '@/data/profile'
 import type { SkillGroupKey } from '@/data/profile'
@@ -72,8 +74,8 @@ const skillGroups = sharedSkillGroups.map((g) => ({
   color: SKILL_GROUP_COLOR[g.key],
 }))
 
-const PROJECT_COLORS = ['#38BDF8', '#22C55E', '#FB7185', '#FBBF24', '#F472B6']
-const PROJECT_ICONS = [Globe, GitBranch, MessageSquare, Gamepad2, AudioLines]
+const PROJECT_COLORS = ['#38BDF8', '#22C55E', '#FB7185', '#FBBF24', '#F472B6', '#2DD4BF', '#A78BFA']
+const PROJECT_ICONS = [Globe, GitBranch, MessageSquare, Gamepad2, AudioLines, Fish, PawPrint]
 
 /* 大格以外的卡片：lg 每排 3 張（12 欄格線），最後一排剩 2 張各佔一半、剩 1 張滿版；手機兩欄且張數為奇數時最後一張滿版 */
 function restSpan(i: number, total: number) {

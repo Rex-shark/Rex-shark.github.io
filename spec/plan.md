@@ -21,6 +21,8 @@ Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist �
 /projects/ai-chatroom                   → ai-chatroom showcase
 /projects/rpgmaker-character-forge      → RPG Maker Character Forge showcase
 /projects/drama-3                       → Drama 3 TTS 工作台 showcase
+/projects/fishing-work                  → fishing-work showcase（強調 AI 應用）
+/projects/pokemon-agent-pets            → 寶可夢牧場 Agent showcase
 ```
 
 ### 目錄結構
@@ -37,7 +39,9 @@ src/
 │       ├── ThreadsBot.tsx
 │       ├── AiChatroom.tsx
 │       ├── RpgmakerCharacterForge.tsx
-│       └── Drama3.tsx
+│       ├── Drama3.tsx
+│       ├── FishingWork.tsx
+│       └── PokemonAgentPets.tsx
 ├── components/
 │   ├── ui/                          # shadcn/ui 元件（目前僅 button）
 │   └── gallery/
@@ -78,7 +82,7 @@ public/
 2. **Hero**：自介、CTA
 3. **關於**：3 張 About 卡片
 4. **技能**：分後端 / 前端 / 資料庫 / AI・LLM / 系統設計
-5. **精選專案**：5 張卡（見下方）
+5. **精選專案**：7 張卡（見下方）
 6. **好文分享**：來自 `spec/article/data.md`，含 tag 篩選
 7. **聯絡**：email、GitHub
 8. **Footer**
@@ -87,7 +91,7 @@ public/
 
 ## 精選專案
 
-5 個專案，全部呈現在首頁專案區塊。**已移除「系統分析設計教學」、「Spring Boot API 範例」與「Claude Code 原始碼研究」**（Spring Boot API 範例 2026-09、Claude Code 原始碼研究 2026-10 連同 showcase 頁、路由一併移除）。
+7 個專案，全部呈現在首頁專案區塊。**已移除「系統分析設計教學」、「Spring Boot API 範例」與「Claude Code 原始碼研究」**（Spring Boot API 範例 2026-09、Claude Code 原始碼研究 2026-10 連同 showcase 頁、路由一併移除）。
 
 | 專案 | 卡片描述 | 點擊行為 | Showcase 頁 | 狀態 |
 |------|----------|----------|-------------|------|
@@ -96,6 +100,8 @@ public/
 | **ai-chatroom** | 真人與 AI 夥伴 Lumi 🐾 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默，還會自己換場並生成背景圖。 | 進入 `/projects/ai-chatroom` | ✅ 已有 | ✅ 完成 |
 | **RPG Maker Character Forge** | 一張行走圖生出整套 RPG Maker 角色素材（立繪 / 16 表情 face / 敵人戰鬥圖），Codex Agent + ComfyUI。 | 進入 `/projects/rpgmaker-character-forge` | ✅ 已有 | ✅ 完成 |
 | **Drama 3 TTS 工作台** | 在 Apple Silicon Mac 上離線操作 Fish Audio Drama 3 語音模型：多角色劇本、聲音複製、表演標籤、串流播放。 | 進入 `/projects/drama-3` | ✅ 已有 | ✅ 完成 |
+| **fishing-work** | 偽裝成 VS Code、簡報、Meet、Excel 的區網遊戲平台；繪圖比賽由本機 AI 當評審（Clef 看圖打分、gemma4 寫評語）。 | 進入 `/projects/fishing-work` | ✅ 已有 | ✅ 完成（repo 待公開） |
+| **寶可夢牧場 Agent** | 讓 AI agent 的工作狀態看得見的 3D 桌寵：每個 Claude Code／Codex session 認養一隻寶可夢。 | 進入 `/projects/pokemon-agent-pets` | ✅ 已有 | ✅ 完成（repo 待公開） |
 
 ---
 
@@ -155,6 +161,8 @@ public/
 | ai-chatroom | `/projects/ai-chatroom` | [spec/projects/ai-chatroom.md](projects/ai-chatroom.md) | ✅ 完成（spec + 8 截圖 + 首頁卡片 + showcase 頁；2026-10-19 依 README 更新） |
 | RPG Maker Character Forge | `/projects/rpgmaker-character-forge` | [spec/projects/rpgmaker-character-forge.md](projects/rpgmaker-character-forge.md) | ✅ 完成（spec + 3 截圖 + 首頁卡片 + showcase 頁） |
 | Drama 3 TTS 工作台 | `/projects/drama-3` | [spec/projects/drama-3.md](projects/drama-3.md) | ✅ 完成（spec + 2 截圖 + 首頁卡片 + showcase 頁；配色沿用該專案的「紙張與墨」） |
+| fishing-work | `/projects/fishing-work` | [spec/projects/fishing-work.md](projects/fishing-work.md) | ✅ 完成（spec + 9 截圖 + 首頁卡片 + showcase 頁；頁面主軸為 AI 應用；配色沿用該專案的 VS Code Dark+） |
+| 寶可夢牧場 Agent | `/projects/pokemon-agent-pets` | [spec/projects/pokemon-agent-pets.md](projects/pokemon-agent-pets.md) | ✅ 完成（spec + 8 張場景地圖 + 2 張有寶可夢的實景截圖 + 首頁卡片 + showcase 頁；泡泡狀態另以網頁元件重繪圖例） |
 
 ---
 
@@ -228,12 +236,12 @@ public/
 - ✅ `public/404.html` 加 GitHub Pages SPA redirect 腳本（編碼路徑進 `?/`）
 - ✅ `index.html` 加接收腳本：還原 `?/path` 路徑 + 相容舊 `#/path` hash
 - ✅ `sitemap.xml` 補完 24 條路由（首頁 + gallery + 3 projects + 19 styles），全部無 hash
-- ✅ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條；其後移除 spring-boot-api 為 25 條；再新增 4 個風格頁為 29 條；再新增 `/projects/drama-3` 為 30 條；移除 `/projects/claude-code-sourcemap`，現為 29 條）
+- ✅ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條；其後移除 spring-boot-api 為 25 條；再新增 4 個風格頁為 29 條；再新增 `/projects/drama-3` 為 30 條；移除 `/projects/claude-code-sourcemap` 為 29 條；再新增 `/projects/fishing-work`、`/projects/pokemon-agent-pets`，現為 31 條）
 - ✅ react-router 的 `<Link to="/xxx">` 不需改（自動跟 BrowserRouter 工作）
 - ⬜ **部署後驗證**：
   - 直接訪問 `https://rex-shark.github.io/projects/threads-bot` 應正常顯示頁面（不是 404）
   - 訪問舊 hash URL `https://rex-shark.github.io/#/styles/finalist` 應 redirect 到 `/styles/finalist`
-  - GSC 重新提交 sitemap.xml 後應顯示 29 個已發現網址
+  - GSC 重新提交 sitemap.xml 後應顯示 31 個已發現網址
 
 #### Lv3 — 預先渲染 ⬜（重工程，視 SEO 需求再評估）
 
@@ -322,6 +330,15 @@ CLAUDE.md 與 subagent 是專案早期寫的，內容冗長且互相重複。改
 - ✅ 情緒圖庫 89 → 109 張、15 → 16 種情緒；`sendLumiImage`、`/api/v1/lumi-images/**`；STOMP 補 `SCENE_*` 事件
 - ✅ 修正：多人房不使用 `ChatMemory`（每次自 Redis 取最近 K 則歷史），原頁面寫「記憶以 roomCode 隔離」有誤
 - ⬜ 重拍 4 張舊截圖（`ai-bubble`、`room-chat`、`rooms-lobby`、`luna-emotion-image`，畫面仍是 Luna 🌙），目前頁面以圖說註明「攝於更名前」
+
+### 🐟 新增精選專案：fishing-work、寶可夢牧場 Agent ✅（2026-11-17）
+
+- ✅ `spec/projects/fishing-work.md`、`spec/projects/pokemon-agent-pets.md`（取自兩個專案的 README、spec、plan）
+- ✅ `spec/info.md` 專案表、`src/data/profile.ts` 新增第 6、7 個專案；首頁與 23 個風格頁皆讀共用資料自動出現（首頁、BentoGrid 依序配色與 icon 陣列補兩筆）
+- ✅ showcase 頁 `FishingWork.tsx`（Rex 指定強調 AI 應用：Clef 評分、像不像比賽雙圖比對、gemma4 評審ミオ、容錯設計、Claude Code 多 session 分工開發）、`PokemonAgentPets.tsx`；`App.tsx` 路由、`sitemap.xml`、README
+- ✅ 寶可夢牧場 Agent：8 張純場景截圖＋README 兩張有寶可夢角色的實景截圖（`map-lake-left-pets` 當 Hero、`map-snow-pets` 放泡泡狀態區；Rex 2026-11-17 決定放上），皆由透明背景 PNG 轉 WebP（保留透明、10 張共約 0.6 MB；先前轉 JPG 會把透明處填成白底）；泡泡狀態另以網頁元件重繪圖例。名稱依 Rex 2026-11-17 指示加上「Agent」
+- ⬜ **部署前**把 `Rex-shark/fishing-work`、`Rex-shark/pokemon-agent-pets` 設為公開（2026-11-17 查詢皆為私有，連結對訪客會是 404）
+- ⬜ 卡牌組（`card-deck/`）的 `cards.ts` 會檢查每個專案都有 `DETAILS`，新增兩個專案後需補 `details.ts` 才能啟動（卡牌組暫停中，恢復時處理）
 
 ### 🔖 首頁「好文分享」改為「優質網站分享」⬜（2026-10-26 提出）
 

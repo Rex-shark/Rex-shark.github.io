@@ -37,6 +37,8 @@ import ThreadsBot from '@/pages/projects/ThreadsBot'
 import AiChatroom from '@/pages/projects/AiChatroom'
 import RpgmakerCharacterForge from '@/pages/projects/RpgmakerCharacterForge'
 import Drama3 from '@/pages/projects/Drama3'
+import FishingWork from '@/pages/projects/FishingWork'
+import PokemonAgentPets from '@/pages/projects/PokemonAgentPets'
 
 function App() {
   return (
@@ -73,6 +75,8 @@ function App() {
         <Route path="/projects/ai-chatroom" element={<AiChatroom />} />
         <Route path="/projects/rpgmaker-character-forge" element={<RpgmakerCharacterForge />} />
         <Route path="/projects/drama-3" element={<Drama3 />} />
+        <Route path="/projects/fishing-work" element={<FishingWork />} />
+        <Route path="/projects/pokemon-agent-pets" element={<PokemonAgentPets />} />
       </Routes>
     </BrowserRouter>
   )

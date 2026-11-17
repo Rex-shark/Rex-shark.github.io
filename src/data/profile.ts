@@ -131,4 +131,20 @@ export const projects: Project[] = [
     href: 'https://github.com/Rex-shark/drama-3',
     to: '/projects/drama-3',
   },
+  {
+    slug: 'fishing-work',
+    title: 'fishing-work',
+    desc: '偽裝成 VS Code、簡報、Meet、Excel 的區網遊戲平台。繪圖比賽由本機 AI 當評審：Clef 看圖打分、gemma4 扮評審寫評語，模型不在也能自動退回照玩。',
+    tags: ['Ollama', 'Vision AI', 'Socket.IO'],
+    href: 'https://github.com/Rex-shark/fishing-work',
+    to: '/projects/fishing-work',
+  },
+  {
+    slug: 'pokemon-agent-pets',
+    title: '寶可夢牧場 Agent',
+    desc: '讓 AI agent 的工作狀態看得見的 3D 桌寵：每個 Claude Code／Codex session 認養一隻寶可夢，泡泡顏色與音效提醒等確認、出錯、做完。Electron + three.js。',
+    tags: ['Claude Code Hooks', 'Electron', 'three.js'],
+    href: 'https://github.com/Rex-shark/pokemon-agent-pets',
+    to: '/projects/pokemon-agent-pets',
+  },
 ]

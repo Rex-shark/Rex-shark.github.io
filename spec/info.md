@@ -73,7 +73,7 @@
 
 ## 專案
 
-精選專案共 5 個，詳細介紹見 [spec/projects/](projects/)。頁面上的專案卡以此表為準。
+精選專案共 7 個，詳細介紹見 [spec/projects/](projects/)。頁面上的專案卡以此表為準。
 
 | 專案 | 一句描述 | tags | Repo | 站內路由 |
 |---|---|---|---|---|
@@ -82,6 +82,8 @@
 | ai-chatroom | 真人與 AI 夥伴 Lumi 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默，還會自己換場並生成背景圖。 | Spring AI / WebSocket / React 19 | [ai-chatroom](https://github.com/Rex-shark/ai-chatroom) | `/projects/ai-chatroom` |
 | RPG Maker Character Forge | 一張行走圖生出整套 RPG Maker 角色素材（立繪 / 16 表情 face / 敵人戰鬥圖）。 | Python / ComfyUI / Codex Agent | [rpgmaker-character-forge](https://github.com/Rex-shark/rpgmaker-character-forge) | `/projects/rpgmaker-character-forge` |
 | Drama 3 TTS 工作台 | 在 Apple Silicon Mac 上離線操作 Fish Audio Drama 3 語音模型：多角色劇本、聲音複製、表演標籤、串流播放。 | Python / FastAPI / MLX | [drama-3](https://github.com/Rex-shark/drama-3) | `/projects/drama-3` |
+| fishing-work | 偽裝成 VS Code、簡報、Meet、Excel 的區網遊戲平台；繪圖比賽由本機 AI 當評審（Clef 看圖打分、gemma4 寫評語）。 | Ollama / Vision AI / Socket.IO | [fishing-work](https://github.com/Rex-shark/fishing-work) | `/projects/fishing-work` |
+| 寶可夢牧場 Agent | 讓 AI agent 的工作狀態看得見的 3D 桌寵：每個 Claude Code／Codex session 認養一隻寶可夢，用泡泡顏色與音效提醒。 | Claude Code Hooks / Electron / three.js | [pokemon-agent-pets](https://github.com/Rex-shark/pokemon-agent-pets) | `/projects/pokemon-agent-pets` |
 
 ---
 
