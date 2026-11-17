@@ -1,0 +1,475 @@
+/* 首頁牌桌（從 card-deck/ 併入）。變數與規則都掛在 .deck-root 底下，不影響主站其他頁面；Tailwind token 對應見 src/index.css 的 deck-* */
+
+/*
+  柔和深色（Soft UI Evolution，改良版新擬態；定案自 demo/minimal.html 的「柔和深色」）：
+  整個畫面同一個深灰藍底，元件靠「左上亮、右下暗」的雙向柔光陰影凸起或凹陷，不用邊框線。
+  文字用淺灰／中灰維持 WCAG AA 對比；唯一的彩色是英雄卡的粉彩光暈與強調藍。
+*/
+.deck-root {
+  /* 底色（整個畫面、面板、凹槽都是它） */
+  --deck-surface: #252a33;
+  /* 文字：主要／次要；強調色 */
+  --deck-fg: #e9edf3;
+  --deck-muted: #a8b1bf;
+  --deck-accent: #8ab0ff;
+  /* 柔光陰影：暗面、亮面 */
+  --deck-shade: #171a20;
+  --deck-shine: #333a46;
+  /* 卡面（內）與卡框（外）的漸層：深色時用比底色亮一階的靛藍石板色，卡片才不會跟桌面糊在一起 */
+  --deck-face-a: #46507a;
+  --deck-face-b: #343c5c;
+  --deck-frame-a: #7884ad;
+  --deck-frame-b: #262c44;
+  /* 強調色填底時上面的字（深色：深字；淺色：白字，兩者對比都 ≥ 4.5） */
+  --deck-on-accent: #1a1e26;
+}
+
+/*
+  深淺兩套共用同一組變數名稱，切換只改牌桌外框 .deck-root 的 data-theme（Home 依 localStorage 決定）。
+  深色是預設值；淺色在 .deck-root[data-theme='light'] 覆寫。所有變數只在牌桌內有效，不影響主站其他頁面。
+*/
+.deck-root {
+  --accent-rgb: 138 176 255;
+  /* 卡圖窗、說明框的凹陷光影；頂端陰影；四周暗角 */
+  --well-dark: rgba(0, 0, 0, 0.55);
+  --well-light: rgba(255, 255, 255, 0.08);
+  --desc-bg: rgba(10, 12, 24, 0.28);
+  --header-shadow: rgba(0, 0, 0, 0.28);
+  --vignette: rgba(0, 0, 0, 0.28);
+}
+.deck-root[data-theme='light'] {
+  --deck-surface: #e6eaf0;
+  --deck-fg: #1e2633;
+  --deck-muted: #4a5568;
+  --deck-accent: #3d6fd6;
+  --deck-shade: #c3c9d3;
+  --deck-shine: #ffffff;
+  --deck-face-a: #f3f5f9;
+  --deck-face-b: #dfe4eb;
+  --deck-frame-a: #fbfcfe;
+  --deck-frame-b: #b3bdcc;
+  --deck-on-accent: #ffffff;
+  --accent-rgb: 61 111 214;
+  --well-dark: rgba(60, 70, 90, 0.35);
+  --well-light: rgba(255, 255, 255, 0.5);
+  --desc-bg: rgba(255, 255, 255, 0.35);
+  --header-shadow: rgba(150, 160, 175, 0.3);
+  --vignette: rgba(120, 130, 150, 0.12);
+  --glow: conic-gradient(from 200deg, #9dbfff, #c9a8ff, #ffb3d1, #ffcfa3, #9dbfff);
+  color-scheme: light;
+}
+
+.deck-root {
+  /* 凸起／凹陷的陰影組合（px，給場地、面板、按鈕用；卡片內部另以卡面尺寸算） */
+  --raise: 10px 10px 22px var(--deck-shade), -10px -10px 22px var(--deck-shine);
+  --raise-sm: 5px 5px 12px var(--deck-shade), -5px -5px 12px var(--deck-shine);
+  --raise-xs: 2px 2px 5px var(--deck-shade), -2px -2px 5px var(--deck-shine);
+  --press: inset 6px 6px 12px var(--deck-shade), inset -6px -6px 12px var(--deck-shine);
+  --press-sm: inset 3px 3px 6px var(--deck-shade), inset -3px -3px 6px var(--deck-shine);
+  /* 英雄卡的粉彩光暈（卡框、圓鈕、背後柔光共用） */
+  --glow: conic-gradient(from 200deg, #7fa8ff, #b48cff, #ff8fbf, #ffb980, #7fa8ff);
+  color-scheme: dark;
+}
+
+/* 牌桌外框：佔滿一個畫面高、不捲動（只套在首頁，其他頁面照常捲動） */
+.deck-root {
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--deck-surface);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+  color: var(--deck-fg);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 畫面四周很淡的暗角，只是讓視線往中間收 */
+.scene-frame {
+  box-shadow: inset 0 0 140px var(--vignette);
+}
+
+/* ───── 牌桌：同底色的平面，中央一點點亮 ───── */
+.scene-duel {
+  --title: var(--deck-fg);
+  --sub: var(--deck-muted);
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 42%, rgba(255, 255, 255, 0.035), transparent 70%),
+    var(--deck-surface);
+}
+
+/* 場地：一整塊凸起的軟墊 */
+.duel-mat {
+  border-radius: 28px;
+  background: var(--deck-surface);
+  box-shadow:
+    16px 16px 36px var(--deck-shade),
+    -16px -16px 36px var(--deck-shine);
+}
+/* 格子：凹進去的槽；下排（魔陷區）凹得淺一點來區分，不用圖示 */
+.duel-zone {
+  position: relative;
+  border-radius: 12px;
+  background: var(--deck-surface);
+  box-shadow: var(--press);
+  transition:
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+.duel-zone.is-spell {
+  box-shadow: var(--press-sm);
+}
+
+/* 拖曳中：可以放的空格多一圈淡藍，游標下的那格最亮 */
+.duel-zone.is-open {
+  box-shadow:
+    var(--press-sm),
+    0 0 0 2px rgb(var(--accent-rgb) / 0.35);
+}
+.duel-zone.is-target {
+  background: rgb(var(--accent-rgb) / 0.1);
+  box-shadow:
+    var(--press-sm),
+    0 0 0 2px var(--deck-accent),
+    0 0 18px rgb(var(--accent-rgb) / 0.45);
+}
+/* 拖回手牌區時，手牌區亮起 */
+.hand-return {
+  background: linear-gradient(0deg, rgb(var(--accent-rgb) / 0.16), transparent);
+  border-top: 2px dashed rgb(var(--accent-rgb) / 0.5);
+  color: var(--deck-accent);
+}
+
+/* 頂端列的手牌計數、放大查看的按鈕與標籤：凸起的小膠囊（放在 components 層，hover:shadow-* 才蓋得過） */
+@layer components {
+  .soft-pill {
+    background: var(--deck-surface);
+    box-shadow: var(--raise-xs);
+  }
+}
+
+/* 放大查看：和卡片同一套粗卡框，只是更厚；英雄卡同樣是粉彩光暈框 */
+.inspect-frame {
+  border: 9px solid transparent;
+  border-radius: 28px;
+  background:
+    linear-gradient(145deg, var(--deck-face-a), var(--deck-face-b)) padding-box,
+    linear-gradient(145deg, var(--deck-frame-a), var(--deck-frame-b)) border-box;
+  box-shadow:
+    18px 18px 40px var(--well-dark),
+    -8px -8px 30px var(--well-light),
+    inset 2px 2px 4px var(--deck-shade),
+    inset -2px -2px 4px var(--deck-shine);
+}
+.inspect-frame.is-narrow {
+  border-width: 4px;
+  border-radius: 14px;
+}
+.inspect-frame.is-hero {
+  background:
+    linear-gradient(145deg, var(--deck-face-a), var(--deck-face-b)) padding-box,
+    var(--glow) border-box;
+}
+
+/* ───── 卡片（CardFace 以 172 × 241 px 繪製再縮放） ───── */
+/* 一圈粗卡框（外層漸層，像實體卡的邊）＋框內凹一階的卡面 */
+.card-frame {
+  border: 6px solid transparent;
+  border-radius: 17px;
+  background:
+    linear-gradient(145deg, var(--deck-face-a), var(--deck-face-b)) padding-box,
+    linear-gradient(145deg, var(--deck-frame-a), var(--deck-frame-b)) border-box;
+  box-shadow:
+    var(--raise-sm),
+    inset 1.5px 1.5px 3px var(--deck-shade),
+    inset -1.5px -1.5px 3px var(--deck-shine);
+  transition: box-shadow 0.25s ease;
+}
+/* 英雄卡：卡框換成粉彩光暈色 */
+.card-frame.is-hero {
+  background:
+    linear-gradient(145deg, var(--deck-face-a), var(--deck-face-b)) padding-box,
+    var(--glow) border-box;
+}
+/* 場上的卡陰影深一點，像壓在軟墊上 */
+.card-frame.card-played {
+  box-shadow:
+    7px 7px 16px var(--deck-shade),
+    -6px -6px 14px var(--deck-shine),
+    inset 1.5px 1.5px 3px var(--deck-shade),
+    inset -1.5px -1.5px 3px var(--deck-shine);
+}
+/* 英雄卡背後的粉彩柔光（呼吸） */
+.hero-glow {
+  position: absolute;
+  inset: -3px;
+  z-index: -1;
+  border-radius: 20px;
+  background: var(--glow);
+  filter: blur(9px);
+  opacity: 0.55;
+  animation: hero-glow 5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes hero-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+/* 卡圖窗：再凹進去一階 */
+.card-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  box-shadow:
+    inset 2.4px 2.4px 5px var(--well-dark),
+    inset -1.7px -1.7px 4px var(--well-light);
+  pointer-events: none;
+}
+/* 卡名條：置中、凸起，壓在卡圖下緣（像卡牌遊戲的名稱橫幅） */
+.card-namebar {
+  background: linear-gradient(145deg, var(--deck-frame-a), var(--deck-face-b));
+  color: var(--deck-fg);
+  box-shadow:
+    2px 3px 6px var(--well-dark),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+/* 英雄卡：卡名條是粉彩光暈色、白字 */
+.card-namebar.is-hero {
+  background: var(--glow);
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(60, 40, 120, 0.55);
+}
+/* 淺色時粉彩底較淡，白字讀不清楚，改深色字 */
+.deck-root[data-theme='light'] .card-namebar.is-hero {
+  color: var(--deck-fg);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+/* 說明區：凹進去的框 */
+.card-desc {
+  background: var(--desc-bg);
+  box-shadow:
+    inset 2px 2px 4px var(--well-dark),
+    inset -1.5px -1.5px 3px var(--well-light);
+}
+/* 標籤：凸起的小膠囊（顏色跟著卡面，不是桌面） */
+.card-tag {
+  background: linear-gradient(145deg, var(--deck-face-a), var(--deck-face-b));
+  box-shadow:
+    1.4px 1.4px 3px var(--well-dark),
+    inset 0 0 0 0.8px rgba(255, 255, 255, 0.14);
+}
+/*
+  左上角圓鈕：龍珠的橘色（半透明感的亮橘球、左上高光、紅字），深淺色都一樣醒目。
+  專案卡是編號，英雄卡是★。放大查看的標頭與「主要功能」編號也共用。
+*/
+.card-badge {
+  background: radial-gradient(circle at 34% 30%, #fff6d6 0 9%, #ffc35a 24%, #f8921c 58%, #c95a00 100%);
+  color: #d4111f;
+  text-shadow: 0 1px 0 rgba(255, 240, 200, 0.6);
+  box-shadow:
+    2px 3px 6px rgba(0, 0, 0, 0.35),
+    inset -2px -3px 5px rgba(150, 50, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 230, 170, 0.5);
+}
+
+/* 深淺切換開關：凹進去的軌道＋凸起的圓鈕 */
+.theme-track {
+  background: var(--deck-surface);
+  box-shadow: var(--press-sm);
+}
+.theme-knob {
+  background: linear-gradient(145deg, var(--deck-shine), var(--deck-surface));
+  box-shadow: var(--raise-xs);
+}
+
+/* 卡圖上掃過的斜向亮光 */
+.hero-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(255, 250, 220, 0.75) 48%,
+    rgba(255, 255, 255, 0.05) 56%,
+    transparent 66%
+  );
+  background-size: 260% 100%;
+  mix-blend-mode: overlay;
+  animation: hero-shine 4.2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes hero-shine {
+  0% {
+    background-position: 130% 0;
+  }
+  45%,
+  100% {
+    background-position: -40% 0;
+  }
+}
+
+/* ───── 英雄卡會動的卡圖（HeroArt） ───── */
+/* 3:2 舞台：高度貼齊圖窗、寬度依比例、水平置中，所有圖層座標都以原圖比例計算 */
+.hero-stage {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  aspect-ratio: 3 / 2;
+  translate: -50% 0;
+  /* 泡泡用 cqh 依舞台高度飄 */
+  container-type: size;
+}
+.hero-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero-bg,
+.hero-mid,
+.hero-front {
+  transition: transform 0.15s ease-out;
+}
+/* 景深：背景往反方向、人物往同方向移，差距就是立體感；背景先放大一點，移動時不露邊 */
+.hero-bg {
+  object-fit: cover;
+  transform: translate(calc(var(--tilt-x, 0) * -8px), calc(var(--tilt-y, 0) * -6px)) scale(1.08);
+}
+.hero-mid {
+  transform: translate(calc(var(--tilt-x, 0) * -3px), calc(var(--tilt-y, 0) * -3px));
+}
+.hero-front {
+  transform: translate(calc(var(--tilt-x, 0) * 6px), calc(var(--tilt-y, 0) * 4px));
+}
+/* 呼吸＋微微擺動，支點在腳底 */
+.hero-body {
+  animation: hero-breathe 3.2s ease-in-out infinite;
+}
+@keyframes hero-breathe {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1, 1);
+  }
+  25% {
+    transform: rotate(-0.6deg) scale(1.006, 1.012);
+  }
+  50% {
+    transform: rotate(0deg) scale(1, 1.02);
+  }
+  75% {
+    transform: rotate(0.6deg) scale(1.006, 1.012);
+  }
+}
+/* 眨眼：閉眼那一小塊平常透明，每 4.6 秒閃一下（約 0.14 秒），邊緣羽化避免看到方框 */
+.hero-blink {
+  position: absolute;
+  opacity: 0;
+  mask-image: radial-gradient(closest-side, #000 70%, transparent);
+  animation: hero-blink 4.6s steps(1, end) infinite;
+}
+@keyframes hero-blink {
+  0%,
+  88% {
+    opacity: 0;
+  }
+  89%,
+  91% {
+    opacity: 1;
+  }
+  92%,
+  100% {
+    opacity: 0;
+  }
+}
+/* 手上卡牌的閃光：十字星一閃一閃 */
+.hero-sparkle {
+  position: absolute;
+  width: 14%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 8%, transparent 30%),
+    linear-gradient(90deg, transparent 46%, rgba(255, 250, 220, 0.9) 50%, transparent 54%),
+    linear-gradient(0deg, transparent 46%, rgba(255, 250, 220, 0.9) 50%, transparent 54%);
+  mask-image: radial-gradient(circle, #000 20%, transparent 70%);
+  mix-blend-mode: screen;
+  animation: hero-sparkle 2.4s ease-in-out infinite;
+}
+@keyframes hero-sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4) rotate(0deg);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1) rotate(45deg);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(0.6) rotate(90deg);
+  }
+}
+/* 背景泡泡由下往上飄 */
+.hero-bubble {
+  position: absolute;
+  bottom: -8%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.95) 0 12%, rgba(190, 235, 255, 0.35) 40%, rgba(120, 200, 255, 0.15) 70%);
+  box-shadow: inset 0 0 0 0.6px rgba(255, 255, 255, 0.8);
+  animation: hero-bubble linear infinite;
+}
+@keyframes hero-bubble {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(4px, -60cqh);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-3px, -115cqh);
+    opacity: 0;
+  }
+}
+
+
+/* 手牌待機時輕輕浮動（每張錯開），滑鼠停留或拖曳時停止 */
+@keyframes card-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+.card-bob {
+  animation: card-bob 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-bob,
+  .hero-glow,
+  .hero-shine,
+  .hero-body,
+  .hero-blink,
+  .hero-sparkle,
+  .hero-bubble {
+    animation: none;
+  }
+}

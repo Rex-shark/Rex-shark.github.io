@@ -200,3 +200,15 @@ Fish Audio 官方推理只支援 NVIDIA GPU（SGLang-Omni / fish-speech），Mac
 | MLX 量化權重（非官方） | [mlx-community/fish-audio-drama-3-4bit](https://huggingface.co/mlx-community/fish-audio-drama-3-4bit) 等，由 stickerdaniel 轉換 |
 | mlx-audio | Prince Canuma，[Blaizzy/mlx-audio](https://github.com/Blaizzy/mlx-audio)（Drama 3 支援由 stickerdaniel 貢獻，PR #1018） |
 | MLX | Apple，[ml-explore/mlx](https://github.com/ml-explore/mlx) |
+
+---
+
+## 卡片重點（首頁牌桌的簡易介紹）
+
+> 點首頁場上的卡時顯示的 3 個亮點與代表截圖（2026-11-17 起）。程式端在 `src/pages/home/content/briefs.ts`，改內容時兩邊一起改。一句話說明直接用 `profile.ts` 的 desc，不寫在這裡。
+
+- 在 Mac 上離線跑 Fish Audio Drama 3，零 API 成本
+- 多角色劇本、聲音複製、表演標籤、串流播放
+- 4bit／8bit／bf16 三版量化可切換
+
+代表截圖：`public/projects/drama-3/workbench-light.jpg`（工作台：角色與參考音檔、劇本行、取樣參數與 take 卡紙）

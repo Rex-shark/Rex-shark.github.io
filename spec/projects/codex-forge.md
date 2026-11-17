@@ -169,3 +169,15 @@ PM：「線上化之後要不要支援代理人？」
 ## 素材
 
 小助手喵喵使用 Live2D 官方的免費範例模型「Tororo & Hijiki」與 Cubism SDK for Web 的 Cubism Core；依授權條款，這些素材不放進版控。
+
+---
+
+## 卡片重點（首頁牌桌的簡易介紹）
+
+> 點首頁場上的卡時顯示的 3 個亮點與代表截圖（2026-11-17 起）。程式端在 `src/pages/home/content/briefs.ts`，改內容時兩邊一起改。一句話說明直接用 `profile.ts` 的 desc，不寫在這裡。
+
+- 擁有者 @小助手Lumi，Codex 讀完整段討論與附件
+- 回覆含 Mermaid 流程圖與可點的 HTML 原型
+- 另有 Claude Code 驅動的 Live2D 貓當私人助手
+
+代表截圖：`public/projects/codex-forge/web-room-day.webp`（前台房間頁・日景（討論內容為虛構示範資料））

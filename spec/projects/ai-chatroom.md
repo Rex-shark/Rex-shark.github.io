@@ -224,3 +224,15 @@ route: /projects/ai-chatroom
 - **範圍限定**：頁面**只呈現聊天室功能**，不要介紹 RBAC 後台 / 帳號權限管理。
 - **不可編造**：所有數字（stars、forks）目前**不放假數據**，沒資料就移除該區塊或顯示 `—`。
 - **文案語氣**：繁體中文（台灣用語），技術詞彙保留原文。
+
+---
+
+## 卡片重點（首頁牌桌的簡易介紹）
+
+> 點首頁場上的卡時顯示的 3 個亮點與代表截圖（2026-11-17 起）。程式端在 `src/pages/home/content/briefs.ts`，改內容時兩邊一起改。一句話說明直接用 `profile.ts` 的 desc，不寫在這裡。
+
+- AI 是群組成員：逐則自主判斷要回應還是沉默
+- 聊到換地方時自己換場，本機 ComfyUI 生成背景
+- 一對一用 SSE、多人房用 WebSocket／STOMP
+
+代表截圖：`public/projects/ai-chatroom/scene-room-festival.png`（多人房實況：Lumi 換到「海邊的夏日祭典」，背景為 ComfyUI 生成）

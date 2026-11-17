@@ -133,3 +133,15 @@ Claude Code／Codex（多個 session、子代理）
 - 非官方的粉絲專案，與任天堂、Creatures、GAME FREAK、The Pokémon Company 無關，也未獲背書。寶可夢（Pokémon）及相關名稱是各權利方的商標。
 - 模型：06wj/pokemon（repo 不包含、不散布模型）；屬性資料：06wj/pokemon 的 `pokemonTypes.ts`（MIT）；官方身高體重：PokeAPI 的 CSV 資料。
 - hook 腳本的規則（不輸出、永遠成功結束、限時）參考 claude-office 與 pixel-agents。
+
+---
+
+## 卡片重點（首頁牌桌的簡易介紹）
+
+> 點首頁場上的卡時顯示的 3 個亮點與代表截圖（2026-11-17 起）。程式端在 `src/pages/home/content/briefs.ts`，改內容時兩邊一起改。一句話說明直接用 `profile.ts` 的 desc，不寫在這裡。
+
+- 每個 Claude Code／Codex session 認養一隻寵物
+- 泡泡顏色看狀態：做事、等確認、出錯、做完
+- hook 最多等 1 秒、永遠成功結束，不拖慢 agent
+
+代表截圖：`public/projects/pokemon-agent-pets/map-snow-pets.webp`（雪地上六個 session 同時在跑（角色屬於各自的權利方，只當示意））

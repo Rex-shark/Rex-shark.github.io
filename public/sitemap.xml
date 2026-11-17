@@ -7,6 +7,13 @@
     <priority>1.0</priority>
   </url>
 
+  <!-- 經典版首頁（原本的正式首頁；/styles/finalist 為相容舊連結的別名，不另列） -->
+  <url>
+    <loc>https://rex-shark.github.io/classic</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- 設計實驗室 -->
   <url>
     <loc>https://rex-shark.github.io/gallery</loc>

@@ -258,3 +258,15 @@ route: /projects/threads-bot
 - **不可編造**：所有數字（stars、forks）目前**不放假數據**，沒資料就移除該區塊或顯示 `—`。
 - **文案語氣**：繁體中文（台灣用語），技術詞彙保留原文。
 - **避免外部 Google Fonts**：沿用系統字體 + JetBrains Mono。
+
+---
+
+## 卡片重點（首頁牌桌的簡易介紹）
+
+> 點首頁場上的卡時顯示的 3 個亮點與代表截圖（2026-11-17 起）。程式端在 `src/pages/home/content/briefs.ts`，改內容時兩邊一起改。一句話說明直接用 `profile.ts` 的 desc，不寫在這裡。
+
+- 爬自由時報、TechCrunch 新聞，以來源網址去重
+- 本機 Ollama 改寫成 500 字內的 Threads 貼文
+- 原文 → AI 改寫 → 發布結果，全程可回溯
+
+代表截圖：`public/projects/threads-bot/hero-threads-post.png`（Threads 實際發文成果）

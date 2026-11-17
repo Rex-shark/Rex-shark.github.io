@@ -5,6 +5,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* 首頁牌桌（src/pages/home）的 token：值定義在 .deck-root（deck.css），只在牌桌內有效。
+   不用 muted / accent 等通用名稱，避免和 shadcn 的同名 token 相撞 */
+@theme inline {
+    --color-deck-surface: var(--deck-surface);
+    --color-deck-fg: var(--deck-fg);
+    --color-deck-muted: var(--deck-muted);
+    --color-deck-accent: var(--deck-accent);
+    --color-deck-shade: var(--deck-shade);
+    --color-deck-shine: var(--deck-shine);
+}
+
 @theme inline {
     --font-heading: var(--font-sans);
     --font-sans: 'Geist Variable', sans-serif;

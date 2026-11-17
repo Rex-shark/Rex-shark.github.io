@@ -16,6 +16,7 @@ import {
   Play,
   FileText,
   Lock,
+  Spade,
 } from 'lucide-react'
 import { handleHashClick } from '@/lib/utils'
 import { profile, skillGroups as sharedSkillGroups, featuredProjects as sharedProjects } from '@/data/profile'
@@ -618,15 +619,25 @@ export default function Finalist() {
             <NavLink href="#articles">文章</NavLink>
             <NavLink href="#contact">聯絡</NavLink>
           </div>
-          <motion.div whileHover={{ x: 3 }} transition={{ type: 'spring', stiffness: 400 }}>
+          <div className="flex items-center gap-5">
+            {/* 經典版（/classic）回到撲克牌桌首頁 */}
             <Link
-              to="/gallery"
-              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 transition-colors text-sm font-medium cursor-pointer"
+              to="/"
+              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 transition-colors text-sm font-medium cursor-pointer whitespace-nowrap"
             >
-              設計實驗室
-              <ArrowRight size={14} />
+              <Spade size={14} />
+              牌桌首頁
             </Link>
-          </motion.div>
+            <motion.div whileHover={{ x: 3 }} transition={{ type: 'spring', stiffness: 400 }}>
+              <Link
+                to="/gallery"
+                className="inline-flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 transition-colors text-sm font-medium cursor-pointer"
+              >
+                設計實驗室
+                <ArrowRight size={14} />
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </motion.nav>
 

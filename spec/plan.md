@@ -13,10 +13,11 @@ Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist �
 使用 **BrowserRouter**（SEO Lv2 已從 HashRouter 遷移；GitHub Pages 的 SPA 路由由 `public/404.html` redirect + `index.html` 還原腳本解決，並相容舊 `#/path` 連結）：
 
 ```
-/                                       → 正式首頁（Finalist 風格）
+/                                       → 首頁：撲克牌桌（src/pages/home/；2026-11-17 起）
+/classic                                → 經典版首頁（Finalist，原正式首頁）
 /gallery                                → 設計實驗室（StyleGallery，含 23 種設計實驗）
 /styles/<風格路由名>                     → 各風格首頁（23 種）
-/styles/finalist                        → 同首頁元件（向下相容，避免已分享連結失效）
+/styles/finalist                        → 同經典版元件（向下相容，避免已分享連結失效）
 /projects/threads-bot                   → ThreadsBot showcase
 /projects/ai-chatroom                   → ai-chatroom showcase
 /projects/rpgmaker-character-forge      → RPG Maker Character Forge showcase
@@ -352,6 +353,29 @@ Rex 指示加入但**不公開** repo。
 - ✅ 首頁 `Finalist.tsx` 改讀 `featuredProjects`：第 8 色赤陶紅；沒有 `href` 的卡片 icon 換成鎖頭、右下角顯示「私人專案」
 - ✅ showcase 頁 `CodexForge.tsx`（紙偶定格配色）；15 張 WebP 截圖（取自專案 `docs/screenshots/web/`，約 1.2 MB）；`App.tsx` 路由、`sitemap.xml`、`info.md`、README
 - ⬜ 卡牌組（`card-deck/`）恢復時，視需要補 codex-forge 的卡
+
+### 🃏 首頁改為撲克牌桌（卡牌組併入主站）🔄（2026-11-17 開始）
+
+Rex 2026-11-17 決定：首頁 `/` 改用撲克牌桌；原本的 Finalist 首頁轉為「經典版」備份。三層瀏覽：
+
+```
+首頁 /（牌桌）── 點場上的卡 ──▶ 簡易介紹（彈出卡，一個畫面看完）── 看完整介紹 ──▶ 詳細頁
+                                                                          英雄卡 → /classic（經典版）
+                                                                          個人網站 → /gallery
+                                                                          其他專案 → /projects/<slug>（現有頁面不動）
+詳細頁按上一頁／返回首頁 → 回到牌桌，場上的牌與剛才打開的卡原樣還原（sessionStorage）
+```
+
+- ✅ 規劃與流程圖（2026-11-17，Rex 確認；由本 session 執行）
+- ✅ 路由：`/` → 牌桌（`src/pages/home/Home.tsx`）；Finalist 改到 `/classic`，`/styles/finalist` 保留相容；sitemap 加 `/classic`
+- ✅ 併入主站：`card-deck/src` 的元件、版面計算、卡圖與英雄卡分層素材搬到 `src/pages/home/`；`@site` 別名改回 `@/`；扭蛋小龍（已停用）不搬
+- ✅ 樣式隔離：牌桌的 Tailwind token 改名 `deck-*`（原本的 `muted`、`accent` 會和 shadcn 撞名），值掛在 `.deck-root`；深淺主題改成牌桌外框的 `data-theme`，不再動 `<html>`。牌桌的動畫 keyframes、多層背景放 `src/pages/home/deck.css`（例外：這些寫成 Tailwind class 不實際）
+- ✅ 簡易介紹（`components/BriefView.tsx`、`content/briefs.ts`）：取代原本的長文 InspectView。專案＝卡圖窗截圖、標題、tags、一句話（`profile.ts` desc）、3 個亮點、按鈕（看完整介紹 → / GitHub 或 🔒 私人專案）；英雄卡＝頭像、職稱、自介、聯絡、按鈕（看完整自介 → `/classic`）。3 個亮點的權威來源是各 `spec/projects/<slug>.md` 的「卡片重點」一節（個人網站沒有 spec，取自 CLAUDE.md／info.md）；長文 `details.ts` 不再使用。窄螢幕（手機）點手牌直接放上場並打開簡易介紹，不用點兩次
+- ✅ 來回保留狀態：場上的牌、打開中的卡存 sessionStorage；回到牌桌時不重新發牌
+- ✅ 經典版頂端加回牌桌的入口（導覽列「牌桌首頁」）；牌桌頂端只放「設計實驗室」（Rex 2026-11-17 指示拿掉頂端的「經典版」按鈕；經典版仍可從英雄卡簡易介紹的「看完整自介」進入）
+- ✅ 其他頁面改 lazy 載入（風格頁、專案頁、經典版），首頁 JS 由 500 kB 以上降到約 270 kB；卡圖與英雄卡分層圖改 WebP（素材 2.6 MB → 1.0 MB）
+- ✅ 驗證（2026-11-17）：桌機與 375 px 手機、鍵盤操作、深淺色、詳細頁按上一頁還原牌桌與簡易介紹、`/classic`；`npm run build`、lint 通過
+- ⬜ `card-deck/` 獨立專案的去留（併入後保留當參考，`demo/` 風格稿仍在那裡），待 Rex 決定
 
 ### 🔖 首頁「好文分享」改為「優質網站分享」⬜（2026-10-26 提出）
 

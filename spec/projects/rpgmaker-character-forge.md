@@ -252,3 +252,15 @@ docker/     Nginx、Supervisor 與本機部署設定
 - **不可編造**：stars / forks 不放假數據，沒資料就移除該區塊或顯示 `—`。
 - **必須保留**：素材來源與版權聲明區塊（RPG Maker、落日迷宮之都）。
 - **文案語氣**：繁體中文（台灣用語），技術詞彙保留原文。
+
+---
+
+## 卡片重點（首頁牌桌的簡易介紹）
+
+> 點首頁場上的卡時顯示的 3 個亮點與代表截圖（2026-11-17 起）。程式端在 `src/pages/home/content/briefs.ts`，改內容時兩邊一起改。一句話說明直接用 `profile.ts` 的 desc，不寫在這裡。
+
+- 一張行走圖生出立繪、16 表情 face 圖、敵人戰鬥圖
+- Codex Agent 組提示詞，ComfyUI 去背、縮放、切割
+- 產出依寫死的五項判準由 AI 自我驗收
+
+代表截圖：`public/projects/rpgmaker-character-forge/character-gallery.png`（角色圖鑑：行走圖預覽、角色立繪與敵人戰鬥圖並排）

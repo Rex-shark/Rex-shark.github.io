@@ -130,3 +130,15 @@ component: src/pages/projects/FishingWork.tsx
 ## 聲明
 
 偽裝外觀模仿 VS Code、PowerPoint、Google Meet、Excel 的介面，相關商標屬於各自的公司；本專案與這些公司無關。猜歌的試聽與封面由玩家瀏覽器直接向 Apple 取得。
+
+---
+
+## 卡片重點（首頁牌桌的簡易介紹）
+
+> 點首頁場上的卡時顯示的 3 個亮點與代表截圖（2026-11-17 起）。程式端在 `src/pages/home/content/briefs.ts`，改內容時兩邊一起改。一句話說明直接用 `profile.ts` 的 desc，不寫在這裡。
+
+- 三款遊戲偽裝成 VS Code、簡報、Meet、Excel
+- 本機 Clef 看圖打分、gemma4 扮評審寫評語
+- 連不上模型時自動改隨機評分，照樣能玩
+
+代表截圖：`public/projects/fishing-work/draw-contest-reveal.png`（繪圖比賽揭曉：Clef 分數、名次與評審ミオ的評語）
