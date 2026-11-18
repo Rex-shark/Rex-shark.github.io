@@ -205,6 +205,8 @@ route: /projects/threads-bot
 
 ## 已知限制 / 誠實揭露
 
+> 2026-11-18 Rex 指示：showcase 頁不顯示本節（僅保留於 spec 作紀錄）。
+
 - **Threads 不支援自動定時發文**：發文步驟目前需手動觸發，或自行包一層排程，不保證 Threads 平台一定接受。
 - **Token 期限**：Threads 長期 Token 約 60 天需手動換發。
 - **模型 context 上限**：原文太長會超出 `gemma4:e4b` context window，需自行截斷或換大模型（如 `gemma3:27b`）。

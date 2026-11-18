@@ -180,6 +180,8 @@ route: /projects/ai-chatroom
 
 ## 已知限制 / 誠實揭露
 
+> 2026-11-18 Rex 指示：showcase 頁不顯示本節（僅保留於 spec 作紀錄）。
+
 - **Function Calling 依賴模型支援 Tool**：Ollama 端若選用不支援 Function Calling 的模型，Lumi 不會觸發發圖（屬正常，非 bug）。
 - **換場由 LLM 自行判斷**：同樣的話不一定每次都觸發 `changeScene`；非定向訊息 Lumi 也可能直接 `[SKIP]`。
 - **場景背景需要本機 ComfyUI**：須在 host 機器上跑 ComfyUI 並安裝 workflow 用到的模型；沒開時只有背景圖生不出來。

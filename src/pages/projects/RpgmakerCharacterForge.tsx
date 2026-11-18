@@ -11,7 +11,6 @@ import {
   Archive,
   Sparkles,
   Lightbulb,
-  AlertTriangle,
   Terminal,
   Scale,
   Swords,
@@ -150,14 +149,6 @@ const highlights = [
   '生成與後處理分離：繪圖工具只負責黑底原圖，尺寸／去背／切割全交給 ComfyUI 工作流，換繪圖工具不用改後處理。',
   '一次指令、多階段生圖：Job 5 內部是三次獨立生圖，中間有驗證閘門，避免一路錯到底。',
   '成果可展示也可驗收：圖鑑的亮／暗／透明三種底色切換，就是為了肉眼確認去背品質。',
-]
-
-const limitations = [
-  '需要本機 ComfyUI：必須有可在 http://127.0.0.1:8188 連線的 ComfyUI，且已安裝所需自訂節點、BEN2 去背模型與 4x-UltraSharpV2.pth。',
-  '需要繪圖工具：專案本身不含生圖模型，實際作畫交給可接收參考圖與提示詞的外部繪圖工具。',
-  '素材版權不在授權範圍：MIT 只涵蓋自行開發的程式碼與文件，公開倉庫不附帶 RPG Maker 原始素材。',
-  '輸入必須是單人行走圖：八人合併行走圖要先用 split_character_sheet.py 切開，不能直接丟給 Job。',
-  '像素圖資訊有限：行走圖與 face 近拍只提供設計與身份，無法控制身體比例；看不清的細節不得當成事實。',
 ]
 
 export default function RpgmakerCharacterForge() {
@@ -461,9 +452,9 @@ export default function RpgmakerCharacterForge() {
         </div>
       </section>
 
-      {/* 設計亮點 / 已知限制 */}
+      {/* 設計亮點 */}
       <section className="px-6 py-16 bg-slate-50/60">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="max-w-5xl mx-auto">
           <div className="bg-gradient-to-br from-amber-50 to-emerald-50 rounded-2xl border border-amber-100 p-6">
             <div className="flex items-center gap-2 mb-4">
               <Lightbulb size={18} className="text-amber-600" />
@@ -474,21 +465,6 @@ export default function RpgmakerCharacterForge() {
                 <li key={h} className="flex gap-2 text-sm text-slate-600 leading-relaxed">
                   <span className="text-amber-500 shrink-0">•</span>
                   <span>{h}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-white rounded-2xl border border-slate-200 p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <AlertTriangle size={18} className="text-slate-500" />
-              <h3 className="font-bold text-slate-900">已知限制 / 誠實揭露</h3>
-            </div>
-            <ul className="space-y-3">
-              {limitations.map((l) => (
-                <li key={l} className="flex gap-2 text-sm text-slate-600 leading-relaxed">
-                  <span className="text-slate-400 shrink-0">•</span>
-                  <span>{l}</span>
                 </li>
               ))}
             </ul>

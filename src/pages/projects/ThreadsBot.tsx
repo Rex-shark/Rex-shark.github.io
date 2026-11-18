@@ -11,7 +11,6 @@ import {
   CheckCircle2,
   Server,
   Lightbulb,
-  AlertTriangle,
 } from 'lucide-react'
 
 function GithubIcon({ className }: { className?: string }) {
@@ -122,13 +121,6 @@ const highlights = [
   '可關可開：每個階段有獨立 enabled / cron，可以只開爬蟲、只開 AI、或全自動。',
   'Spring 生態整合：示範 Spring AI、WebMagic、Spring Retry、Scheduling、JPA 在單一專案中協作。',
   'Prompt 自主可調：Prompt 全在自己 codebase，可隨時為個人風格微調。',
-]
-
-const limitations = [
-  'Threads 不支援自動定時發文：發文步驟目前需手動觸發或自行包排程。',
-  'Token 期限：Threads 長期 Token 約 60 天需手動換發。',
-  '模型 context 上限：原文太長會超出 gemma4:e4b context window，需自行截斷或換大模型。',
-  'schema 採用 ddl-auto: update：適合個人專案，正式環境建議改 Flyway / Liquibase。',
 ]
 
 export default function ThreadsBot() {
@@ -403,9 +395,9 @@ export default function ThreadsBot() {
         </div>
       </section>
 
-      {/* 設計亮點 / 已知限制 */}
+      {/* 設計亮點 */}
       <section className="px-6 py-16">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="max-w-5xl mx-auto">
           <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl border border-indigo-100 p-6">
             <div className="flex items-center gap-2 mb-4">
               <Lightbulb size={18} className="text-indigo-600" />
@@ -416,21 +408,6 @@ export default function ThreadsBot() {
                 <li key={h} className="flex gap-2 text-sm text-slate-600 leading-relaxed">
                   <span className="text-indigo-500 shrink-0">•</span>
                   <span>{h}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-amber-50/60 rounded-2xl border border-amber-100 p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <AlertTriangle size={18} className="text-amber-600" />
-              <h3 className="font-bold text-slate-900">已知限制 / 誠實揭露</h3>
-            </div>
-            <ul className="space-y-3">
-              {limitations.map((l) => (
-                <li key={l} className="flex gap-2 text-sm text-slate-600 leading-relaxed">
-                  <span className="text-amber-500 shrink-0">•</span>
-                  <span>{l}</span>
                 </li>
               ))}
             </ul>

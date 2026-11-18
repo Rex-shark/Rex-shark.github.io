@@ -10,7 +10,6 @@ import {
   Layers,
   FileAudio,
   Lightbulb,
-  AlertTriangle,
   Terminal,
   Scale,
   Cpu,
@@ -154,15 +153,6 @@ const commands = [
   { use: '啟動後端（:8793）', cmd: 'bash server/run-server.sh' },
   { use: '無模型時用模擬後端', cmd: 'MOCK=1 bash server/run-server.sh' },
   { use: '啟動前端（:5173）', cmd: 'cd frontend && npm install && npm run dev' },
-]
-
-const limitations = [
-  '跑的不是 Fish Audio 官方推理：MLX 權重由社群（stickerdaniel）轉換，Fish Audio 未釋出也未背書。',
-  '8bit 社群尚未以新權重重轉，仍是舊權重，中斷率約三成；重轉後重測再決定是否改回建議。',
-  '中斷偵測抓不到「出聲之後才轉成低音量雜訊」的失敗，會拖到長度上限（約 47 秒）；新權重 100 次測試出現 1 次。',
-  '麥克風錄音功能未在自動化測試中驗證（瀏覽器窗格無法授權麥克風）。',
-  '同一段文字每次結果不同，沒有固定種子。',
-  '載入秒數為檔案已在系統快取的熱載入，冷讀會更久。',
 ]
 
 const notDoing = ['修改 take', '局部 infilling', '固定種子', '變速', '角色描述代替音檔']
@@ -528,28 +518,8 @@ export default function Drama3() {
         </div>
       </section>
 
-      {/* 已知限制 */}
-      <section className="px-6 py-16 border-t" style={{ borderColor: LINE }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="border p-6" style={{ borderColor: LINE, backgroundColor: CARD }}>
-            <div className="flex items-center gap-2 mb-4">
-              <AlertTriangle size={18} style={{ color: MUTED }} />
-              <h3 className="font-medium" style={DISPLAY}>已知限制 / 誠實揭露</h3>
-            </div>
-            <ul className="space-y-3">
-              {limitations.map((l) => (
-                <li key={l} className="flex gap-2 text-sm leading-relaxed" style={{ color: MUTED }}>
-                  <span className="shrink-0">—</span>
-                  <span>{l}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
       {/* 授權與來源 */}
-      <section className="px-6 pb-14">
+      <section className="px-6 py-14 border-t" style={{ borderColor: LINE }}>
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-2 mb-4">
             <Scale size={18} style={{ color: MUTED }} />

@@ -13,7 +13,6 @@ import {
   Radio,
   Sparkles,
   Lightbulb,
-  AlertTriangle,
 } from 'lucide-react'
 
 function GithubIcon({ className }: { className?: string }) {
@@ -118,15 +117,6 @@ const highlights = [
   '並發安全：多人同時發話時，AI 觸發走 Redis 佇列 + 鎖序列化，回應不交錯。',
   'Prompt injection 防護：房主自訂人設經結構化隔離 + 後端安全準則約束。',
   '生圖不拖慢聊天：場景文字與背景圖雙軌、生圖延到 AI 回完話才開始、每房 60 秒冷卻 + 最新優先，幾十秒的本機生圖不卡住即時對話。',
-]
-
-const limitations = [
-  'Function Calling 需模型支援 Tool：Ollama 端若選不支援的模型，Lumi 不會觸發發圖（正常，非 bug）。',
-  '換場由 LLM 自行判斷：同樣的話不一定每次都觸發 changeScene；非定向訊息 Lumi 也可能直接 [SKIP]。',
-  '場景背景需要本機 ComfyUI：沒開時只有背景圖生不出來，聊天與場景文字不受影響。',
-  '房間狀態存 Redis：房間 / 成員 / 訊息 / 佇列皆存 Redis，清空即遺失（個人專案取向）。',
-  '預設啟動政策為手動：docker-compose 的 restart 設為 "no"，不隨開機自啟。',
-  '派生自 RBAC 模板：底層仍帶 good-neighbor RBAC 後台，但非本專案展示重點。',
 ]
 
 export default function AiChatroom() {
@@ -432,9 +422,9 @@ export default function AiChatroom() {
         </div>
       </section>
 
-      {/* 設計亮點 / 已知限制 */}
+      {/* 設計亮點 */}
       <section className="px-6 py-16 bg-slate-50/60">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="max-w-5xl mx-auto">
           <div className="bg-gradient-to-br from-sky-50 to-indigo-50 rounded-2xl border border-sky-100 p-6">
             <div className="flex items-center gap-2 mb-4">
               <Lightbulb size={18} className="text-sky-600" />
@@ -445,21 +435,6 @@ export default function AiChatroom() {
                 <li key={h} className="flex gap-2 text-sm text-slate-600 leading-relaxed">
                   <span className="text-sky-500 shrink-0">•</span>
                   <span>{h}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-amber-50/60 rounded-2xl border border-amber-100 p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <AlertTriangle size={18} className="text-amber-600" />
-              <h3 className="font-bold text-slate-900">已知限制 / 誠實揭露</h3>
-            </div>
-            <ul className="space-y-3">
-              {limitations.map((l) => (
-                <li key={l} className="flex gap-2 text-sm text-slate-600 leading-relaxed">
-                  <span className="text-amber-500 shrink-0">•</span>
-                  <span>{l}</span>
                 </li>
               ))}
             </ul>
