@@ -41,6 +41,7 @@ const RpgmakerCharacterForge = lazy(() => import('@/pages/projects/RpgmakerChara
 const Drama3 = lazy(() => import('@/pages/projects/Drama3'))
 const FishingWork = lazy(() => import('@/pages/projects/FishingWork'))
 const PokemonAgentPets = lazy(() => import('@/pages/projects/PokemonAgentPets'))
+const VrmChatWidget = lazy(() => import('@/pages/projects/VrmChatWidget'))
 const CodexForge = lazy(() => import('@/pages/projects/CodexForge'))
 
 function App() {
@@ -83,6 +84,7 @@ function App() {
         <Route path="/projects/drama-3" element={<Drama3 />} />
         <Route path="/projects/fishing-work" element={<FishingWork />} />
         <Route path="/projects/pokemon-agent-pets" element={<PokemonAgentPets />} />
+        <Route path="/projects/vrm-chat-widget" element={<VrmChatWidget />} />
         <Route path="/projects/codex-forge" element={<CodexForge />} />
       </Routes>
       </Suspense>

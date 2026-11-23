@@ -90,6 +90,17 @@ export const BRIEFS: Record<string, ProjectBrief> = {
       caption: '雪地上六個 session 同時在跑（角色屬於各自的權利方，只當示意）',
     },
   },
+  'vrm-chat-widget': {
+    points: [
+      '本機 Ollama 對話，回覆帶情緒標籤自動換表情',
+      'TTS 語音回話，Web Audio 即時驅動嘴型',
+      '舞台版全畫面，泡泡版複製一個區塊就能嵌入網頁',
+    ],
+    shot: {
+      image: '/projects/vrm-chat-widget/stage.webp',
+      caption: '舞台版（角色為 VRoid Project 的 AvatarSample_A）',
+    },
+  },
   'codex-forge': {
     points: [
       '擁有者 @小助手Lumi，Codex 讀完整段討論與附件',

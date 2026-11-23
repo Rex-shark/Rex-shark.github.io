@@ -73,7 +73,7 @@
 
 ## 專案
 
-精選專案共 8 個（7 個公開、1 個私人），詳細介紹見 [spec/projects/](projects/)。頁面上的專案卡以此表為準。
+精選專案共 9 個（8 個公開、1 個私人），詳細介紹見 [spec/projects/](projects/)。頁面上的專案卡以此表為準。
 
 | 專案 | 一句描述 | tags | Repo | 站內路由 |
 |---|---|---|---|---|
@@ -84,6 +84,7 @@
 | Drama 3 TTS 工作台 | 在 Apple Silicon Mac 上離線操作 Fish Audio Drama 3 語音模型：多角色劇本、聲音複製、表演標籤、串流播放。 | Python / FastAPI / MLX | [drama-3](https://github.com/Rex-shark/drama-3) | `/projects/drama-3` |
 | fishing-work | 偽裝成 VS Code、簡報、Meet、Excel 的區網遊戲平台；繪圖比賽由本機 AI 當評審（Clef 看圖打分、gemma4 寫評語）。 | Ollama / Vision AI / Socket.IO | [fishing-work](https://github.com/Rex-shark/fishing-work) | `/projects/fishing-work` |
 | 寶可夢牧場 Agent | 讓 AI agent 的工作狀態看得見的 3D 桌寵：每個 Claude Code／Codex session 認養一隻寶可夢，用泡泡顏色與音效提醒。 | Claude Code Hooks / Electron / three.js | [pokemon-agent-pets](https://github.com/Rex-shark/pokemon-agent-pets) | `/projects/pokemon-agent-pets` |
+| VRM Chat Widget | 會聊天、會說話、有表情的 3D 虛擬角色：本機 Ollama 對話、TTS 語音回話與對嘴、whisper.cpp 語音輸入，依情緒換表情；有全畫面舞台版與可嵌入網頁的泡泡版。 | three-vrm / Ollama / TTS / STT | [vrm-chat-widget](https://github.com/Rex-shark/vrm-chat-widget) | `/projects/vrm-chat-widget` |
 | codex-forge | 把 AI 技術顧問接進需求討論群聊：擁有者 @小助手Lumi，Codex CLI 讀完整段討論與附件，回覆流程圖與可點的 HTML 原型；另有 Claude Code 驅動的 Live2D 貓。 | Spring Boot 4 / Codex CLI / Claude Code | 私人專案（不公開，不放連結） | `/projects/codex-forge` |
 
 ---

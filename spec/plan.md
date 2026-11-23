@@ -25,6 +25,7 @@ Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist �
 /projects/fishing-work                  → fishing-work showcase（強調 AI 應用）
 /projects/pokemon-agent-pets            → 寶可夢牧場 Agent showcase
 /projects/codex-forge                   → codex-forge showcase（私人專案，無 repo 連結）
+/projects/vrm-chat-widget               → VRM Chat Widget showcase
 ```
 
 ### 目錄結構
@@ -93,7 +94,7 @@ public/
 
 ## 精選專案
 
-8 個專案（7 個公開＋1 個私人），全部呈現在首頁專案區塊；23 個風格頁只列有 repo 的 7 個公開專案（`projects`），首頁讀 `featuredProjects`（含 `privateProjects`）。**已移除「系統分析設計教學」、「Spring Boot API 範例」與「Claude Code 原始碼研究」**（Spring Boot API 範例 2026-09、Claude Code 原始碼研究 2026-10 連同 showcase 頁、路由一併移除）。
+9 個專案（8 個公開＋1 個私人），全部呈現在首頁專案區塊；23 個風格頁只列有 repo 的 8 個公開專案（`projects`），首頁讀 `featuredProjects`（含 `privateProjects`）。**已移除「系統分析設計教學」、「Spring Boot API 範例」與「Claude Code 原始碼研究」**（Spring Boot API 範例 2026-09、Claude Code 原始碼研究 2026-10 連同 showcase 頁、路由一併移除）。
 
 | 專案 | 卡片描述 | 點擊行為 | Showcase 頁 | 狀態 |
 |------|----------|----------|-------------|------|
@@ -105,6 +106,7 @@ public/
 | **fishing-work** | 偽裝成 VS Code、簡報、Meet、Excel 的區網遊戲平台；繪圖比賽由本機 AI 當評審（Clef 看圖打分、gemma4 寫評語）。 | 進入 `/projects/fishing-work` | ✅ 已有 | ✅ 完成（repo 待公開） |
 | **寶可夢牧場 Agent** | 讓 AI agent 的工作狀態看得見的 3D 桌寵：每個 Claude Code／Codex session 認養一隻寶可夢。 | 進入 `/projects/pokemon-agent-pets` | ✅ 已有 | ✅ 完成（repo 待公開） |
 | **codex-forge** 🔒 | 把 AI 技術顧問接進需求討論群聊：擁有者 @小助手Lumi，Codex CLI 讀完整段討論與附件回覆；另有 Claude Code 驅動的 Live2D 貓。 | 進入 `/projects/codex-forge`（卡片顯示「私人專案」，不放 repo 連結） | ✅ 已有 | ✅ 完成（私人專案） |
+| **VRM Chat Widget** | 會聊天、會說話、有表情的 3D 虛擬角色：本機 Ollama 對話、TTS 語音與對嘴、whisper.cpp 語音輸入；舞台版與可嵌入網頁的泡泡版。 | 進入 `/projects/vrm-chat-widget` | ✅ 已有 | ✅ 完成 |
 
 ---
 
@@ -167,6 +169,7 @@ public/
 | fishing-work | `/projects/fishing-work` | [spec/projects/fishing-work.md](projects/fishing-work.md) | ✅ 完成（spec + 9 截圖 + 首頁卡片 + showcase 頁；頁面主軸為 AI 應用；配色沿用該專案的 VS Code Dark+） |
 | 寶可夢牧場 Agent | `/projects/pokemon-agent-pets` | [spec/projects/pokemon-agent-pets.md](projects/pokemon-agent-pets.md) | ✅ 完成（spec + 8 張場景地圖 + 2 張有寶可夢的實景截圖 + 首頁卡片 + showcase 頁；泡泡狀態另以網頁元件重繪圖例） |
 | codex-forge 🔒 | `/projects/codex-forge` | [spec/projects/codex-forge.md](projects/codex-forge.md) | ✅ 完成（spec + 15 截圖 + 首頁卡片 + showcase 頁；私人專案不放連結；配色沿用該專案前台的「紙偶定格」） |
+| VRM Chat Widget | `/projects/vrm-chat-widget` | [spec/projects/vrm-chat-widget.md](projects/vrm-chat-widget.md) | ✅ 完成（spec + 4 截圖 + 牌桌卡（卡圖 Codex 生成）+ showcase 頁；截圖角色為 VRoid Project 的 AvatarSample_A，圖說皆註明） |
 
 ---
 
@@ -240,7 +243,7 @@ public/
 - ✅ `public/404.html` 加 GitHub Pages SPA redirect 腳本（編碼路徑進 `?/`）
 - ✅ `index.html` 加接收腳本：還原 `?/path` 路徑 + 相容舊 `#/path` hash
 - ✅ `sitemap.xml` 補完 24 條路由（首頁 + gallery + 3 projects + 19 styles），全部無 hash
-- ✅ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條；其後移除 spring-boot-api 為 25 條；再新增 4 個風格頁為 29 條；再新增 `/projects/drama-3` 為 30 條；移除 `/projects/claude-code-sourcemap` 為 29 條；再新增 `/projects/fishing-work`、`/projects/pokemon-agent-pets` 為 31 條；再新增 `/projects/codex-forge`，現為 32 條）
+- ✅ `sitemap.xml` 補上後續新增的 2 條：`/projects/ai-chatroom`、`/projects/rpgmaker-character-forge`（補完後共 26 條；其後移除 spring-boot-api 為 25 條；再新增 4 個風格頁為 29 條；再新增 `/projects/drama-3` 為 30 條；移除 `/projects/claude-code-sourcemap` 為 29 條；再新增 `/projects/fishing-work`、`/projects/pokemon-agent-pets` 為 31 條；再新增 `/projects/codex-forge` 為 32 條；再新增 `/projects/vrm-chat-widget`，現為 33 條）
 - ✅ react-router 的 `<Link to="/xxx">` 不需改（自動跟 BrowserRouter 工作）
 - ⬜ **部署後驗證**：
   - 直接訪問 `https://rex-shark.github.io/projects/threads-bot` 應正常顯示頁面（不是 404）
@@ -375,6 +378,7 @@ Rex 2026-11-17 決定：首頁 `/` 改用撲克牌桌；原本的 Finalist 首�
 - ✅ 經典版頂端加回牌桌的入口（導覽列「牌桌首頁」）；牌桌頂端只放「設計實驗室」（Rex 2026-11-17 指示拿掉頂端的「經典版」按鈕；經典版仍可從英雄卡簡易介紹的「看完整自介」進入）
 - ✅ 其他頁面改 lazy 載入（風格頁、專案頁、經典版），首頁 JS 由 500 kB 以上降到約 270 kB；卡圖與英雄卡分層圖改 WebP（素材 2.6 MB → 1.0 MB）
 - ✅ 驗證（2026-11-17）：桌機與 375 px 手機、鍵盤操作、深淺色、詳細頁按上一頁還原牌桌與簡易介紹、`/classic`；`npm run build`、lint 通過
+- ✅ 卡片左上角圓鈕的編號改為羅馬數字（Ⅰ、Ⅱ、Ⅲ…，Rex 2026-11-23 指示；英雄卡維持 ★），簡易介紹標頭同步；`content/cards.ts` 的 `cardBadge()`
 - ⬜ `card-deck/` 獨立專案的去留（併入後保留當參考，`demo/` 風格稿仍在那裡），待 Rex 決定
 
 ### ✂️ 專案頁移除「已知限制 / 誠實揭露」✅（2026-11-18）
@@ -384,6 +388,14 @@ Rex 指示：showcase 頁不再顯示「已知限制 / 誠實揭露」區塊。
 - ✅ 移除 ThreadsBot、ai-chatroom、RPG Maker Character Forge、Drama 3 四頁的該區塊（前三頁原本與「設計亮點」並排，改為設計亮點單欄）
 - ✅ spec 原文保留作紀錄，各節加註「頁面不顯示」
 - 未動：Drama 3 的「模型會中斷」技術段落（spec 標題有「誠實揭露」字樣，但頁面上是對策與實測數據的主體內容）；fishing-work、寶可夢牧場 Agent 頁的「已知限制」區塊（標題沒有「誠實揭露」）
+
+### 🧸 新增精選專案：VRM Chat Widget ✅（2026-11-23）
+
+- ✅ `spec/projects/vrm-chat-widget.md`（取自該專案 README、THIRD_PARTY_NOTICES、models/README；repo 已公開）
+- ✅ `profile.ts`／`info.md` 新增第 9 個專案（公開專案最後一個，codex-forge 仍排最後）；經典版與 BentoGrid 配色各補一色，codex-forge 維持赤陶紅
+- ✅ showcase 頁 `VrmChatWidget.tsx`（配色取自專案畫面：淡藍天空、奶油黃、粉紅）；4 張截圖轉 WebP（舞台版、泡泡版、六表情、九動作）；`App.tsx` 路由、`sitemap.xml`、README
+- ✅ 牌桌：卡圖由 Codex image_gen 生成原創插畫（`assets/cards/vrm-chat-widget.webp`，畫風參考寶可夢牧場卡），`briefs.ts` 與 spec「卡片重點」補 3 個亮點
+- 截圖中的角色是第三方模型（VRoid Project 的 AvatarSample_A），頁面與簡易介紹的圖說都註明
 
 ### 🔖 首頁「好文分享」改為「優質網站分享」⬜（2026-10-26 提出）
 

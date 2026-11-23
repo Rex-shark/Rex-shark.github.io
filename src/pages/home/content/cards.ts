@@ -7,6 +7,7 @@ import forgeArt from '../assets/cards/rpgmaker-character-forge.webp'
 import dramaArt from '../assets/cards/drama-3.webp'
 import fishingArt from '../assets/cards/fishing-work.webp'
 import petsArt from '../assets/cards/pokemon-agent-pets.webp'
+import vrmArt from '../assets/cards/vrm-chat-widget.webp'
 import codexForgeArt from '../assets/cards/codex-forge.webp'
 
 export interface CardArt {
@@ -39,6 +40,8 @@ const ART: Record<string, CardArt> = {
   'fishing-work': { image: fishingArt },
   // 辦公桌上浮著一座等角小島牧場，原創的圓滾滾小寵物頭上頂著不同顏色的狀態泡泡，光線連到後方的終端機視窗
   'pokemon-agent-pets': { image: petsArt },
+  // 傍晚的書桌上，筆電裡的原創少女虛擬角色揮手說話，旁邊飄著表情小泡泡、聲波與音符，螢幕角落有縮小版的她探出頭，桌上有麥克風與熱茶
+  'vrm-chat-widget': { image: vrmArt },
   // 紙板劇場箱裡大家把便條與草圖貼成一條時間軸，AI 小助手從影印紙裡探出身子展開流程圖，角落的小黑貓遞紙條給主持人
   'codex-forge': { image: codexForgeArt },
 }
@@ -66,4 +69,29 @@ export function cardTitle(card: CardData) {
 export function cardBrief(card: CardData) {
   const text = card.kind === 'intro' ? profile.intro[0] : card.project.desc
   return text.split(/[。，：]/)[0].trim()
+}
+
+/** 羅馬數字單字元（Ⅰ～Ⅻ），一個字就放得進卡片左上角的圓鈕 */
+const ROMAN_GLYPHS = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ', 'Ⅸ', 'Ⅹ', 'Ⅺ', 'Ⅻ']
+const ROMAN_PARTS: [number, string][] = [
+  [10, 'X'],
+  [9, 'IX'],
+  [5, 'V'],
+  [4, 'IV'],
+  [1, 'I'],
+]
+
+/** 圓鈕上的牌組編號：英雄卡（0）是 ★，專案卡用羅馬數字；超過 12 張改用一般英文字母組合 */
+export function cardBadge(no: number) {
+  if (no <= 0) return '★'
+  if (no <= ROMAN_GLYPHS.length) return ROMAN_GLYPHS[no - 1]
+  let n = no
+  let out = ''
+  for (const [v, s] of ROMAN_PARTS) {
+    while (n >= v) {
+      out += s
+      n -= v
+    }
+  }
+  return out
 }

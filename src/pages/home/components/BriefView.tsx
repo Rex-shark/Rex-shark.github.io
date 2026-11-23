@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { motion, type Variants } from 'framer-motion'
 import { profile } from '@/data/profile'
 import { BRIEFS } from '../content/briefs'
-import { cardTitle, type CardData } from '../content/cards'
+import { cardBadge, cardTitle, type CardData } from '../content/cards'
 import { GithubIcon, LockIcon } from '../content/icons'
 
 /** 退場時要縮回去的位置（卡片中心、實際寬度、旋轉角） */
@@ -81,7 +81,7 @@ export default function BriefView({ card, no, vw, vh, narrow, from, onClose, onR
         >
           <header className="relative z-10 flex h-14 shrink-0 items-center gap-3 pr-3 pl-3 shadow-[0_6px_14px_var(--header-shadow)]">
             <span className={`card-badge grid h-8 w-8 shrink-0 place-items-center rounded-full text-sm font-extrabold ${hero ? 'is-hero' : ''}`}>
-              {hero ? '★' : no}
+              {cardBadge(no)}
             </span>
             <p className="min-w-0 flex-1 truncate text-base font-bold tracking-[-0.02em]">{cardTitle(card)}</p>
             <button

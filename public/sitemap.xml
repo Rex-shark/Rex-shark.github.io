@@ -53,6 +53,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://rex-shark.github.io/projects/vrm-chat-widget</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://rex-shark.github.io/projects/codex-forge</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

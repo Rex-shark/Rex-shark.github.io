@@ -147,6 +147,14 @@ export const projects: Project[] = [
     href: 'https://github.com/Rex-shark/pokemon-agent-pets',
     to: '/projects/pokemon-agent-pets',
   },
+  {
+    slug: 'vrm-chat-widget',
+    title: 'VRM Chat Widget',
+    desc: '會聊天、會說話、有表情的 3D 虛擬角色：本機 Ollama 對話、TTS 語音回話與對嘴、whisper.cpp 語音輸入，依情緒換表情；有全畫面舞台版與可嵌入網頁的泡泡版。',
+    tags: ['three-vrm', 'Ollama', 'TTS / STT'],
+    href: 'https://github.com/Rex-shark/vrm-chat-widget',
+    to: '/projects/vrm-chat-widget',
+  },
 ]
 
 /** 私人專案：repo 不公開，沒有 GitHub 連結，只有站內介紹頁 */

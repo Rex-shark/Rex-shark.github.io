@@ -31,7 +31,7 @@ const DRAG_SCALE = 1.12
 /** 滑鼠停在場上卡片時放大一點 */
 const FIELD_HOVER = 1.12
 
-/** 牌組編號：自介卡為 0（顯示 ★），專案依序 1、2、3… */
+/** 牌組編號：自介卡為 0（顯示 ★），專案依序 1、2、3…（圓鈕上顯示成羅馬數字，見 cardBadge） */
 const cardNo = (card: CardData) => cards.indexOf(card)
 
 /**

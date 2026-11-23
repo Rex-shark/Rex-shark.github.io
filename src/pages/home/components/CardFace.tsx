@@ -1,7 +1,7 @@
 import { profile } from '@/data/profile'
 import { FACE_H, FACE_W } from '../layout'
 import HeroArt from './HeroArt'
-import { cardBrief, cardTitle, type CardData } from '../content/cards'
+import { cardBadge, cardBrief, cardTitle, type CardData } from '../content/cards'
 
 interface Props {
   card: CardData
@@ -13,7 +13,7 @@ interface Props {
 /**
  * 卡面（柔和 UI）：固定以 FACE_W × FACE_H 繪製，外層再依實際卡寬等比縮放。
  * 由上而下：卡圖 → 置中的卡名條（壓在卡圖下緣）→ 凹進去的一句話說明 → 左右兩個標籤；
- * 左上角是龍珠橘的圓鈕（編號／★）。英雄卡是粉彩光暈框、粉彩卡名條，人物會動。
+ * 左上角是龍珠橘的圓鈕（羅馬數字編號／★）。英雄卡是粉彩光暈框、粉彩卡名條，人物會動。
  */
 export default function CardFace({ card, no, glow }: Props) {
   const hero = card.kind === 'intro'
@@ -68,12 +68,12 @@ export default function CardFace({ card, no, glow }: Props) {
         ))}
       </div>
 
-      {/* 左上角圓鈕：龍珠橘，專案卡顯示編號，英雄卡是★ */}
+      {/* 左上角圓鈕：龍珠橘，專案卡顯示羅馬數字編號，英雄卡是★ */}
       <div
         className="card-badge absolute -top-[12px] -left-[12px] z-10 grid h-[29px] w-[29px] place-items-center rounded-full text-[14px] font-extrabold tracking-[-0.02em]"
         aria-hidden="true"
       >
-        {hero ? '★' : no}
+        {cardBadge(no)}
       </div>
     </div>
   )
