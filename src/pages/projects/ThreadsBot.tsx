@@ -183,7 +183,10 @@ export default function ThreadsBot() {
             className="justify-self-center"
           >
             <img
-              src="/projects/threads-bot/hero-threads-post.png"
+              width={1206}
+              height={2622}
+              decoding="async"
+              src="/projects/threads-bot/hero-threads-post.webp"
               alt="Threads 實際發文成果"
               className="rounded-2xl border border-slate-200 shadow-lg shadow-indigo-100/40 max-h-[600px] w-auto hover:-translate-y-1 transition-transform duration-300"
             />
@@ -252,7 +255,11 @@ export default function ThreadsBot() {
               Ollama 本地回應實測
             </p>
             <img
-              src="/projects/threads-bot/ollama-response.png"
+              width={1304}
+              height={442}
+              loading="lazy"
+              decoding="async"
+              src="/projects/threads-bot/ollama-response.webp"
               alt="Ollama 終端機回應"
               className="rounded-2xl border border-slate-200 hover:-translate-y-1 transition-transform duration-300 w-full"
             />
@@ -269,6 +276,8 @@ export default function ThreadsBot() {
           </p>
           <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-10 overflow-x-auto">
             <img
+              loading="lazy"
+              decoding="async"
               src="/projects/threads-bot/architecture-flow.svg"
               alt="ThreadsBot 系統架構流程圖"
               className="mx-auto max-w-full h-auto"
@@ -355,7 +364,7 @@ export default function ThreadsBot() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            src="/projects/threads-bot/db-records.png"
+            src="/projects/threads-bot/db-records.webp"
             alt="crawl_article 表實際資料"
             className="rounded-2xl border border-slate-200 w-full hover:-translate-y-1 transition-transform duration-300"
           />

@@ -33,7 +33,7 @@ export const BRIEFS: Record<string, ProjectBrief> = {
       '本機 Ollama 改寫成 500 字內的 Threads 貼文',
       '原文 → AI 改寫 → 發布結果，全程可回溯',
     ],
-    shot: { image: '/projects/threads-bot/hero-threads-post.png', caption: 'Threads 實際發文成果' },
+    shot: { image: '/projects/threads-bot/hero-threads-post.webp', caption: 'Threads 實際發文成果' },
   },
   'ai-chatroom': {
     points: [
@@ -42,7 +42,7 @@ export const BRIEFS: Record<string, ProjectBrief> = {
       '一對一用 SSE、多人房用 WebSocket／STOMP',
     ],
     shot: {
-      image: '/projects/ai-chatroom/scene-room-festival.png',
+      image: '/projects/ai-chatroom/scene-room-festival.webp',
       caption: '多人房實況：Lumi 換到「海邊的夏日祭典」，背景為 ComfyUI 生成',
     },
   },
@@ -53,7 +53,7 @@ export const BRIEFS: Record<string, ProjectBrief> = {
       '產出依寫死的五項判準由 AI 自我驗收',
     ],
     shot: {
-      image: '/projects/rpgmaker-character-forge/character-gallery.png',
+      image: '/projects/rpgmaker-character-forge/character-gallery.webp',
       caption: '角色圖鑑：行走圖預覽、角色立繪與敵人戰鬥圖並排',
     },
   },
@@ -64,7 +64,7 @@ export const BRIEFS: Record<string, ProjectBrief> = {
       '4bit／8bit／bf16 三版量化可切換',
     ],
     shot: {
-      image: '/projects/drama-3/workbench-light.jpg',
+      image: '/projects/drama-3/workbench-light.webp',
       caption: '工作台：角色與參考音檔、劇本行、取樣參數與 take 卡紙',
     },
   },
@@ -75,7 +75,7 @@ export const BRIEFS: Record<string, ProjectBrief> = {
       '連不上模型時自動改隨機評分，照樣能玩',
     ],
     shot: {
-      image: '/projects/fishing-work/draw-contest-reveal.png',
+      image: '/projects/fishing-work/draw-contest-reveal.webp',
       caption: '繪圖比賽揭曉：Clef 分數、名次與評審ミオ的評語',
     },
   },

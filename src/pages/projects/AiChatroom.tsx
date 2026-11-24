@@ -173,7 +173,10 @@ export default function AiChatroom() {
           </motion.div>
 
           <img
-            src="/projects/ai-chatroom/scene-room-festival.png"
+            width={800}
+            height={500}
+            decoding="async"
+            src="/projects/ai-chatroom/scene-room-festival.webp"
             alt="多人聊天室：Lumi 依對話換到「海邊的夏日祭典」，上方「當前場景」已更新，背景換成 ComfyUI 生成的祭典夜景"
             className="mt-10 rounded-2xl border border-slate-200 shadow-lg shadow-sky-100/50 w-full hover:-translate-y-1 transition-transform duration-300"
           />
@@ -224,7 +227,11 @@ export default function AiChatroom() {
                 </p>
               </div>
               <img
-                src="/projects/ai-chatroom/ai-bubble.png"
+                width={2000}
+                height={1654}
+                loading="lazy"
+                decoding="async"
+                src="/projects/ai-chatroom/ai-bubble.webp"
                 alt="AI 泡泡一對一對話（攝於角色更名前）"
                 className="w-full border-t border-slate-100"
               />
@@ -248,7 +255,11 @@ export default function AiChatroom() {
                 </p>
               </div>
               <img
-                src="/projects/ai-chatroom/room-chat.png"
+                width={2000}
+                height={1654}
+                loading="lazy"
+                decoding="async"
+                src="/projects/ai-chatroom/room-chat.webp"
                 alt="多人聊天室房內回覆（攝於角色更名前）"
                 className="w-full border-t border-slate-100"
               />
@@ -271,8 +282,8 @@ export default function AiChatroom() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3">
             {[
-              { src: '/projects/ai-chatroom/scene-bg-festival.jpg', alt: '自動生成的背景：海邊的夏日祭典，夜晚，紅燈籠與煙火', label: '海邊的夏日祭典' },
-              { src: '/projects/ai-chatroom/scene-bg-onsen.jpg', alt: '自動生成的背景：山中溫泉旅館的庭院，雪夜與石燈籠', label: '山裡溫泉旅館的雪夜庭院' },
+              { src: '/projects/ai-chatroom/scene-bg-festival.webp', alt: '自動生成的背景：海邊的夏日祭典，夜晚，紅燈籠與煙火', label: '海邊的夏日祭典' },
+              { src: '/projects/ai-chatroom/scene-bg-onsen.webp', alt: '自動生成的背景：山中溫泉旅館的庭院，雪夜與石燈籠', label: '山裡溫泉旅館的雪夜庭院' },
             ].map((img, i) => (
               <motion.figure
                 key={img.src}
@@ -282,6 +293,8 @@ export default function AiChatroom() {
                 transition={{ duration: 0.4, delay: i * 0.08 }}
               >
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src={img.src}
                   alt={img.alt}
                   className="rounded-2xl border border-slate-200 w-full hover:-translate-y-1 transition-transform duration-300"
@@ -359,7 +372,11 @@ export default function AiChatroom() {
               開房 / 加入房間
             </p>
             <img
-              src="/projects/ai-chatroom/rooms-lobby.png"
+              width={2000}
+              height={1654}
+              loading="lazy"
+              decoding="async"
+              src="/projects/ai-chatroom/rooms-lobby.webp"
               alt="多人聊天室開房表單（攝於角色更名前）"
               className="rounded-2xl border border-slate-200 w-full hover:-translate-y-1 transition-transform duration-300"
             />
@@ -378,7 +395,11 @@ export default function AiChatroom() {
               Lumi 依情緒挑圖（emotion：embarrassed × intent：affection）
             </p>
             <img
-              src="/projects/ai-chatroom/luna-emotion-image.png"
+              width={1494}
+              height={1498}
+              loading="lazy"
+              decoding="async"
+              src="/projects/ai-chatroom/luna-emotion-image.webp"
               alt="被誇獎後害羞，自主發出對應情緒的圖片（攝於角色更名前）"
               className="rounded-2xl border border-slate-200 w-full max-w-md mx-auto hover:-translate-y-1 transition-transform duration-300"
             />

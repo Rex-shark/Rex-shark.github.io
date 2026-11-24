@@ -4,7 +4,7 @@ slug: ai-chatroom
 status: draft
 date: 2026-06-16
 tags: [AI, Spring AI, WebSocket, SSE, React]
-cover: /projects/ai-chatroom/home.png
+cover: /projects/ai-chatroom/home.webp
 repo: https://github.com/Rex-shark/ai-chatroom
 ---
 
@@ -16,7 +16,7 @@ repo: https://github.com/Rex-shark/ai-chatroom
 
 技術上是 **Spring Boot 3 + React 19 + Spring AI** 的全端專案，用 Docker 單一網域部署。這篇談幾個我覺得最有意思的設計決策。
 
-![首頁](/projects/ai-chatroom/home.png)
+![首頁](/projects/ai-chatroom/home.webp)
 
 ---
 
@@ -35,7 +35,7 @@ repo: https://github.com/Rex-shark/ai-chatroom
 
 匿名訪客填個暱稱就能聊，靠 `anon_id` 的 HttpOnly cookie + Redis session（TTL 30 分）維持身分，配 Spring AI 的 `ChatMemory`（`CONVERSATION_ID = anonId`）記住上下文。
 
-![AI 泡泡一對一](/projects/ai-chatroom/ai-bubble.png)
+![AI 泡泡一對一](/projects/ai-chatroom/ai-bubble.webp)
 
 ### 多人房為什麼用 WebSocket/STOMP？
 
@@ -53,7 +53,7 @@ repo: https://github.com/Rex-shark/ai-chatroom
 
 但這帶來一個並發問題：多人同時發話時，多個 AI 判斷會交錯，回應順序亂掉。解法是用 **Redis 佇列 + 鎖**（`ai:queue` + `ai:lock`）把 AI 觸發**序列化**，嚴格逐則處理，確保 Luna 的反應不會打架。
 
-![房間內 Luna 自主回應](/projects/ai-chatroom/room-chat.png)
+![房間內 Luna 自主回應](/projects/ai-chatroom/room-chat.webp)
 
 ---
 
@@ -69,7 +69,7 @@ repo: https://github.com/Rex-shark/ai-chatroom
 
 輸入框上方還有一排「對象快捷 chip」：對所有人 / 對 Luna / 對每位成員 / 旁白，一鍵切換。最細緻的是它**具記憶性**——送出後維持同一對象（保留前綴），不會每次跳回「對所有人」；而當記憶的對象**離開房間**時，會自動退回「對所有人」（Luna 常駐不受影響）。
 
-![開房表單](/projects/ai-chatroom/rooms-lobby.png)
+![開房表單](/projects/ai-chatroom/rooms-lobby.webp)
 
 ---
 
@@ -90,7 +90,7 @@ repo: https://github.com/Rex-shark/ai-chatroom
 
 先看效果：Rex 說「你今天超可愛」，Luna 害羞地回「欸～突然這樣誇獎，人家會害羞啦！」，並自己配上一張害羞表情的圖：
 
-![Luna 依情緒發圖](/projects/ai-chatroom/luna-emotion-image.png)
+![Luna 依情緒發圖](/projects/ai-chatroom/luna-emotion-image.webp)
 
 ### 一個工具、兩個維度挑圖
 

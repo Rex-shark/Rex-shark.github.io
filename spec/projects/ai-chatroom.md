@@ -205,14 +205,14 @@ route: /projects/ai-chatroom
 
 | # | 檔案 | 內容 | 用途 / 位置 |
 |---|------|------|-------------|
-| 1 | `scene-room-festival.png` | 多人房實況：Lumi 依對話換到「海邊的夏日祭典」，上方「當前場景」已更新，背景為 ComfyUI 生成的祭典夜景（800×500） | ⭐ Hero 主視覺 |
-| 2 | `scene-bg-festival.jpg` | 自動生成的背景：海邊的夏日祭典，夜晚，紅燈籠與煙火（896×592） | 「自動情境生圖」段落 |
-| 3 | `scene-bg-onsen.jpg` | 自動生成的背景：山中溫泉旅館的雪夜庭院（896×592） | 「自動情境生圖」段落 |
-| 4 | `ai-bubble.png` | AI 泡泡一對一實際對話 | 「AI 泡泡」卡片 |
-| 5 | `room-chat.png` | 房內實況：房號 / 在線成員 / 對象 chip / 開場回覆 | 「多人聊天室」卡片 |
-| 6 | `rooms-lobby.png` | 多人聊天室大廳「開房」表單（暱稱 + 人設 + 建立房間） | 「開房 / 加入房間」 |
-| 7 | `luna-emotion-image.png` | 情緒圖庫實例：被誇「你今天超可愛」，害羞回覆並自主發出對應情緒圖（emotion：embarrassed × intent：affection） | 「情緒圖庫」段落 |
-| 8 | `home.png` | 舊版玻璃態首頁 Hero（月亮圖示 + Luna） | 目前僅 `docs/blog/ai-chatroom.md` 草稿的 cover 使用 |
+| 1 | `scene-room-festival.webp` | 多人房實況：Lumi 依對話換到「海邊的夏日祭典」，上方「當前場景」已更新，背景為 ComfyUI 生成的祭典夜景（800×500） | ⭐ Hero 主視覺 |
+| 2 | `scene-bg-festival.webp` | 自動生成的背景：海邊的夏日祭典，夜晚，紅燈籠與煙火（896×592） | 「自動情境生圖」段落 |
+| 3 | `scene-bg-onsen.webp` | 自動生成的背景：山中溫泉旅館的雪夜庭院（896×592） | 「自動情境生圖」段落 |
+| 4 | `ai-bubble.webp` | AI 泡泡一對一實際對話 | 「AI 泡泡」卡片 |
+| 5 | `room-chat.webp` | 房內實況：房號 / 在線成員 / 對象 chip / 開場回覆 | 「多人聊天室」卡片 |
+| 6 | `rooms-lobby.webp` | 多人聊天室大廳「開房」表單（暱稱 + 人設 + 建立房間） | 「開房 / 加入房間」 |
+| 7 | `luna-emotion-image.webp` | 情緒圖庫實例：被誇「你今天超可愛」，害羞回覆並自主發出對應情緒圖（emotion：embarrassed × intent：affection） | 「情緒圖庫」段落 |
+| 8 | `home.webp` | 舊版玻璃態首頁 Hero（月亮圖示 + Luna） | 目前僅 `docs/blog/ai-chatroom.md` 草稿的 cover 使用 |
 
 > 1–3 取自 ai-chatroom 的 `docs/images/`（2026-10-19）。
 > ⚠️ 4–8 攝於**角色更名前**，畫面上仍是舊名「Luna 🌙」與月亮圖示；頁面引用時須在圖說註明。待重新截圖後替換並移除註記。
@@ -237,4 +237,4 @@ route: /projects/ai-chatroom
 - 聊到換地方時自己換場，本機 ComfyUI 生成背景
 - 一對一用 SSE、多人房用 WebSocket／STOMP
 
-代表截圖：`public/projects/ai-chatroom/scene-room-festival.png`（多人房實況：Lumi 換到「海邊的夏日祭典」，背景為 ComfyUI 生成）
+代表截圖：`public/projects/ai-chatroom/scene-room-festival.webp`（多人房實況：Lumi 換到「海邊的夏日祭典」，背景為 ComfyUI 生成）

@@ -231,9 +231,9 @@ route: /projects/threads-bot
 
 | # | 來源檔 | 改名為 | 用途 / 位置 | 備註 |
 |---|---|---|---|---|
-| 1 | `img/發文成果圖.PNG` | `hero-threads-post.png` | ⭐ Hero 旁或頁尾「成果」區塊 | 手機豎版 Threads 實際貼文，最強成果證明 |
-| 2 | `img/ollama回應.png` | `ollama-response.png` | 「本地 LLM 文章改寫」功能卡片旁 | 終端機 `curl /api/generate` 回應截圖 |
-| 3 | `img/DB資料圖.png` | `db-records.png` | 「資料模型摘要」段落 | `crawl_article` 表實際資料列 |
+| 1 | `img/發文成果圖.PNG` | `hero-threads-post.webp` | ⭐ Hero 旁或頁尾「成果」區塊 | 手機豎版 Threads 實際貼文，最強成果證明 |
+| 2 | `img/ollama回應.png` | `ollama-response.webp` | 「本地 LLM 文章改寫」功能卡片旁 | 終端機 `curl /api/generate` 回應截圖 |
+| 3 | `img/DB資料圖.png` | `db-records.webp` | 「資料模型摘要」段落 | `crawl_article` 表實際資料列 |
 | 4 | `img/流程圖.md` | （直接內嵌 mermaid） | Overview / 流程區塊 | 見下方「架構流程圖」 |
 
 ### 架構流程圖（mermaid 已提供）
@@ -248,8 +248,8 @@ route: /projects/threads-bot
 ### 截圖樣式建議
 
 - 三張 PNG 統一加圓角 `rounded-2xl` + 細邊框 `border-slate-200`，hover 可微微抬起。
-- `hero-threads-post.png` 因為是手機豎版，建議放在 Hero 右側欄或單獨「成果」區塊置中，不要強拉滿寬以免變形。
-- `db-records.png`、`ollama-response.png` 屬於螢幕截圖，可加 macOS 視窗框裝飾或保持原樣。
+- `hero-threads-post.webp` 因為是手機豎版，建議放在 Hero 右側欄或單獨「成果」區塊置中，不要強拉滿寬以免變形。
+- `db-records.webp`、`ollama-response.webp` 屬於螢幕截圖，可加 macOS 視窗框裝飾或保持原樣。
 
 ---
 
@@ -271,4 +271,4 @@ route: /projects/threads-bot
 - 本機 Ollama 改寫成 500 字內的 Threads 貼文
 - 原文 → AI 改寫 → 發布結果，全程可回溯
 
-代表截圖：`public/projects/threads-bot/hero-threads-post.png`（Threads 實際發文成果）
+代表截圖：`public/projects/threads-bot/hero-threads-post.webp`（Threads 實際發文成果）

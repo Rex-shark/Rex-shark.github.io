@@ -223,7 +223,10 @@ export default function Drama3() {
           </motion.div>
 
           <img
-            src="/projects/drama-3/workbench-light.jpg"
+            width={1200}
+            height={1068}
+            decoding="async"
+            src="/projects/drama-3/workbench-light.webp"
             alt="Drama 3 工作台亮色介面：左欄角色與參考音檔、中欄劇本行、右欄取樣參數與 take 卡紙"
             className="mt-10 w-full border hover:-translate-y-1 transition-transform duration-300"
             style={{ borderColor: LINE, boxShadow: '0 18px 40px -24px rgba(18,18,18,0.35)' }}
@@ -398,7 +401,11 @@ export default function Drama3() {
             </div>
             <figure className="lg:col-span-3">
               <img
-                src="/projects/drama-3/workbench-dark-early-stop.jpg"
+                width={1200}
+                height={1068}
+                loading="lazy"
+                decoding="async"
+                src="/projects/drama-3/workbench-dark-early-stop.webp"
                 alt="Drama 3 工作台暗色介面，take 卡紙顯示「偵測到長時間無聲，已自動停止」的提示"
                 className="w-full border hover:-translate-y-1 transition-transform duration-300"
                 style={{ borderColor: LINE }}

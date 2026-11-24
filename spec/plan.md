@@ -236,6 +236,7 @@ public/
 - ✅ `public/robots.txt`
 - ✅ `public/sitemap.xml`（初版：首頁 + gallery；Lv2 已改為無 hash 路徑）
 - ✅ **JSON-LD `Person` schema**
+- ✅ 專案截圖轉 WebP（2026-11-24）：`public/projects` 25 張 PNG／JPG 轉成 WebP（12 MB → 1.9 MB，原本的 PNG／JPG 已從 `public` 移除，要找回看 git 歷史），專案頁 `<img>` 補 `loading="lazy"`、`decoding="async"` 與寬高；加 `apple-touch-icon`（180×180）
 - ⬜ 部署後用 [Open Graph Debugger](https://www.opengraph.xyz/) 驗證（需推 main 觸發 deploy）
 - ✅ 1200×630 專屬 OG 圖 `public/og.jpg` 取代 `/me.png`（2026-11-24；原始稿 `scripts/og-image.html`，headless Chrome 截圖後轉 JPG）
 - ✅ 門面修正（2026-11-24）：找不到頁面 `src/pages/NotFound.tsx`（`path="*"`，原本是空白畫面）；各頁專屬分頁標題（`src/lib/pageTitle.ts`，`/templates` 仍由範本頁自己設定；新增風格頁時要補 `STYLE_NAMES`）；頭像改用 512px WebP `/me.webp`（1.7 MB → 47 kB）；description、README、個人網站專案描述改成與牌桌首頁一致
@@ -385,6 +386,8 @@ Rex 2026-11-17 決定：首頁 `/` 改用撲克牌桌；原本的 Finalist 首�
 - ✅ 設計範本卡改名「UI 設計試衣間」（2026-11-24，Rex 指示由 Claude 取名，呼應卡圖的試衣間）：只改牌卡標題與按鈕「進試衣間 →」，路由 `/templates` 與範本頁內的「設計範本」名稱不動
 - ✅ 牌桌頂端移除「設計實驗室」連結（Rex 2026-11-24 指示）：頂端只剩深淺切換；設計實驗室仍可從經典版導覽列進入
 - ✅ 卡片左上角圓鈕的編號改為羅馬數字（Ⅰ、Ⅱ、Ⅲ…，Rex 2026-11-23 指示；英雄卡維持 ★），簡易介紹標頭同步；`content/cards.ts` 的 `cardBadge()`
+- ✅ 英雄卡收回手牌時固定排在手牌正中間（Rex 2026-11-24 指示；原本會回到最左邊）：`Home.tsx` 的 `handOrder()`，專案卡仍照編號排，手牌張數為偶數時英雄卡落在中間偏右
+- ✅ 牌桌頂端列加職稱與聯絡圖示（Rex 2026-11-24 指示）：標題下方改放職稱（`profile.title`），右側加 GitHub、Email 圖示連結；操作提示移到頂端列下方置中。頂端仍不放「設計實驗室」「經典版」連結
 - ⬜ `card-deck/` 獨立專案的去留（併入後保留當參考，`demo/` 風格稿仍在那裡），待 Rex 決定
 
 ### ✂️ 專案頁移除「已知限制 / 誠實揭露」✅（2026-11-18）

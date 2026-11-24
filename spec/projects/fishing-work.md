@@ -107,15 +107,15 @@ component: src/pages/projects/FishingWork.tsx
 
 | 檔案 | 說明 |
 |---|---|
-| `public/projects/fishing-work/draw-guess-vscode.png` | 我畫你猜（VS Code 偽裝）：畫布在編輯區、TERMINAL 是聊天猜題、檔案總管是玩家與分數 |
-| `public/projects/fishing-work/draw-guess-ppt.png` | 我畫你猜（PowerPoint 偽裝） |
-| `public/projects/fishing-work/draw-guess-meet.png` | 我畫你猜（Google Meet 偽裝） |
-| `public/projects/fishing-work/draw-guess-excel.png` | 我畫你猜（Excel 偽裝） |
-| `public/projects/fishing-work/draw-contest-drawing.png` | 繪圖比賽作畫中（簡報偽裝） |
-| `public/projects/fishing-work/draw-contest-reveal.png` | 繪圖比賽揭曉：Clef 分數、名次與ミオ的評語 |
-| `public/projects/fishing-work/draw-contest-mimic.png` | 像不像比賽：作畫中的參考圖面板 |
-| `public/projects/fishing-work/song-guess-playing.png` | 猜歌播放中（Meet 偽裝） |
-| `public/projects/fishing-work/song-guess-reveal.png` | 猜歌揭曉 |
+| `public/projects/fishing-work/draw-guess-vscode.webp` | 我畫你猜（VS Code 偽裝）：畫布在編輯區、TERMINAL 是聊天猜題、檔案總管是玩家與分數 |
+| `public/projects/fishing-work/draw-guess-ppt.webp` | 我畫你猜（PowerPoint 偽裝） |
+| `public/projects/fishing-work/draw-guess-meet.webp` | 我畫你猜（Google Meet 偽裝） |
+| `public/projects/fishing-work/draw-guess-excel.webp` | 我畫你猜（Excel 偽裝） |
+| `public/projects/fishing-work/draw-contest-drawing.webp` | 繪圖比賽作畫中（簡報偽裝） |
+| `public/projects/fishing-work/draw-contest-reveal.webp` | 繪圖比賽揭曉：Clef 分數、名次與ミオ的評語 |
+| `public/projects/fishing-work/draw-contest-mimic.webp` | 像不像比賽：作畫中的參考圖面板 |
+| `public/projects/fishing-work/song-guess-playing.webp` | 猜歌播放中（Meet 偽裝） |
+| `public/projects/fishing-work/song-guess-reveal.webp` | 猜歌揭曉 |
 
 ---
 
@@ -141,4 +141,4 @@ component: src/pages/projects/FishingWork.tsx
 - 本機 Clef 看圖打分、gemma4 扮評審寫評語
 - 連不上模型時自動改隨機評分，照樣能玩
 
-代表截圖：`public/projects/fishing-work/draw-contest-reveal.png`（繪圖比賽揭曉：Clef 分數、名次與評審ミオ的評語）
+代表截圖：`public/projects/fishing-work/draw-contest-reveal.webp`（繪圖比賽揭曉：Clef 分數、名次與評審ミオ的評語）

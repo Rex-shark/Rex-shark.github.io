@@ -7,6 +7,7 @@ import ThemeToggle from './components/ThemeToggle'
 import { readDeckTheme, saveDeckTheme, type DeckTheme } from './content/theme'
 import BriefView, { type ExitTarget } from './components/BriefView'
 import { cards, type CardData } from './content/cards'
+import { GithubIcon, MailIcon } from './content/icons'
 import { PLAY_SLOTS, computeLayout, computeMat, handPose, nearestOpenSlot, type Pose } from './layout'
 import './deck.css'
 
@@ -30,8 +31,24 @@ const DRAG_SCALE = 1.12
 /** 滑鼠停在場上卡片時放大一點 */
 const FIELD_HOVER = 1.12
 
+/** 頂端列的聯絡圖示連結 */
+const HEADER_LINK =
+  'grid h-8 w-8 place-items-center rounded-full text-deck-muted transition-colors hover:text-deck-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-deck-accent'
+
 /** 牌組編號：自介卡為 0（顯示 ★），專案依序 1、2、3…（圓鈕上顯示成羅馬數字，見 cardBadge） */
 const cardNo = (card: CardData) => cards.indexOf(card)
+
+/**
+ * 手牌由左到右的順序：專案卡照牌組編號排，英雄卡（自介）固定插在正中間。
+ * 英雄卡從場上收回手牌時因此回到手牌中央，而不是最左邊；張數為偶數時落在中間偏右那一張。
+ */
+function handOrder(inHand: CardData[]): CardData[] {
+  const hero = inHand.find((c) => c.kind === 'intro')
+  if (!hero) return inHand
+  const rest = inHand.filter((c) => c !== hero)
+  const mid = Math.ceil(rest.length / 2)
+  return [...rest.slice(0, mid), hero, ...rest.slice(mid)]
+}
 
 /**
  * 牌桌狀態存在 sessionStorage：從簡易介紹進完整介紹頁，再按上一頁回來時，
@@ -226,7 +243,7 @@ export default function Home() {
     }
   }, [dragId, layout, mat, placed, placeAt, placeAuto, returnToHand, setDrag, takenSlots])
 
-  const hand = cards.filter((c) => !(c.id in placed))
+  const hand = handOrder(cards.filter((c) => !(c.id in placed)))
   const dragging = drag?.moved ? drag : null
   const hoverIdx = !dragging && hoverId ? hand.findIndex((c) => c.id === hoverId) : -1
 
@@ -283,7 +300,7 @@ export default function Home() {
   // 在放大畫面按「收回手牌」：退場動畫要縮回手牌裡的位置，而不是原本的場地格
   const [exitTo, setExitTo] = useState<ExitTarget | null>(null)
   const returnFromInspect = (id: string) => {
-    const nextHand = cards.filter((c) => !(c.id in placed) || c.id === id)
+    const nextHand = handOrder(cards.filter((c) => !(c.id in placed) || c.id === id))
     const p = handPose(nextHand.findIndex((c) => c.id === id), nextHand.length, null, layout, vw, vh)
     setExitTo({ cx: p.cx, cy: p.cy, w: layout.cardW * p.scale, rotate: p.rotate })
     returnToHand(id)
@@ -304,11 +321,16 @@ export default function Home() {
           <header className="absolute top-0 right-0 left-0 z-50 flex h-16 items-center justify-between gap-4 px-7 text-deck-fg">
             <div className="min-w-0">
               <h1 className="truncate text-xl font-bold tracking-[-0.02em] text-(color:--title)">{profile.name} 的手牌</h1>
-              <p className="truncate text-xs text-(color:--sub)">
-                {layout.narrow ? '點一張牌看介紹' : '把手牌拖到場地格子上（或點一下），點場上的卡看介紹；拖回下方即收回'}
-              </p>
+              {/* 職稱放在頂端：訪客不用點開英雄卡就知道這是誰的網站 */}
+              <p className="truncate text-xs font-medium text-(color:--sub)">{profile.title}</p>
             </div>
-            <nav className="flex shrink-0 items-center gap-2 sm:gap-3" aria-label="其他頁面">
+            <nav className="flex shrink-0 items-center gap-1 sm:gap-2" aria-label="聯絡方式與顯示設定">
+              <a className={HEADER_LINK} href={profile.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`GitHub：@${profile.githubHandle}`} title="GitHub">
+                <GithubIcon size={18} />
+              </a>
+              <a className={HEADER_LINK} href={`mailto:${profile.email}`} aria-label={`寄信給 ${profile.name}`} title="Email">
+                <MailIcon size={18} />
+              </a>
               <ThemeToggle
                 theme={theme}
                 onChange={(t) => {
@@ -318,6 +340,11 @@ export default function Home() {
               />
             </nav>
           </header>
+
+          {/* 操作提示：頂端列下方置中，不擋場地 */}
+          <p className="pointer-events-none absolute top-16 right-0 left-0 z-[5] truncate px-7 text-center text-xs text-(color:--sub)">
+            {layout.narrow ? '點一張牌看介紹' : '把手牌拖到場地格子上（或點一下），點場上的卡看介紹；拖回下方即收回'}
+          </p>
 
           {/* 拖場上的卡回手牌區：手牌區亮起 */}
           {dragging && dragging.id in placed && (

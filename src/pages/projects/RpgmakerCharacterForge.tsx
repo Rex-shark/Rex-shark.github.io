@@ -205,7 +205,10 @@ export default function RpgmakerCharacterForge() {
           </motion.div>
 
           <img
-            src="/projects/rpgmaker-character-forge/character-gallery.png"
+            width={2000}
+            height={1201}
+            decoding="async"
+            src="/projects/rpgmaker-character-forge/character-gallery.webp"
             alt="角色圖鑑：行走圖預覽、角色立繪與敵人戰鬥圖並排展示"
             className="mt-10 rounded-2xl border border-slate-200 shadow-lg shadow-amber-100/50 w-full hover:-translate-y-1 transition-transform duration-300"
           />
@@ -390,7 +393,11 @@ export default function RpgmakerCharacterForge() {
               Face 切割檢查：逐格瀏覽 16 表情 ＋ 兩張 576×288 原圖與切割線
             </p>
             <img
-              src="/projects/rpgmaker-character-forge/face-sheet-inspector.png"
+              width={2000}
+              height={1018}
+              loading="lazy"
+              decoding="async"
+              src="/projects/rpgmaker-character-forge/face-sheet-inspector.webp"
               alt="Face 切割檢查介面：16 表情逐格瀏覽與兩張 face 圖的切割線"
               className="rounded-2xl border border-slate-200 w-full hover:-translate-y-1 transition-transform duration-300"
             />
@@ -412,7 +419,11 @@ export default function RpgmakerCharacterForge() {
             transition={{ duration: 0.4 }}
           >
             <img
-              src="/projects/rpgmaker-character-forge/bright-check.png"
+              width={2000}
+              height={1250}
+              loading="lazy"
+              decoding="async"
+              src="/projects/rpgmaker-character-forge/bright-check.webp"
               alt="透明背景檢查切到亮色底，確認去背邊緣沒有殘留"
               className="rounded-2xl border border-slate-200 w-full hover:-translate-y-1 transition-transform duration-300"
             />

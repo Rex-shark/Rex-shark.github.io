@@ -43,8 +43,8 @@ Fish Audio 官方推理只支援 NVIDIA GPU（SGLang-Omni / fish-speech），Mac
 
 | 檔案 | 說明 |
 |---|---|
-| `public/projects/drama-3/workbench-light.jpg` | 工作台（亮色）：左欄角色與參考音檔、中欄劇本行、右欄取樣參數與 take 卡紙 |
-| `public/projects/drama-3/workbench-dark-early-stop.jpg` | 工作台（暗色），take 卡紙顯示提前中斷提示 |
+| `public/projects/drama-3/workbench-light.webp` | 工作台（亮色）：左欄角色與參考音檔、中欄劇本行、右欄取樣參數與 take 卡紙 |
+| `public/projects/drama-3/workbench-dark-early-stop.webp` | 工作台（暗色），take 卡紙顯示提前中斷提示 |
 
 > 截圖為接「模擬後端」時的畫面，音訊是測試音；真模型畫面相同，只是沒有頂端的橫幅。
 
@@ -213,4 +213,4 @@ Fish Audio 官方推理只支援 NVIDIA GPU（SGLang-Omni / fish-speech），Mac
 - 多角色劇本、聲音複製、表演標籤、串流播放
 - 4bit／8bit／bf16 三版量化可切換
 
-代表截圖：`public/projects/drama-3/workbench-light.jpg`（工作台：角色與參考音檔、劇本行、取樣參數與 take 卡紙）
+代表截圖：`public/projects/drama-3/workbench-light.webp`（工作台：角色與參考音檔、劇本行、取樣參數與 take 卡紙）

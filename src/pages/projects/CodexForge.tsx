@@ -162,6 +162,7 @@ function Shot({
         style={{ borderColor: C.card, backgroundColor: C.card }}
       >
         <img
+          decoding="async"
           src={src}
           alt={alt}
           loading="lazy"
@@ -564,6 +565,7 @@ export default function CodexForge() {
               ].map((s) => (
                 <figure key={s.src} className="min-w-0">
                   <img
+                    decoding="async"
                     src={`${IMG}/${s.src}.webp`}
                     alt={s.alt}
                     loading="lazy"

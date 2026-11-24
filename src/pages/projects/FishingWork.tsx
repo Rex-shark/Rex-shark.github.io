@@ -73,10 +73,10 @@ const games = [
 ]
 
 const disguises = [
-  { icon: Code2, label: 'VS Code', src: `${IMG}/draw-guess-vscode.png`, alt: '我畫你猜的 VS Code 偽裝：畫布在編輯區，TERMINAL 是聊天猜題' },
-  { icon: Presentation, label: 'PowerPoint', src: `${IMG}/draw-guess-ppt.png`, alt: '我畫你猜的 PowerPoint 偽裝' },
-  { icon: Video, label: 'Google Meet', src: `${IMG}/draw-guess-meet.png`, alt: '我畫你猜的 Google Meet 偽裝' },
-  { icon: Sheet, label: 'Excel', src: `${IMG}/draw-guess-excel.png`, alt: '我畫你猜的 Excel 偽裝' },
+  { icon: Code2, label: 'VS Code', src: `${IMG}/draw-guess-vscode.webp`, alt: '我畫你猜的 VS Code 偽裝：畫布在編輯區，TERMINAL 是聊天猜題' },
+  { icon: Presentation, label: 'PowerPoint', src: `${IMG}/draw-guess-ppt.webp`, alt: '我畫你猜的 PowerPoint 偽裝' },
+  { icon: Video, label: 'Google Meet', src: `${IMG}/draw-guess-meet.webp`, alt: '我畫你猜的 Google Meet 偽裝' },
+  { icon: Sheet, label: 'Excel', src: `${IMG}/draw-guess-excel.webp`, alt: '我畫你猜的 Excel 偽裝' },
 ]
 
 /* 一回合繪圖比賽裡 AI 經手的步驟 */
@@ -132,6 +132,7 @@ function Shot({ src, alt, caption }: { src: string; alt: string; caption?: strin
   return (
     <figure className="min-w-0">
       <img
+        decoding="async"
         src={src}
         alt={alt}
         loading="lazy"
@@ -227,7 +228,7 @@ export default function FishingWork() {
 
           <div className="mt-10">
             <Shot
-              src={`${IMG}/draw-contest-reveal.png`}
+              src={`${IMG}/draw-contest-reveal.webp`}
               alt="繪圖比賽揭曉：每張畫的 AI 分數、名次與評審ミオ的一句評語"
               caption="繪圖比賽揭曉（PowerPoint 偽裝）：分數與名次由 Clef 評定，每張畫下方是評審ミオ的評語，第一名拿到稱讚版"
             />
@@ -303,7 +304,7 @@ export default function FishingWork() {
               </dl>
             </div>
             <Shot
-              src={`${IMG}/draw-contest-drawing.png`}
+              src={`${IMG}/draw-contest-drawing.webp`}
               alt="繪圖比賽作畫中：所有人同時在自己的畫布上畫同一個題目"
               caption="作畫中：所有人同時畫同一題，2 分鐘後自動交卷"
             />
@@ -337,7 +338,7 @@ export default function FishingWork() {
             </div>
             <div className="md:order-1 min-w-0">
               <Shot
-                src={`${IMG}/draw-contest-mimic.png`}
+                src={`${IMG}/draw-contest-mimic.webp`}
                 alt="像不像比賽：作畫中右上角浮動的參考圖面板"
                 caption="像不像比賽：作畫時右上角有參考圖面板，可放大或收合"
               />
@@ -449,7 +450,7 @@ export default function FishingWork() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
             {disguises.map((d) => (
               <figure key={d.label} className="min-w-0">
-                <img src={d.src} alt={d.alt} loading="lazy" className="w-full rounded-lg border" style={{ borderColor: C.line }} />
+                <img decoding="async" src={d.src} alt={d.alt} loading="lazy" className="w-full rounded-lg border" style={{ borderColor: C.line }} />
                 <figcaption className="flex items-center gap-1.5 text-xs mt-2" style={{ color: C.muted }}>
                   <d.icon size={13} />
                   {d.label}
@@ -460,8 +461,8 @@ export default function FishingWork() {
 
           <p className="text-sm font-semibold mb-4" style={{ color: C.bright }}>猜歌（Meet 偽裝）</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <Shot src={`${IMG}/song-guess-playing.png`} alt="猜歌播放中：同步播放 30 秒試聽、聊天室打字猜歌名" caption="播放中：所有人同時聽 30 秒試聽" />
-            <Shot src={`${IMG}/song-guess-reveal.png`} alt="猜歌揭曉：歌名、歌手、封面與本首得分" caption="揭曉：歌名、歌手、封面與本首得分" />
+            <Shot src={`${IMG}/song-guess-playing.webp`} alt="猜歌播放中：同步播放 30 秒試聽、聊天室打字猜歌名" caption="播放中：所有人同時聽 30 秒試聽" />
+            <Shot src={`${IMG}/song-guess-reveal.webp`} alt="猜歌揭曉：歌名、歌手、封面與本首得分" caption="揭曉：歌名、歌手、封面與本首得分" />
           </div>
         </div>
       </section>

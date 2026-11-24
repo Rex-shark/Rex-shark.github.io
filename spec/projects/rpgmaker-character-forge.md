@@ -232,17 +232,17 @@ docker/     Nginx、Supervisor 與本機部署設定
 
 | # | 檔案 | 內容 | 來源 | 用途 / 位置 |
 |---|------|------|------|-------------|
-| 1 | `character-gallery.png` | 角色圖鑑（Sylphie）：角色清單 + 行走圖預覽 + 角色立繪 + 敵人戰鬥圖，透明格底 | 專案 README | ⭐ Hero / 頁首主視覺 |
-| 2 | `face-sheet-inspector.png` | Face 切割檢查：16 表情逐格瀏覽 + 兩張 576×288 原始圖與切割線 + 「2/2 張尺寸正確」 | 專案 README | 「16 表情 face 圖」功能段落 |
-| 3 | `bright-check.png` | 透明背景檢查切到**亮色**底（Amber）：白底下確認去背無殘留光暈或色塊 | Claude 實機擷取 | 「AI 視覺驗證 / 圖鑑」段落 |
+| 1 | `character-gallery.webp` | 角色圖鑑（Sylphie）：角色清單 + 行走圖預覽 + 角色立繪 + 敵人戰鬥圖，透明格底 | 專案 README | ⭐ Hero / 頁首主視覺 |
+| 2 | `face-sheet-inspector.webp` | Face 切割檢查：16 表情逐格瀏覽 + 兩張 576×288 原始圖與切割線 + 「2/2 張尺寸正確」 | 專案 README | 「16 表情 face 圖」功能段落 |
+| 3 | `bright-check.webp` | 透明背景檢查切到**亮色**底（Amber）：白底下確認去背無殘留光暈或色塊 | Claude 實機擷取 | 「AI 視覺驗證 / 圖鑑」段落 |
 
-> 註：`bright-check.png` 由 Claude 以 puppeteer-core 驅動系統 Chrome，對本機實際跑起來的圖鑑（`npm run dev`，port 3000）擷取，3200×2000。
+> 註：`bright-check.webp` 由 Claude 以 puppeteer-core 驅動系統 Chrome，對本機實際跑起來的圖鑑（`npm run dev`，port 3000）擷取，3200×2000。
 
 ### 截圖樣式建議
 
 - 三張皆為深綠／深空色系的深色截圖，統一 `rounded-2xl` + 細邊框（深色用 `border-white/10`）。
-- `character-gallery.png` 最適合當 Hero，寬幅呈現。
-- `bright-check.png` 與 `character-gallery.png` 是同一介面的**不同底色**，可並排做「透明 vs 亮底」對照，強化「去背品質可驗證」這個賣點。
+- `character-gallery.webp` 最適合當 Hero，寬幅呈現。
+- `bright-check.webp` 與 `character-gallery.webp` 是同一介面的**不同底色**，可並排做「透明 vs 亮底」對照，強化「去背品質可驗證」這個賣點。
 
 ---
 
@@ -265,4 +265,4 @@ docker/     Nginx、Supervisor 與本機部署設定
 - Codex Agent 組提示詞，ComfyUI 去背、縮放、切割
 - 產出依寫死的五項判準由 AI 自我驗收
 
-代表截圖：`public/projects/rpgmaker-character-forge/character-gallery.png`（角色圖鑑：行走圖預覽、角色立繪與敵人戰鬥圖並排）
+代表截圖：`public/projects/rpgmaker-character-forge/character-gallery.webp`（角色圖鑑：行走圖預覽、角色立繪與敵人戰鬥圖並排）

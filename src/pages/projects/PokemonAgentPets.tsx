@@ -181,6 +181,9 @@ export default function PokemonAgentPets() {
 
           <figure className="mt-10">
             <img
+              width={1200}
+              height={750}
+              decoding="async"
               src={`${IMG}/map-lake-left-pets.webp`}
               alt="左側海地圖上的寶可夢：兩隻走上木棧橋，水系在海裡游"
               className="w-full rounded-2xl"
@@ -218,6 +221,9 @@ export default function PokemonAgentPets() {
           </div>
           <figure className="mt-10">
             <img
+              width={1200}
+              height={750}
+              decoding="async"
               src={`${IMG}/map-snow-pets.webp`}
               alt="雪地地圖上六隻寶可夢頭上各有一個泡泡：白色在做事、黃色等確認、紅色失敗、淡紫整理記憶、綠色做完"
               loading="lazy"
@@ -266,6 +272,7 @@ export default function PokemonAgentPets() {
             {maps.map((m) => (
               <figure key={m.file} className="min-w-0">
                 <img
+                  decoding="async"
                   src={`${IMG}/${m.file}.webp`}
                   alt={`${m.name}地圖：${m.desc}`}
                   loading="lazy"
