@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "tpl:check": "node scripts/check-templates.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",

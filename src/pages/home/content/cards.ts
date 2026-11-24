@@ -1,6 +1,6 @@
-import { featuredProjects, profile, type PrivateProject, type Project } from '@/data/profile'
+import { featuredProjects, profile, projects, type PrivateProject, type Project } from '@/data/profile'
 import { BRIEFS } from './briefs'
-import siteArt from '../assets/cards/personal-site.webp'
+import templatesArt from '../assets/cards/templates.webp'
 import threadsArt from '../assets/cards/threads-bot.webp'
 import chatroomArt from '../assets/cards/ai-chatroom.webp'
 import forgeArt from '../assets/cards/rpgmaker-character-forge.webp'
@@ -26,8 +26,8 @@ export type CardData =
  * 卡圖是裝飾（卡片本身的 aria-label 就是標題），所以不另寫 alt，畫面內容記在各行註解。
  */
 const ART: Record<string, CardArt> = {
-  // 設計工作室裡漂浮著二十多個不同風格的網頁畫框，畫筆小精靈把中央的金框推到正中間
-  'personal-site': { image: siteArt },
+  // 服裝店試衣間裡，網頁造型的小角色換穿八種風格外衣，客戶拿著色票挑選，鯊魚帽設計師拿布尺量身
+  templates: { image: templatesArt },
   // 深夜書桌旁的小機器人用網子撈起飛舞的報紙，經紡紗輪紡成發光絲線，變成社群貼文泡泡飄出窗外
   'threads-bot': { image: threadsArt },
   // AI 夥伴 Lumi 和兩位朋友圍坐聊天，身後的布景從房間翻轉成海邊夏日祭典的夜晚
@@ -46,10 +46,31 @@ const ART: Record<string, CardArt> = {
   'codex-forge': { image: codexForgeArt },
 }
 
-/** 手牌：自介卡在最左，其餘依 profile.ts 的精選專案順序（公開專案＋私人專案）；文字資料一律讀 profile.ts */
+/**
+ * 設計範本（/templates，牌卡名「UI 設計試衣間」）：本站的接案展示功能，不在 profile.ts 的專案清單裡，牌桌另外放一張。
+ * 文案摘錄自 spec/templates/README.md（版型 4 個、風格 8 種，改規格時這裡一起改）；
+ * 程式就在本站 repo 裡，GitHub 連結沿用個人網站專案的 repo。
+ */
+const SITE_REPO = projects.find((p) => p.slug === 'personal-site')?.href
+if (!SITE_REPO) throw new Error('profile.ts 找不到個人網站專案（設計範本卡要用它的 repo 連結）')
+const templatesWork: Project = {
+  slug: 'templates',
+  title: 'UI 設計試衣間',
+  desc: '同一份內容與功能、當場切換 8 種設計風格的接案展示範本：後台儀表板、購物網站、公司官網、方案介紹頁 4 個版型，客戶選定風格後可直接帶走那份 DESIGN.md。',
+  tags: ['8 種風格', '4 個版型', 'DESIGN.md'],
+  href: SITE_REPO,
+  to: '/templates',
+}
+
+/**
+ * 手牌：自介卡在最左，接著設計範本，其餘依 profile.ts 的精選專案順序（公開專案＋私人專案）。
+ * 個人網站不放進牌組（Rex 2026-11-18 指示）；牌桌本身就是個人網站。文字資料一律讀 profile.ts。
+ */
+const deckWorks: (Project | PrivateProject)[] = [templatesWork, ...featuredProjects.filter((p) => p.slug !== 'personal-site')]
+
 export const cards: CardData[] = [
   { kind: 'intro', id: 'intro' },
-  ...featuredProjects.map((project): CardData => {
+  ...deckWorks.map((project): CardData => {
     const art = ART[project.slug]
     if (!art) throw new Error(`cards.ts 缺少專案卡圖：${project.slug}`)
     // 漏了簡易介紹就直接報錯，不要讓點開的卡靜默變成只剩標頭

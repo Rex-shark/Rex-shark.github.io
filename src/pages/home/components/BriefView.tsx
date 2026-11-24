@@ -200,7 +200,7 @@ function ProjectBrief({ card }: { card: Extract<CardData, { kind: 'project' }> }
       </ul>
 
       <Actions>
-        <DetailLink to={p.to}>{p.to === '/gallery' ? '進設計實驗室' : '看完整介紹'}</DetailLink>
+        <DetailLink to={p.to}>{p.to === '/templates' ? '進試衣間' : '看完整介紹'}</DetailLink>
         {p.href ? (
           <a
             href={p.href}

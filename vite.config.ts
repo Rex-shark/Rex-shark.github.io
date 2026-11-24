@@ -10,6 +10,22 @@ export default defineConfig({
     tailwindcss(),
   ],
   base: '/',
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [
+            {
+              // 設計範本（/templates）各 chunk 共用的 class 合併工具：
+              // 不指定的話 rolldown 會把它們併進首頁入口 chunk，首頁多載入約 29KB
+              name: 'templates-shared',
+              test: /[\\/]node_modules[\\/](tailwind-merge|clsx)[\\/]|[\\/]src[\\/]templates[\\/]lib[\\/]cn\.ts$/,
+            },
+          ],
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

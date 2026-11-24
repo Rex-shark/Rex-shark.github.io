@@ -1,4 +1,8 @@
 @import "tailwindcss";
+/* 同 repo 裡的獨立子專案各自有 Tailwind，不要被主站的自動掃描吃進來（否則它們的 class 會混進主站 CSS） */
+@source not "../card-deck";
+@source not "../tank-battle";
+@source not "../game";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";

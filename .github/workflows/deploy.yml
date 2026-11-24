@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check templates
+        run: npm run tpl:check
+
       - name: Build
         run: npm run build
 

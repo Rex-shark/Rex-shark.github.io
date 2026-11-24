@@ -1,4 +1,4 @@
-import siteShot from '../assets/personal-site.webp'
+import templatesShot from '../assets/templates.webp'
 
 /** 簡易介紹的代表截圖 */
 export interface BriefShot {
@@ -15,17 +15,17 @@ export interface ProjectBrief {
 /**
  * 點場上的專案卡時的簡易介紹（一個畫面看完；完整內容在 showcase 頁）。
  * 亮點的權威來源是各 spec/projects/<slug>.md 的「卡片重點」一節，改內容時兩邊一起改。
- * 個人網站沒有 spec 檔，亮點取自 CLAUDE.md 與 spec/info.md。
+ * 設計範本的亮點取自 spec/templates/README.md。
  * 一句話說明不寫在這裡，直接用 profile.ts 的 desc。
  */
 export const BRIEFS: Record<string, ProjectBrief> = {
-  'personal-site': {
+  templates: {
     points: [
-      '同一份個人資料，做出 24 種設計風格的首頁',
-      '每個精選專案都有獨立的完整介紹頁',
-      'push main 就由 GitHub Actions 部署到 GitHub Pages',
+      '後台、購物、官網、方案頁 4 個版型 × 8 種風格',
+      '切換風格時購物車、篩選、表單內容完全保留',
+      '每種風格附通過 lint 的 DESIGN.md，可直接帶走',
     ],
-    shot: { image: siteShot, caption: '經典版首頁（原本的正式首頁）' },
+    shot: { image: templatesShot, caption: '購物網站版型（簡約風格），底部工具列可切換風格、版型與裝置寬度' },
   },
   'threads-bot': {
     points: [

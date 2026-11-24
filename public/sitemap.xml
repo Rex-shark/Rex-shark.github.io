@@ -21,6 +21,17 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- 設計範本（/templates/kit 為內部元件總覽，不列入） -->
+  <url>
+    <loc>https://rex-shark.github.io/templates</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url><loc>https://rex-shark.github.io/templates/dashboard</loc><priority>0.6</priority></url>
+  <url><loc>https://rex-shark.github.io/templates/shop</loc><priority>0.6</priority></url>
+  <url><loc>https://rex-shark.github.io/templates/corporate</loc><priority>0.6</priority></url>
+  <url><loc>https://rex-shark.github.io/templates/landing</loc><priority>0.6</priority></url>
+
   <!-- 精選專案 showcase 頁 -->
   <url>
     <loc>https://rex-shark.github.io/projects/threads-bot</loc>

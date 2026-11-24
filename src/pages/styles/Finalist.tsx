@@ -630,8 +630,17 @@ export default function Finalist() {
             </Link>
             <motion.div whileHover={{ x: 3 }} transition={{ type: 'spring', stiffness: 400 }}>
               <Link
+                to="/templates"
+                className="inline-flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 transition-colors text-sm font-medium cursor-pointer whitespace-nowrap"
+              >
+                設計範本
+                <ArrowRight size={14} />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ x: 3 }} transition={{ type: 'spring', stiffness: 400 }}>
+              <Link
                 to="/gallery"
-                className="inline-flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 transition-colors text-sm font-medium cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 transition-colors text-sm font-medium cursor-pointer whitespace-nowrap"
               >
                 設計實驗室
                 <ArrowRight size={14} />

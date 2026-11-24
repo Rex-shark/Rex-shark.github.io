@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router'
-const Home = lazy(() => import('@/pages/home/Home'))
+import Home from '@/pages/home/Home'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -44,6 +44,10 @@ const PokemonAgentPets = lazy(() => import('@/pages/projects/PokemonAgentPets'))
 const VrmChatWidget = lazy(() => import('@/pages/projects/VrmChatWidget'))
 const CodexForge = lazy(() => import('@/pages/projects/CodexForge'))
 
+// 設計範本：lazy 載入，不增加首頁 bundle
+const TemplatesHome = lazy(() => import('@/templates/viewer/TemplatesHome'))
+const TemplateViewer = lazy(() => import('@/templates/viewer/TemplateViewer'))
+
 function App() {
   return (
     <BrowserRouter>
@@ -86,6 +90,8 @@ function App() {
         <Route path="/projects/pokemon-agent-pets" element={<PokemonAgentPets />} />
         <Route path="/projects/vrm-chat-widget" element={<VrmChatWidget />} />
         <Route path="/projects/codex-forge" element={<CodexForge />} />
+        <Route path="/templates" element={<Suspense fallback={null}><TemplatesHome /></Suspense>} />
+        <Route path="/templates/:template" element={<Suspense fallback={null}><TemplateViewer /></Suspense>} />
       </Routes>
       </Suspense>
     </BrowserRouter>
