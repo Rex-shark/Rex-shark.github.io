@@ -713,7 +713,7 @@ export default function Finalist() {
               {/* 裝飾光圈 */}
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-200 to-violet-200 blur-xl opacity-60 scale-110" />
               <div className="relative w-52 h-52 rounded-3xl overflow-hidden border-4 border-white shadow-2xl shadow-indigo-200">
-                <img src="/me.png" alt="Rex" className="w-full h-full object-cover" />
+                <img src="/me.webp" alt="Rex" className="w-full h-full object-cover" />
               </div>
             </motion.div>
             {/* 在線指示器 */}

@@ -2,7 +2,7 @@
 
 ## 專案目標
 
-Rex 的個人網站（`rex-shark.github.io`）。**正式首頁採用 Finalist 風格**（白底 indigo/violet、3D Tilt 卡片、好文分享、文章分類篩選），位於 `/`。原本的多風格導覽頁（StyleGallery）作為「設計實驗室」保留於 `/gallery`，可從首頁連入觀賞其餘 23 種設計風格。
+Rex 的個人網站（`rex-shark.github.io`）。**首頁 `/` 是撲克牌桌**（2026-11-17 起）：手牌是自介卡與精選專案卡。原正式首頁 Finalist（白底 indigo/violet、3D Tilt 卡片、好文分享、文章分類篩選）保留為經典版 `/classic`；多風格導覽頁（StyleGallery）作為「設計實驗室」保留於 `/gallery`，收錄其餘 23 種設計風格，可從經典版導覽列進入。
 
 ---
 
@@ -39,7 +39,7 @@ src/
 ├── index.css                        # 全域樣式與主題變數
 ├── pages/
 │   ├── StyleGallery.tsx             # 設計實驗室（/gallery）
-│   ├── styles/                      # 23 個設計實驗風格 + Finalist.tsx（正式首頁）
+│   ├── styles/                      # 23 個設計實驗風格 + Finalist.tsx（經典版首頁）
 │   └── projects/                    # 精選專案 showcase 頁
 │       ├── ThreadsBot.tsx
 │       ├── AiChatroom.tsx
@@ -79,9 +79,9 @@ public/
 
 ---
 
-## 首頁設計
+## 經典版首頁設計
 
-正式首頁（`/`）採用 **Finalist 風格**，內容區塊：
+首頁 `/` 已改為撲克牌桌（見「首頁改為撲克牌桌」一節）。經典版（`/classic`）採用 **Finalist 風格**，內容區塊：
 
 1. **固定導覽列**：關於 / 技能 / 專案 / 文章 / 聯絡（右上）+ 「設計實驗室」連結到 `/gallery`
 2. **Hero**：自介、CTA
@@ -100,7 +100,7 @@ public/
 
 | 專案 | 卡片描述 | 點擊行為 | Showcase 頁 | 狀態 |
 |------|----------|----------|-------------|------|
-| **個人網站** | 用 24 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。 | 直連 `/gallery` 觀賞其他 23 種風格 | 不做（網站本身即作品） | ✅ 完成 |
+| **個人網站** | 個人網站（即本站）：首頁是可以玩的撲克牌桌，另收錄經典版首頁與 23 種設計風格實驗。 | 直連 `/gallery` 觀賞其他 23 種風格 | 不做（網站本身即作品） | ✅ 完成 |
 | **ThreadsBot** | 本地 LLM 自動爬新聞、改寫成 Threads 貼文，Spring Boot 3 + Spring AI + Ollama，零 API 成本。 | 進入 `/projects/threads-bot` | ✅ 已有 | ✅ 完成 |
 | **ai-chatroom** | 真人與 AI 夥伴 Lumi 🐾 同房即時聊天，AI 以群組成員身分自主判斷回應或沉默，還會自己換場並生成背景圖。 | 進入 `/projects/ai-chatroom` | ✅ 已有 | ✅ 完成 |
 | **RPG Maker Character Forge** | 一張行走圖生出整套 RPG Maker 角色素材（立繪 / 16 表情 face / 敵人戰鬥圖），Codex Agent + ComfyUI。 | 進入 `/projects/rpgmaker-character-forge` | ✅ 已有 | ✅ 完成 |
@@ -237,7 +237,8 @@ public/
 - ✅ `public/sitemap.xml`（初版：首頁 + gallery；Lv2 已改為無 hash 路徑）
 - ✅ **JSON-LD `Person` schema**
 - ⬜ 部署後用 [Open Graph Debugger](https://www.opengraph.xyz/) 驗證（需推 main 觸發 deploy）
-- ⬜ 之後做 1200×630 專屬 OG 圖取代 `/me.png`
+- ✅ 1200×630 專屬 OG 圖 `public/og.jpg` 取代 `/me.png`（2026-11-24；原始稿 `scripts/og-image.html`，headless Chrome 截圖後轉 JPG）
+- ✅ 門面修正（2026-11-24）：找不到頁面 `src/pages/NotFound.tsx`（`path="*"`，原本是空白畫面）；各頁專屬分頁標題（`src/lib/pageTitle.ts`，`/templates` 仍由範本頁自己設定；新增風格頁時要補 `STYLE_NAMES`）；頭像改用 512px WebP `/me.webp`（1.7 MB → 47 kB）；description、README、個人網站專案描述改成與牌桌首頁一致
 
 #### Lv2 — 解 HashRouter SEO 問題 ✅（部署後驗證待辦）
 

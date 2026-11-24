@@ -6,7 +6,7 @@ Rex 的 GitHub Pages 個人網站，部署於 [rex-shark.github.io](https://rex-
 
 - **作者**：Rex — Java 全端工程師 ＆ 系統分析師
 - **聯絡**：rexrex10050@gmail.com
-- **設計風格**：Finalist（白底 indigo/violet）為正式首頁；另有 23 種設計風格實驗收錄於「設計實驗室」
+- **設計風格**：首頁是撲克牌桌；原正式首頁 Finalist（白底 indigo/violet）保留為經典版，另有 23 種設計風格實驗收錄於「設計實驗室」
 
 ## 網站內容
 

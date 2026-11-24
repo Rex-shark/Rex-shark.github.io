@@ -1,11 +1,22 @@
 import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router'
 import Home from '@/pages/home/Home'
+import { titleFor } from '@/lib/pageTitle'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
     window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
+
+/** 依路徑設定分頁標題；/templates 自己依版型與風格設定，這裡不動 */
+function PageTitle() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    const title = titleFor(pathname)
+    if (title) document.title = title
   }, [pathname])
   return null
 }
@@ -48,10 +59,13 @@ const CodexForge = lazy(() => import('@/pages/projects/CodexForge'))
 const TemplatesHome = lazy(() => import('@/templates/viewer/TemplatesHome'))
 const TemplateViewer = lazy(() => import('@/templates/viewer/TemplateViewer'))
 
+const NotFound = lazy(() => import('@/pages/NotFound'))
+
 function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <PageTitle />
       <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -92,6 +106,8 @@ function App() {
         <Route path="/projects/codex-forge" element={<CodexForge />} />
         <Route path="/templates" element={<Suspense fallback={null}><TemplatesHome /></Suspense>} />
         <Route path="/templates/:template" element={<Suspense fallback={null}><TemplateViewer /></Suspense>} />
+        {/* 其餘路徑：找不到頁面（不列入 sitemap） */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
       </Suspense>
     </BrowserRouter>

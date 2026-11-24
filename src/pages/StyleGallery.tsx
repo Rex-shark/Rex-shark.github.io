@@ -615,7 +615,7 @@ function GithubProfilePreview() {
         {/* Left: avatar */}
         <div className="flex flex-col items-center gap-1">
           <div className="w-8 h-8 rounded-full overflow-hidden" style={{ border: '1px solid #30363D' }}>
-            <img src="/me.png" alt="" className="w-full h-full object-cover" />
+            <img src="/me.webp" alt="" className="w-full h-full object-cover" />
           </div>
           <div className="w-6 h-0.5 rounded-full" style={{ background: '#E6EDF3' }} />
           <div className="w-8 h-0.5 rounded-full" style={{ background: '#8B949E' }} />
@@ -698,7 +698,7 @@ function AiNativePreview() {
         {/* Agent 回覆 + context 卡 */}
         <div className="flex gap-1 items-start">
           <div className="w-4 h-4 rounded-full overflow-hidden shrink-0">
-            <img src="/me.png" alt="" className="w-full h-full object-cover" />
+            <img src="/me.webp" alt="" className="w-full h-full object-cover" />
           </div>
           <div className="rounded-md bg-white p-1 flex flex-col gap-0.5 w-[70%]" style={{ borderLeft: '2px solid #6366F1' }}>
             <div className="w-full h-0.5 rounded-full" style={{ background: '#52525B' }} />
@@ -763,7 +763,7 @@ function EditorialPreview() {
         {/* 右：封面照 figure */}
         <div className="w-[38%] flex flex-col gap-0.5">
           <div className="w-full aspect-[3/4] overflow-hidden" style={{ border: '1px solid #1A1613' }}>
-            <img src="/me.png" alt="" className="w-full h-full object-cover grayscale" />
+            <img src="/me.webp" alt="" className="w-full h-full object-cover grayscale" />
           </div>
           <div className="w-3/4 h-0.5" style={{ background: '#6B645C' }} />
         </div>

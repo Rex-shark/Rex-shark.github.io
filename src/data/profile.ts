@@ -18,7 +18,7 @@ export const profile = {
   email: 'rexrex10050@gmail.com',
   githubHandle: 'Rex-shark',
   githubUrl: 'https://github.com/Rex-shark',
-  avatar: '/me.png',
+  avatar: '/me.webp',
 } as const
 
 export type SkillGroupKey = 'backend' | 'frontend' | 'data' | 'ai' | 'design'
@@ -94,7 +94,7 @@ export const projects: Project[] = [
   {
     slug: 'personal-site',
     title: '個人網站',
-    desc: '用 24 種不同設計風格實作的個人網站（即本站），最終選定 Finalist 為正式首頁。React 19 + Vite 8 + Tailwind v4，部署於 GitHub Pages。',
+    desc: '個人網站（即本站）：首頁是可以玩的撲克牌桌，另收錄經典版首頁與 23 種設計風格實驗。React 19 + Vite 8 + Tailwind v4，部署於 GitHub Pages。',
     tags: ['React', 'TypeScript', 'Tailwind CSS'],
     href: 'https://github.com/Rex-shark/Rex-shark.github.io',
     to: '/gallery',
