@@ -1,6 +1,6 @@
 ---
 version: alpha
-name: 企業專業 2 Enterprise II
+name: 企業專業 Ⅱ Enterprise II
 description: 白底配深翠綠與暖灰中性色，小圓角、資訊密度高；卡片左上與右下直角、右上與左下圓弧，形成對角的葉形，穩定又有辨識度。
 colors:
   primary: "#0B5D4B"
@@ -317,7 +317,7 @@ components:
 
 > 與「企業專業」同一套結構、密度與元件規則，只換配色與卡片形狀。卡片「左上右下直角、右上左下圓弧」為 Rex 指定（2026-11-24；最初是左方右圓的 D 字形，同日改為對角葉形）。
 
-# 企業專業 2 Enterprise II
+# 企業專業 Ⅱ Enterprise II
 
 ## Overview
 

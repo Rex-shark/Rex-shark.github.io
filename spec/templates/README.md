@@ -34,7 +34,7 @@
 
 ### 2.2 風格（Style）
 
-第一批 3 種（2026-11-09 Rex 選定）＋第二批 5 種（2026-11-09 Claude 設計、Rex 同意）＋第三批 4 種（2026-11-24，Rex 指定 CSS Zen Garden 四個作品為靈感）＋第四批 9 種（2026-11-24，Rex 從 daisyUI UI Design Trends 指定）＋變體 2 種（玻璃態 2、企業專業 2）＋實木擬物（daisyUI #023），共 24 種。每種風格最終都要有一份 `DESIGN.md`（Google design.md 格式），放在 `spec/templates/styles/<slug>/DESIGN.md`，以 `npx @google/design.md lint` 驗證。
+第一批 3 種（2026-11-09 Rex 選定）＋第二批 5 種（2026-11-09 Claude 設計、Rex 同意）＋第三批 4 種（2026-11-24，Rex 指定 CSS Zen Garden 四個作品為靈感）＋第四批 9 種（2026-11-24，Rex 從 daisyUI UI Design Trends 指定）＋變體 2 種（玻璃態 Ⅱ、企業專業 Ⅱ）＋實木擬物（daisyUI #023），共 24 種。每種風格最終都要有一份 `DESIGN.md`（Google design.md 格式），放在 `spec/templates/styles/<slug>/DESIGN.md`，以 `npx @google/design.md lint` 驗證。
 
 | 風格 | slug | 一句話定位 | 適合推薦給 | 規範 |
 |---|---|---|---|---|
@@ -59,13 +59,13 @@
 | 全像虹彩 | `holo` | 淡紫白底、粉青紫虹彩光暈、雙色光邊面板 | 美妝香氛、時尚潮流、Web3、Z 世代 | [DESIGN.md](styles/holo/DESIGN.md) ✅ |
 | 新藝術 | `nouveau` | 奶油底、深梅紫字、霧青綠主色，**上圓下方的拱門卡片**與藤蔓曲線 | 花藝、美容 SPA、婚禮、精品包裝 | [DESIGN.md](styles/nouveau/DESIGN.md) ✅ |
 | 液態金屬 | `chrome` | 近黑石墨底、拋光銀膠囊按鈕、斜面高光面板與液態銀光斑（暗色） | 汽車、3C 硬體、電子音樂、機能服飾 | [DESIGN.md](styles/chrome/DESIGN.md) ✅ |
-| 玻璃態 2 | `glass2` | 玻璃態的冰藍薄荷配色版，卡片**上方直角、下方圓角** | 醫療健康、金融科技、旅遊航空、SaaS | [DESIGN.md](styles/glass2/DESIGN.md) ✅ |
-| 企業專業 2 | `enterprise2` | 企業專業的深翠綠暖灰配色版，卡片**左上右下直角、右上左下圓弧（對角葉形）** | 銀行投資、能源環境、醫藥生技、物流 | [DESIGN.md](styles/enterprise2/DESIGN.md) ✅ |
+| 玻璃態 Ⅱ | `glass2` | 玻璃態的冰藍薄荷配色版，卡片**上方直角、下方圓角** | 醫療健康、金融科技、旅遊航空、SaaS | [DESIGN.md](styles/glass2/DESIGN.md) ✅ |
+| 企業專業 Ⅱ | `enterprise2` | 企業專業的深翠綠暖灰配色版，卡片**左上右下直角、右上左下圓弧（對角葉形）** | 銀行投資、能源環境、醫藥生技、物流 | [DESIGN.md](styles/enterprise2/DESIGN.md) ✅ |
 | 實木擬物 | `wood` | 橡木地板底、楓木面板與木框、胡桃木厚按鈕、刻槽輸入框（木紋以 CSS 產生；daisyUI #023） | 家具木作、咖啡館餐酒館、樂器音響、露營戶外 | [DESIGN.md](styles/wood/DESIGN.md) ✅ |
 
-第二批 5 種（企業專業～奢華精品）於 2026-11-09 新增。第三批 4 種（中世紀現代以下）於 2026-11-24 新增，靈感分別來自 CSS Zen Garden #221、#217、#213、#177：**只借用風格語彙**（配色氛圍、字體走向、版面手法），配色數值與裝飾圖形皆為原創；原作為 CC BY-NC-SA 且註明不可複製，不得使用原作圖片、CSS 或可辨識的版面。第四批 9 種於 2026-11-24 新增，Rex 從 [daisyUI UI Design Trends](https://trends.daisyui.com/) 指定 #005、#006、#007、#008、#011、#012、#014、#015、#048：同樣只借用風格語彙，不使用其範例程式碼、截圖或情緒板圖片；Material、Fluent 另參考 Google／Microsoft 的公開設計規範。新藝術的「上圓下方」卡片由 `--tpl-card-radius`／`--tpl-card-radius-xl` 提供（其他風格預設跟隨 radius-lg／xl）。變體「玻璃態 2」「企業專業 2」沿用原風格的材質與元件規則，只換配色與卡片形狀（上方下圓、對角葉形，Rex 指定）。實木擬物的面板木紋由 `--tpl-panel-image` 提供（其他風格為 none）。二十四份 DESIGN.md 都通過 lint（0 錯誤、0 警告）。
+第二批 5 種（企業專業～奢華精品）於 2026-11-09 新增。第三批 4 種（中世紀現代以下）於 2026-11-24 新增，靈感分別來自 CSS Zen Garden #221、#217、#213、#177：**只借用風格語彙**（配色氛圍、字體走向、版面手法），配色數值與裝飾圖形皆為原創；原作為 CC BY-NC-SA 且註明不可複製，不得使用原作圖片、CSS 或可辨識的版面。第四批 9 種於 2026-11-24 新增，Rex 從 [daisyUI UI Design Trends](https://trends.daisyui.com/) 指定 #005、#006、#007、#008、#011、#012、#014、#015、#048：同樣只借用風格語彙，不使用其範例程式碼、截圖或情緒板圖片；Material、Fluent 另參考 Google／Microsoft 的公開設計規範。新藝術的「上圓下方」卡片由 `--tpl-card-radius`／`--tpl-card-radius-xl` 提供（其他風格預設跟隨 radius-lg／xl）。變體「玻璃態 Ⅱ」「企業專業 Ⅱ」沿用原風格的材質與元件規則，只換配色與卡片形狀（上方下圓、對角葉形，Rex 指定）。實木擬物的面板木紋由 `--tpl-panel-image` 提供（其他風格為 none）。二十四份 DESIGN.md 都通過 lint（0 錯誤、0 警告）。
 
-工具列順序：亮色在前、暗色在後（簡約、企業專業、企業專業 2、和紙編輯、柔和 UI、新粗野、玻璃態、玻璃態 2、中世紀現代、透疊色面、古典博物誌、Material、Metro 方塊、Fluent、擬物、實木擬物、黏土擬態、Aqua 果凍、全像虹彩、新藝術、暗色科技、奢華精品、黃昏城市、液態金屬）。風格之間刻意拉開差異：亮／暗、線條／材質／陰影、小圓角／大圓角、無襯線／襯線，讓客戶一眼看出不同。
+工具列順序：亮色在前、暗色在後（簡約、企業專業、企業專業 Ⅱ、和紙編輯、柔和 UI、新粗野、玻璃態、玻璃態 Ⅱ、中世紀現代、透疊色面、古典博物誌、Material、Metro 方塊、Fluent、擬物、實木擬物、黏土擬態、Aqua 果凍、全像虹彩、新藝術、暗色科技、奢華精品、黃昏城市、液態金屬）。風格之間刻意拉開差異：亮／暗、線條／材質／陰影、小圓角／大圓角、無襯線／襯線，讓客戶一眼看出不同。
 
 備案：活潑繽紛（Playful）、Material、黏土風等。新增風格**只能新增樣式**，不得改資料與功能。
 

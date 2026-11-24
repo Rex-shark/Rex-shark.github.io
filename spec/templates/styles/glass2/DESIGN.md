@@ -1,6 +1,6 @@
 ---
 version: alpha
-name: 玻璃態 2 Glassmorphism II
+name: 玻璃態 Ⅱ Glassmorphism II
 description: 冰藍畫布上三團天藍、薄荷、長春花藍的同色系柔光，內容放在通透的白色毛玻璃面板上；卡片上方直角、下方圓角，像掛在牆上的玻璃標牌，清爽、乾淨、可信賴。
 colors:
   primary: "#1D5E8C"
@@ -348,7 +348,7 @@ components:
 
 > 與「玻璃態」同一套材質與元件規則（白色毛玻璃＋同色系柔光＋多重亮邊），只換配色與卡片形狀。卡片「上方直角、下方圓角」為 Rex 指定（2026-11-24）。
 
-# 玻璃態 2 Glassmorphism II
+# 玻璃態 Ⅱ Glassmorphism II
 
 ## Overview
 

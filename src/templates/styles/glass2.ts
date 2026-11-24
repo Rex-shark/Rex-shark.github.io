@@ -8,13 +8,13 @@ const PANEL_SHADOW =
   'inset 0 1px 0 #FFFFFF, inset 1px 0 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(255,255,255,0.3), 0 8px 32px rgba(29,94,140,0.10)'
 
 /**
- * 玻璃態 2 Glassmorphism II。權威來源：spec/templates/styles/glass2/DESIGN.md
+ * 玻璃態 Ⅱ Glassmorphism II。權威來源：spec/templates/styles/glass2/DESIGN.md
  * 與玻璃態同一套材質（白色毛玻璃＋同色系柔光），改成冰藍薄荷配色，卡片「上方下圓」（Rex 指定）。
  */
 export const glass2: TplStyle = {
   slug: 'glass2',
   meta: {
-    name: '玻璃態 2',
+    name: '玻璃態 Ⅱ',
     nameEn: 'Glassmorphism II',
     tagline: '冰藍底＋天藍薄荷柔光、通透白色毛玻璃，卡片上方直角、下方圓角。',
     suitableFor: ['醫療與健康', '金融科技', '旅遊與航空', '清潔與家電', 'SaaS 產品'],

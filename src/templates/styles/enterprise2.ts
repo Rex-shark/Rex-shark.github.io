@@ -1,13 +1,13 @@
 import type { TplStyle } from './types'
 
 /**
- * 企業專業 2 Enterprise II。權威來源：spec/templates/styles/enterprise2/DESIGN.md
+ * 企業專業 Ⅱ Enterprise II。權威來源：spec/templates/styles/enterprise2/DESIGN.md
  * 與企業專業同一套結構與密度，改成深翠綠＋暖灰配色，卡片「左上右下直角、右上左下圓弧」的對角葉形（Rex 指定；原本是左方右圓的 D 字形）。
  */
 export const enterprise2: TplStyle = {
   slug: 'enterprise2',
   meta: {
-    name: '企業專業 2',
+    name: '企業專業 Ⅱ',
     nameEn: 'Enterprise II',
     tagline: '白底深翠綠、暖灰中性色、資訊密度高，卡片左上右下直角、右上左下圓弧的對角葉形。',
     suitableFor: ['銀行與投資', '能源與環境', '醫藥與生技', '物流與供應鏈', '顧問與會計'],
