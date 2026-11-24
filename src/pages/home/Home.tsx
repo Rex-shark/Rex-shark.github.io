@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from 'react'
 import { AnimatePresence, MotionConfig } from 'framer-motion'
-import { Link } from 'react-router'
 import { profile } from '@/data/profile'
 import CardSprite, { type CardMode } from './components/CardSprite'
 import DuelField from './components/DuelField'
@@ -310,12 +309,6 @@ export default function Home() {
               </p>
             </div>
             <nav className="flex shrink-0 items-center gap-2 sm:gap-3" aria-label="其他頁面">
-              <Link
-                to="/gallery"
-                className="soft-pill hidden rounded-full px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-shadow hover:shadow-[var(--raise-sm)] focus-visible:outline-2 focus-visible:outline-deck-accent active:shadow-[var(--press-sm)] sm:inline-block"
-              >
-                設計實驗室
-              </Link>
               <ThemeToggle
                 theme={theme}
                 onChange={(t) => {
